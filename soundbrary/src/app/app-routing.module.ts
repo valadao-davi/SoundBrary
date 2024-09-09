@@ -1,12 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from 'src/components/login/login.component';
-import { AuthLayoutComponent } from 'src/layouts/auth-layout/auth-layout.component';
+import { CadastroLayoutComponent } from 'src/app/layouts/cadastro-layout/cadastro-layout.component';
+import { LoginLayoutComponent } from 'src/app/layouts/login-layout/login-layout.component';
+import { MainLayoutComponent } from 'src/app/layouts/main-layout/main-layout.component';
+import { HomeComponent } from './components/home/home.component';
+import { MusicaComponent } from './components/musica/musica.component';
+import { AlbumComponent } from './components/album/album.component';
 
 const routes: Routes = [
-  {path: 'auth', component: AuthLayoutComponent, children:[
-    {path: 'login', component: LoginComponent}
-  ]}
+  {path: '', component: MainLayoutComponent, children:[
+    {path: 'home', component: HomeComponent},
+    {path: 'musica', component: MusicaComponent},
+    {path: 'album', component: AlbumComponent},
+    {path: 'artista', component: AlbumComponent},
+  ]
+  },
+
+  {path: 'login', component: LoginLayoutComponent},
+
+  {path: 'cadastro', component: CadastroLayoutComponent},
+
+
 ];
 
 @NgModule({
