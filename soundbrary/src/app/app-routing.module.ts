@@ -6,6 +6,8 @@ import { MainLayoutComponent } from 'src/app/layouts/main-layout/main-layout.com
 import { HomeComponent } from './components/home/home.component';
 import { MusicaComponent } from './components/musica/musica.component';
 import { AlbumComponent } from './components/album/album.component';
+import { LoginComponent } from './components/login/login.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children:[
@@ -16,9 +18,13 @@ const routes: Routes = [
   ]
   },
 
-  {path: 'login', component: LoginLayoutComponent},
+  {path: 'login', component: LoginLayoutComponent, children: [
+    {path: '',  component: LoginComponent}
+  ]},
 
-  {path: 'cadastro', component: CadastroLayoutComponent},
+  {path: 'cadastro', component: LoginLayoutComponent, children: [
+    {path: '',  component: CadastroComponent}
+  ]},
 
 
 ];

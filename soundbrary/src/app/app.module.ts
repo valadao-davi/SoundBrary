@@ -8,6 +8,7 @@ import { AlbumComponent } from './components/album/album.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { PerfilLateralComponent } from './shared/perfil-lateral/perfil-lateral.component';
 import { AdsComponent } from './shared/ads/ads.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AdsComponent } from './shared/ads/ads.component';
     AlbumComponent,
     HeaderComponent,
     PerfilLateralComponent,
-    AdsComponent
+    AdsComponent,
+    CadastroComponent,
   ],
   imports: [
     BrowserModule,
