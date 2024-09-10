@@ -1,0 +1,50 @@
+#profile_left{
+    padding: 40px;
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    background-color: #f2f2f2;
+}
+
+#profile_left-top{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    gap: 16px;
+}
+#grey_circle{
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+}
+#profile_left-top h5{
+    color: #797979;
+    font-weight: 7  00;
+}
+
+#coluna_salvos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#item_salvos{
+    display: flex;
+    gap: 8px;
+    padding: 8px 0px;
+}
+
+#btn_criar_dissay {
+    padding: 12px;
+    background-color: #FD47BC;
+    display: flex;
+    gap: 8px;
+    color: white;
+    border-radius: 20px;
+}

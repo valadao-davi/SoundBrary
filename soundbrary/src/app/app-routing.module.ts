@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CadastroLayoutComponent } from 'src/app/layouts/cadastro-layout/cadastro-layout.component';
-import { LoginLayoutComponent } from 'src/app/layouts/login-layout/login-layout.component';
+import { AuthLayoutComponent } from 'src/app/layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from 'src/app/layouts/main-layout/main-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { MusicaComponent } from './components/musica/musica.component';
@@ -9,8 +8,10 @@ import { AlbumComponent } from './components/album/album.component';
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 
+
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children:[
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'musica', component: MusicaComponent},
     {path: 'album', component: AlbumComponent},
@@ -18,11 +19,11 @@ const routes: Routes = [
   ]
   },
 
-  {path: 'login', component: LoginLayoutComponent, children: [
+  {path: 'login', component: AuthLayoutComponent, children: [
     {path: '',  component: LoginComponent}
   ]},
 
-  {path: 'cadastro', component: LoginLayoutComponent, children: [
+  {path: 'cadastro', component: AuthLayoutComponent, children: [
     {path: '',  component: CadastroComponent}
   ]},
 

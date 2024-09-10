@@ -1,0 +1,47 @@
+header {
+  background-color: #6313A1;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 48px;
+  height: min-content;
+  align-items: center;
+}
+div {
+  display: flex;
+  align-items: center;
+}
+#h_left {
+  gap: 32px;
+}
+#logo_header {
+  height: 48px;
+}
+
+#barra_pesquisa {
+  width: 36%;
+  justify-content: space-between;
+  padding: 12px 40px;
+  border: 1px solid white;
+  border-radius: 32px;
+}
+
+h4 {
+  font-weight: 300;
+}
+
+#h_right h3{
+  font-weight: 300
+}
+
+#entrar {
+  font-weight: 900px;
+}
+
+#h_right{
+  gap: 32px;
+}
+#auth_redirects{
+  gap: 24px;
+  width: fit-content;
+}

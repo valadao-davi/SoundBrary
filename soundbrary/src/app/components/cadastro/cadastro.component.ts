@@ -11,7 +11,7 @@ export class CadastroComponent {
 
   constructor(private router: Router) {}
 
-  navigateToHome() {
+  navigateLogin() {
     this.router.navigate(['/login']);
   }
 }

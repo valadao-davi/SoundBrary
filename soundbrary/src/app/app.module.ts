@@ -9,6 +9,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { PerfilLateralComponent } from './shared/perfil-lateral/perfil-lateral.component';
 import { AdsComponent } from './shared/ads/ads.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
     PerfilLateralComponent,
     AdsComponent,
     CadastroComponent,
+    MainLayoutComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,14 +26,14 @@
       <div id="esqueceu_senha"><a href="./cadastro.html">Esqueci minha senha</a></div>
     </div>
 
-    <div id="botoes_login">
+    <div id="botoes_login" (click)="navigateHome()">
       <button id="botao_cadastro">
           <h4>Login</h4>
       </button>
       <div id="divisor_ou">
           <hr> <h5>OU</h5> <hr>
       </div>
-      <button id="botao_login">
+      <button id="botao_login" (click)="navigateCadastro()">
           <h4>Cadastre-se</h4>
       </button>
     </div>
