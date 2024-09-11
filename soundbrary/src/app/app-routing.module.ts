@@ -6,6 +6,7 @@ import { MainLayoutComponent } from 'src/app/layouts/main-layout/main-layout.com
 import { HomeComponent } from './components/home/home.component';
 import { MusicaComponent } from './components/musica/musica.component';
 import { AlbumComponent } from './components/album/album.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children:[
@@ -20,6 +21,7 @@ const routes: Routes = [
 
   {path: 'cadastro', component: CadastroLayoutComponent},
 
+ 
 
 ];
 

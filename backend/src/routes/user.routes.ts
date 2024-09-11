@@ -34,7 +34,7 @@ userRouter.get('/:id', async (req, res)=> {
     }
 })
 
-//função de dar post
+//faz uma requisição ao servidor utilizando a rota HTTP: url/users/ no método .post para inserir um usuário
 userRouter.post('/', async(req, res)=> {
     try{
         const user = req.body
