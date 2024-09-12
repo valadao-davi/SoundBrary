@@ -1,4 +1,6 @@
+import { User } from './../User';
 import { Component } from '@angular/core';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
   selector: 'app-cadastro-layout',
@@ -8,5 +10,17 @@ import { Component } from '@angular/core';
 export class CadastroLayoutComponent {
 
   textoBotao = "Cadastrar"
+
+  constructor(private service: ServiceUserService){}
+
+  async cadastrarUsuario(user: User){
+    const userJson = {
+      "name": `${user.name}`,
+      "email": `${user.email}`,
+      "password": `${user.password}`
+    }
+    console.log(userJson.name)
+    this.service.createUser(userJson).subscribe()
+  }
 
 }

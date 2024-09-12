@@ -21,6 +21,14 @@ export class ServiceUserService {
   getUser(id: String): Observable<User> {
     return this.http.get<User>(`${this.API}/users/${id}`)
   }
+  getUserByEmail(email: String) {
+    return this.http.get<User>(`${this.API}/users/email/${email}`)
+  }
+
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.API}/users`, user)
+  }
+
   // getUsers() {
   //   this.refreshUsers();
   //   return this.users$();

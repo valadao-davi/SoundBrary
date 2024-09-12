@@ -1,3 +1,4 @@
+import { Dissay } from './dissay';
 import * as mongodb from "mongodb"
 
 export interface User {
@@ -5,4 +6,5 @@ export interface User {
     email: string;
     password: string;
     _id?: mongodb.ObjectId;
+    _dissays_created?: Dissay[];
 }

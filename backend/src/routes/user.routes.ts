@@ -34,6 +34,19 @@ userRouter.get('/:id', async (req, res)=> {
     }
 })
 
+//Função de retornar os usuários com base no email
+userRouter.get('/email/:email', async(req, res)=> {
+    try {
+        const email = req?.params?.email
+        const result = await collections?.users?.findOne({email: email})
+        if(result){
+            res.status(200).send(result)
+        }
+    }catch(error){
+        res.status(500).send("error");
+    }
+})
+
 //faz uma requisição ao servidor utilizando a rota HTTP: url/users/ no método .post para inserir um usuário
 userRouter.post('/', async(req, res)=> {
     try{
@@ -41,10 +54,10 @@ userRouter.post('/', async(req, res)=> {
         const result = await collections?.users?.insertOne(user)
 
         if(result?.acknowledged){
-            res.status(201).send(`Usuário criado com sucesso no id de: ${result.insertedId}`)
+            res.status(201)
         }else{
             res.status(500).send("Falha em criar usuário")
-        }
+        } 
     }catch(error){
         console.error(error)
         res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")

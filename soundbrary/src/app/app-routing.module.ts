@@ -14,6 +14,7 @@ const routes: Routes = [
     {path: 'musica', component: MusicaComponent},
     {path: 'album', component: AlbumComponent},
     {path: 'artista', component: AlbumComponent},
+    {path: 'user/:id', component: UsuarioComponent}
   ]
   },
 
@@ -21,7 +22,6 @@ const routes: Routes = [
 
   {path: 'cadastro', component: CadastroLayoutComponent},
 
- 
 
 ];
 

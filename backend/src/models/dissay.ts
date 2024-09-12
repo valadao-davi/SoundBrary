@@ -5,5 +5,5 @@ export interface Dissay {
     desc: string;
     createdAt: string;
     musicId: string;
-    userId: string;
+    userId: mongodb.ObjectId
 }
