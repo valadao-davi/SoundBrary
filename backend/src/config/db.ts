@@ -1,8 +1,10 @@
  import * as mongodb from 'mongodb'
  import {User} from '../models/user'
+import { Dissay } from '../models/dissay';
 
  export const collections: {
     users?: mongodb.Collection<User>; // cria uma coleção (tabela) de usuários
+    dissays?: mongodb.Collection<Dissay>;
  } = {};
 
 export async function connectToDatabase(uri: string) {
@@ -13,12 +15,14 @@ export async function connectToDatabase(uri: string) {
     await applySchemaValidation(db)
 
     const usersCollection = db.collection<User>("users")
+    const dissaysCollection = db.collection<Dissay>("dissays")
     collections.users = usersCollection
+    collections.dissays = dissaysCollection
 }
 
 async function applySchemaValidation(db: mongodb.Db) {
-    const jsonSchema = {
-        $jsonSchema: {
+    const userSchema = {
+        $userSchema: {
             bsonType: "object",
             required: ["name", "email", "password"],
             additionalProperties: false,
@@ -43,13 +47,21 @@ async function applySchemaValidation(db: mongodb.Db) {
             }
         }
     };
+    const dissaySchema = {
+        $dissaySchema: {
+            BSONType: "object",
+            required: ['name', 'desc', 'musicId', 'userId']
+        }
+    }
     // aguarda o banco de dados modificar os dados da coleção se ela não existe criar a coleção
     await db.command({
         collMod: "users",
-        validator: jsonSchema
+        validator: userSchema
     }).catch(async (error: mongodb.MongoServerError) => {
         if (error.codeName === "NamespaceNotFound") {
-            await db.createCollection("users", {validator: jsonSchema});
+            await db.createCollection("users", {validator: userSchema});
         }
     });
+
+
 }

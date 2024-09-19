@@ -26,9 +26,16 @@ export class FormularioCadastroComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
     })
+
+    this.getEmailForm().valueChanges.subscribe(() => {
+      this.invalidEmail = false;
+    })
   }
 
+
   submit() {
+    console.log('ok')
+    this.user = ''
     if(this.user){
       this.invalidEmail = true
       return;
@@ -36,10 +43,24 @@ export class FormularioCadastroComponent {
     if(this.cadastroForm.invalid){
       return;
     }
-    this.service.getUserByEmail(this.getEmailForm().value).subscribe((user=> {
-      this.user = user.email
-    }))
-    this.onSubmit.emit(this.cadastroForm.value)
+    this.service.getUserByEmail(this.getEmailForm().value).subscribe({
+      next: (user) => {
+        this.user = user.email
+        this.invalidEmail = true
+        return;
+      },
+      error: (err) => {
+        console.log('aqui')
+        if(err.status === 404) {
+          console.log('usuario nao encontrado')
+          this.onSubmit.emit(this.cadastroForm.value)
+          this.invalidEmail = false
+          return;
+        }else {
+          console.error('erro inesperado', err)
+        }
+      }
+    })
   }
 
   getNameForm(){

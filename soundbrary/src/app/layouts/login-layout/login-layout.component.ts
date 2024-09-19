@@ -17,11 +17,29 @@ export class LoginLayoutComponent {
 
   constructor(private service: ServiceUserService){
   }
-
-  ngOnInit(): void {
-   this.service.getUsuariosLista().subscribe((listaUsers => {
-    this.listaUsers = listaUsers
-   }))
+  resetarListar(): void {
+    this.service.getUsuariosLista().subscribe((listaUsers => {
+      this.listaUsers = listaUsers
+    }))
   }
-
+  ngOnInit(): void {
+   this.resetarListar()
+  }
+  async delete(user: User){
+    const userJson = {
+      "id": `${user._id}` || ''
+    }
+    console.log(userJson.id)
+    if(userJson.id != '') {
+      this.service.deleteUser(userJson.id).subscribe({
+        next: () => {
+          this.listaUsers = this.listaUsers.filter(u => u._id !== user._id)
+          this.resetarListar()
+        },
+        error: (err) => {
+          console.error("Erro ao deletar", err)
+        }
+      })
+    }
+  }
 }

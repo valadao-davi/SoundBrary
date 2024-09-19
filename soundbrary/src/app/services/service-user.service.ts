@@ -29,6 +29,11 @@ export class ServiceUserService {
     return this.http.post<User>(`${this.API}/users`, user)
   }
 
+  deleteUser(id: String): Observable<User> {
+    console.log('deletado')
+    return this.http.delete<User>(`${this.API}/users/${id}`)
+  }
+
   // getUsers() {
   //   this.refreshUsers();
   //   return this.users$();

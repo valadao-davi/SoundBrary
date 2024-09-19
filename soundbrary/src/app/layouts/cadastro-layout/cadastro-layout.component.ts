@@ -19,7 +19,7 @@ export class CadastroLayoutComponent {
       "email": `${user.email}`,
       "password": `${user.password}`
     }
-    console.log(userJson.name)
+    console.log(userJson)
     this.service.createUser(userJson).subscribe()
   }
 

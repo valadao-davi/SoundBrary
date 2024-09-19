@@ -41,6 +41,10 @@ userRouter.get('/email/:email', async(req, res)=> {
         const result = await collections?.users?.findOne({email: email})
         if(result){
             res.status(200).send(result)
+            console.log('usuario encontrado')
+        }else{
+            res.status(404).send({'error': "erro nao encontrado"})
+            console.log("nao encontrado")
         }
     }catch(error){
         res.status(500).send("error");
@@ -94,11 +98,11 @@ userRouter.delete('/:id', async(req, res)=> {
         const result = await collections?.users?.deleteOne(query)
 
         if(result && result.deletedCount){
-            res.status(201).send(`Usuário deletado com sucesso`)
+            res.status(201).send({"message": "usuario deletado com sucesso"})
         }else if (!result){
-            res.send(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
+            res.status(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
         }else if (!result.deletedCount){
-            res.send(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
+            res.status(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
         }
     }catch(error){
         console.error(error)
