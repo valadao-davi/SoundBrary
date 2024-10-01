@@ -13,9 +13,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: min-content;
     height: auto;
     gap: 16px;
+    text-align: center;
 }
 #grey_circle{
     width: 160px;
@@ -25,7 +26,7 @@
 }
 #profile_left-top h5{
     color: #797979;
-    font-weight: 7  00;
+    font-weight: 700;
 }
 
 #coluna_salvos {
@@ -41,10 +42,18 @@
 }
 
 #btn_criar_dissay {
-    padding: 12px;
+    padding: 16px;
     background-color: #FD47BC;
     display: flex;
     gap: 8px;
     color: white;
-    border-radius: 20px;
+    border-radius: 24px;
+    align-items: center;
+    text-align: center;
+    
+}
+
+
+#btn_criar_dissay h4 {
+    font-size: 14px;
 }
