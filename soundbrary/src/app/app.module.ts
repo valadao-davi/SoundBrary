@@ -9,7 +9,12 @@ import { HeaderComponent } from './shared/header/header.component';
 import { PerfilLateralComponent } from './shared/perfil-lateral/perfil-lateral.component';
 import { AdsComponent } from './shared/ads/ads.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+
+
 
 @NgModule({
   declarations: [
@@ -21,13 +26,17 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
     PerfilLateralComponent,
     AdsComponent,
     CadastroComponent,
-    MainLayoutComponent,
+    UsuarioComponent,
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+
   ],
-  providers: [],
+  providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

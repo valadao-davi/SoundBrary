@@ -7,15 +7,17 @@ import { MusicaComponent } from './components/musica/musica.component';
 import { AlbumComponent } from './components/album/album.component';
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
 
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children:[
-    { path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'musica', component: MusicaComponent},
     {path: 'album', component: AlbumComponent},
     {path: 'artista', component: AlbumComponent},
+    {path: 'user/:id', component: UsuarioComponent}
   ]
   },
 

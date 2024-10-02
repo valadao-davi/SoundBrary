@@ -4,6 +4,16 @@
   color: 0px;
 }
 
+form {
+  width: 450px;
+  margin: 0 auto;
+}
+.validation-error p{
+  color: red;
+  margin: .4em;
+  border-left: 3px solid red;
+  padding-left: 0.2em;
+}
 
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
