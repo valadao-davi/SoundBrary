@@ -19,7 +19,8 @@ export class CadastroComponent {
           id: new FormControl(''),
           name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
           email: new FormControl('', [Validators.required, Validators.email]),
-          senha: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50)], ),
+          senha: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50)] ),
+          confirmaSenha: new FormControl('', [Validators.required])
         })
 
         this.getEmailForm().valueChanges.subscribe(() => {
@@ -37,21 +38,19 @@ export class CadastroComponent {
   @Output() onSubmit = new EventEmitter<User>()
 
   cadastroForm!: FormGroup;
-  user!: string
-  invalidEmail!: boolean
-  senhasNaoConferem!: boolean
+  user!: string;
+  invalidEmail!: boolean;
+  senhasNaoConferem: boolean = true;
   inputValue!: String;
 
   onChange(event: Event): void {
-    this.senhasNaoConferem = this.comparaSenhas(this.cadastroForm)
+    this.senhasNaoConferem = this.comparaSenhas(this.cadastroForm);
   }
 
   comparaSenhas(formGroup: FormGroup) {
     const senha = formGroup.get ('senha')?.value;
-    const confirmaSenha = formGroup.get ('senha')?.value;
-    console.log(senha)
-    console.log(confirmaSenha)
-    return senha === confirmaSenha ? null : {senhasNaoConferem:true};
+    const confirmaSenha = formGroup.get ('confirmaSenha')?.value;
+    return senha === confirmaSenha ? false : true;
   }
 
 

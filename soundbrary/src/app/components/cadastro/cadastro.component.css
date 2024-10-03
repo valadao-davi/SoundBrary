@@ -131,6 +131,13 @@ hr {
   color: #FD47BC;
 }
 
+.erroValidacao p {
+  color: rgb(255, 24, 24);
+  font-weight: 600;
+  border-left: 3px solid rgb(255, 24, 24);
+  padding-left: 0.2em;
+}
+
 /* <a id="botao_login"href=""><button >
           <h4>Entre em uma conta existente</h4>
       </button></a>
