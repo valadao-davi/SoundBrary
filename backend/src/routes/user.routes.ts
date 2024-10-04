@@ -51,6 +51,7 @@ userRouter.get('/email/:email', async(req, res)=> {
     }
 })
 
+
 //faz uma requisição ao servidor utilizando a rota HTTP: url/users/ no método .post para inserir um usuário
 userRouter.post('/', async(req, res)=> {
     try{

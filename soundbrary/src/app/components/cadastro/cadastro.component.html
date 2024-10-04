@@ -13,6 +13,7 @@
                             <input type="text" placeholder="Insira um nome" formControlName="name" required/>
                             <img src="./assets/cadeado_icon.svg">
                         </div>
+                        <div class="erroValidacao" *ngIf="getNameForm().invalid && formDir.submitted">Nome inválido</div>
                     </div>
                     <div id="input_item">
                       <p>Email</p>
@@ -20,6 +21,7 @@
                           <input type="text" placeholder="Endereço de email" formControlName="email" required/>
                           <img src="./assets/cadeado_icon.svg">
                       </div>
+                      <div class="input_item" class="erroValidacao" *ngIf="getEmailForm().invalid && formDir.submitted">Email inválido</div>
                   </div>
                     <div id="input_item">
                         <p>Senha</p>
@@ -27,6 +29,7 @@
                             <input id="senha" type="password" placeholder="Crie uma senha" formControlName="senha" required />
                             <img src="./assets/cadeado_icon.svg">
                         </div>
+                        <div class="erroValidacao" *ngIf="getPasswordForm().invalid && formDir.submitted">Senha inválida</div>
                     </div>
                     <div id="input_item">
                         <p>Confirmar senha</p>
@@ -34,15 +37,15 @@
                             <input id="confirmaSenha" type="password" placeholder="Confirme sua senha" formControlName="confirmaSenha" (change)="onChange($event)">
                             <img src="./assets/cadeado_icon.svg">
                         </div>
+                        <div class="erroValidacao" *ngIf="senhasNaoConferem == true">As senhas não são iguais</div>
+
                     </div>
-                    <div id="input_item" *ngIf="senhasNaoConferem == true">
-                      <p>senhas não iguais</p>
                     </div>
+
                 </div>
             </div>
         </div>
         <div id="esqueceu_senha"><a href="./cadastro.html">Esqueci minha senha</a></div>
-    </div>
 
     <div id="botoes_login">
         <input type="submit" id="botao_cadastro" value="Cadastro">

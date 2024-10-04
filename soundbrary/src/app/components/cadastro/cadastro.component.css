@@ -131,7 +131,7 @@ hr {
   color: #FD47BC;
 }
 
-.erroValidacao p {
+.erroValidacao {
   color: rgb(255, 24, 24);
   font-weight: 600;
   border-left: 3px solid rgb(255, 24, 24);

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/layouts/User';
@@ -32,15 +32,10 @@ export class CadastroComponent {
     this.router.navigate(['/login']);
   }
 
-
-  textoBotao = "Cadastrar"
-
-  @Output() onSubmit = new EventEmitter<User>()
-
   cadastroForm!: FormGroup;
-  user!: string;
+  emailUser!: string;
   invalidEmail!: boolean;
-  senhasNaoConferem: boolean = true;
+  senhasNaoConferem!: boolean;
   inputValue!: String;
 
   onChange(event: Event): void {
@@ -55,18 +50,21 @@ export class CadastroComponent {
 
 
   submit() {
-    console.log('ok')
-    this.user = ''
-    if(this.user){
+    this.emailUser = ''
+    if(this.cadastroForm.invalid){
+          return;
+        }
+    if(this.emailUser){
       this.invalidEmail = true
       return;
     }
-    if(this.cadastroForm.invalid){
+    if(this.senhasNaoConferem){
       return;
     }
+
     this.service.getUserByEmail(this.getEmailForm().value).subscribe({
       next: (user) => {
-        this.user = user.email
+        this.emailUser = user.email
         this.invalidEmail = true
         return;
       },
@@ -74,7 +72,7 @@ export class CadastroComponent {
         console.log('aqui')
         if(err.status === 404) {
           console.log('usuario nao encontrado')
-          this.onSubmit.emit(this.cadastroForm.value)
+          this.cadastrarUsuario(this.cadastroForm.value)
           this.invalidEmail = false
           return;
         }else {
@@ -91,14 +89,14 @@ export class CadastroComponent {
     return this.cadastroForm.get('email')!
   }
   getPasswordForm(){
-    return this.cadastroForm.get('password')!
+    return this.cadastroForm.get('senha')!
   }
 
   async cadastrarUsuario(user: User){
     const userJson = {
       "name": `${user.name}`,
       "email": `${user.email}`,
-      "password": `${user.password}`
+      "senha": `${user.senha}`
     }
     console.log(userJson)
     this.service.createUser(userJson).subscribe()
