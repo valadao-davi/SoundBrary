@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoginComponent } from 'src/app/components/login/login.component';
 
+import { DMiniComponent } from './d-mini.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('DMiniComponent', () => {
+  let component: DMiniComponent;
+  let fixture: ComponentFixture<DMiniComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent]
+      declarations: [DMiniComponent]
     });
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(DMiniComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

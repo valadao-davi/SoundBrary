@@ -43,17 +43,50 @@
     gap: 32px;
 }
 
-.slider_container{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: top left;
-    width: auto;
-    height: fit-content;
+.slider_container {
+  display: flex;
+  flex-direction: column;
 }
 
-.d_mini {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.slider_space{
+  width: 100%; /* Ajuste conforme necessário */
+  overflow-x: auto; /* Permite o scroll horizontal */
+  white-space: nowrap; /* Mantém os slides em uma única linha */
+  cursor: grab;
+}
+
+.slider {
+  display: inline-flex;
+  width: max-content;
+
+}
+
+.slide {
+  min-width: 300px; /* Largura mínima dos slides */
+  margin-right: 20px; /* Espaçamento entre os slides */
+  background-color: #f1f1f1; /* Cor de fundo dos slides */
+  padding: 20px; /* Padding para os slides */
+  box-sizing: border-box; /* Inclui padding na largura total */
+}
+.slide2 {
+  min-width: 300px; /* Largura mínima dos slides */
+  margin-right: 20px; /* Espaçamento entre os slides */
+  background-color: #771010; /* Cor de fundo dos slides */
+  padding: 20px; /* Padding para os slides */
+  box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background-color: #e0e0e0;
+  position: relative;
+  margin-top: 10px;
+}
+
+
+.slider-container:active {
+  cursor: grabbing; /* Cursor quando arrastando */
 }

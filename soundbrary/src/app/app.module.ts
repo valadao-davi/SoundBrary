@@ -14,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { LoginComponent } from './components/login/login.component';
+import { DMiniComponent } from './components/d-mini/d-mini.component';
+import { InstrumentoMiniComponent } from './components/instrumento-mini/instrumento-mini.component';
 
 
 
@@ -29,7 +31,9 @@ import { LoginComponent } from './components/login/login.component';
     CadastroComponent,
     UsuarioComponent,
     MainLayoutComponent,
-    LoginComponent
+    LoginComponent,
+    DMiniComponent,
+    InstrumentoMiniComponent
   ],
   imports: [
     BrowserModule,

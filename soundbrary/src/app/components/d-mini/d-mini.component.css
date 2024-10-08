@@ -1,0 +1,69 @@
+.d_mini {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 24px;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid #00000050;
+  border-radius: 24px;
+}
+
+.d_mini div {
+  display: flex;
+}
+
+.d_mini_content {
+  gap: 12px;
+  align-items: center;
+}
+
+.d_mini_info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.d_mini_text {
+  display: flex;
+  flex-direction: column;
+  width: 232px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d_mini_text h4 {
+  font-size: 18px;
+}
+
+.d_mini_text h5 {
+  color: #406AFF;
+  font-weight: 700;
+}
+
+.d_mini_rating_save{
+  align-items: center;
+  gap: 24px;
+  width: fit-content;
+}
+
+.d_mini_rating_save h4{
+  font-size: 18px;
+}
+
+.d_mini_rating{
+
+}
+
+.d_mini_cover{
+  height: 80px;
+  width: 80px;
+}
+
+.d_mini_instruments{
+  display: flex;
+  gap: 32px;
+}
+
