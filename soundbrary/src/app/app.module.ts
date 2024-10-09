@@ -16,6 +16,9 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { LoginComponent } from './components/login/login.component';
 import { DMiniComponent } from './components/d-mini/d-mini.component';
 import { InstrumentoMiniComponent } from './components/instrumento-mini/instrumento-mini.component';
+import { MMiniComponent } from './components/m-mini/m-mini.component';
+import { DissayComponent } from './components/dissay/dissay.component';
+import { LeftInfoComponent } from './components/left-info/left-info.component';
 
 
 
@@ -33,7 +36,10 @@ import { InstrumentoMiniComponent } from './components/instrumento-mini/instrume
     MainLayoutComponent,
     LoginComponent,
     DMiniComponent,
-    InstrumentoMiniComponent
+    InstrumentoMiniComponent,
+    MMiniComponent,
+    DissayComponent,
+    LeftInfoComponent
   ],
   imports: [
     BrowserModule,

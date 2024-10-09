@@ -1,0 +1,39 @@
+.m_mini {
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 4px  rgba(0, 0, 0, 0.4);;
+  margin: 2px;
+}
+
+.m_mini img{
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+}
+
+.m_mini_musica_artista{
+  width: 100%;
+}
+
+.m_mini_musica_artista h5{
+  font-weight: 500;
+}
+
+.m_mini_textos{
+  gap: 8px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.detalhes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FD47BC;
+}
+
+.detalhes img {
+  height: 8px;
+  width: fit-content;
+}

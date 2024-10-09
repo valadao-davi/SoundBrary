@@ -8,6 +8,7 @@ import { AlbumComponent } from './components/album/album.component';
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
+import { DissayComponent } from './components/dissay/dissay.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'musica', component: MusicaComponent},
+    {path: 'dissay', component: DissayComponent},
     {path: 'album', component: AlbumComponent},
     {path: 'artista', component: AlbumComponent},
     {path: 'user/:id', component: UsuarioComponent}

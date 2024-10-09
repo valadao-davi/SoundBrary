@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-d-mini',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./d-mini.component.css']
 })
 export class DMiniComponent {
+
+  constructor(private router: Router){}
+
+  navigateDissay() {
+    this.router.navigate(['/dissay']);
+  }
 
 }
