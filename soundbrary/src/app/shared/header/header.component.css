@@ -45,3 +45,9 @@ h4 {
   gap: 24px;
   width: fit-content;
 }
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}

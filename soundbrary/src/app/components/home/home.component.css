@@ -5,6 +5,7 @@
     flex-direction: column;
     gap: 32px;
     padding: 48px 0px;
+    margin: auto;
 }
 
 .titulo_slider{

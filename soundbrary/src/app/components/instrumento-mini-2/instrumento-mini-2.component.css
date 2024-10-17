@@ -1,0 +1,16 @@
+.instrumento-mini-2 {
+  padding: 24px;
+  border: solid 1px black;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.instrumento-mini-2 img {
+  width: 80px;
+  max-height: 80px;
+}
