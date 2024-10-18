@@ -29,6 +29,7 @@ export class ServiceUserService {
   getUsuariosLista(): Observable<User[]>{
     return this.http.get<User[]>(`${this.API}/users`)
   }
+  
   getUser(id: String): Observable<User> {
     return this.http.get<User>(`${this.API}/users/${id}`)
   }

@@ -1,13 +1,14 @@
 <div class="m_mini">
-  <img src="../../../assets/brat cover.png" alt="">
+  <img [src]="imageUrl" alt="">
   <div class="m_mini_textos">
     <div class="m_mini_musica_artista">
-       <h4>Apple</h4>
-       <h5>Charli xcx</h5>
-    </div>
+      <h4>{{ name }}</h4>
+      <h5>{{ artistName }}</h5>
+   </div>
+
     <div class="detalhes">
       <h5>Ver detalhes</h5>
-      <img src="../../../assets/setinha_detalhes_icon.svg" alt="">
+      <img src="../../../assets/setinha_detalhes_icon.svg">
     </div>
   </div>
 </div>
