@@ -1,0 +1,50 @@
+.layout {
+  width: 100%;
+  display: flex;
+}
+
+.dissay {
+  padding-right: 108px;
+  width: 900;
+}
+
+.data_lancamento span{
+  color: rgba(0, 0, 0, 0.5)
+}
+
+.conteudo {
+  width: 100%;
+  padding: 48px 108px 120px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.conteudo h1 span {
+  color: #6313A1;
+}
+
+.secao_dissyas{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.secao_dissays_topo{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.secao_dissays_topo span{
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5)
+}
+
+
+.linha {
+  height: 2px;
+  width: 100%;
+  background-color: #bfbfbf;
+}

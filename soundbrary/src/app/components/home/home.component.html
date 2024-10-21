@@ -32,8 +32,9 @@
         <img class="icone_grafico" src="../../../assets/graph_icon.svg" alt="Icone grafico em alta">
     </div>
     <div class="slider_space" >
-      <div class="slider" *ngFor="let item of topDay | slice:0:10">
+      <div class="slider" *ngFor="let item of topDay">
         <app-m-mini
+        [id] = "item.id"
         [name] = "item.track_name"
         [artistName]="item.artist_name[0].name"
         [imageUrl]="item.image_urls[1].link"
@@ -63,11 +64,11 @@
         <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
     </div>
     <div class="slider_space" >
-      <div class="slider" *ngFor="let item of topDay">
-        <app-m-mini *ngIf="item.album_type === 'album'"
+      <div class="slider" *ngFor="let item of albumItems">
+        <app-m-mini
         [name] = "item.album_name"
-        [artistName]="item.artist_name[0].name"
-        [imageUrl]="item.image_urls[1].link"
+        [artistName]="item.artist"
+        [imageUrl]="item.url"
         ></app-m-mini>
       </div>
   </div>

@@ -4,6 +4,12 @@
   color: 0px;
 }
 
+button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
 form {
   width: 450px;
   margin: 0 auto;

@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: '', component: MainLayoutComponent, children:[
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
-    {path: 'musica', component: MusicaComponent},
+    {path: 'musica/:id', component: MusicaComponent},
     {path: 'dissay', component: DissayComponent},
     {path: 'album', component: AlbumComponent},
     {path: 'artista', component: AlbumComponent},

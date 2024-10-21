@@ -3,7 +3,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get('/:musicName', async (req, res)=> {
+router.get('/searchMusic/:musicName', async (req, res)=> {
     const musicName: string = req.params.musicName
     try {
         const musicData: SpotifyApi.TrackObjectFull[] = await searchTrack(musicName)
@@ -29,7 +29,7 @@ router.get('/:musicName', async (req, res)=> {
     }
 })
 
-router.get('/:idMusic', async (req, res)=> {
+router.get('/musicId/:idMusic', async (req, res)=> {
     const idMusic = req.params.idMusic
     try {
         const musicData = await musicDetails(idMusic)

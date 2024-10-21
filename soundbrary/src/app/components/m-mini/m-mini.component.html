@@ -1,14 +1,18 @@
-<div class="m_mini">
-  <img [src]="imageUrl" alt="">
-  <div class="m_mini_textos">
-    <div class="m_mini_musica_artista">
-      <h4>{{ name }}</h4>
-      <h5>{{ artistName }}</h5>
-   </div>
+<button (click)="navigateMusic(id)">
+  <div class="m_mini">
+    <img [src]="imageUrl" alt="">
+    <div class="m_mini_textos">
+      <div class="m_mini_musica_artista">
+        <h4>{{ name }}</h4>
+        <h5>{{ artistName }}</h5>
+     </div>
 
-    <div class="detalhes">
-      <h5>Ver detalhes</h5>
-      <img src="../../../assets/setinha_detalhes_icon.svg">
+      <div class="detalhes">
+        <h5>Ver detalhes</h5>
+        <img src="../../../assets/setinha_detalhes_icon.svg">
+      </div>
     </div>
   </div>
-</div>
+
+</button>
+

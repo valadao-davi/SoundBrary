@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-left-info',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./left-info.component.css']
 })
 export class LeftInfoComponent {
-
+  @Input() urlImage!: string;
 }

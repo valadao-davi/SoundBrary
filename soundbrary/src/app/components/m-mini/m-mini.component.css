@@ -42,3 +42,8 @@
   height: 8px;
   width: fit-content;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

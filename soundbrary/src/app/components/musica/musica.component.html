@@ -1,1 +1,24 @@
-<p>musica works!</p>
+<div class="layout">
+  <app-left-info [urlImage]="albumImage"></app-left-info>
+  <div class="conteudo">
+      <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ musicName }} </h1>
+
+      <div class="data_lancamento">
+          <h3>Data de Lançamento: <span>{{ releaseDate }}</span></h3>
+      </div>
+
+      <div class="secao_dissays">
+        <div class="secao_dissays_topo">
+          <h1>Dissays <span>(4)</span></h1>
+          <div class="linha"></div>
+        </div>
+
+        <div></div>
+        <div></div>
+      </div>
+
+
+    </div>
+
+  </div>
+
