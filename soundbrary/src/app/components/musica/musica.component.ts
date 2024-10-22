@@ -12,14 +12,21 @@ export class MusicaComponent {
   releaseDate!: string
   albumImage!: string
   artistNames!: any[]
+  albumId!: string
+  albumName!: string
+  dataLoaded!: boolean
 
   id!: string | null;
   constructor(private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
 
   }
   ngOnInit(){
-    this.id = this.route.snapshot.paramMap.get('id')
-    this.loadMusic(this.id!)
+    this.route.paramMap.subscribe((params)=> {
+      this.id = params.get('id')
+      if(this.id){
+        this.loadMusic(this.id!)
+      }
+    })
   }
   loadMusic(id: string): void {
     this.serviceSpotify.getMusicById(id).subscribe(
@@ -29,7 +36,10 @@ export class MusicaComponent {
         }))
         this.musicName = params.name,
         this.releaseDate = params.releaseDate,
-        this.albumImage = params.albumImages[0].link
+        this.albumImage = params.albumImages[0].link,
+        this.albumId = params.albumId,
+        this.albumName = params.albumName,
+        this.dataLoaded = true
       }
     )
   }

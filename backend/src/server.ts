@@ -10,27 +10,27 @@ import albumRoutes from '../src/routes/album.routes'
 import playlistRoutes from '../src/routes/playlist.routes'
 
 dotenv.config({path: './src/.env'})
-// const { MONGODB_URI } = process.env;
 
+const { MONGODB_URI } = process.env;
+if( !MONGODB_URI ) {
+    console.error("Não foi definido nenhuma variável no config.env");
+    process.exit(1)
+}
 
-// if( !MONGODB_URI ) {
-//     console.error("Não foi definido nenhuma variável no config.env");
-//     process.exit(1)
-// }
-
-// connectToDatabase(MONGODB_URI)
-//     .then(()=> {
-        
-       
-        
-//     })
-//     .catch((error)=> console.error(error))
 const app = express();
-
 app.use(express.json())
 app.use(cors())
 
+// Conexão com o banco de dados
+connectToDatabase(MONGODB_URI)
+    .then(()=> {
+       app.use("/user", userRouter)
+    })
+    .catch((error)=> console.error(error))
 
+
+
+//Inicializa o token
 const initializeToken = async () => {
     try {
         await getAcessToken()

@@ -35,6 +35,7 @@
       <div class="slider" *ngFor="let item of topDay">
         <app-m-mini
         [id] = "item.id"
+        [isAlbum]="false"
         [name] = "item.track_name"
         [artistName]="item.artist_name[0].name"
         [imageUrl]="item.image_urls[1].link"
@@ -66,6 +67,8 @@
     <div class="slider_space" >
       <div class="slider" *ngFor="let item of albumItems">
         <app-m-mini
+        [isAlbum]="true"
+        [id]="item.id"
         [name] = "item.album_name"
         [artistName]="item.artist"
         [imageUrl]="item.url"

@@ -9,15 +9,22 @@ import { Router } from '@angular/router';
 export class MMiniComponent {
 
   constructor(private router: Router) {}
-
-  navigateMusic(id: string) {
-    
-    this.router.navigate([`/musica/${id}`])
-  }
-
   @Input() name!: string;
   @Input() imageUrl!: string;
   @Input() artistName!: string;
   @Input() id!: string;
+  @Input() isAlbum!: boolean
+
+  navigateMusic(id: string) {
+    if(this.isAlbum === true){
+      this.router.navigate([`/album/${id}`])
+
+    }else{
+      this.router.navigate([`/musica/${id}`])
+    }
+    
+  }
+
+
 
 }
