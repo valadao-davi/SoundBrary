@@ -24,10 +24,27 @@ div {
   padding: 12px 40px;
   border: 1px solid white;
   border-radius: 32px;
+  cursor: pointer;
 }
 
 h4 {
   font-weight: 300;
+}
+
+input {
+  font-weight: 300;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  color: white;
+}
+
+input:focus{
+  outline: none;
+}
+
+input::placeholder{
+  color: inherit;
 }
 
 #h_right h3{

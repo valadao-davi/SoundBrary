@@ -6,6 +6,7 @@
 
 button {
   background-color: transparent;
+  color: inherit;
   cursor: pointer;
   border: none;
 }

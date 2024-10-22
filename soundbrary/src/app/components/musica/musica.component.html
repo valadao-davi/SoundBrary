@@ -3,9 +3,19 @@
   <div class="conteudo">
       <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ musicName }} </h1>
 
-      <div class="data_lancamento">
-          <h3>Data de Lançamento: <span>{{ releaseDate }}</span></h3>
+      <div class="generos_sec">
+          <h3>Gêneros do artista: </h3>
+          <div class="generos">
+            <div class="genero"><h4>pop</h4></div>
+            <div class="genero"><h4>pop</h4></div>
+            <div class="genero"><h4>pop</h4></div>
+            <div class="genero"><h4>pop</h4></div>
+          </div>
       </div>
+
+      <div class="data_lancamento">
+        <h3>Data de Lançamento: <span>{{ releaseDate }}</span></h3>
+    </div>
 
       <div class="secao_dissays">
         <div class="secao_dissays_topo">

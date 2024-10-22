@@ -48,3 +48,30 @@
   width: 100%;
   background-color: #bfbfbf;
 }
+
+.generos_sec {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.generos_sec h3 {
+  margin-top: 8px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.generos{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+  max-width: 100%;
+
+}
+
+.genero{
+  padding: 8px 16px;
+  border: 1px solid black;
+  border-radius: 24px;
+  width: fit-content;
+}

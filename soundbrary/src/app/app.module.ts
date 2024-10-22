@@ -20,6 +20,7 @@ import { MMiniComponent } from './components/m-mini/m-mini.component';
 import { DissayComponent } from './components/dissay/dissay.component';
 import { LeftInfoComponent } from './components/left-info/left-info.component';
 import { InstrumentoMini2Component } from './components/instrumento-mini-2/instrumento-mini-2.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 
@@ -41,7 +42,8 @@ import { InstrumentoMini2Component } from './components/instrumento-mini-2/instr
     MMiniComponent,
     DissayComponent,
     LeftInfoComponent,
-    InstrumentoMini2Component
+    InstrumentoMini2Component,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

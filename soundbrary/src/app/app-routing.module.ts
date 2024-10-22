@@ -9,6 +9,10 @@ import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { DissayComponent } from './components/dissay/dissay.component';
+import { SearchComponent } from './components/search/search.component';
+
+
+
 
 
 const routes: Routes = [
@@ -19,7 +23,8 @@ const routes: Routes = [
     {path: 'dissay', component: DissayComponent},
     {path: 'album', component: AlbumComponent},
     {path: 'artista', component: AlbumComponent},
-    {path: 'user/:id', component: UsuarioComponent}
+    {path: 'user/:id', component: UsuarioComponent},
+    {path: 'search', component: SearchComponent}
   ]
   },
 
