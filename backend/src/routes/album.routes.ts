@@ -5,8 +5,9 @@ const router = Router();
 
 router.get('/searchAlbum/:albumName', async (req, res)=> {
     const albumName = req.params.albumName
+    const offset = parseInt(req.query.offset as string) || 0
     try {
-        const albumData = await searchAlbum(albumName)
+        const albumData = await searchAlbum(albumName, offset)
         const formatted = albumData.map(item => ({
             id: item.id,
             album_name: item.name,

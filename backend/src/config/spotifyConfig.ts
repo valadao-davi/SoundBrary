@@ -1,6 +1,5 @@
 import axios from "axios";
-import * as dotenv from 'dotenv';
-import SpotifyWebApi from 'spotify-web-api-node';
+
 
 //  Variavel de token a ser recebida
 let acessToken: string | null = null;
@@ -38,8 +37,8 @@ export const getAcessToken = async(): Promise<void> => {
 }
 
 //Função de busca geral:
-export const searchGeneral = async <T>(type: 'track' | 'album' | 'artist', query: string): Promise<T[]> => {
-    const url: string = `https://api.spotify.com/v1/search?query=${query}&type=${type}&locale=pt-BR%2Cpt%3Bq%3D0.9&offset=0&limit=20`
+export const searchSample = async <T>(type: 'track' | 'album' | 'artist', query: string, offset: number = 0): Promise<T[]> => {
+    const url: string = `https://api.spotify.com/v1/search?query=${query}&type=${type}&locale=pt-BR%2Cpt%3Bq%3D0.9&offset=${offset}&limit=20`
     try {
         const response = await axios.get(url, {
             headers: {
@@ -52,14 +51,28 @@ export const searchGeneral = async <T>(type: 'track' | 'album' | 'artist', query
         return []
     }
 }
+
+export const searchGeneral = async(itemName: string): Promise<any>=> {
+    const url: string = `https://api.spotify.com/v1/search?q=${itemName}&type=artist%2Calbum%2Ctrack`
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${acessToken}`
+            }
+        })
+        return response.data
+    }catch(e){
+        console.error("Erro na busca: ", e)
+    }
+}
 //Procura pela música
-export const searchTrack = async(musicName: string) => searchGeneral<SpotifyApi.TrackObjectFull>("track", musicName)
+export const searchTrack = async(musicName: string, offset: number = 0) => searchSample<SpotifyApi.TrackObjectFull>("track", musicName, offset)
 
 //Procura pelo artista
-export const searchArtist = async(artistName: string)=> searchGeneral<SpotifyApi.ArtistObjectFull>("artist", artistName)
+export const searchArtist = async(artistName: string, offset: number = 0)=> searchSample<SpotifyApi.ArtistObjectFull>("artist", artistName, offset)
 
 //Procura pelo álbum
-export const searchAlbum = async(albumName: string) => searchGeneral<SpotifyApi.AlbumObjectSimplified>("album", albumName)
+export const searchAlbum = async(albumName: string, offset: number = 0) => searchSample<SpotifyApi.AlbumObjectSimplified>("album", albumName, offset)
 
 
 //Entra nos detalhes do item
