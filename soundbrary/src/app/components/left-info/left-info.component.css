@@ -12,8 +12,8 @@
   width: 400px;
   height: 400px;
 }
-.bold-text{
-  font-weight: 900;
+.normal_text{
+  font-weight: 500;
 }
 .linha{
   height: 2px;
@@ -25,8 +25,12 @@
   width: 100%;
   padding: 0px 16px;
   box-sizing: border-box;
-
 }
+
+.links_externos h3 {
+  margin-bottom: 8px;
+}
+
 
 .link {
   display: flex;
@@ -55,7 +59,19 @@
   flex-direction: row;
 }
 
-.album_tracks span {
+.album_tracks h3 {
+  margin-bottom: 8px;
+}
 
+.album_tracks span {
   width: 24px;
+}
+
+.album_track button{
+  width: 100%;
+  justify-content: space-between;
+}
+
+.album_track * {
+  display: flex;
 }
