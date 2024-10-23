@@ -6,12 +6,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: fit-content;
 }
 .info img{
   width: 400px;
   height: 400px;
 }
-
+.normal_text{
+  font-weight: 500;
+}
 .linha{
   height: 2px;
   width: 100%;
@@ -22,8 +25,12 @@
   width: 100%;
   padding: 0px 16px;
   box-sizing: border-box;
-
 }
+
+.links_externos h3 {
+  margin-bottom: 8px;
+}
+
 
 .link {
   display: flex;
@@ -45,4 +52,26 @@
   width: 100%;
   padding: 0px 16px;
   box-sizing: border-box;
+}
+
+.album_tracks h4 {
+  display: flex;
+  flex-direction: row;
+}
+
+.album_tracks h3 {
+  margin-bottom: 8px;
+}
+
+.album_tracks span {
+  width: 24px;
+}
+
+.album_track button{
+  width: 100%;
+  justify-content: space-between;
+}
+
+.album_track * {
+  display: flex;
 }

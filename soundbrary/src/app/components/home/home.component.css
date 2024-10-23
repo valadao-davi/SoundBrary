@@ -64,6 +64,11 @@
   margin-bottom: 8px;
 }
 
+.slider_space{
+  display: flex;
+  gap: 8px;
+}
+
 .progress-bar {
   width: 100%;
   height: 4px;

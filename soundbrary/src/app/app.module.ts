@@ -19,8 +19,9 @@ import { InstrumentoMiniComponent } from './components/instrumento-mini/instrume
 import { MMiniComponent } from './components/m-mini/m-mini.component';
 import { DissayComponent } from './components/dissay/dissay.component';
 import { LeftInfoComponent } from './components/left-info/left-info.component';
-import { DissayContentComponent } from './components/dissay-content/dissay-content.component';
 import { InstrumentoMini2Component } from './components/instrumento-mini-2/instrumento-mini-2.component';
+import { SearchComponent } from './components/search/search.component';
+import { DuracaoPipe } from './pipes/duracao.pipe';
 
 
 
@@ -42,8 +43,9 @@ import { InstrumentoMini2Component } from './components/instrumento-mini-2/instr
     MMiniComponent,
     DissayComponent,
     LeftInfoComponent,
-    DissayContentComponent,
-    InstrumentoMini2Component
+    InstrumentoMini2Component,
+    SearchComponent,
+    DuracaoPipe
   ],
   imports: [
     BrowserModule,

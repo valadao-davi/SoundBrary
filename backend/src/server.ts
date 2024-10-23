@@ -11,16 +11,27 @@ import searchRoutes from '../src/routes/searchGeneral.routes'
 import playlistRoutes from '../src/routes/playlist.routes'
 
 dotenv.config({path: './src/.env'})
+
 const { MONGODB_URI } = process.env;
-const app = express();
-app.use(express.json())
-app.use(cors())
-//Se a variavel não existir:
 if( !MONGODB_URI ) {
     console.error("Não foi definido nenhuma variável no config.env");
     process.exit(1)
 }
-// Inicializa o token da API Spotify
+
+const app = express();
+app.use(express.json())
+app.use(cors())
+
+// Conexão com o banco de dados
+connectToDatabase(MONGODB_URI)
+    .then(()=> {
+       app.use("/users", userRouter)
+    })
+    .catch((error)=> console.error(error))
+
+
+
+//Inicializa o token
 const initializeToken = async () => {
     try {
         await getAcessToken()

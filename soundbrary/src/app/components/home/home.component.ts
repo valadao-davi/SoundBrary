@@ -9,6 +9,7 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
 export class HomeComponent  {
 
   topDay: any[] = []
+  albumItems: any[] = []
 
   constructor(private serviceMusic: ServiceMusicService){ }
 
@@ -16,7 +17,21 @@ export class HomeComponent  {
     this.serviceMusic.getTracksPlaylist().subscribe(
       (tracks) => {
         this.topDay = tracks
-        console.log('lista: ', this.topDay)
+        const albumMap = new Map();
+
+        this.topDay.forEach(item => {
+          if(item.album_type === "album") {
+            const albumData = {
+              id: item.album_id,
+              album_name: item.album_name,
+              artist: item.artist_name[0].name,
+              url: item.image_urls[1].link
+            }
+            albumMap.set(albumData.id, albumData)
+          }
+        })
+
+        this.albumItems = Array.from(albumMap.values())
       },
       (error) => {
         console.error(error)
@@ -27,6 +42,7 @@ export class HomeComponent  {
   ngOnInit(): void {
     this.loadTracks()
   }
+
 
 
 }

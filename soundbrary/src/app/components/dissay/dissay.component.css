@@ -1,4 +1,4 @@
-.dissay-layout {
+.layout {
   width: 100%;
   display: flex;
 }
@@ -8,6 +8,86 @@
   width: 900;
 }
 
-.conteudo_dissay {
+.conteudo {
   width: 100%;
+  padding: 48px 108px 120px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dissay_content h1{
+  width: 100%;
+}
+
+.perfil_avaliacao {
+  justify-content: space-between;
+  display: flex;
+
+}
+
+.dissay_perfil {
+  display: flex;
+  gap: 8px;
+  color: #FD47BC;
+  align-items: center;
+}
+
+.dissay_perfil img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+.dissay_avaliacao{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.estrelas_avaliacao{
+  display: flex;
+  gap: 4px;
+}
+
+.dissay_avaliacao img {
+  width: 40px;
+  height: 40px;
+}
+
+.instrumentos_secao {
+  display: flex;
+  justify-content: space-between;
+}
+
+.instrumentos{
+  width: 568px;
+}
+
+.instrumentos h1 {
+  width: 100%;
+  word-wrap: break-word;
+  white-space: normal;
+  margin-bottom: 8px;
+}
+
+.linha {
+  height: 2px;
+  width: 100%;
+  background-color: #bfbfbf;
+}
+
+.lista_instrumentos{
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.afinacao {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
 }

@@ -1,0 +1,25 @@
+.search_layout {
+  margin: 64px 120px;
+}
+
+.barra_pesquisa_search {
+  background-color: #6313A1;
+  padding: 32px 8px;
+  border-radius: 32px;
+}
+
+input {
+  font-weight: 300;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  color: white;
+}
+
+input:focus{
+  outline: none;
+}
+
+input::placeholder{
+  color: inherit;
+}

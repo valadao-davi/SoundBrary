@@ -9,17 +9,22 @@ import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { DissayComponent } from './components/dissay/dissay.component';
+import { SearchComponent } from './components/search/search.component';
+
+
+
 
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children:[
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
-    {path: 'musica', component: MusicaComponent},
+    {path: 'musica/:id', component: MusicaComponent},
     {path: 'dissay', component: DissayComponent},
-    {path: 'album', component: AlbumComponent},
+    {path: 'album/:id', component: AlbumComponent},
     {path: 'artista', component: AlbumComponent},
-    {path: 'user/:id', component: UsuarioComponent}
+    {path: 'user/:id', component: UsuarioComponent},
+    {path: 'search', component: SearchComponent}
   ]
   },
 

@@ -1,5 +1,5 @@
 <div class="info">
-  <img src="../../../assets/brat cover.png" alt="">
+  <img [src]="urlImage" alt="">
   <div class="linha"></div>
   <div class="links_externos">
     <h3>Links externos</h3>
@@ -11,18 +11,8 @@
     </div>
   </div>
   <div class="album_tracks">
-    <h3>Nome do Álbum</h3>
-    <div>
-      <h4>Track 1</h4>
-      <h4>Track 2</h4>
-      <h4>Track 3</h4>
-      <h4>Track 4</h4>
-      <h4>Track 5</h4>
-      <h4>Track 6</h4>
-      <h4>Track 7</h4>
-      <h4>Track 8</h4>
-      <h4>Track 9</h4>
-      <h4>Track 10</h4>
-    </div>
+    <h3>{{ albumName }}</h3>
+    <div *ngFor="let item of albumTracks" class="album_track">
+      <button (click)="navigateMusic(item.id)"><h4 [ngClass]="{'normal_text' : trackName != item.name}"><span>{{item.orderTrack}}. </span>{{item.name}}</h4> <h4 [ngClass]="{'normal_text' : trackName != item.name}">3:34</h4></button>
   </div>
 </div>
