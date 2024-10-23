@@ -12,7 +12,9 @@
   width: 400px;
   height: 400px;
 }
-
+.bold-text{
+  font-weight: 900;
+}
 .linha{
   height: 2px;
   width: 100%;
@@ -54,6 +56,6 @@
 }
 
 .album_tracks span {
-  
+
   width: 24px;
 }

@@ -1,8 +1,8 @@
 <div class="layout">
   <div *ngIf="dataLoaded">
-    <app-left-info [urlImage]="albumImage" [albumId]="albumId"></app-left-info>
+    <app-left-info [trackName]="musicName" [urlImage]="albumImage" [albumId]="albumId"></app-left-info>
   </div>
-  
+
   <div class="conteudo">
       <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ musicName }} </h1>
 

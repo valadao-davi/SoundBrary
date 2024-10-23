@@ -10,6 +10,7 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
 export class LeftInfoComponent {
   @Input() urlImage!: string;
   @Input() albumId!: string;
+  @Input() trackName!: string;
   albumName!: string;
   albumTracks!: any[]
   albumType!: string
