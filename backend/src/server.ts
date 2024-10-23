@@ -24,7 +24,7 @@ app.use(cors())
 // Conexão com o banco de dados
 connectToDatabase(MONGODB_URI)
     .then(()=> {
-       app.use("/user", userRouter)
+       app.use("/users", userRouter)
     })
     .catch((error)=> console.error(error))
 

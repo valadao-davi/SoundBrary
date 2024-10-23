@@ -13,6 +13,6 @@
   <div class="album_tracks">
     <h3>{{ albumName }}</h3>
     <div *ngFor="let item of albumTracks" >
-      <button (click)="navigateMusic(item.id)"><h4>{{item.name}} #{{item.orderTrack}}</h4></button>    
+      <button (click)="navigateMusic(item.id)"><h4><span>{{item.orderTrack}}. </span>{{item.name}}</h4></button>    
   </div>
 </div>

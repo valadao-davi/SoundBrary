@@ -18,10 +18,12 @@ export class MMiniComponent {
   navigateMusic(id: string) {
     if(this.isAlbum === true){
       this.router.navigate([`/album/${id}`])
+      console.log(`album id: ${id}`)
 
     }else{
       this.router.navigate([`/musica/${id}`])
     }
+    
     
   }
 
