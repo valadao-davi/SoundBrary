@@ -22,6 +22,8 @@ import { LeftInfoComponent } from './components/left-info/left-info.component';
 import { InstrumentoMini2Component } from './components/instrumento-mini-2/instrumento-mini-2.component';
 import { SearchComponent } from './components/search/search.component';
 import { DuracaoPipe } from './pipes/duracao.pipe';
+import { DissayItemComponent } from './components/dissay-item/dissay-item.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 
 
@@ -45,7 +47,9 @@ import { DuracaoPipe } from './pipes/duracao.pipe';
     LeftInfoComponent,
     InstrumentoMini2Component,
     SearchComponent,
-    DuracaoPipe
+    DuracaoPipe,
+    DissayItemComponent,
+    CapitalizePipe
   ],
   imports: [
     BrowserModule,

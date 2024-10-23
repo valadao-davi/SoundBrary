@@ -9,13 +9,13 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
 })
 export class AlbumComponent {
 
-  musicName!: string
   releaseDate!: string
   albumImage!: string
   artistNames!: any[]
   albumId!: string
   albumName!: string
   dataLoaded!: boolean
+  albumType!: string
 
   id!: string | null;
   constructor(private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
@@ -30,17 +30,17 @@ export class AlbumComponent {
     })
   }
   loadMusic(id: string): void {
-    this.serviceSpotify.getMusicById(id).subscribe(
+    this.serviceSpotify.getAlbumById(id).subscribe(
       (params) => {
         this.artistNames = params.artists.map((artist: any)=> ({
           name: artist.name,
         }))
-        this.musicName = params.name,
         this.releaseDate = params.releaseDate,
-        this.albumImage = params.albumImages[0].link,
-        this.albumId = params.albumId,
+        this.albumImage = params.albumImage[0].link,
+        this.albumId = params.id,
         this.albumName = params.albumName,
-        this.dataLoaded = true
+        this.dataLoaded = true,
+        this.albumType = params.albumType
       }
     )
   }

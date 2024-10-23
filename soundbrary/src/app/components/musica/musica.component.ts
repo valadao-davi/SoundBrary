@@ -15,6 +15,7 @@ export class MusicaComponent {
   albumId!: string
   albumName!: string
   dataLoaded!: boolean
+  albumType!: string
 
   id!: string | null;
   constructor(private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
@@ -39,7 +40,8 @@ export class MusicaComponent {
         this.albumImage = params.albumImages[0].link,
         this.albumId = params.albumId,
         this.albumName = params.albumName,
-        this.dataLoaded = true
+        this.dataLoaded = true,
+        this.albumType = params.albumType
       }
     )
   }

@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
   width: fit-content;
+  height: 100%;
 }
 .info img{
   width: 400px;
@@ -52,14 +53,17 @@
   width: 100%;
   padding: 0px 16px;
   box-sizing: border-box;
-}
-
-.album_tracks h4 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.album_tracks h3 {
+.album_tracks button {
+  width: 100%;
+  text-align: start;
+}
+
+.titulo_album {
   margin-bottom: 8px;
 }
 
@@ -74,4 +78,23 @@
 
 .album_track * {
   display: flex;
+  text-align: start;
+}
+
+.tempo {
+  display: flex;
+  text-align: end;
+  align-content: end;
+}
+
+.sublinhado {
+  text-decoration: underline;
+  text-underline-offset: 4px; /* Altere o valor para ajustar a distância */
+
+}
+
+.left_anuncio {
+  width: 320px;
+  height: 320px;
+  background-color: rgba(255, 255, 255, 0.75);
 }

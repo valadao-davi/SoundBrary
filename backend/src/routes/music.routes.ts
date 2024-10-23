@@ -21,7 +21,8 @@ router.get('/searchMusic/:musicName', async (req, res)=> {
                 height: images.height,
                 width: images.width
             })),
-            album_id: item.album.id
+            album_id: item.album.id,
+            duration: item.duration_ms
         }))
         res.status(200).json(formatted)
     }catch(e) {
@@ -53,7 +54,8 @@ router.get('/musicId/:idMusic', async (req, res)=> {
                     height: images.height,
                     width: images.width
                 })),
-                externalLink: musicData.external_urls.spotify
+                externalLink: musicData.external_urls.spotify,
+                duration: musicData.duration_ms
             }
             res.status(200).json(formatted)
         }

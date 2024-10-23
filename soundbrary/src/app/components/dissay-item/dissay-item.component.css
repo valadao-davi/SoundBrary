@@ -1,0 +1,88 @@
+.dissay {
+  padding: 32px 64px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topo{
+  display: flex;
+}
+
+.topo_textos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.topo_textos h3 {
+  width: 85%;
+}
+
+.info_perfil {
+  display: flex;
+  gap: 8px;
+
+}
+
+.info_perfil_texto {
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  white-space: pre;
+}
+
+.info_perfil_texto span {
+  color: #FD47BC;
+  font-weight: 600;
+}
+
+.info_perfil img {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+}
+
+.topo_avaliacao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.estrelas {
+  display: flex;
+  gap: 4px;
+}
+
+.estrelas img {
+  height: 32px;
+  width: 32px;
+}
+
+.conteudo{
+  display: flex;
+  gap: 48px;
+  width: 100%;
+
+}
+
+.instrumentos {
+  display: flex;
+  gap: 16px;
+  width: fit-content  ;
+}
+
+.texto_dissay {
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limita a 4 linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2em; /* Ajuste a altura da linha para evitar que uma 5ª linha apareça */
+  max-height: calc(1.2em * 4);
+}

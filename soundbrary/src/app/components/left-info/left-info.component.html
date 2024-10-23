@@ -11,8 +11,13 @@
     </div>
   </div>
   <div class="album_tracks">
-    <h3>{{ albumName }}</h3>
+    <button (click)="navigateAlbum(albumId)"><h3 [ngClass]="{'sublinhado' : albumName === albumTitle}" class="titulo_album">{{ albumName }}</h3></button>
     <div *ngFor="let item of albumTracks" class="album_track">
-      <button (click)="navigateMusic(item.id)"><h4 [ngClass]="{'normal_text' : trackName != item.name}"><span>{{item.orderTrack}}. </span>{{item.name}}</h4> <h4 [ngClass]="{'normal_text' : trackName != item.name}">3:34</h4></button>
+      <button (click)="navigateMusic(item.id)"><h4 [ngClass]="{'normal_text' : trackName != item.name}"><span>{{item.orderTrack}}. </span>{{item.name}}</h4> <h4 class="tempo" [ngClass]="{'normal_text' : trackName != item.name}">{{item.duration | duracao }}</h4></button>
   </div>
+</div>
+
+<div class="left_anuncio">
+  
+</div>
 </div>

@@ -1,5 +1,5 @@
 #profile_left{
-    padding: 40px;
+    padding: 40px 40px 0px 40px;
     height: 100%;
     width: auto;
     display: flex;
@@ -50,7 +50,7 @@
     border-radius: 24px;
     align-items: center;
     text-align: center;
-    
+
 }
 
 
