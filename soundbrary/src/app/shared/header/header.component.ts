@@ -11,11 +11,16 @@ RouterModule
 export class HeaderComponent {
 
   @ViewChild('input_pesquisa') inputElement!: ElementRef;
+currentRoute: any;
 
   constructor(private router: Router) {}
 
   focusInput() {
     this.inputElement.nativeElement.focus();
+  }
+
+  isSearchRoute(): boolean {
+    return this.router.url.startsWith('/search');
   }
 
   pesquisar() {

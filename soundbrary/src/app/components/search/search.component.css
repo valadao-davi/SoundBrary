@@ -2,10 +2,17 @@
   margin: 64px 120px;
 }
 
+.barra_catergorias{
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
 .barra_pesquisa_search {
+  display: flex;
+  align-items: center;
   background-color: #6313A1;
-  padding: 32px 8px;
-  border-radius: 32px;
+  padding: 16px 32px;
+  border-radius: 64px;
 }
 
 input {
@@ -23,3 +30,18 @@ input:focus{
 input::placeholder{
   color: inherit;
 }
+
+.categorias {
+  display: flex;
+  gap: 8px  ;
+
+}
+
+.categoria {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: 2px solid black;
+  border-radius: 64px;
+}
+
