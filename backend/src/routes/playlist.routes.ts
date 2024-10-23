@@ -5,8 +5,9 @@ const router = Router();
 
 router.get('/playlistTracks/:id', async(req, res)=> {
     const idPlaylist = req.params.id
+    
     try{
-        const playlistData = await playlistTracks(idPlaylist)
+        const playlistData = await playlistTracks(idPlaylist, )
         if(playlistData === null){
             res.status(404).json({message: `Playlist with the ID: ${idPlaylist} Data not found`})
         }else{

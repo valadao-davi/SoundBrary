@@ -5,8 +5,9 @@ const router = Router();
 
 router.get('/searchArtist/:artistName', async(req, res)=> {
     const artistName: string = req.params.artistName
+    const offset = parseInt(req.query.offset as string) || 0
     try {
-        const artistData = await searchArtist(artistName)
+        const artistData = await searchArtist(artistName, offset)
         const formatted = await Promise.all(artistData.map(async (artist) => {
             const details = await detailsArtist(artist.id)
             return {
@@ -21,7 +22,7 @@ router.get('/searchArtist/:artistName', async(req, res)=> {
         res.status(500).json({"erro": e})
     }
 })
-router.get('/:id', async(req, res)=> {
+router.get('idArtist/:id', async(req, res)=> {
     const idArtist = req.params.id
     try {
         const artistData = await detailsArtist(idArtist)

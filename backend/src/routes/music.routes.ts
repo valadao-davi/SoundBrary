@@ -5,8 +5,9 @@ const router = Router();
 
 router.get('/searchMusic/:musicName', async (req, res)=> {
     const musicName: string = req.params.musicName
+    const offset = parseInt(req.query.offset as string) || 0
     try {
-        const musicData: SpotifyApi.TrackObjectFull[] = await searchTrack(musicName)
+        const musicData: SpotifyApi.TrackObjectFull[] = await searchTrack(musicName, offset)
         const formatted = musicData.map(item => ({
             id: item.id,
             song: item.name,

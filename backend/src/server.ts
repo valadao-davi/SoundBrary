@@ -7,6 +7,7 @@ import { connectToDatabase } from './config/db';
 import musicRoutes from '../src/routes/music.routes'
 import artistRoutes from '../src/routes/artist.routes'
 import albumRoutes from '../src/routes/album.routes'
+import searchRoutes from '../src/routes/searchGeneral.routes'
 import playlistRoutes from '../src/routes/playlist.routes'
 
 dotenv.config({path: './src/.env'})
@@ -39,6 +40,17 @@ const initializeToken = async () => {
         console.error("Houve um erro: ", E)
     }
 }
+//Conecta ao banco de dados
+connectToDatabase(MONGODB_URI)
+    .then(()=> {
+        //Usa a rota de users
+       app.use('/users', userRouter)
+       console.log("Conectado")
+        
+    })
+    .catch((error)=> console.error("Ocorreu um erro ao se conectar com o banco: ", error))
+
+
 
 initializeToken().then(() => {
     
@@ -46,7 +58,8 @@ initializeToken().then(() => {
    app.use('/artists', artistRoutes)
    app.use('/playlist', playlistRoutes)
    app.use('/album', albumRoutes)
-
+   app.use('/search', searchRoutes)
+   
    app.listen(3000, ()=> {
     console.log(`Server funcionando na porta 3000...`)
     });
