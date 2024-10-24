@@ -24,6 +24,7 @@ import { SearchComponent } from './components/search/search.component';
 import { DuracaoPipe } from './pipes/duracao.pipe';
 import { DissayItemComponent } from './components/dissay-item/dissay-item.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { ArtistaComponent } from './components/artista/artista.component';
 
 
 
@@ -49,7 +50,8 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
     SearchComponent,
     DuracaoPipe,
     DissayItemComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    ArtistaComponent
   ],
   imports: [
     BrowserModule,

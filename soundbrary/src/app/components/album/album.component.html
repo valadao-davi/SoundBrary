@@ -7,7 +7,7 @@
         <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ albumName }} </h1>
 
         <div class="generos_sec">
-            <h3>Tipo: </h3>
+            <h3>Tipo de lançamento: </h3>
             <div class="generos">
               <div class="genero"><h4>{{ albumType }}</h4></div>
             </div>
@@ -23,8 +23,19 @@
             <div class="linha"></div>
           </div>
 
-          <div></div>
-          <div></div>
+          <div *ngFor="let item of albumTracks">
+            <div class="track_album">
+            <button (click)="navigateMusic(item.id)"><h2><span>{{ item.orderTrack }}. </span>{{ item.name }}</h2></button>
+            <div class="lista_dissays">
+              <app-dissay-item></app-dissay-item>
+              <app-dissay-item></app-dissay-item>
+            </div>
+            <button class="ver_mais" (click)="navigateMusic(item.id)">Ver mais dissays da música</button>
+          </div>
+          </div>
+          
+          
+        
         </div>
 
 

@@ -24,7 +24,7 @@
   color: #6313A1;
 }
 
-.secao_dissyas{
+.secao_dissays{
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -74,4 +74,25 @@
   border: 2px solid black;
   border-radius: 24px;
   width: fit-content;
+}
+
+.track_album {
+  display: flex;
+  flex-direction: column;
+}
+
+.lista_dissays {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 8px 0px;
+}
+
+.ver_mais {
+  display: flex;
+  color: #6313A1;
+  font-weight: 400;
+  font-size: 16px;
+  align-self: last baseline;
+  text-decoration: underline;
 }

@@ -10,6 +10,7 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { DissayComponent } from './components/dissay/dissay.component';
 import { SearchComponent } from './components/search/search.component';
+import { ArtistaComponent } from './components/artista/artista.component';
 
 
 
@@ -22,7 +23,7 @@ const routes: Routes = [
     {path: 'musica/:id', component: MusicaComponent},
     {path: 'dissay', component: DissayComponent},
     {path: 'album/:id', component: AlbumComponent},
-    {path: 'artista', component: AlbumComponent},
+    {path: 'artista', component: ArtistaComponent},
     {path: 'user/:id', component: UsuarioComponent},
     {path: 'search', component: SearchComponent}
   ]

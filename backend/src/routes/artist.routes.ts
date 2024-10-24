@@ -13,7 +13,8 @@ router.get('/searchArtist/:artistName', async(req, res)=> {
             return {
                 id: artist.id,
                 artist: artist.name,
-                image: details?.images[0]?.url
+                image: details?.images[0]?.url,
+                followers: details?.followers.total
             }
         }))
         res.status(200).json(formatted)
@@ -28,6 +29,20 @@ router.get('idArtist/:id', async(req, res)=> {
         const artistData = await detailsArtist(idArtist)
         if(artistData === null) {
             res.status(404).json({message: `Artist with the ID: ${idArtist} Data not found`})
+        }else{
+            const formatted = {
+                id: artistData.id,
+                name: artistData.name,
+                artistFollowers: artistData.followers,
+                artistImages: artistData.images.map(images => ({
+                    link: images.url,
+                    height: images.height,
+                    width: images.width
+                })),
+                externalLink: artistData.external_urls.spotify,
+                genres: artistData.genres
+            }
+            res.status(200).json(formatted)
         }
         res.status(200).json(artistData)
     }catch(e){

@@ -1,0 +1,42 @@
+<div class="layout">
+    <div *ngIf="dataLoaded">
+      <app-left-info [urlImage]="albumImage" [albumId]="albumId" [albumTitle]="albumName"></app-left-info>
+    </div>
+
+    <div class="conteudo">
+        <h1>{{artist.name}}</h1>
+
+        <div class="generos_sec">
+            <h3>Gêneros do artista: </h3>
+            <div class="generos">
+              <div class="genero"><h4>{{ albumType }}</h4></div>
+            </div>
+        </div>
+
+        <div class="seguidores">
+          <h3>Seguidores: <span>{{ releaseDate }}</span></h3>
+        </div>
+
+        <div class="lancamentos_artista">
+            <div class="lancamentos_artista_topo">
+              <h1>Álbuns</h1>
+              <h1>Ano de lançamento</h1>
+              <div class="linha"></div>
+            </div>
+  
+            <div *ngFor="let item of albumTracks">
+              <div class="track_album">
+              <button (click)="navigateMusic(item.id)"><h2><span>{{ item.orderTrack }}. </span>{{ item.name }}</h2></button>
+              <div class="lista_dissays">
+                <app-dissay-item></app-dissay-item>
+                <app-dissay-item></app-dissay-item>
+              </div>
+              <button class="ver_mais" (click)="navigateMusic(item.id)">Ver mais dissays da música</button>
+            </div>
+            </div>
+            
+            
+          
+          </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+.layout {
+    width: 100%;
+    display: flex;
+}
+
+.conteudo {
+    width: 100%;
+    padding: 48px 108px 120px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.conteudo h1 {
+    font-size: 48px;
+}
+
+.generos_sec {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+  
+.generos_sec h3 {
+    margin-top: 8px;
+    align-items: center;
+    white-space: nowrap;
+  }
+  
+.generos{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+    max-width: 100%;
+  
+  }
+  
+.genero{
+    padding: 8px 16px;
+    border: 2px solid black;
+    border-radius: 24px;
+    width: fit-content;
+  }
+
+.lancamentos_artista_topo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
