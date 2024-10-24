@@ -11,12 +11,17 @@ export class LeftInfoComponent {
   @Input() urlImage!: string;
   @Input() albumId!: string;
   @Input() trackName!: string;
+  @Input() albumTitle!: string;
   albumName!: string;
   albumTracks!: any[]
   albumType!: string
 
   constructor(private router: Router,private serviceSpotify: ServiceMusicService){
 
+  }
+
+  navigateAlbum(id: string) {
+    this.router.navigate([`/album/${id}`])
   }
 
   navigateMusic(id: string) {
@@ -35,7 +40,8 @@ export class LeftInfoComponent {
         this.albumTracks = params.tracks.map((item: any) => ({
           id: item.id,
           name: item.name,
-          orderTrack: item.orderTrack
+          orderTrack: item.orderTrack,
+          duration: item.duration
         }))
       }
     )

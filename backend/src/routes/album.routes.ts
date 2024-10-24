@@ -53,7 +53,8 @@ router.get('/idAlbum/:idAlbum', async (req, res)=> {
                 tracks: albumData.tracks.items.map(track => ({
                     id: track.id,
                     name: track.name,
-                    orderTrack: track.track_number
+                    orderTrack: track.track_number,
+                    duration: track.duration_ms
                 }))
             }
             res.status(200).json(formatted)

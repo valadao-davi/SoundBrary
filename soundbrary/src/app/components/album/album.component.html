@@ -1,38 +1,34 @@
 <div class="layout">
     <div *ngIf="dataLoaded">
-      <app-left-info [urlImage]="albumImage" [albumId]="albumId"></app-left-info>
+      <app-left-info [urlImage]="albumImage" [albumId]="albumId" [albumTitle]="albumName"></app-left-info>
     </div>
-    
+
     <div class="conteudo">
-        <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ musicName }} </h1>
-  
+        <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ albumName }} </h1>
+
         <div class="generos_sec">
-            <h3>Gêneros do artista: </h3>
+            <h3>Tipo: </h3>
             <div class="generos">
-              <div class="genero"><h4>pop</h4></div>
-              <div class="genero"><h4>pop</h4></div>
-              <div class="genero"><h4>pop</h4></div>
-              <div class="genero"><h4>pop</h4></div>
+              <div class="genero"><h4>{{ albumType }}</h4></div>
             </div>
         </div>
-  
+
         <div class="data_lancamento">
           <h3>Data de Lançamento: <span>{{ releaseDate }}</span></h3>
       </div>
-  
+
         <div class="secao_dissays">
           <div class="secao_dissays_topo">
             <h1>Dissays <span>(4)</span></h1>
             <div class="linha"></div>
           </div>
-  
+
           <div></div>
           <div></div>
         </div>
-  
-  
+
+
       </div>
-  
+
     </div>
-  
-  
+

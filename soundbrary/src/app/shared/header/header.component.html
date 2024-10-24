@@ -2,9 +2,9 @@
   <div id="h_left">
     <button (click)="navigateHome()"><img id="logo_header" src="../../../assets/Logo_roxo.png"></button>
   </div>
-  <div id="barra_pesquisa" (click)="focusInput()">
-    <input #input_pesquisa type="text" placeholder="Pesquise aqui sua música favorita">
-    <img (click)="pesquisar()" src="../../../assets/lupa_icon.svg">
+  <div id="barra_pesquisa" (click)="focusInput()" *ngIf="!isSearchRoute()">
+    <input #input_pesquisa type="text" placeholder="Pesquise aqui sua música favorita" (keyup.enter)="pesquisar()">
+    <button type="submit" (click)="pesquisar()"><img src="../../../assets/lupa_icon.svg"></button>
   </div>
   <div id="h_right">
     <div id="auth_redirects">
