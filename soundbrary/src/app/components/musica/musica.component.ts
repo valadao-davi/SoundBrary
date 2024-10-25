@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 
 @Component({
@@ -16,9 +16,10 @@ export class MusicaComponent {
   albumName!: string
   dataLoaded!: boolean
   albumType!: string
+  urlLink!: string
 
   id!: string | null;
-  constructor(private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
+  constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
 
   }
   ngOnInit(){
@@ -29,11 +30,16 @@ export class MusicaComponent {
       }
     })
   }
+  navigateArtist(id: string) {
+    this.router.navigate([`/artista/${id}`])
+  }
+
   loadMusic(id: string): void {
     this.serviceSpotify.getMusicById(id).subscribe(
       (params) => {
         this.artistNames = params.artists.map((artist: any)=> ({
           name: artist.name,
+          id: artist.id
         }))
         this.musicName = params.name,
         this.releaseDate = params.releaseDate,
@@ -42,6 +48,7 @@ export class MusicaComponent {
         this.albumName = params.albumName,
         this.dataLoaded = true,
         this.albumType = params.albumType
+        this.urlLink = params.externalLink
       }
     )
   }

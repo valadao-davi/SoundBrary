@@ -21,4 +21,12 @@ export class ServiceMusicService {
   getAlbumById(id: String): Observable<any>{
     return this.http.get<any>(`${this.API}/album/idAlbum/${id}`)
   }
+
+  getArtistById(id: string): Observable<any>{
+    return this.http.get<any>(`${this.API}/artists/idArtist/${id}`)
+  }
+
+  getAlbumsByArtist(id: string): Observable<any[]>{
+    return this.http.get<any[]>(`${this.API}/artists/idArtist/album/${id}`)
+  }
 }

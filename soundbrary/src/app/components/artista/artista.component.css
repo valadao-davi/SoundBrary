@@ -21,21 +21,21 @@
     gap: 8px;
     width: 100%;
   }
-  
+
 .generos_sec h3 {
     margin-top: 8px;
     align-items: center;
     white-space: nowrap;
   }
-  
+
 .generos{
     display: flex;
     gap: 8px;
     flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
     max-width: 100%;
-  
+
   }
-  
+
 .genero{
     padding: 8px 16px;
     border: 2px solid black;
@@ -84,6 +84,7 @@
   width: 100px;
   border-radius: 8px;
 }
+
 
 .lancamento_texto {
   width: 100%;

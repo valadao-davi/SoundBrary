@@ -95,6 +95,22 @@ export const detailsGeneral = async<T>(type: 'artists' | 'tracks' | 'albums', id
 // Entra nos detalhes do artista
 export const detailsArtist = async(idArtist: string) => detailsGeneral<SpotifyApi.ArtistObjectFull | null>("artists", idArtist)
 
+export const artistAlbums = async(idArtist: string): Promise<SpotifyApi.AlbumObjectSimplified[]> => {
+    const url = `https://api.spotify.com/v1/artists/${idArtist}/albums?include_groups=single%2Calbum`
+    try {
+        const response = await axios.get<{items: SpotifyApi.AlbumObjectSimplified[]}>(url, {
+            headers: {
+                Authorization: `Bearer ${acessToken}`
+            }
+        })
+        const listItems: SpotifyApi.AlbumObjectSimplified[] = response.data.items
+        return listItems
+    }catch(E){
+        console.error(E)
+        return []
+    }
+}
+
 //Entra nos detalhes da música
 export const musicDetails = async(idMusic: string) => detailsGeneral<SpotifyApi.TrackObjectFull | null>("tracks", idMusic)
 

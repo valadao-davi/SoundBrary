@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { searchArtist, detailsArtist } from "../config/spotifyConfig";
+import { searchArtist, detailsArtist, artistAlbums } from "../config/spotifyConfig";
 
 const router = Router();
 
@@ -23,7 +23,7 @@ router.get('/searchArtist/:artistName', async(req, res)=> {
         res.status(500).json({"erro": e})
     }
 })
-router.get('idArtist/:id', async(req, res)=> {
+router.get('/idArtist/:id', async(req, res)=> {
     const idArtist = req.params.id
     try {
         const artistData = await detailsArtist(idArtist)
@@ -44,8 +44,37 @@ router.get('idArtist/:id', async(req, res)=> {
             }
             res.status(200).json(formatted)
         }
-        res.status(200).json(artistData)
     }catch(e){
+        console.log(e)
+        res.status(500).json({"erro": e})
+    }
+})
+
+router.get('/idArtist/album/:id', async(req, res)=> {
+    const idArtist = req.params.id
+    try {
+        const albumData = await artistAlbums(idArtist)
+        if(albumData === null){
+            res.status(404).json({message: `Artist with the ID: ${idArtist} Data not found`})
+        }else{
+            const formatted = await Promise.all(albumData.map(items => ({
+                id: items.id,
+                name: items.name,
+                type: items.album_group,
+                artists: items.artists.map(artist => ({
+                    id: artist.id,
+                    name: artist.name
+                })),
+                releaseDate: items.release_date,
+                images: items.images.map(image => ({
+                    url: image.url,
+                    width: image.width,
+                    height: image.height
+                }))
+            })))
+            res.status(200).json(formatted)
+       
+    } }catch(e){
         console.log(e)
         res.status(500).json({"erro": e})
     }

@@ -5,12 +5,12 @@
     <h3>Links externos</h3>
     <div class="lista_links">
       <div class="link">
-        <img src="../../../assets/spotify_icon.svg" alt="icone spotify link">
+        <a [href]="urlLink" target="_blank" rel="noopener noreferrer"><img src="../../../assets/spotify_icon.svg" alt="icone spotify link"></a>
         <h4>Spotify</h4>
       </div>
     </div>
   </div>
-  <div class="album_tracks">
+  <div class="album_tracks" *ngIf="albumId !== null">
     <button (click)="navigateAlbum(albumId)"><h3 [ngClass]="{'sublinhado' : albumName === albumTitle}" class="titulo_album">{{ albumName }}</h3></button>
     <div *ngFor="let item of albumTracks" class="album_track">
       <button (click)="navigateMusic(item.id)"><h4 [ngClass]="{'normal_text' : trackName != item.name}"><span>{{item.orderTrack}}. </span>{{item.name}}</h4> <h4 class="tempo" [ngClass]="{'normal_text' : trackName != item.name}">{{item.duration | duracao }}</h4></button>
@@ -18,6 +18,6 @@
 </div>
 
 <div class="left_anuncio">
-  
+
 </div>
 </div>

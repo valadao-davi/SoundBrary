@@ -9,7 +9,7 @@
         <div class="generos_sec">
             <h3>Tipo de lançamento: </h3>
             <div class="generos">
-              <div class="genero"><h4>{{ albumType }}</h4></div>
+              <div class="genero"><h4>{{ albumType | capitalize}}</h4></div>
             </div>
         </div>
 
@@ -33,9 +33,9 @@
             <button class="ver_mais" (click)="navigateMusic(item.id)">Ver mais dissays da música</button>
           </div>
           </div>
-          
-          
-        
+
+
+
         </div>
 
 

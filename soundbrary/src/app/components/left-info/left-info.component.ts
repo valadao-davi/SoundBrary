@@ -12,6 +12,7 @@ export class LeftInfoComponent {
   @Input() albumId!: string;
   @Input() trackName!: string;
   @Input() albumTitle!: string;
+  @Input() urlLink!: string;
   albumName!: string;
   albumTracks!: any[]
   albumType!: string

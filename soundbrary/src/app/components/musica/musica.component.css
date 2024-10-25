@@ -9,6 +9,11 @@
   width: 900;
 }
 
+button {
+  all: unset;
+  cursor: pointer;
+}
+
 .data_lancamento span{
   color: rgba(0, 0, 0, 0.5)
 }
