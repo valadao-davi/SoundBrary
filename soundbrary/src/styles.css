@@ -12,6 +12,11 @@ button {
   width: fit-content;
 }
 
+app-left-info {
+  display: flex;
+  height: 100%;
+}
+
 form {
   width: 450px;
   margin: 0 auto;

@@ -1,11 +1,11 @@
-#anuncios {
+.anuncios {
     display: flex;
     flex-direction: column;
     gap: 64px;
     padding: 48px 48px 48px 0px;
 }
 
-#anuncio {
+.anuncio {
     background-color: #cccccc;
     width: 200px;
     height: 720px;

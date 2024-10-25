@@ -4,39 +4,64 @@
     </div>
 
     <div class="conteudo">
-        <h1>{{artist.name}}</h1>
+        <h1 class="nome_artista">Nome do artista</h1>
 
         <div class="generos_sec">
             <h3>Gêneros do artista: </h3>
             <div class="generos">
-              <div class="genero"><h4>{{ albumType }}</h4></div>
+              <div class="genero"><h4>genero</h4></div>
             </div>
         </div>
 
         <div class="seguidores">
-          <h3>Seguidores: <span>{{ releaseDate }}</span></h3>
+          <h3>Seguidores: <span>2.198.391</span></h3>
         </div>
 
-        <div class="lancamentos_artista">
-            <div class="lancamentos_artista_topo">
-              <h1>Álbuns</h1>
-              <h1>Ano de lançamento</h1>
+        <div class="lancamentos">
+          <div class="lancamentos_secao">
+            <div class="lancamentos_secao_topo">
+              <div class="lancamentos_secao_texto">
+                <h2>Álbuns</h2>
+                <h2>Ano de lançamento</h2>
+              </div>
               <div class="linha"></div>
             </div>
   
-            <div *ngFor="let item of albumTracks">
-              <div class="track_album">
-              <button (click)="navigateMusic(item.id)"><h2><span>{{ item.orderTrack }}. </span>{{ item.name }}</h2></button>
-              <div class="lista_dissays">
-                <app-dissay-item></app-dissay-item>
-                <app-dissay-item></app-dissay-item>
+            <div>
+              <div class="lancamento">
+                <img src="../../../assets/brat cover.png">
+                <div class="lancamento_texto">
+                  <h2>Brat</h2>
+                  <p>Charli xcx</p>
+                </div>
+                <h3>2024</h3>
               </div>
-              <button class="ver_mais" (click)="navigateMusic(item.id)">Ver mais dissays da música</button>
+              <div class="linha"></div>
             </div>
+          </div>
+
+          <div class="lancamentos_secao">
+            <div class="lancamentos_secao_topo">
+              <div class="lancamentos_secao_texto">
+                <h2>Singles e EPs</h2>
+                <h2>Ano de lançamento</h2>
+              </div>
+              <div class="linha"></div>
             </div>
-            
-            
+  
+            <div>
+              <div class="lancamento">
+                <img src="../../../assets/brat cover.png">
+                <div class="lancamento_texto">
+                  <h2>Guess</h2>
+                  <p>Charli xcx</p>
+                </div>
+                <h3>2024</h3>
+              </div>
+              <div class="linha"></div>
+            </div>
           
           </div>
+        </div>
     </div>
 </div>

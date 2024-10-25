@@ -22,6 +22,8 @@ export class ArtistaComponent {
 
   }
   ngOnInit(){
+    this.dataLoaded = true
+
     this.route.paramMap.subscribe((params)=> {
       this.id = params.get('id')
       if(this.id){
