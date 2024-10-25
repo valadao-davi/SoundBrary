@@ -28,10 +28,10 @@
             </div>
 
             <div *ngFor="let album of albumItems">
-              <div class="lancamento">
+             <div class="lancamento">
                 <img [src]="album.images[0].url">
                 <div class="lancamento_texto">
-                  <h2>{{ album.name }}</h2>
+                  <button (click)="navigateAlbum(album.id)"><h2>{{ album.name }}</h2></button>
                   <p>{{ getArtistsString(album.artists) }}</p>
                 </div>
                 <h3>{{getYearFromReleaseDate(album.releaseDate)}}</h3>
@@ -53,7 +53,7 @@
               <div class="lancamento">
                 <img [src]="single.images[0].url">
                 <div class="lancamento_texto">
-                  <h2>{{single.name}}</h2>
+                  <button (click)="navigateAlbum(single.id)"><h2>{{single.name}}</h2></button>
                   <p>{{getArtistsString(single.artists)}}</p>
                 </div>
                 <h3>{{getYearFromReleaseDate(single.releaseDate)}}</h3>

@@ -85,7 +85,10 @@
   border-radius: 8px;
 }
 
-
+button {
+  all: unset;
+  cursor: pointer;
+}
 .lancamento_texto {
   width: 100%;
   display: flex;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 
 @Component({
@@ -20,9 +20,13 @@ export class ArtistaComponent {
   singleItems: any[] = [];
 
   id!: string | null;
-  constructor(private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
+  constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
 
   }
+  navigateAlbum(id: string) {
+    this.router.navigate([`/album/${id}`])
+  }
+
   ngOnInit(){
     this.dataLoaded = true
 
