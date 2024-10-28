@@ -8,6 +8,12 @@
   margin: 64px 120px;
 
 }
+.botao_search {
+  all: unset;
+  cursor: pointer;
+  width: 100%;
+}
+
 
 .barra_catergorias{
   display: flex;

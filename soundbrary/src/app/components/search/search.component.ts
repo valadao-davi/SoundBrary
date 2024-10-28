@@ -3,6 +3,9 @@ import { Music } from 'src/app/layouts/Music';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs';
+import { Album } from 'src/app/layouts/Album';
+import { Artist } from 'src/app/layouts/Artists';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -13,11 +16,46 @@ export class SearchComponent {
   searchQuery: string = '';
   private searchSubject: Subject<string> = new Subject<string>();
   tracksSearched!: Music[]
+  albumsSearched!: Album[]
+  albumsAndSingles!: Album[]
+  artistsSearched!: Artist[]
+  singleAndEpsSearched!: Album[]
+  categoria = "catMusica";
 
-  constructor(private serviceSpotify: ServiceMusicService){
+  changeMusica() {
+    this.categoria = "catMusica"
+    this.getTracksQuery(this.searchQuery)
+  }
+  changeAlbuns() {
+    this.categoria = "catAlbuns"
+    this.getTracksQuery(this.searchQuery)
+  }
+  changeSinglesEps() {
+    this.categoria = "catSinglesEps"
+    this.getTracksQuery(this.searchQuery)
+  }
+  changeArtistas() {
+    this.categoria = "catArtistas"
+    this.getTracksQuery(this.searchQuery)
+  }
+  changeDissays() {
+    this.categoria = "catDissays"
+    this.getTracksQuery(this.searchQuery)
+  }
+
+  constructor(private router: Router,private serviceSpotify: ServiceMusicService){
     this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
       this.getTracksQuery(value)
     })
+  }
+  navigateMusic(id: string) {
+    this.router.navigate([`/musica/${id}`])
+  }
+  navigateArtist(id: string) {
+    this.router.navigate([`/artista/${id}`])
+  }
+  navigateAlbum(id: string) {
+    this.router.navigate([`/album/${id}`])
   }
 
   onSearchChange(value: string){
@@ -28,31 +66,38 @@ export class SearchComponent {
 
   getTracksQuery(query: string): void {
     if(query) {
-      this.serviceSpotify.getQueryMusic(query).subscribe(items => {
-        this.tracksSearched = items
-        console.log(this.tracksSearched)
-      })
+      switch(this.categoria){
+        case 'catMusica':
+          this.serviceSpotify.getQueryMusic(query).subscribe(items => {
+            this.tracksSearched = items
+          });
+        break;
+        case 'catAlbuns':
+          this.serviceSpotify.getQueryAlbum(query).subscribe(items => {
+            this.albumsAndSingles = items
+            console.log(this.albumsAndSingles)
+            this.albumsSearched = this.albumsAndSingles.filter(items => items.albumType === "album")
+          });
+        break;
+        case 'catSinglesEps':
+          this.serviceSpotify.getQueryAlbum(query).subscribe(items => {
+            this.albumsAndSingles = items
+            this.singleAndEpsSearched = this.albumsAndSingles.filter(items => items.albumType !== "album")
+          });
+        break;
+        case 'catArtistas':
+          this.serviceSpotify.getQueryArtist(query).subscribe(items => {
+            this.artistsSearched = items
+            console.log(this.artistsSearched)
+          })
+      }
     }else {
       this.tracksSearched = []
+      this.albumsAndSingles = []
+      this.albumsAndSingles = []
     }
   }
 
-  categoria = "catMusica";
 
-  changeMusica() {
-    this.categoria = "catMusica"
-  }
-  changeAlbuns() {
-    this.categoria = "catAlbuns"
-  }
-  changeSinglesEps() {
-    this.categoria = "catSinglesEps"
-  }
-  changeArtistas() {
-    this.categoria = "catArtistas"
-  }
-  changeDissays() {
-    this.categoria = "catDissays"
-  }
 
 }

@@ -12,8 +12,12 @@ router.get('/searchArtist/:artistName', async(req, res)=> {
             const details = await detailsArtist(artist.id)
             return {
                 id: artist.id,
-                artist: artist.name,
-                image: details?.images[0]?.url,
+                name: artist.name,
+                artistImages: details?.images.map(images => ({
+                    link: images.url,
+                    width: images.width,
+                    height: images.height
+                })),
                 followers: details?.followers.total
             }
         }))

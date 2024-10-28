@@ -11,18 +11,18 @@ router.get('/searchMusic/:musicName', async (req, res)=> {
         const formatted = musicData.map(item => ({
             id: item.id,
             name: item.name,
-            album_type: item.album.album_type,
-            album_name: item.album.name,
-            artist_name: item.artists.map(artist=> ({
+            albumType: item.album.album_type,
+            albumName: item.album.name,
+            artists: item.artists.map(artist=> ({
                 id: artist.id,
                 name: artist.name
             })),
-            album_images: item.album.images.map(images => ({
+            albumImages: item.album.images.map(images => ({
                 link: images.url,
                 height: images.height,
                 width: images.width
             })),
-            album_id: item.album.id,
+            albumId: item.album.id,
             duration: item.duration_ms
         }))
         res.status(200).json(formatted)

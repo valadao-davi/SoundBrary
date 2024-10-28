@@ -10,18 +10,18 @@ router.get('/searchAlbum/:albumName', async (req, res)=> {
         const albumData = await searchAlbum(albumName, offset)
         const formatted = albumData.map(item => ({
             id: item.id,
-            album_name: item.name,
-            album_type: item.type,
-            artist_name: item.artists.map(artist=> ({
+            albumName: item.name,
+            albumType: item.album_type,
+            artists: item.artists.map(artist=> ({
                 id: artist.id,
                 name: artist.name
             })),
-            image_url: item.images.map(images => ({
+            albumImage: item.images.map(images => ({
                 link: images.url,
                 height: images.height,
                 width: images.width
             })),
-            release_date: item.release_date
+            releaseDate: item.release_date
         }))
         res.status(200).json(formatted)
     }catch(e) {

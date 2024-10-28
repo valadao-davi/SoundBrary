@@ -36,4 +36,10 @@ export class ServiceMusicService {
   getQueryMusic(query: string): Observable<Music[]>{
     return this.http.get<Music[]>(`${this.API}/music/searchMusic/${query}`)
   }
+  getQueryAlbum(query: string): Observable<Album[]>{
+    return this.http.get<Album[]>(`${this.API}/album/searchAlbum/${query}`)
+  }
+  getQueryArtist(query: string): Observable<Artist[]>{
+    return this.http.get<Artist[]>(`${this.API}/artists/searchArtist/${query}`)
+  }
 }

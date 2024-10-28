@@ -13,18 +13,86 @@
     </div>
   </div>
 
-  <div class="resultados_item">
-    <div class="resultados">
-      <div class="resultado">
-        <img src="">
-      <div class="resultado_textos">
-        <h2>Música</h2>
-        <h3>Álbum</h3>
-        <h4>Artista</h4>
+<ng-container *ngIf="categoria === 'catMusica'">
+  <div *ngFor="let track of tracksSearched">
+  <button class="botao_search" (click)="navigateMusic(track.id)">
+    <div class="resultados_item">
+      <div class="resultados">
+        <div class="resultado">
+          <img [src]="track.albumImages[0].link">
+        <div class="resultado_textos">
+          <h2>{{track.name}}</h2>
+          <h3>{{track.albumName}}</h3>
+          <h4>{{track.artists[0].name}}</h4>
+        </div>
+        <div class="resultado_criados">Dissays criados: 4</div>
+        </div>
+        <div class="linha"></div>
       </div>
-      <div class="resultado_criados">Dissays criados: 4</div>
-      </div>
-      <div class="linha"></div>
     </div>
+  </button>
   </div>
+</ng-container>
+
+<ng-container *ngIf="categoria === 'catAlbuns'">
+ <div *ngFor="let album of albumsSearched">
+  <button class="botao_search" (click)="navigateAlbum(album.id)">
+    <div class="resultados_item">
+      <div class="resultados">
+        <div class="resultado">
+          <img [src]="album.albumImage[0].link">
+        <div class="resultado_textos">
+          <h3>{{album.albumName}}</h3>
+          <h4>{{album.artists[0].name}}</h4>
+        </div>
+        <div class="resultado_criados">Dissays criados: 4</div>
+        </div>
+        <div class="linha"></div>
+      </div>
+    </div>
+  </button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="categoria === 'catSinglesEps'">
+  <div *ngFor="let item of singleAndEpsSearched">
+    <button class="botao_search" (click)="navigateAlbum(item.id)">
+      <div class="resultados_item">
+        <div class="resultados">
+          <div class="resultado">
+            <img [src]="item.albumImage[0].link">
+          <div class="resultado_textos">
+            <h3>{{item.albumName}}</h3>
+            <h4>{{item.artists[0].name}}</h4>
+          </div>
+          <div class="resultado_criados">Dissays criados: 4</div>
+          </div>
+          <div class="linha"></div>
+        </div>
+      </div>
+    </button>
+   </div>
+ </ng-container>
+
+ <ng-container *ngIf="categoria === 'catArtistas'">
+    <div *ngFor="let item of artistsSearched">
+      <button class="botao_search" (click)="navigateArtist(item.id)">
+        <div class="resultados_item">
+          <div class="resultados">
+            <div class="resultado">
+             <img [src]="item.artistImages[0].link">
+            <div class="resultado_textos">
+              <h3>{{item.name}}</h3>
+            </div>
+            </div>
+            <div class="linha"></div>
+          </div>
+        </div>
+      </button>
+    </div>
+ </ng-container>
+
+
+
+
 </div>
