@@ -1,20 +1,21 @@
-<div class="layout">
-    <div *ngIf="dataLoaded">
-      <app-left-info [urlImage]="artistImage" [urlLink]="externalLink"></app-left-info>
+<ng-container *ngIf="artistItem && albumItems && singleItems">
+  <div class="layout">
+    <div *ngIf="dataLoaded && artistItem">
+      <app-left-info [urlImage]="artistItem.artistImages[0].link" [urlLink]="artistItem.externalLink" [isArtistPage]="true"></app-left-info>
     </div>
 
     <div class="conteudo">
-        <h1 class="nome_artista">{{ artistName }}</h1>
+        <h1 class="nome_artista">{{ artistItem.name }}</h1>
 
         <div class="generos_sec">
             <h3>Gêneros do artista: </h3>
             <div class="generos">
-              <div class="genero" *ngFor="let genero of genres"><h4>{{ genero }}</h4></div>
+              <div class="genero" *ngFor="let genero of artistItem.genres"><h4>{{ genero }}</h4></div>
             </div>
         </div>
 
         <div class="seguidores">
-          <h3>Seguidores: <span>{{ followers }}</span></h3>
+          <h3>Seguidores: <span>{{ artistItem.artistFollowers }}</span></h3>
         </div>
 
         <div class="lancamentos">
@@ -29,17 +30,16 @@
 
             <div *ngFor="let album of albumItems">
              <div class="lancamento">
-                <img [src]="album.images[0].url">
+                <img [src]="album.albumImage[0].link">
                 <div class="lancamento_texto">
-                  <button (click)="navigateAlbum(album.id)"><h2>{{ album.name }}</h2></button>
+                  <button (click)="navigateAlbum(album.id)"><h2>{{ album.albumName }}</h2></button>
                   <p>{{ getArtistsString(album.artists) }}</p>
                 </div>
                 <h3>{{getYearFromReleaseDate(album.releaseDate)}}</h3>
               </div>
               <div class="linha"></div>
             </div>
-          </div>
-
+            </div>
           <div class="lancamentos_secao">
             <div class="lancamentos_secao_topo">
               <div class="lancamentos_secao_texto">
@@ -51,9 +51,9 @@
 
             <div *ngFor="let single of singleItems">
               <div class="lancamento">
-                <img [src]="single.images[0].url">
+                <img [src]="single.albumImage[0].link">
                 <div class="lancamento_texto">
-                  <button (click)="navigateAlbum(single.id)"><h2>{{single.name}}</h2></button>
+                  <button (click)="navigateAlbum(single.id)"><h2>{{single.albumName}}</h2></button>
                   <p>{{getArtistsString(single.artists)}}</p>
                 </div>
                 <h3>{{getYearFromReleaseDate(single.releaseDate)}}</h3>
@@ -64,4 +64,6 @@
           </div>
         </div>
     </div>
-</div>
+  </div>
+</ng-container>
+

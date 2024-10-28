@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Album } from 'src/app/layouts/Album';
+import { Artist } from 'src/app/layouts/Artists';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 
 @Component({
@@ -8,16 +10,11 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
   styleUrls: ['./artista.component.css']
 })
 export class ArtistaComponent {
-  artistId!: string
-  artistName!: string
-  artistImage!: string
-  dataLoaded!: boolean
-  externalLink!: string;
-  genres!: string[];
-  followers!: number;
-  allItems: any[] = []
-  albumItems:any[] = [];
-  singleItems: any[] = [];
+  artistItem?: Artist;
+  albumItems:Album[] = [];
+  singleItems: Album[] = [];
+  dataLoaded!: boolean;
+  itemsAlbum: Album[] = [];
 
   id!: string | null;
   constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
@@ -40,29 +37,22 @@ export class ArtistaComponent {
   }
   loadAlbums(id: string): void {
     this.serviceSpotify.getAlbumsByArtist(id).subscribe(
-      (items) => {
-        this.albumItems = items.filter(item => item.type === "album"),
-        this.singleItems = items.filter(item => item.type === "single")
-        console.log(this.albumItems)
-        console.log(this.singleItems)
+      items => {
+        this.itemsAlbum = items
+        console.log(this.itemsAlbum)
+        this.albumItems = this.itemsAlbum.filter(items => items.albumType === "album")
+        this.singleItems = this.itemsAlbum.filter(items => items.albumType === "single")
       }
     )
   }
   loadArtist(id: string): void {
     this.serviceSpotify.getArtistById(id).subscribe(
-      (params) => {
-        this.artistName = params.name,
-        this.artistImage = params.artistImages[0].link,
-        this.dataLoaded = true,
-        this.externalLink = params.externalLink,
-        this.genres = params.genres
-        this.followers = params.artistFollowers.total
-        console.log(this.externalLink)
-
+      artist => {
+        this.artistItem = artist
       }
     )
   }
-  getArtistsString(artists: any[]): string {
+  getArtistsString(artists: Pick<Artist, 'id' | 'name'>[]): string {
     return artists.map(artist => artist.name).join(', ');
   }
   getYearFromReleaseDate(releaseDate: string): string {

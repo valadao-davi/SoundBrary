@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Album } from 'src/app/layouts/Album';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 
 @Component({
@@ -13,9 +14,8 @@ export class LeftInfoComponent {
   @Input() trackName!: string;
   @Input() albumTitle!: string;
   @Input() urlLink!: string;
-  albumName!: string;
-  albumTracks!: any[]
-  albumType!: string
+  @Input() isArtistPage: boolean = false;
+  albumItem?: Album
 
   constructor(private router: Router,private serviceSpotify: ServiceMusicService){
 
@@ -30,20 +30,15 @@ export class LeftInfoComponent {
   }
 
   ngOnInit(){
-    this.loadAlbumTracks(this.albumId!)
+    if(this.isArtistPage === false){
+      this.loadAlbumTracks(this.albumId!)
+    }
   }
 
   loadAlbumTracks(id: string): void {
     this.serviceSpotify.getAlbumById(id).subscribe(
-      (params) => {
-        this.albumName = params.albumName
-        this.albumType = params.albumType
-        this.albumTracks = params.tracks.map((item: any) => ({
-          id: item.id,
-          name: item.name,
-          orderTrack: item.orderTrack,
-          duration: item.duration
-        }))
+      album => {
+        this.albumItem = album
       }
     )
   }

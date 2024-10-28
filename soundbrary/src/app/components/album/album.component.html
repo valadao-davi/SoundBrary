@@ -1,20 +1,21 @@
-<div class="layout">
+<ng-container *ngIf="albumItem">
+  <div class="layout">
     <div *ngIf="dataLoaded">
-      <app-left-info [urlImage]="albumImage" [albumId]="albumId" [albumTitle]="albumName"></app-left-info>
+      <app-left-info [urlImage]="albumItem.albumImage[0].link" [albumId]="albumItem.id" [albumTitle]="albumItem.albumName"></app-left-info>
     </div>
 
     <div class="conteudo">
-        <h1><span *ngFor="let artist of artistNames; let isLast = last">{{artist.name}}<span *ngIf="!isLast">, </span> </span> - {{ albumName }} </h1>
+        <h1><span *ngFor="let artist of albumItem.artists; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ albumItem.albumName }} </h1>
 
         <div class="generos_sec">
             <h3>Tipo de lançamento: </h3>
             <div class="generos">
-              <div class="genero"><h4>{{ albumType | capitalize}}</h4></div>
+              <div class="genero"><h4>{{ albumItem.albumType | capitalize}}</h4></div>
             </div>
         </div>
 
         <div class="data_lancamento">
-          <h3>Data de Lançamento: <span>{{ releaseDate }}</span></h3>
+          <h3>Data de Lançamento: <span>{{ albumItem.releaseDate }}</span></h3>
       </div>
 
         <div class="secao_dissays">
@@ -23,7 +24,7 @@
             <div class="linha"></div>
           </div>
 
-          <div *ngFor="let item of albumTracks">
+          <div *ngFor="let item of albumItem.tracks">
             <div class="track_album">
             <button (click)="navigateMusic(item.id)"><h2><span>{{ item.orderTrack }}. </span>{{ item.name }}</h2></button>
             <div class="lista_dissays">
@@ -42,4 +43,6 @@
       </div>
 
     </div>
+
+</ng-container>
 

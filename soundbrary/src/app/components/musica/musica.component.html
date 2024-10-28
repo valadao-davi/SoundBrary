@@ -1,43 +1,47 @@
-<div class="layout">
-  <div *ngIf="dataLoaded">
-    <app-left-info [urlLink]="urlLink" [trackName]="musicName" [urlImage]="albumImage" [albumId]="albumId"></app-left-info>
-  </div>
+<ng-container *ngIf="musicItem">
+  <div class="layout">
+    <div *ngIf="dataLoaded">
+      <app-left-info [urlLink]="musicItem.externalLink" [trackName]="musicItem.name" [urlImage]="musicItem.albumImages[0].link" [albumId]="musicItem.albumId"></app-left-info>
+    </div>
 
-  <div class="conteudo">
-      <h1><span *ngFor="let artist of artistNames; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ musicName }} </h1>
+    <div class="conteudo">
+        <h1><span *ngFor="let artist of musicItem.artists; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ musicItem.name }} </h1>
 
-      <div class="generos_sec">
-          <h3>Tipo de lançamento: </h3>
-          <div class="generos">
-            <div class="genero"><h4>{{ albumType | capitalize}}</h4></div>
+        <div class="generos_sec">
+            <h3>Tipo de lançamento: </h3>
+            <div class="generos">
+              <div class="genero"><h4>{{ musicItem.albumType | capitalize}}</h4></div>
+            </div>
+        </div>
+
+        <div class="data_lancamento">
+          <h3>Data de Lançamento: <span>{{ musicItem.releaseDate }}</span></h3>
+      </div>
+
+        <div class="secao_dissays">
+          <div class="secao_dissays_topo">
+            <h1>Dissays <span>(4)</span></h1>
+            <div class="linha"></div>
           </div>
+
+          <div class="filtragem">
+            <img src="../../../assets/filter_icon.svg">
+            <p>por avaliação</p>
+          </div>
+
+          <div class="lista_dissays">
+            <app-dissay-item></app-dissay-item>
+            <app-dissay-item></app-dissay-item>
+            <app-dissay-item></app-dissay-item>
+            <app-dissay-item></app-dissay-item>
+          </div>
+        </div>
+
+
       </div>
-
-      <div class="data_lancamento">
-        <h3>Data de Lançamento: <span>{{ releaseDate }}</span></h3>
-    </div>
-
-      <div class="secao_dissays">
-        <div class="secao_dissays_topo">
-          <h1>Dissays <span>(4)</span></h1>
-          <div class="linha"></div>
-        </div>
-
-        <div class="filtragem">
-          <img src="../../../assets/filter_icon.svg">
-          <p>por avaliação</p>
-        </div>
-
-        <div class="lista_dissays">
-          <app-dissay-item></app-dissay-item>
-          <app-dissay-item></app-dissay-item>
-          <app-dissay-item></app-dissay-item>
-          <app-dissay-item></app-dissay-item>
-        </div>
-      </div>
-
 
     </div>
 
-  </div>
+
+</ng-container>
 

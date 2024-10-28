@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Album } from 'src/app/layouts/Album';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 
 @Component({
@@ -10,14 +11,9 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
 export class AlbumComponent {
 
   @Input() trackName!: string;
-  releaseDate!: string
-  albumImage!: string
-  artistNames!: any[]
-  albumId!: string
-  albumName!: string
+  albumItem?: Album;
   dataLoaded!: boolean
-  albumType!: string
-  albumTracks!: any[]
+
 
   id!: string | null;
   constructor(private route: ActivatedRoute, private router: Router, private serviceSpotify: ServiceMusicService){
@@ -27,8 +23,11 @@ export class AlbumComponent {
   navigateMusic(id: string) {
     this.router.navigate([`/musica/${id}`])
   }
-  
-  
+  navigateArtist(id: string) {
+    this.router.navigate([`/artista/${id}`])
+  }
+
+
 
   ngOnInit(){
     this.route.paramMap.subscribe((params)=> {
@@ -40,29 +39,12 @@ export class AlbumComponent {
   }
   loadMusic(id: string): void {
     this.serviceSpotify.getAlbumById(id).subscribe(
-      (params) => {
-        this.artistNames = params.artists.map((artist: any)=> ({
-          name: artist.name,
-        }))
-        this.releaseDate = params.releaseDate,
-        this.albumImage = params.albumImage[0].link,
-        this.albumId = params.id,
-        this.albumName = params.albumName,
-        this.dataLoaded = true,
-        this.albumType = params.albumType
+      album => {
+        this.albumItem = album
+        this.dataLoaded = true
       }
     )
 
-    this.serviceSpotify.getAlbumById(id).subscribe(
-      (params) => {
-        this.albumTracks = params.tracks.map((item: any) => ({
-          id: item.id,
-          name: item.name,
-          orderTrack: item.orderTrack,
-          duration: item.duration
-        }))
-      }
-    )
   }
 
 }

@@ -33,7 +33,7 @@ router.get('/idArtist/:id', async(req, res)=> {
             const formatted = {
                 id: artistData.id,
                 name: artistData.name,
-                artistFollowers: artistData.followers,
+                artistFollowers: artistData.followers.total,
                 artistImages: artistData.images.map(images => ({
                     link: images.url,
                     height: images.height,
@@ -59,15 +59,15 @@ router.get('/idArtist/album/:id', async(req, res)=> {
         }else{
             const formatted = await Promise.all(albumData.map(items => ({
                 id: items.id,
-                name: items.name,
-                type: items.album_group,
+                albumName: items.name,
+                albumType: items.album_group,
                 artists: items.artists.map(artist => ({
                     id: artist.id,
                     name: artist.name
                 })),
                 releaseDate: items.release_date,
-                images: items.images.map(image => ({
-                    url: image.url,
+                albumImage: items.images.map(image => ({
+                    link: image.url,
                     width: image.width,
                     height: image.height
                 }))
