@@ -7,4 +7,22 @@ import { Component } from '@angular/core';
 })
 export class SearchComponent {
 
+  categoria = "catMusica";
+
+  changeMusica() {
+    this.categoria = "catMusica"
+  }
+  changeAlbuns() {
+    this.categoria = "catAlbuns"
+  }
+  changeSinglesEps() {
+    this.categoria = "catSinglesEps"
+  }
+  changeArtistas() {
+    this.categoria = "catArtistas"
+  }
+  changeDissays() {
+    this.categoria = "catDissays"
+  }
+
 }

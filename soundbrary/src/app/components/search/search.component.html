@@ -6,11 +6,11 @@
     </div>
 
     <div class="categorias">
-      <button class="categoria" >Músicas</button>
-      <button class="categoria" >Álbuns</button>
-      <button class="categoria" >Singles</button>
-      <button class="categoria" >Artistas</button>
-      <button class="categoria" >Dissays</button>
+      <button (click)="changeMusica()" class="categoria" [ngClass]="{'categoria_selecionada': categoria === 'catMusica'}" >Músicas</button>
+      <button (click)="changeAlbuns()" class="categoria" [ngClass]="{'categoria_selecionada': categoria === 'catAlbuns'}">Álbuns</button>
+      <button (click)="changeSinglesEps()" class="categoria" [ngClass]="{'categoria_selecionada': categoria === 'catSinglesEps'}">Singles & EPs</button>
+      <button (click)="changeArtistas()" class="categoria" [ngClass]="{'categoria_selecionada': categoria === 'catArtistas'}">Artistas</button>
+      <button (click)="changeDissays()" class="categoria" [ngClass]="{'categoria_selecionada': categoria === 'catDissays'}">Dissays</button>
     </div>
   </div>
 
