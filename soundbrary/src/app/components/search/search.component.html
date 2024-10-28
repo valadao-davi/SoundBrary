@@ -1,10 +1,9 @@
 <div class="search_layout">
   <div class="barra_catergorias">
     <div class="barra_pesquisa_search">
-      <input type="text" placeholder="Conteudo pesquisado">
+      <input type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)" placeholder="Conteudo pesquisado">
       <img src="../../../assets/lupa_icon.svg">
     </div>
-
     <div class="categorias">
       <button class="categoria" >Músicas</button>
       <button class="categoria" >Álbuns</button>

@@ -58,7 +58,7 @@ import { ArtistaComponent } from './components/artista/artista.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-
+    FormsModule
   ],
   providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent]

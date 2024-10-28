@@ -10,7 +10,7 @@ router.get('/searchMusic/:musicName', async (req, res)=> {
         const musicData: SpotifyApi.TrackObjectFull[] = await searchTrack(musicName, offset)
         const formatted = musicData.map(item => ({
             id: item.id,
-            song: item.name,
+            name: item.name,
             album_type: item.album.album_type,
             album_name: item.album.name,
             artist_name: item.artists.map(artist=> ({
