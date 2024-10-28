@@ -54,6 +54,11 @@ input::placeholder{
   border-radius: 64px;
 }
 
+.categoria_selecionada {
+  color: #6313A1;
+  border: 2px solid #6313A1;
+}
+
 .resultados_item {
   display: flex;
   flex-direction: column;
