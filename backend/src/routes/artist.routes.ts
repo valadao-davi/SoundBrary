@@ -22,12 +22,13 @@ router.get('/searchArtist/:artistName', async(req, res)=> {
         res.status(500).json({"erro": e})
     }
 })
-router.get('idArtist/:id', async(req, res)=> {
+router.get('/idArtist/:id', async(req, res)=> {
     const idArtist = req.params.id
     try {
         const artistData = await detailsArtist(idArtist)
         if(artistData === null) {
             res.status(404).json({message: `Artist with the ID: ${idArtist} Data not found`})
+
         }
         res.status(200).json(artistData)
     }catch(e){
