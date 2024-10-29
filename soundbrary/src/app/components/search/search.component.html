@@ -19,6 +19,7 @@
     <div class="resultados_item">
       <div class="resultados">
         <div class="resultado">
+          <h1 *ngIf="track.albumImages === []">Imagem não encontrada</h1>
           <img [src]="track.albumImages[0].link">
         <div class="resultado_textos">
           <h2>{{track.name}}</h2>
@@ -40,6 +41,7 @@
     <div class="resultados_item">
       <div class="resultados">
         <div class="resultado">
+          <h1 *ngIf="album.albumImage === []">Imagem não encontrada</h1>
           <img [src]="album.albumImage[0].link">
         <div class="resultado_textos">
           <h3>{{album.albumName}}</h3>
@@ -60,6 +62,7 @@
       <div class="resultados_item">
         <div class="resultados">
           <div class="resultado">
+            <h1 *ngIf="item.albumImage === []">Imagem não encontrada</h1>
             <img [src]="item.albumImage[0].link">
           <div class="resultado_textos">
             <h3>{{item.albumName}}</h3>
@@ -80,7 +83,8 @@
         <div class="resultados_item">
           <div class="resultados">
             <div class="resultado">
-             <img [src]="item.artistImages[0].link">
+              <h1 *ngIf="item.artistImages.length == 0">Imagem não encontrada</h1>
+             <img *ngIf="item.artistImages.length > 0" [src]="item.artistImages[0].link">
             <div class="resultado_textos">
               <h3>{{item.name}}</h3>
             </div>

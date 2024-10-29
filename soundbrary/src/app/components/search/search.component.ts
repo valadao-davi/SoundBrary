@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Music } from 'src/app/layouts/Music';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs';
 import { Album } from 'src/app/layouts/Album';
 import { Artist } from 'src/app/layouts/Artists';
-import { Route, Router } from '@angular/router';
+import { Route, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -13,7 +13,7 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  searchQuery: string = '';
+  searchQuery!: string;
   private searchSubject: Subject<string> = new Subject<string>();
   tracksSearched!: Music[]
   albumsSearched!: Album[]
@@ -43,7 +43,7 @@ export class SearchComponent {
     this.getTracksQuery(this.searchQuery)
   }
 
-  constructor(private router: Router,private serviceSpotify: ServiceMusicService){
+  constructor(private router: Router, private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
     this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
       this.getTracksQuery(value)
     })
@@ -57,11 +57,18 @@ export class SearchComponent {
   navigateAlbum(id: string) {
     this.router.navigate([`/album/${id}`])
   }
+  ngOnInit(){
+    this.route.params.subscribe(params => {
+      this.searchQuery = params['query']
+      this.getTracksQuery(this.searchQuery)
+    })
+  }
 
   onSearchChange(value: string){
     this.searchQuery = value;
     console.log(this.searchQuery)
     this.searchSubject.next(this.searchQuery)
+    this.router.navigate(['/search', this.searchQuery])
   }
 
   getTracksQuery(query: string): void {

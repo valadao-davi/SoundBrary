@@ -25,7 +25,7 @@ const routes: Routes = [
     {path: 'album/:id', component: AlbumComponent},
     {path: 'artista/:id', component: ArtistaComponent},
     {path: 'user/:id', component: UsuarioComponent},
-    {path: 'search', component: SearchComponent}
+    {path: 'search/:query', component: SearchComponent}
   ]
   },
 

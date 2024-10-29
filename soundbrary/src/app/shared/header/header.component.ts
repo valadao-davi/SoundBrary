@@ -12,6 +12,7 @@ export class HeaderComponent {
 
   @ViewChild('input_pesquisa') inputElement!: ElementRef;
 currentRoute: any;
+  text!: string;
 
   constructor(private router: Router) {}
 
@@ -23,8 +24,9 @@ currentRoute: any;
     return this.router.url.startsWith('/search');
   }
 
-  pesquisar() {
-    this.router.navigate(['/search'])
+  pesquisar(query: string) {
+    this.router.navigate([`/search/${query}`])
+
     console.log("Pesquisa")
   }
 
