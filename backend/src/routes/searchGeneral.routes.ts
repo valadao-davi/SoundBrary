@@ -13,14 +13,14 @@ router.get('/:query', async(req, res)=> {
         }else{
             const musicData: any[] = itemsData.tracks.items.map((music: any) => ({
                 id: music.id,
-                musicName: music.name,
-                artistName: music.artists.map((artist: any) => ({
+                name: music.name,
+                artists: music.artists.map((artist: any) => ({
                     id: artist.id,
                     name: artist.name
                 }
                 )),
-                album_name: music.album.name,
-                image_urls: music.album.images.map((image: any) => ({
+                albumName: music.album.name,
+                albumImages: music.album.images.map((image: any) => ({
                     link: image.url,
                     width: image.width,
                     height: image.height
@@ -29,20 +29,20 @@ router.get('/:query', async(req, res)=> {
             const albumData: any[] = itemsData.albums.items.map((album: any) => ({
                 id: album.id,
                 albumName: album.name,
-                image_urls: album.images.map((image: any) => ({
+                albumImage: album.images.map((image: any) => ({
                     link: image.url,
                     width: image.width,
                     height: image.height
                 })),
-                artist_name: album.artists.map((artist: any) => ({
+                artists: album.artists.map((artist: any) => ({
                     id: artist.id,
                     name: artist.name
                 }))
             })).slice(offset, offset + 5)
             const artistData: any[] = itemsData.artists.items.map((artist: any) => ({
                 id: artist.id,
-                artist_name: artist.name,
-                image_urls: artist.images.map((image: any) => ({
+                name: artist.name,
+                artistImages: artist.images.map((image: any) => ({
                     link: image.url,
                     width: image.width,
                     height: image.height

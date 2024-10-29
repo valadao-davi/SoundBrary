@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Music } from '../layouts/Music';
 import { Album } from '../layouts/Album';
 import { Artist } from '../layouts/Artists';
+import { Items } from '../layouts/Items';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,8 @@ export class ServiceMusicService {
   }
   getQueryArtist(query: string): Observable<Artist[]>{
     return this.http.get<Artist[]>(`${this.API}/artists/searchArtist/${query}`)
+  }
+  getQueryGeneral(query: string): Observable<Items>{
+    return this.http.get<Items>(`${this.API}/allSearch/${query}`)
   }
 }

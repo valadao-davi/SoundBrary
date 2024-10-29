@@ -84,7 +84,7 @@
 .tempo {
   display: flex;
   text-align: end;
-  align-content: end;
+  align-content: flex-end;
 }
 
 .sublinhado {

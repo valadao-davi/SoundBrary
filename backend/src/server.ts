@@ -58,7 +58,7 @@ initializeToken().then(() => {
    app.use('/artists', artistRoutes)
    app.use('/playlist', playlistRoutes)
    app.use('/album', albumRoutes)
-   app.use('/search', searchRoutes)
+   app.use('/allSearch', searchRoutes)
    
    app.listen(3000, ()=> {
     console.log(`Server funcionando na porta 3000...`)
