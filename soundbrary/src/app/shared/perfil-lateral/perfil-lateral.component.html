@@ -1,9 +1,14 @@
 <div id="profile_left">
-  <div id="profile_left-top">
+  <div id="profile_left-top" *ngIf="user === undefined">
       <div id="grey_circle"></div>
       <h3>Você ainda não criou uma conta</h3>
       <h5>Crie uma conta para uma experiência completa do Soundbrary</h5>
   </div>
+
+  <div id="profile_left-top" *ngIf="user">
+    <div id="grey_circle"></div>
+    <h3>{{user.name}}</h3>
+</div>
 
   <div id="coluna_salvos">
       <div id="item_salvos">

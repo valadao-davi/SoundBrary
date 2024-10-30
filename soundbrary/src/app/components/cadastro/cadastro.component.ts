@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 import { User } from 'src/app/layouts/User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 
@@ -52,32 +53,31 @@ export class CadastroComponent {
   submit() {
     this.emailUser = ''
     if(this.cadastroForm.invalid){
-          return;
-        }
-    if(this.emailUser){
-      this.invalidEmail = true
       return;
     }
     if(this.senhasNaoConferem){
       return;
     }
 
-    this.service.createUser(this.getEmailForm().value).subscribe({
-      next: (user) => {
-        this.emailUser = user.email
-        this.invalidEmail = true
-        return;
-      },
-      error: (err) => {
-        console.log('aqui')
-        if(err.status === 404) {
-          console.log('usuario nao encontrado')
-          this.cadastrarUsuario(this.cadastroForm.value)
-          this.invalidEmail = false
-          return;
-        }else {
-          console.error('erro inesperado', err)
+    const userJson = {
+      "name": this.getNameForm().value,
+      "email": this.getEmailForm().value,
+      "password": this.getPasswordForm().value,
+    }
+    this.service.createUser(userJson).pipe(
+      catchError((code)=> {
+        if(code.status === 400){
+           alert("Erro: " + code.error)
+        }else if(code.status === 500){
+          alert("Erro no servidor: " + code.error)
+        }else if(code.status !== 201){
+          alert("Erro desconhecido")
         }
+        return throwError(() => code)
+      })
+    ).subscribe({
+      next:(response) => {
+        console.log('Usuário criado com sucesso: ', response)
       }
     })
   }
@@ -92,13 +92,5 @@ export class CadastroComponent {
     return this.cadastroForm.get('senha')!
   }
 
-  async cadastrarUsuario(user: User){
-    const userJson = {
-      "name": `${user.name}`,
-      "email": `${user.email}`,
-      "senha": `${user.senha}`
-    }
-    console.log(userJson)
-    this.service.createUser(userJson).subscribe()
-  }
+
 }

@@ -21,9 +21,9 @@ export class ServiceUserService {
 
   getUser(token: String): Observable<User> {
     const headers = new HttpHeaders({
-      Authorization: `${token}`
+      Authorization: `Bearer ${token}`
     })
-    return this.http.get<User>(`${this.API}/profile`)
+    return this.http.get<User>(`${this.API}/profile`, {headers})
   }
 
   createUser(user: User): Observable<User> {
@@ -34,6 +34,7 @@ export class ServiceUserService {
     console.log('deletado')
     return this.http.delete<User>(`${this.API}/${id}`)
   }
+
 
 
 

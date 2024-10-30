@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/layouts/User';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
   selector: 'app-perfil-lateral',
@@ -6,5 +8,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./perfil-lateral.component.css']
 })
 export class PerfilLateralComponent {
+
+  accessToken!: string;
+  user!: User;
+
+  constructor(private serviceUsers: ServiceUserService){
+
+  }
+
+  ngOnInit(): void {
+    this.accessToken = localStorage.getItem('token') ?? ""
+    console.log(this.accessToken)
+    this.serviceUsers.getUser(this.accessToken).subscribe(user => {
+      this.user = user
+    })
+  }
+
 
 }
