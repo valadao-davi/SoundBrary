@@ -39,3 +39,18 @@
   width: 24px;
   height: 24px;
 }
+
+.agradecimento {
+  color: #FD47BC;
+}
+
+.agradecimento img {
+  width: 24px;
+  height: 24px;
+}
+
+.perfil_right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

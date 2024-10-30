@@ -3,17 +3,66 @@
   <div class="perfil_left">
     <h1 class="informacoes">Informações da conta</h1>
     <div class="imagem">
-      <img class="img_perfil" src="../../../assets/icon_0.png">
+      <img class="img_perfil" src="../../../assets/icone_1.png">
       <img class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
     <div class="nome">
-      <h1>Nome do Usuário</h1>
+      <h1>{{user.name}}</h1>
       <img class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
     <div class="email">
-      <h3>Email: usua***&#64;gmail.com</h3>
+      <h3>Email: {{user.email}}</h3>
       <img class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
+    <div class="senha">
+      <h3>Alterar senha</h3>
+      <img class="img_edit" src="../../../assets/edit_icon.svg">
+    </div>
+    <div class="agradecimento">
+      <h3>Receba agradecimentos!</h3>
+      <img src="../../../assets/donate_icon.svg">
+    </div>
   </div>
-  <div></div>
+
+  <div class="perfil_right">
+    <h1>Meu perfil</h1>
+    <div class="dissays_perfil">
+      <div class="section">
+        <div class="titulo_slider">
+            <h1>Top Dissays</h1>
+            <img src="../../../assets/fogo_vermelho_icon.svg" alt="Icone fogo">
+        </div>
+        <div class="slider_space" >
+            <div class="slider" id="slider" >
+              <app-d-mini></app-d-mini>
+              <app-d-mini></app-d-mini>
+              <app-d-mini></app-d-mini>
+              <app-d-mini></app-d-mini>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="section">
+      <div class="titulo_slider">
+        <h1>Musicas salvas</h1>
+        <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+    </div>
+    <div class="slider_space" >
+      <h1 *ngIf="listIdsString.length === 0">Não há músicas salvas no momento</h1>
+      <div class="slider" *ngFor="let item of listIdsString">
+        <h1>{{item}}</h1>
+        <!-- <app-m-mini
+        [isAlbum]="true"
+        [id]="item.id"
+        [name] = "item.album_name"
+        [artistName]="item.artist"
+        [imageUrl]="item.url"
+        ></app-m-mini> -->
+      </div>
+  </div>
+    </div>
+  </div>
+
+
 </div>

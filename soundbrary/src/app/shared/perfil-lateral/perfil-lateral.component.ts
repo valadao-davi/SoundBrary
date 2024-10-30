@@ -21,7 +21,6 @@ export class PerfilLateralComponent {
     console.log(this.accessToken)
     this.serviceUsers.getUser(this.accessToken).subscribe(user => {
       this.user = user
-      console.log(this.user.image)
     })
   }
 
