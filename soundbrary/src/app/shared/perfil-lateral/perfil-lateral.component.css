@@ -18,7 +18,7 @@
     gap: 16px;
     text-align: center;
 }
-#grey_circle{
+.grey_circle{
     width: 160px;
     height: 160px;
     border-radius: 50%;

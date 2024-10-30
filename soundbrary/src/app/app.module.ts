@@ -25,6 +25,7 @@ import { DuracaoPipe } from './pipes/duracao.pipe';
 import { DissayItemComponent } from './components/dissay-item/dissay-item.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { ArtistaComponent } from './components/artista/artista.component';
+import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.component';
 
 
 
@@ -51,7 +52,8 @@ import { ArtistaComponent } from './components/artista/artista.component';
     DuracaoPipe,
     DissayItemComponent,
     CapitalizePipe,
-    ArtistaComponent
+    ArtistaComponent,
+    ProfileLayoutComponent
   ],
   imports: [
     BrowserModule,

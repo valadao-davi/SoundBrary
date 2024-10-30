@@ -6,7 +6,7 @@
   </div>
 
   <div id="profile_left-top" *ngIf="user">
-    <img class="grey_circle"class="grey_circle" src="" alt="">
+    <img class="grey_circle"class="grey_circle" *ngIf="user.image === undefined" src="../../../assets/icon_0.png" alt="">
     <h3>{{user.name}}</h3>
 </div>
 

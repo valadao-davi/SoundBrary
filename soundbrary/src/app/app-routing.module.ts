@@ -11,6 +11,7 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { DissayComponent } from './components/dissay/dissay.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtistaComponent } from './components/artista/artista.component';
+import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.component';
 
 
 
@@ -36,6 +37,8 @@ const routes: Routes = [
   {path: 'cadastro', component: AuthLayoutComponent, children: [
     {path: '',  component: CadastroComponent}
   ]},
+
+  {path: 'perfil', component: ProfileLayoutComponent}
 
 
 ];
