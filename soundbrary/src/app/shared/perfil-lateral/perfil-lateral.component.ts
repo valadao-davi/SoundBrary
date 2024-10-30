@@ -18,10 +18,12 @@ export class PerfilLateralComponent {
 
   ngOnInit(): void {
     this.accessToken = localStorage.getItem('token') ?? ""
-    console.log(this.accessToken)
-    this.serviceUsers.getUser(this.accessToken).subscribe(user => {
-      this.user = user
-    })
+    if(this.accessToken.length > 0) {
+      this.serviceUsers.getUser(this.accessToken).subscribe(user => {
+        this.user = user
+      })
+    }
+
   }
 
 

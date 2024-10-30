@@ -59,6 +59,45 @@ userRouter.post('/createUser', async(req, res)=> {
     }
 })
 
+userRouter.patch('/addToFavorites/songs', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {_musicSaved: item}})
+            if(result){
+                res.status(200).send("Item salvado com sucesso")
+            }else{
+                res.status(500).send("Ocorreu um erro ao salvar seu item")
+            }
+        }else{
+            res.status(400).send("Por favor autentique para salvar o item")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+
+userRouter.patch('/removeFavorites/songs', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {_musicSaved: item}})
+            if(result){
+                res.status(200).send("Item salvado com sucesso")
+            }else{
+                res.status(500).send("Ocorreu um erro ao salvar seu item")
+            }
+        }else{
+            res.status(400).send("Por favor autentique para salvar o item")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+
+
 //Retorna o perfil do usuario
 userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
     try{

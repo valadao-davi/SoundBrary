@@ -35,6 +35,19 @@ export class ServiceUserService {
     return this.http.delete<User>(`${this.API}/${id}`)
   }
 
+  saveSongToFavorite(token: string, item: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.patch<void>(`${this.API}/addToFavorites/songs`, {id: item}, {headers})
+  }
+
+  removeSongFavorites(token: string, item: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.patch<void>(`${this.API}/removeFavorites/songs`, {id: item}, {headers})
+  }
 
 
 
