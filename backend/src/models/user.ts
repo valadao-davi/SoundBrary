@@ -7,5 +7,9 @@ export interface User {
     password: string;
     image?: string;
     _id?: mongodb.ObjectId;
+    _dissaySaved?: string[];
+    _musicSaved?: string[];
+    _albumSaved?: string[];
+    _artistsSaved?: string[];
     _dissays_created?: Dissay[];
 }

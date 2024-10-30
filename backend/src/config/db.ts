@@ -48,7 +48,44 @@ async function applySchemaValidation(db: mongodb.Db) {
                     description: "Image is an optional string parameter or null",
                     minLength: 8,
                     maxLength: 128
-                }
+                },
+                dissaySaved: {
+                    bsonType: ["array", "null"],
+                    description: "DissaysSaved is an optional array parameter or null",
+                    items: {
+                        bsonType: "string",
+                        minLength: 1,
+                        maxLength: 128
+                    }
+                },
+                musicSaved: {
+                    bsonType: ["array", "null"],
+                    description: "MusicsSaved is an optional string parameter or null",
+                    items: {
+                        bsonType: "string",
+                        minLength: 1,
+                        maxLength: 128
+                    }
+                },
+                albumSaved: {
+                    bsonType: ["array", "null"],
+                    description: "AlbumSaved is an optional string parameter or null",
+                    items: {
+                        bsonType: "string",
+                        minLength: 1,
+                        maxLength: 128
+                    }
+                },
+                artistsSaved: {
+                    bsonType: ["array", "null"],
+                    description: "ArtistsSaved is an optional string parameter or null",
+                    items: {
+                        bsonType: "string",
+                        minLength: 1,
+                        maxLength: 128
+                    }
+                },
+
                 
             }
         
