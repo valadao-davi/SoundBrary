@@ -78,6 +78,7 @@ export class CadastroComponent {
     ).subscribe({
       next:(response) => {
         console.log('Usuário criado com sucesso: ', response)
+        this.navigateLogin()
       }
     })
   }
