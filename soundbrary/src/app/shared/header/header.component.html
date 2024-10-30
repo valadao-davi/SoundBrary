@@ -8,8 +8,9 @@
   </div>
   <div id="h_right">
     <div id="auth_redirects">
-        <button (click)="navigateLogin()"><h3 id="entrar_text">Entrar</h3></button>
-        <button (click)="navigateCadastro()"><h3>Cadastrar</h3></button>
+        <button (click)="navigateLogin(false)" *ngIf="accessToken.length === 0"><h3 id="entrar_text" >Entrar</h3></button>
+        <button (click)="navigateLogin(true)" *ngIf="accessToken.length > 0"><h3 id="entrar_text" >Sair</h3></button>
+        <button (click)="navigateCadastro()"><h3 *ngIf="accessToken.length === 0">Cadastrar</h3></button>
     </div>
     <h3>Sobre</h3>
   </div>

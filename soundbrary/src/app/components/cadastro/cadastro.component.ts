@@ -62,7 +62,7 @@ export class CadastroComponent {
       return;
     }
 
-    this.service.getUserByEmail(this.getEmailForm().value).subscribe({
+    this.service.createUser(this.getEmailForm().value).subscribe({
       next: (user) => {
         this.emailUser = user.email
         this.invalidEmail = true

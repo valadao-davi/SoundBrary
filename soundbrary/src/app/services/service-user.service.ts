@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../layouts/User';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -8,42 +8,31 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceUserService {
-  private readonly API = 'http://localhost:3000'
-  private userId: String | undefined
+  private readonly API = 'http://localhost:3000/users'
 
   constructor(private http: HttpClient) {}
 
-  setUserId(id: String | undefined) {
-    this.userId = id;
+  loginUser(email: String, password: string): Observable<{accesToken: string}>{
+    return this.http.post<{accesToken: string}>(`${this.API}/login`, {
+      email,
+      password
+    });
   }
 
-  getUserId(): String | undefined {
-    return this.userId;
-  }
-
-  clearUserId() {
-    this.userId = undefined;
-  }
-
-  // chama a requisição get para a api no backend
-  getUsuariosLista(): Observable<User[]>{
-    return this.http.get<User[]>(`${this.API}/users`)
-  }
-  
-  getUser(id: String): Observable<User> {
-    return this.http.get<User>(`${this.API}/users/${id}`)
-  }
-  getUserByEmail(email: String) {
-    return this.http.get<User>(`${this.API}/users/email/${email}`)
+  getUser(token: String): Observable<User> {
+    const headers = new HttpHeaders({
+      Authorization: `${token}`
+    })
+    return this.http.get<User>(`${this.API}/profile`)
   }
 
   createUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.API}/users`, user)
+    return this.http.post<User>(`${this.API}/createUser`, user)
   }
 
   deleteUser(id: String): Observable<User> {
     console.log('deletado')
-    return this.http.delete<User>(`${this.API}/users/${id}`)
+    return this.http.delete<User>(`${this.API}/${id}`)
   }
 
 

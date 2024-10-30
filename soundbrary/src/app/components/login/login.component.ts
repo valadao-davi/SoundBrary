@@ -25,7 +25,7 @@ export class LoginComponent {
     }
 
   loginForm!: FormGroup;
-  id?: String;
+  token?: string;
   senha?: String;
 
 
@@ -34,18 +34,16 @@ export class LoginComponent {
   }
 
   logar() {
-    this.service.getUserByEmail(this.getEmailForm().value).subscribe(user => {
-      this.senha = user.senha
-      if(this.senha === this.getPasswordForm().value){
-        this.id = user._id
-        console.log(this.id)
-        this.service.setUserId(this.id)
+    this.service.loginUser(this.getEmailForm().value, this.getPasswordForm().value).subscribe((response) => {
+      if(response.accesToken){
+        this.token = response.accesToken
+        localStorage.setItem('token', this.token)
         this.navigateHome()
       }else{
-        console.log("Senha inválida")
+        console.error("Token não encontrado")
       }
-
-    })
+    }
+    )
   }
   getEmailForm(){
     return this.loginForm.get('email')!

@@ -9,15 +9,21 @@ RouterModule
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  accessToken!: string
+
 
   @ViewChild('input_pesquisa') inputElement!: ElementRef;
-currentRoute: any;
+  currentRoute: any;
   text!: string;
 
   constructor(private router: Router) {}
 
   focusInput() {
     this.inputElement.nativeElement.focus();
+  }
+  ngOnInit(){
+    this.accessToken = localStorage.getItem('token') ?? ""
+    console.log(this.accessToken)
   }
 
   isSearchRoute(): boolean {
@@ -38,7 +44,12 @@ currentRoute: any;
     this.router.navigate(['/cadastro']);
   }
 
-  navigateLogin() {
-    this.router.navigate(['/login']);
+  navigateLogin(leaving: boolean) {
+    if(leaving){
+      this.router.navigate(['/login']);
+      localStorage.clear()
+    }else{
+      this.router.navigate(['/login']);
+    }
   }
 }
