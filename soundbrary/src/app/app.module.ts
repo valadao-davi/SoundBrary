@@ -9,7 +9,6 @@ import { HeaderComponent } from './shared/header/header.component';
 import { PerfilLateralComponent } from './shared/perfil-lateral/perfil-lateral.component';
 import { AdsComponent } from './shared/ads/ads.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
-import { UsuarioComponent } from './components/usuario/usuario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
@@ -25,6 +24,7 @@ import { DuracaoPipe } from './pipes/duracao.pipe';
 import { DissayItemComponent } from './components/dissay-item/dissay-item.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { ArtistaComponent } from './components/artista/artista.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 
 
@@ -38,7 +38,6 @@ import { ArtistaComponent } from './components/artista/artista.component';
     PerfilLateralComponent,
     AdsComponent,
     CadastroComponent,
-    UsuarioComponent,
     MainLayoutComponent,
     LoginComponent,
     DMiniComponent,
@@ -51,7 +50,8 @@ import { ArtistaComponent } from './components/artista/artista.component';
     DuracaoPipe,
     DissayItemComponent,
     CapitalizePipe,
-    ArtistaComponent
+    ArtistaComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

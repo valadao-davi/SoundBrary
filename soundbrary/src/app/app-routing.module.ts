@@ -7,11 +7,10 @@ import { MusicaComponent } from './components/musica/musica.component';
 import { AlbumComponent } from './components/album/album.component';
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
-import { UsuarioComponent } from './components/usuario/usuario.component';
 import { DissayComponent } from './components/dissay/dissay.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtistaComponent } from './components/artista/artista.component';
-
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 
 
@@ -24,7 +23,6 @@ const routes: Routes = [
     {path: 'dissay', component: DissayComponent},
     {path: 'album/:id', component: AlbumComponent},
     {path: 'artista/:id', component: ArtistaComponent},
-    {path: 'user/:id', component: UsuarioComponent},
     {path: 'search/:query', component: SearchComponent}
   ]
   },
@@ -36,6 +34,8 @@ const routes: Routes = [
   {path: 'cadastro', component: AuthLayoutComponent, children: [
     {path: '',  component: CadastroComponent}
   ]},
+
+  {path: 'perfil', component: PerfilComponent}
 
 
 ];
