@@ -1,5 +1,7 @@
 <div class="layout">
-  <app-left-info></app-left-info>
+  <div>
+    <app-left-info></app-left-info>
+  </div>
   <div class="conteudo">
     <div class="dissay_content">
       <h1>Titulo do Dissay</h1>
@@ -23,7 +25,7 @@
 
       <div class="instrumentos_secao">
         <div class="instrumentos">
-          <h1>Instrumentos</h1>
+          <h1 class="secao_titulo">Instrumentos</h1>
           <div class="linha"></div>
           <div class="lista_instrumentos">
             <app-instrumento-mini-2></app-instrumento-mini-2>
@@ -44,7 +46,33 @@
           <app-instrumento-mini-2></app-instrumento-mini-2>
         </div>
       </div>
-    </div>
 
+      <div class="descricao">
+        <h1 class="secao_titulo">Descrição</h1>
+        <div class="linha"></div>
+        <div class="campo_texto">
+          <p>O piano é gravado de forma analógica, então talvez seja mais difícil de obter o timbre ideal, no entanto, alguns plugins de DAWs como FL Studio e Ableton conseguem simular bem o som analógico. Para alcançar um som autêntico, recomendo o uso do plugin RC-20 Retro Color, que adiciona uma leve saturação e ruído de fita, imitando as imperfeições de uma gravação analógica. Além disso, o uso de um compressor suave, como o LA-2A, pode ajudar a manter a dinâmica natural do piano enquanto dá uma coloração mais quente ao som.</p>
+          <br>
+          <p>No FL Studio, utilizar o equalizador Parametric EQ 2 para cortar um pouco dos médios graves em torno de 250Hz e realçar as altas frequências em 8kHz pode trazer mais clareza e brilho ao som, especialmente se a gravação original estiver um pouco abafada. Para finalizar, o reverb Valhalla VintageVerb com um tempo de decaimento médio e um mix em torno de 20% pode adicionar uma profundidade espacial que simula a acústica de uma sala de gravação vintage.</p>
+        </div>
+      </div>
+
+      <button class="agradecimento"><h3>Esse Dissay te ajudou? Envie um agradecimento!</h3><img src="../../../assets/donate_icon.svg" alt=""></button>
+
+      <div class="comentarios">
+        <h1 class="secao_titulo">Comentários</h1>
+        <div class="linha"></div>
+        <div class="zona_comentario">
+          <img src="../../../assets/icone_0.png">
+          <div class="campo_comentario">
+            <textarea #textarea_comentario (input)="adjustHeight(textarea_comentario)" spellcheck="false" class="comentario" placeholder="Adicione um comentário..."></textarea>
+            <div class="botoes_comentario">
+              <button><h4 class="cancelar">Cancelar</h4></button>
+              <button><h4 class="publicar">Publicar</h4></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

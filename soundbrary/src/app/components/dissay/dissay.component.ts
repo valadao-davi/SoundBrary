@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class DissayComponent {
 
+  adjustHeight(textarea: HTMLTextAreaElement) {
+    textarea.style.height = 'auto'; // Reseta a altura
+    textarea.style.height = `${textarea.scrollHeight}px`; // Define a nova altura
+  }
+
+
 }
