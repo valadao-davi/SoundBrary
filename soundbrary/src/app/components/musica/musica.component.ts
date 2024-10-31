@@ -41,8 +41,12 @@ export class MusicaComponent {
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
+        console.log(this.user?.musicSaved)
         if(this.musicItem && this.user.musicSaved){
+         console.log(this.user.musicSaved)
          this.saved = this.user.musicSaved?.includes(this.musicItem.id) ?? false
+         console.log("Is saved: ", this.saved)
+         console.log("ID saved: ", this.musicItem.id)
         }
       })
     }
@@ -57,17 +61,12 @@ export class MusicaComponent {
              alert("Erro: " + code.error)
           }else if(code.status === 500){
             alert("Erro no servidor: " + code.error)
+          }else if(code.status !== 200){
+            alert("Erro desconhecido")
           }
           return throwError(() => code)
         })
-      ).subscribe({
-        next: () => {
-          this.saved = true
-        },
-        error: (err) => {
-          console.error(err)
-        }
-      })
+      ).subscribe()
       this.saved = true
     }else if(this.accessToken && isSaved === true){
       this.serviceUser.removeSongFavorites(this.accessToken, id).pipe(
@@ -76,17 +75,12 @@ export class MusicaComponent {
              alert("Erro: " + code.error)
           }else if(code.status === 500){
             alert("Erro no servidor: " + code.error)
+          }else if(code.status !== 200){
+            alert("Erro desconhecido")
           }
           return throwError(() => code)
         })
-      ).subscribe({
-        next: () => {
-          this.saved = true
-        },
-        error: (err) => {
-          console.error(err)
-        }
-      })
+      ).subscribe()
       this.saved = false
 
     }

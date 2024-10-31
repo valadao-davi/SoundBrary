@@ -18,10 +18,7 @@ export class AlbumComponent {
   accessToken!: string
   saved: boolean = false;
   user?: User;
-
   dataLoaded!: boolean
-
-
   id!: string | null;
   constructor(private route: ActivatedRoute, private router: Router, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){
 
@@ -33,8 +30,6 @@ export class AlbumComponent {
   navigateArtist(id: string) {
     this.router.navigate([`/artista/${id}`])
   }
-
-
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
@@ -49,18 +44,13 @@ export class AlbumComponent {
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
-        console.log(this.user?.albumSaved)
         if(this.albumItem && this.user.albumSaved){
-         console.log(this.user.albumSaved)
          this.saved = this.user.albumSaved?.includes(this.albumItem.id) ?? false
-         console.log("Is saved: ", this.saved)
-         console.log("ID saved: ", this.albumItem.id)
         }
       })
     }
   }
-  saveAlbumOrRemove(id: string, isSaved: boolean): void {
-    console.log(isSaved)
+  saveOrRemoveAlbum(id: string, isSaved: boolean): void {
     if(this.accessToken && isSaved === false){
       this.serviceUser.saveAlbumToFavorite(this.accessToken, id).pipe(
         catchError((code)=> {
@@ -68,17 +58,12 @@ export class AlbumComponent {
              alert("Erro: " + code.error)
           }else if(code.status === 500){
             alert("Erro no servidor: " + code.error)
+          }else if(code.status !== 200){
+            alert("Erro desconhecido")
           }
           return throwError(() => code)
         })
-      ).subscribe({
-        next: () => {
-          this.saved = true
-        },
-        error: (err) => {
-          console.error(err)
-        }
-      })
+      ).subscribe()
       this.saved = true
     }else if(this.accessToken && isSaved === true){
       this.serviceUser.removeAlbumFavorites(this.accessToken, id).pipe(
@@ -87,27 +72,24 @@ export class AlbumComponent {
              alert("Erro: " + code.error)
           }else if(code.status === 500){
             alert("Erro no servidor: " + code.error)
+          }else if(code.status !== 200){
+            alert("Erro desconhecido")
           }
           return throwError(() => code)
         })
-      ).subscribe({
-        next: () => {
-          this.saved = true
-        },
-        error: (err) => {
-          console.error(err)
-        }
-      })
+      ).subscribe()
       this.saved = false
 
     }
   }
+
   loadAlbum(id: string): void {
     this.serviceSpotify.getAlbumById(id).subscribe(
       album => {
         this.albumItem = album
         this.dataLoaded = true
         this.getUser()
+
       }
     )
 

@@ -9,12 +9,11 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 export const userRouter = express.Router();
 userRouter.use(express.json())
 dotenv.config({path: './src/.env'})
-const { ACESS_SECRET } =  process.env
-console.log(ACESS_SECRET)
+const { ACCESS_SECRET } =  process.env
 
 interface CustomRequest extends Request {
     token?: JwtPayload; // A propriedade token pode ser undefined
-  }
+}
 
 
 
@@ -26,11 +25,11 @@ export const auth = async(req: CustomRequest, res: Response, next: NextFunction)
         if(!token){
             throw new Error()
         }
-        const decoded = jwt.verify(token, `${ACESS_SECRET}`) as JwtPayload
+        const decoded = jwt.verify(token, `${ACCESS_SECRET}`) as JwtPayload
         req.token = decoded
         next();
     } catch(err){
-        res.status(401).send("Please authenticate")
+        console.error("Erro no middleware de autenticação: ", err);
 
     }
 }
@@ -48,9 +47,9 @@ userRouter.post('/createUser', async(req, res)=> {
         else{
             const result = await collections?.users?.insertOne(user)
             if(result?.acknowledged){
-                res.status(201).send("Usuário criado com sucesso")
+                res.status(200).send()
             }else{
-                res.send(500).send("Ocorreu um erro ao criar o usuário")
+                res.status(500).send("Ocorreu um erro ao criar o usuário")
             }
         }
     }catch(error){
@@ -63,18 +62,22 @@ userRouter.patch('/addToFavorites/songs', auth, async(req: CustomRequest, res: R
     try{
         const userId = req.token?.sub;
         const item = req.body.id
+        console.log("id: ", item + ", userid: ", userId)
         if(userId && item){
-            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {_musicSaved: item}})
+            console.log("validos")
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {musicSaved: item}})
             if(result){
                 res.status(200)
             }else{
-                res.status(500).send("Ocorreu um erro ao salvar seu item")
+                console.log("Erro aqui")
+                res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
-            res.status(400).send("Por favor autentique para salvar o item")
+            res.status(400).json({error: "Autentique para continuar"})
         }
     }catch(error){
-        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+        console.error("Erro no método add to favorites: ", error)
+        res.status(500).json({error: error})
     }
 })
 
@@ -83,7 +86,76 @@ userRouter.patch('/removeFavorites/songs', auth, async(req: CustomRequest, res: 
         const userId = req.token?.sub;
         const item = req.body.id
         if(userId && item){
-            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {_musicSaved: item}})
+            console.log("validos")
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {musicSaved: item}})
+            if(result){
+                res.status(200)
+            }else{
+                console.log("Erro aqui")
+                res.status(500).json({error: "Erro ao salvar seu item"})
+            }
+        }else{
+            res.status(400).json({error: "Autentique para continuar"})
+        }
+    }catch(error){
+        console.error("Erro no método add to favorites: ", error)
+        res.status(500).json({error: error})
+    }
+})
+
+userRouter.patch('/addToFavorites/albums', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        console.log("id: ", item + ", userid: ", userId)
+        if(userId && item){
+            console.log("validos")
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {albumSaved: item}})
+            if(result){
+                res.status(200)
+            }else{
+                console.log("Erro aqui")
+                res.status(500).json({error: "Erro ao salvar seu item"})
+            }
+        }else{
+            res.status(400).json({error: "Autentique para continuar"})
+        }
+    }catch(error){
+        console.error("Erro no método add to favorites: ", error)
+        res.status(500).json({error: error})
+    }
+})
+
+userRouter.patch('/removeFavorites/albums', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            console.log("validos")
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {albumSaved: item}})
+            if(result){
+                res.status(200)
+            }else{
+                console.log("Erro aqui")
+                res.status(500).json({error: "Erro ao salvar seu item"})
+            }
+        }else{
+            res.status(400).json({error: "Autentique para continuar"})
+        }
+    }catch(error){
+        console.error("Erro no método add to favorites: ", error)
+        res.status(500).json({error: error})
+    }
+})
+
+userRouter.patch('/addToFavorites/artists', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        console.log("id: ", item + ", userid: ", userId)
+        if(userId && item){
+            console.log("validos")
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {artistsSaved: item}})
             if(result){
                 res.status(200)
             }else{
@@ -161,25 +233,50 @@ userRouter.patch('/removeFavorites/albums', auth, async(req: CustomRequest, res:
             if(result){
                 res.status(200)
             }else{
-                res.status(500).send("Ocorreu um erro ao salvar seu item")
+                console.log("Erro aqui")
+                res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
-            res.status(400).send("Por favor autentique para salvar o item")
+            res.status(400).json({error: "Autentique para continuar"})
         }
     }catch(error){
-        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+        console.error("Erro no método add to favorites: ", error)
+        res.status(500).json({error: error})
     }
 })
 
+userRouter.patch('/removeFavorites/artists', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            console.log("validos")
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {artistsSaved: item}})
+            if(result){
+                return res.status(200)
+            }else{
+                console.log("Erro aqui")
+                return res.status(500).json({error: "Erro ao salvar seu item"})
+            }
+        }else{
+            return res.status(400).json({error: "Autentique para continuar"})
+        }
+    }catch(error){
+        console.error("Erro no método add to favorites: ", error)
+        res.status(500).json({error: error})
+    }
+})
 
 //Retorna o perfil do usuario
 userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
     try{
         const userId = req.token?.sub;
         const user = await collections?.users?.findOne({_id: new ObjectId(userId)})
-
+        if(userId && !ObjectId.isValid(userId)){
+            return res.status(400).send("ID de usuário inválido");
+        }
         if(user){
-            res.status(200).send({email: user.email, name: user.name, musicSaved: user._musicSaved, albumSaved: user._albumSaved, artistsSaved: user._artistsSaved})
+            res.status(200).send({email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -211,9 +308,8 @@ userRouter.post('/login', async(req, res)=> {
         }
         
         if(checkUser?.password === password){
-            const token = jwt.sign({sub: checkUser?._id},`${ACESS_SECRET}`)
+            const token = jwt.sign({sub: checkUser?._id},`${ACCESS_SECRET}`)
             res.json({accessToken: token})
-            res.status(200)
         }else{
             res.status(404).send("Usuário não encontrado")
         }        

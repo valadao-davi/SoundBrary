@@ -22,7 +22,6 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 
-
 //Inicializa o token
 const initializeToken = async () => {
     try {

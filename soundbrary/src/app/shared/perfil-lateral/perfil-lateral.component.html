@@ -1,34 +1,33 @@
 <div id="profile_left">
-  <div id="profile_left-top" *ngIf="accessToken.length === 0">
-      <div id="grey_circle"></div>
-      <img class="grey_circle" src="../../../assets/icon_0.png" alt="">
+  <div id="profile_left-top" *ngIf="user === undefined">
+    <button (click)="navigatePerfil()"><img class="grey_circle" src="../../../assets/icon_0.png" alt=""></button>
       <h3>Você ainda não criou uma conta</h3>
       <h5>Crie uma conta para uma experiência completa do Soundbrary</h5>
 
   </div>
 
-  <div id="profile_left-top">
+  <button (click)="navigatePerfil()" id="profile_left-top" *ngIf="user">
     <img class="grey_circle" *ngIf="user.image === undefined" src="../../../assets/icon_0.png" alt="">
     <h3>{{user.name}}</h3>
-</div>
+</button>
 
   <div id="coluna_salvos">
-      <div id="item_salvos">
+      <button (click)="navigatePerfil()" id="item_salvos">
           <img src="../../../assets/song_icon.svg">
           <h4>Músicas salvas</h4>
-      </div>
-      <div id="item_salvos">
+      </button>
+      <button (click)="navigatePerfil()" id="item_salvos">
           <img src="../../../assets/artist_icon.svg">
           <h4>Artistas salvos</h4>
-      </div>
-      <div id="item_salvos">
+      </button>
+      <button (click)="navigatePerfil()" id="item_salvos">
           <img src="../../../assets/album_icon.svg">
           <h4>Albuns salvos</h4>
-      </div>
-      <div id="item_salvos">
+      </button>
+      <button (click)="navigatePerfil()" id="item_salvos">
           <img src="../../../assets/article_icon.svg">
           <h4>Artigos salvos</h4>
-      </div>
+      </button>
   </div>
 
   <div id="btn_criar_dissay">

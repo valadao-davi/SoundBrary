@@ -44,7 +44,7 @@ export class SearchComponent {
   }
 
   constructor(private router: Router, private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
-    this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
+    this.searchSubject.pipe(debounceTime(1000)).subscribe(value => {
       this.getTracksQuery(value)
     })
   }

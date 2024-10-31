@@ -33,70 +33,80 @@
             <img src="../../../assets/fogo_vermelho_icon.svg" alt="Icone fogo">
         </div>
         <div class="slider_space" >
-            <div class="slider" id="slider" >
+            <div class="slider">
               <app-d-mini></app-d-mini>
               <app-d-mini></app-d-mini>
               <app-d-mini></app-d-mini>
               <app-d-mini></app-d-mini>
             </div>
         </div>
-    </div>
-    </div>
+      </div>
 
-    <div class="section">
-      <div class="titulo_slider">
-        <h1>Musicas salvas</h1>
-        <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
-    </div>
-    <div class="slider_space" >
-      <h1 *ngIf="musicsSaved.length === 0">Não há músicas salvas no momento</h1>
-      <div class="slider" *ngFor="let item of musicsSaved">
-        <app-m-mini
-        [isAlbum]="false"
-        [id]="item.id"
-        [name] = "item.name"
-        [artistName]="item.artists[0].name"
-        [imageUrl]="item.albumImages[0].link"
-        ></app-m-mini>
+      <div class="section">
+        <div class="titulo_slider">
+          <h1>Musicas salvas</h1>
+          <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+      </div>
+      <div class="slider_space" >
+        <h1 *ngIf="listIdsString.musics.length === 0">Não há músicas salvas no momento</h1>
+        <div class="slider" *ngFor="let item of musicsList">
+          <app-m-mini
+          [isAlbum]="false"
+          [id]="item.id"
+          [name] = "item.name"
+          [artistName]="item.artists[0].name"
+          [imageUrl]="item.albumImages[0].link"
+          ></app-m-mini>
+        </div>
+      </div>
+      </div>
+
+      <div class="section">
+        <div class="titulo_slider">
+          <h1>Albums salvos</h1>
+          <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+      </div>
+      <div class="slider_space" >
+        <h2 class="sem_itens" *ngIf="listIdsString.albums.length === 0">Não há músicas salvas no momento</h2>
+        <div class="slider" *ngFor="let item of albumsList">
+          <app-m-mini
+          [isAlbum]="true"
+          [id]="item.id"
+          [name] = "item.albumName"
+          [artistName]="item.artists[0].name"
+          [imageUrl]="item.albumImage[0].link"
+          ></app-m-mini>
+        </div>
+      </div>
+      </div>
+
+      <div class="section">
+        <div class="titulo_slider">
+
+          <h1>Artistas salvos</h1>
+          <div *ngIf="listIdsString.artists.length === 0" >
+            <h2 class="sem_itens">Não há músicas salvas no momento</h2>
+          </div>
+          <img *ngIf="listIdsString.artists.length > 0" src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+      </div>
+
+      <div *ngIf="listIdsString.artists.length > 0" class="slider_space" >
+        <div class="slider" *ngFor="let item of artistsList">
+          <app-m-mini
+          [isAlbum]="false"
+          [id]="item.id"
+          [name] = "item.name"
+          [imageUrl]="item.artistImages[0].link"
+          ></app-m-mini>
+        </div>
+      </div>
       </div>
     </div>
-  </div>
 
-  <div class="section">
-    <div class="titulo_slider">
-      <h1>Albuns salvos</h1>
-      <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
-  </div>
-  <div class="slider_space" >
-    <h1 *ngIf="albumsSaved.length === 0">Não há albuns salvos no momento</h1>
-    <div class="slider" *ngFor="let item of albumsSaved">
-      <app-m-mini
-      [isAlbum]="true"
-      [id]="item.id"
-      [name] = "item.albumName"
-      [artistName]="item.artists[0].name"
-      [imageUrl]="item.albumImage[0].link"
-      ></app-m-mini>
-    </div>
-</div>
-</div>
 
-<div class="section">
-  <div class="titulo_slider">
-    <h1>Artistas salvos</h1>
-    <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
-</div>
-<div class="slider_space" >
-  <h1 *ngIf="artistsSaved.length === 0">Não há albuns salvos no momento</h1>
-  <div class="slider" *ngFor="let item of artistsSaved">
-    <app-m-mini
-    [id]="item.id"
-    [name] = "item.name"
-    [imageUrl]="item.artistImages[0].link"
-    ></app-m-mini>
-  </div>
-</div>
-</div>
+
+
+
 
   </div>
 

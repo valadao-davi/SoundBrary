@@ -15,7 +15,11 @@ button {
   all: unset;
   cursor: pointer;
 }
-
+.title-song{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .conteudo {
   width: 100%;
   padding: 48px 108px 120px 64px;

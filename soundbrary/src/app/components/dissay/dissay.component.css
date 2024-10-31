@@ -1,16 +1,18 @@
 .layout {
   width: 100%;
   display: flex;
-}
-
-.dissay {
-  padding-right: 108px;
-  width: 900;
+  height: 100%;
 }
 
 .conteudo {
   width: 100%;
   padding: 48px 108px 120px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dissay_content {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -64,7 +66,7 @@
   width: 568px;
 }
 
-.instrumentos h1 {
+.secao_titulo {
   width: 100%;
   word-wrap: break-word;
   white-space: normal;
@@ -91,3 +93,94 @@
   gap: 16px;
   align-items: center;
 }
+
+.descricao {
+  margin-top: 8px ;
+}
+
+.campo_texto {
+  margin-top: 16px;
+}
+
+.campo_texto p {
+  font-size: 20px;
+}
+
+.zona_comentario {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+}
+
+.zona_comentario img {
+  width: 48px;
+  height: 48px;
+  border-radius: 100px
+}
+
+.campo_comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 24px;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.agradecimento {
+  display: flex;
+  gap: 8px;
+  color: #FD47BC;
+  border: 2px solid #FD47BC;
+  border-radius: 100px;
+  padding: 16px 80px;
+  align-self: center;
+  margin: 24px 0px 24px 0px;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.comentario {
+  font-size: 20px;
+  min-height: 64px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.comentario:focus {
+  color: black;
+}
+
+.botoes_comentario {
+  display: flex;
+  gap: 0px;
+  align-self: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+.cancelar {
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.publicar {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+button {
+  width: fit-content;
+  height: fit-content;
+  margin: 0px;
+  padding: 0px;
+}
+
+

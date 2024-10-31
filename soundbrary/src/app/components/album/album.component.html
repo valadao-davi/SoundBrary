@@ -1,15 +1,18 @@
 <ng-container *ngIf="albumItem">
   <div class="layout">
     <div *ngIf="dataLoaded">
-      <app-left-info [urlImage]="albumItem.albumImage[0].link" [albumId]="albumItem.id" [albumTitle]="albumItem.albumName"></app-left-info>
+      <app-left-info [albumId]="albumItem.id" [urlImage]="albumItem.albumImage[0].link" [albumTitle]="albumItem.albumName"></app-left-info>
     </div>
 
     <div class="conteudo">
-      <div class="title-song">
-        <h1><span *ngFor="let artist of albumItem.artists; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ albumItem.albumName }} </h1>
-        <button (click)="saveAlbumOrRemove(albumItem.id, saved)"><img src="../../../assets/Vector.png" *ngIf="!saved" alt=""><img src="../../../assets/salvado.png" *ngIf="saved" alt=""></button>
+        <div class="title-song">
+          <h1><span *ngFor="let artist of albumItem.artists; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ albumItem.albumName }} </h1>
+          <button (click)="saveOrRemoveAlbum(albumItem.id, saved)">
+            <img src="../../../assets/Vector.png" *ngIf="!saved" alt="">
+            <img src="../../../assets/salvado.png" *ngIf="saved" alt="">
+          </button>
+        </div>
 
-      </div>
         <div class="generos_sec">
             <h3>Tipo de lançamento: </h3>
             <div class="generos">
@@ -27,19 +30,17 @@
             <div class="linha"></div>
           </div>
 
-          <div *ngFor="let item of albumItem.tracks">
-            <div class="track_album">
-            <button (click)="navigateMusic(item.id)"><h2><span>{{ item.orderTrack }}. </span>{{ item.name }}</h2></button>
-            <div class="lista_dissays">
-              <app-dissay-item></app-dissay-item>
-              <app-dissay-item></app-dissay-item>
-            </div>
-            <button class="ver_mais" (click)="navigateMusic(item.id)">Ver mais dissays da música</button>
-          </div>
+          <div class="filtragem">
+            <img src="../../../assets/filter_icon.svg">
+            <p>por avaliação</p>
           </div>
 
-
-
+          <div class="lista_dissays">
+            <app-dissay-item></app-dissay-item>
+            <app-dissay-item></app-dissay-item>
+            <app-dissay-item></app-dissay-item>
+            <app-dissay-item></app-dissay-item>
+          </div>
         </div>
 
 
@@ -47,5 +48,8 @@
 
     </div>
 
+
 </ng-container>
+
+
 

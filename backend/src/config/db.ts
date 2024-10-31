@@ -8,16 +8,20 @@ import { Dissay } from '../models/dissay';
  } = {};
 
 export async function connectToDatabase(uri: string) {
-    const client = new mongodb.MongoClient(uri)
-    await client.connect();
+    try {
+        const client = new mongodb.MongoClient(uri);
+        await client.connect();
+        console.log("Conexão ao banco de dados estabelecida.");
+        
+        const db = client.db("database-test");
+        await applySchemaValidation(db);
 
-    const db = client.db("database-test")
-    await applySchemaValidation(db)
-
-    const usersCollection = db.collection<User>("users")
-    const dissaysCollection = db.collection<Dissay>("dissays")
-    collections.users = usersCollection
-    collections.dissays = dissaysCollection
+        collections.users = db.collection<User>("users");
+        collections.dissays = db.collection<Dissay>("dissays");
+        console.log("Coleções atribuídas com sucesso.");
+    } catch (error) {
+        console.error("Erro ao conectar ao banco de dados:", error);
+    }
 }
 
 async function applySchemaValidation(db: mongodb.Db) {
@@ -93,7 +97,12 @@ async function applySchemaValidation(db: mongodb.Db) {
     const dissaySchema = {
         $dissaySchema: {
             BSONType: "object",
-            required: ['name', 'desc', 'musicId', 'userId']
+            required: ['name', 'musicId', 'userId', 'instruments'],
+            additionalProperties: false,
+            // properties: {
+            //     _id: {},
+            //     name:
+            // }
         }
     }
     // aguarda o banco de dados modificar os dados da coleção se ela não existe criar a coleção

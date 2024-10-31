@@ -71,18 +71,18 @@ export class CadastroComponent {
            alert("Erro: " + code.error)
         }else if(code.status === 500){
           alert("Erro no servidor: " + code.error)
-        }else if(code.status !== 201){
+        }else if(code.status !== 200){
           alert("Erro desconhecido");
-          return throwError(()=> code)
+          return throwError(()=> console.log('aqui'))
         }
         return of(null)
       })
     ).subscribe({
-      next:(response) => {
-        console.log('Usuário criado com sucesso: ', response)
-        this.navigateLogin()
+      next: (response) => {
+          console.log('Usuário criado com sucesso: ', response);
+          this.navigateLogin();
       }
-    })
+    });
   }
 
   getNameForm(){

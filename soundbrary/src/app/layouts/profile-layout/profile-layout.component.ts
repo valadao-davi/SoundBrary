@@ -1,11 +1,11 @@
+import { ServiceMusicService } from './../../services/service-music.service';
 import { Component } from '@angular/core';
 import { User } from '../User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
-import { ServiceMusicService } from 'src/app/services/service-music.service';
-import { Music } from '../Music';
 import { forkJoin } from 'rxjs';
-import { Album } from '../Album';
+import { Music } from '../Music';
 import { Artist } from '../Artists';
+import { Album } from '../Album';
 
 @Component({
   selector: 'app-profile-layout',
@@ -15,14 +15,14 @@ import { Artist } from '../Artists';
 export class ProfileLayoutComponent {
   acessToken!: string;
   user!: User
-  listIdsStrings: {musics: string[], albums: string[], artists: string[]} = {
+  listIdsString: { musics: string[], albums: string[], artists: string[]} = {
     musics: [],
     albums: [],
     artists: []
   }
-  musicsSaved!: Music[];
-  albumsSaved!: Album[];
-  artistsSaved!: Artist[];
+  musicsList!: Music[]
+  albumsList!: Album[]
+  artistsList!: Artist[]
 
   constructor(private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService){}
 
@@ -30,52 +30,60 @@ export class ProfileLayoutComponent {
     this.acessToken = localStorage.getItem('token') ?? ""
     console.log(this.acessToken)
     this.getUser()
+    console.log(this.acessToken)
   }
 
   getUser(){
     if(this.acessToken.length > 0){
       this.serviceUser.getUser(this.acessToken).subscribe(user => {
         this.user = user
-        this.listIdsStrings.musics = this.user.musicSaved ?? []
-        this.listIdsStrings.albums = this.user.albumSaved ?? []
-        this.listIdsStrings.artists = this.user.artistsSaved ?? []
-        this.getIds()
+        console.log(this.user)
+        this.listIdsString.musics = this.user.musicSaved ?? []
+        this.listIdsString.albums = this.user.albumSaved ?? []
+        this.listIdsString.artists = this.user.artistsSaved ?? []
+        console.log(this.listIdsString.musics)
+        this.getIdsObjects()
       })
     }
   }
 
-  getIds(){
-    if(this.listIdsStrings.musics.length > 0){
-      const items = this.listIdsStrings.musics.map(id =>
+  getIdsObjects(){
+    if(this.listIdsString.musics.length > 0){
+      const items = this.listIdsString.musics.map(id =>
         this.serviceSpotify.getMusicById(id)
-      );
+      )
       forkJoin(items).subscribe(
         (results) => {
-          this.musicsSaved = results
+          this.musicsList = results
+          console.log(this.musicsList)
         }
       )
     }
-    if(this.listIdsStrings.albums.length > 0){
-      const items = this.listIdsStrings.albums.map(id =>
-        this.serviceSpotify.getAlbumById(id)
-      );
-      forkJoin(items).subscribe(
-        (results) => {
-          this.albumsSaved = results
-        }
-      )
-    }
-    if(this.listIdsStrings.artists.length > 0){
-      const items = this.listIdsStrings.artists.map(id =>
+    if(this.listIdsString.artists.length > 0) {
+      const items = this.listIdsString.artists.map(id =>
         this.serviceSpotify.getArtistById(id)
-      );
+      )
       forkJoin(items).subscribe(
         (results) => {
-          this.artistsSaved = results
+          this.artistsList = results
         }
       )
     }
-
+    if(this.listIdsString.albums.length > 0) {
+      const items = this.listIdsString.albums.map(id =>
+        this.serviceSpotify.getAlbumById(id)
+      )
+      forkJoin(items).subscribe(
+        (results) => {
+          this.albumsList = results
+        }
+      )
+    }
+    }
   }
 
-}
+
+
+
+
+

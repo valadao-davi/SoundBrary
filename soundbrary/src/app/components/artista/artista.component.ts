@@ -7,6 +7,7 @@ import { User } from 'src/app/layouts/User';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 
+
 @Component({
   selector: 'app-artista',
   templateUrl: './artista.component.html',
@@ -33,6 +34,7 @@ export class ArtistaComponent {
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
     this.dataLoaded = true
+    this.accessToken = localStorage.getItem('token') ?? ""
     this.route.paramMap.subscribe((params)=> {
       this.id = params.get('id')
       if(this.id){
@@ -51,8 +53,7 @@ export class ArtistaComponent {
       })
     }
   }
-  saveArtistOrRemove(id: string, isSaved: boolean): void {
-    console.log(isSaved)
+  saveOrRemoveArtist(id: string, isSaved: boolean): void {
     if(this.accessToken && isSaved === false){
       this.serviceUser.saveArtistsToFavorite(this.accessToken, id).pipe(
         catchError((code)=> {
@@ -60,17 +61,12 @@ export class ArtistaComponent {
              alert("Erro: " + code.error)
           }else if(code.status === 500){
             alert("Erro no servidor: " + code.error)
+          }else if(code.status !== 200){
+            alert("Erro desconhecido")
           }
           return throwError(() => code)
         })
-      ).subscribe({
-        next: () => {
-          this.saved = true
-        },
-        error: (err) => {
-          console.error(err)
-        }
-      })
+      ).subscribe()
       this.saved = true
     }else if(this.accessToken && isSaved === true){
       this.serviceUser.removeArtistsFavorites(this.accessToken, id).pipe(
@@ -79,17 +75,12 @@ export class ArtistaComponent {
              alert("Erro: " + code.error)
           }else if(code.status === 500){
             alert("Erro no servidor: " + code.error)
+          }else if(code.status !== 200){
+            alert("Erro desconhecido")
           }
           return throwError(() => code)
         })
-      ).subscribe({
-        next: () => {
-          this.saved = true
-        },
-        error: (err) => {
-          console.error(err)
-        }
-      })
+      ).subscribe()
       this.saved = false
 
     }
