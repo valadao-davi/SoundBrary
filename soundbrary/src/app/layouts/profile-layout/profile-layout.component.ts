@@ -1,6 +1,11 @@
+import { ServiceMusicService } from './../../services/service-music.service';
 import { Component } from '@angular/core';
 import { User } from '../User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
+import { forkJoin } from 'rxjs';
+import { Music } from '../Music';
+import { Artist } from '../Artists';
+import { Album } from '../Album';
 
 @Component({
   selector: 'app-profile-layout',
@@ -10,9 +15,16 @@ import { ServiceUserService } from 'src/app/services/service-user.service';
 export class ProfileLayoutComponent {
   acessToken!: string;
   user!: User
-  listIdsString!: string[]
+  listIdsString: { musics: string[], albums: string[], artists: string[]} = {
+    musics: [],
+    albums: [],
+    artists: []
+  }
+  musicsList!: Music[]
+  albumsList!: Album[]
+  artistsList!: Artist[]
 
-  constructor(private serviceUser: ServiceUserService){}
+  constructor(private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService){}
 
   ngOnInit(){
     this.acessToken = localStorage.getItem('token') ?? ""
@@ -24,12 +36,50 @@ export class ProfileLayoutComponent {
       this.serviceUser.getUser(this.acessToken).subscribe(user => {
         this.user = user
         console.log(this.user)
-        this.listIdsString = this.user._musicSaved ?? []
-        console.log(this.listIdsString)
+        this.listIdsString.musics = this.user.musicSaved ?? []
+        this.listIdsString.albums = this.user.albumSaved ?? []
+        this.listIdsString.artists = this.user.artistsSaved ?? []
+        this.getIdsObjects()
       })
+    }
+  }
+
+  getIdsObjects(){
+    if(this.listIdsString.musics.length > 0){
+      const items = this.listIdsString.musics.map(id =>
+        this.serviceSpotify.getMusicById(id)
+      )
+      forkJoin(items).subscribe(
+        (results) => {
+          this.musicsList = results
+        }
+      )
+    }
+    if(this.listIdsString.artists.length > 0) {
+      const items = this.listIdsString.artists.map(id =>
+        this.serviceSpotify.getArtistById(id)
+      )
+      forkJoin(items).subscribe(
+        (results) => {
+          this.artistsList = results
+        }
+      )
+    }
+    if(this.listIdsString.albums.length > 0) {
+      const items = this.listIdsString.albums.map(id =>
+        this.serviceSpotify.getAlbumById(id)
+      )
+      forkJoin(items).subscribe(
+        (results) => {
+          this.albumsList = results
+        }
+      )
+    }
     }
   }
 
 
 
-}
+
+
+

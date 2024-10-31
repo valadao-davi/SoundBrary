@@ -22,13 +22,6 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 
-// Conexão com o banco de dados
-connectToDatabase(MONGODB_URI)
-    .then(()=> {
-       app.use("/users", userRouter)
-    })
-    .catch((error)=> console.error(error))
-
 
 
 //Inicializa o token

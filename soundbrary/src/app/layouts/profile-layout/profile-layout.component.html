@@ -49,18 +49,54 @@
         <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
     </div>
     <div class="slider_space" >
-      <h1 *ngIf="listIdsString.length === 0">Não há músicas salvas no momento</h1>
-      <div class="slider" *ngFor="let item of listIdsString">
-        <h1>{{item}}</h1>
-        <!-- <app-m-mini
+      <h1 *ngIf="listIdsString.musics.length === 0">Não há músicas salvas no momento</h1>
+      <div class="slider" *ngFor="let item of musicsList">
+        <app-m-mini
+        [isAlbum]="false"
+        [id]="item.id"
+        [name] = "item.name"
+        [artistName]="item.artists[0].name"
+        [imageUrl]="item.albumImages[0].link"
+        ></app-m-mini>
+      </div>
+    </div>
+    </div>
+
+    <div class="section">
+      <div class="titulo_slider">
+        <h1>Albums salvos</h1>
+        <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+    </div>
+    <div class="slider_space" >
+      <h1 *ngIf="listIdsString.albums.length === 0">Não há músicas salvas no momento</h1>
+      <div class="slider" *ngFor="let item of albumsList">
+        <app-m-mini
         [isAlbum]="true"
         [id]="item.id"
-        [name] = "item.album_name"
-        [artistName]="item.artist"
-        [imageUrl]="item.url"
-        ></app-m-mini> -->
+        [name] = "item.albumName"
+        [artistName]="item.artists[0].name"
+        [imageUrl]="item.albumImage[0].link"
+        ></app-m-mini>
       </div>
-  </div>
+    </div>
+    </div>
+
+    <div class="section">
+      <div class="titulo_slider">
+        <h1>Artistas salvos</h1>
+        <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+    </div>
+    <div class="slider_space" >
+      <h1 *ngIf="listIdsString.artists.length === 0">Não há músicas salvas no momento</h1>
+      <div class="slider" *ngFor="let item of artistsList">
+        <app-m-mini
+        [isAlbum]="false"
+        [id]="item.id"
+        [name] = "item.name"
+        [imageUrl]="item.artistImages[0].link"
+        ></app-m-mini>
+      </div>
+    </div>
     </div>
   </div>
 

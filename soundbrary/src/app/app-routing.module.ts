@@ -38,7 +38,7 @@ const routes: Routes = [
     {path: '',  component: CadastroComponent}
   ]},
 
-  {path: 'perfil', component: ProfileLayoutComponent}
+  {path: 'profile', component: ProfileLayoutComponent}
 
 
 ];
