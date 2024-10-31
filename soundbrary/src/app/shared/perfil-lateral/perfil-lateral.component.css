@@ -56,3 +56,11 @@
 #btn_criar_dissay h4 {
     font-size: 14px;
 }
+
+button {
+  width: fit-content;
+  height: fit-content;
+  margin: 0px;
+  padding: 0px;
+  align-items: center;
+}

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { User } from 'src/app/layouts/User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
@@ -12,9 +13,13 @@ export class PerfilLateralComponent {
   accessToken!: string;
   user!: User;
 
-  constructor(private serviceUsers: ServiceUserService){
+  constructor(private router: Router, private serviceUsers: ServiceUserService){}
 
-  }
+    navigatePerfil() {
+      this.router.navigate(['/perfil']);
+    }
+
+
 
   ngOnInit(): void {
     this.accessToken = localStorage.getItem('token') ?? ""
@@ -23,6 +28,8 @@ export class PerfilLateralComponent {
       this.user = user
     })
   }
+
+
 
 
 }
