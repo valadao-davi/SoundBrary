@@ -29,6 +29,7 @@ export class ProfileLayoutComponent {
   ngOnInit(){
     this.acessToken = localStorage.getItem('token') ?? ""
     this.getUser()
+    console.log(this.acessToken)
   }
 
   getUser(){
@@ -39,6 +40,7 @@ export class ProfileLayoutComponent {
         this.listIdsString.musics = this.user.musicSaved ?? []
         this.listIdsString.albums = this.user.albumSaved ?? []
         this.listIdsString.artists = this.user.artistsSaved ?? []
+        console.log(this.listIdsString.musics)
         this.getIdsObjects()
       })
     }
@@ -52,6 +54,7 @@ export class ProfileLayoutComponent {
       forkJoin(items).subscribe(
         (results) => {
           this.musicsList = results
+          console.log(this.musicsList)
         }
       )
     }

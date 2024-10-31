@@ -70,17 +70,24 @@ export class CadastroComponent {
            alert("Erro: " + code.error)
         }else if(code.status === 500){
           alert("Erro no servidor: " + code.error)
-        }else if(code.status !== 201){
-          alert("Erro desconhecido")
+        }else{
+          console.log("erro desconhecido")
         }
         return throwError(() => code)
       })
     ).subscribe({
-      next:(response) => {
-        console.log('Usuário criado com sucesso: ', response)
-        this.navigateLogin()
+      next: (response) => {
+        console.log('Usuário criado com sucesso:', response);
+        alert("Cadastro realizado com sucesso!"); // Mensagem de sucesso para o usuário
+      },
+      error: (error) => {
+        console.error('Erro inesperado no subscribe:', error);
+        alert("Ocorreu um erro inesperado. Por favor, tente novamente.");
+      },
+      complete: () => {
+        console.log('Processo de cadastro finalizado.');
       }
-    })
+    });
   }
 
   getNameForm(){

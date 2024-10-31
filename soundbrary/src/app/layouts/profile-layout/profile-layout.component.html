@@ -33,7 +33,7 @@
             <img src="../../../assets/fogo_vermelho_icon.svg" alt="Icone fogo">
         </div>
         <div class="slider_space" >
-            <div class="slider" id="slider" >
+            <div class="slider">
               <app-d-mini></app-d-mini>
               <app-d-mini></app-d-mini>
               <app-d-mini></app-d-mini>
@@ -67,7 +67,7 @@
           <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
       </div>
       <div class="slider_space" >
-        <h1 *ngIf="listIdsString.albums.length === 0">Não há músicas salvas no momento</h1>
+        <h2 class="sem_itens" *ngIf="listIdsString.albums.length === 0">Não há músicas salvas no momento</h2>
         <div class="slider" *ngFor="let item of albumsList">
           <app-m-mini
           [isAlbum]="true"
@@ -82,11 +82,15 @@
 
       <div class="section">
         <div class="titulo_slider">
+          
           <h1>Artistas salvos</h1>
-          <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
+          <div *ngIf="listIdsString.artists.length === 0" >
+            <h2 class="sem_itens">Não há músicas salvas no momento</h2>
+          </div>
+          <img *ngIf="listIdsString.artists.length > 0" src="../../../assets/estrela_cheia.svg" alt="Icone estrela destaque">
       </div>
-      <div class="slider_space" >
-        <h1 *ngIf="listIdsString.artists.length === 0">Não há músicas salvas no momento</h1>
+      
+      <div *ngIf="listIdsString.artists.length > 0" class="slider_space" >
         <div class="slider" *ngFor="let item of artistsList">
           <app-m-mini
           [isAlbum]="false"

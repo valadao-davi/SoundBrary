@@ -29,7 +29,7 @@ export const auth = async(req: CustomRequest, res: Response, next: NextFunction)
         req.token = decoded
         next();
     } catch(err){
-        res.status(401).send("Please authenticate")
+        console.error("Erro no middleware de autenticação: ", err);
 
     }
 }
@@ -47,9 +47,9 @@ userRouter.post('/createUser', async(req, res)=> {
         else{
             const result = await collections?.users?.insertOne(user)
             if(result?.acknowledged){
-                res.status(201).send("Usuário criado com sucesso")
+                res.status(200)
             }else{
-                res.send(500).send("Ocorreu um erro ao criar o usuário")
+                res.status(500).send("Ocorreu um erro ao criar o usuário")
             }
         }
     }catch(error){
@@ -179,13 +179,13 @@ userRouter.patch('/removeFavorites/artists', auth, async(req: CustomRequest, res
             console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {artistsSaved: item}})
             if(result){
-                res.status(200)
+                return res.status(200)
             }else{
                 console.log("Erro aqui")
-                res.status(500).json({error: "Erro ao salvar seu item"})
+                return res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
-            res.status(400).json({error: "Autentique para continuar"})
+            return res.status(400).json({error: "Autentique para continuar"})
         }
     }catch(error){
         console.error("Erro no método add to favorites: ", error)
@@ -198,7 +198,9 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
     try{
         const userId = req.token?.sub;
         const user = await collections?.users?.findOne({_id: new ObjectId(userId)})
-
+        if(userId && !ObjectId.isValid(userId)){
+            return res.status(400).send("ID de usuário inválido");
+        }
         if(user){
             res.status(200).send({email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved})
         }else{
