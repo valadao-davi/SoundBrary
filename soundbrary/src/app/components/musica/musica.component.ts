@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Music } from 'src/app/layouts/Music';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 import { ServiceUserService } from 'src/app/services/service-user.service';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-musica',
@@ -27,9 +28,7 @@ export class MusicaComponent {
       this.id = params.get('id')
       if(this.id){
         this.loadMusic(this.id!)
-          this.getUser()
-        }
-
+      }
     })
 
   }
@@ -42,28 +41,54 @@ export class MusicaComponent {
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
-        if(this.user?._musicSaved?.includes(this.id!)){
-          this.saved = true
-        }else{
-          this.saved = false
+        if(this.musicItem && this.user.musicSaved){
+         this.saved = this.user.musicSaved?.includes(this.musicItem.id) ?? false
         }
       })
     }
   }
 
-  saveSong(id: string): void {
-    if(this.accessToken){
-      this.serviceUser.saveSongToFavorite(this.accessToken, id).subscribe(
-      )
+  saveSongOrRemove(id: string, isSaved: boolean): void {
+    console.log(isSaved)
+    if(this.accessToken && isSaved === false){
+      this.serviceUser.saveSongToFavorite(this.accessToken, id).pipe(
+        catchError((code)=> {
+          if(code.status === 400){
+             alert("Erro: " + code.error)
+          }else if(code.status === 500){
+            alert("Erro no servidor: " + code.error)
+          }
+          return throwError(() => code)
+        })
+      ).subscribe({
+        next: () => {
+          this.saved = true
+        },
+        error: (err) => {
+          console.error(err)
+        }
+      })
       this.saved = true
-
-    }
-  }
-
-  removeSongFavorite(id: string): void {
-    if(this.accessToken){
-      this.serviceUser.removeSongFavorites(this.accessToken, id).subscribe()
+    }else if(this.accessToken && isSaved === true){
+      this.serviceUser.removeSongFavorites(this.accessToken, id).pipe(
+        catchError((code)=> {
+          if(code.status === 400){
+             alert("Erro: " + code.error)
+          }else if(code.status === 500){
+            alert("Erro no servidor: " + code.error)
+          }
+          return throwError(() => code)
+        })
+      ).subscribe({
+        next: () => {
+          this.saved = true
+        },
+        error: (err) => {
+          console.error(err)
+        }
+      })
       this.saved = false
+
     }
   }
 
@@ -71,7 +96,7 @@ export class MusicaComponent {
     this.serviceSpotify.getMusicById(id).subscribe(music => {
       this.musicItem = music
       this.dataLoaded = true
-      console.log(this.musicItem.albumImages[0].link)
+      this.getUser()
     })
   }
 }

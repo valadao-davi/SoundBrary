@@ -66,7 +66,7 @@ userRouter.patch('/addToFavorites/songs', auth, async(req: CustomRequest, res: R
         if(userId && item){
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {_musicSaved: item}})
             if(result){
-                res.status(200).send("Item salvado com sucesso")
+                res.status(200)
             }else{
                 res.status(500).send("Ocorreu um erro ao salvar seu item")
             }
@@ -85,7 +85,81 @@ userRouter.patch('/removeFavorites/songs', auth, async(req: CustomRequest, res: 
         if(userId && item){
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {_musicSaved: item}})
             if(result){
-                res.status(200).send("Item salvado com sucesso")
+                res.status(200)
+            }else{
+                res.status(500).send("Ocorreu um erro ao salvar seu item")
+            }
+        }else{
+            res.status(400).send("Por favor autentique para salvar o item")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+userRouter.patch('/addToFavorites/artists', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {_artistsSaved: item}})
+            if(result){
+                res.status(200)
+            }else{
+                res.status(500).send("Ocorreu um erro ao salvar seu item")
+            }
+        }else{
+            res.status(400).send("Por favor autentique para salvar o item")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+
+userRouter.patch('/removeFavorites/artists', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {_artistsSaved: item}})
+            if(result){
+                res.status(200)
+            }else{
+                res.status(500).send("Ocorreu um erro ao salvar seu item")
+            }
+        }else{
+            res.status(400).send("Por favor autentique para salvar o item")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+userRouter.patch('/addToFavorites/albums', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {_albumSaved: item}})
+            if(result){
+                res.status(200)
+            }else{
+                res.status(500).send("Ocorreu um erro ao salvar seu item")
+            }
+        }else{
+            res.status(400).send("Por favor autentique para salvar o item")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+
+userRouter.patch('/removeFavorites/albums', auth, async(req: CustomRequest, res: Response)=>{
+    try{
+        const userId = req.token?.sub;
+        const item = req.body.id
+        if(userId && item){
+            const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {_albumSaved: item}})
+            if(result){
+                res.status(200)
             }else{
                 res.status(500).send("Ocorreu um erro ao salvar seu item")
             }
@@ -105,7 +179,7 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
         const user = await collections?.users?.findOne({_id: new ObjectId(userId)})
 
         if(user){
-            res.status(200).send({email: user.email, name: user.name})
+            res.status(200).send({email: user.email, name: user.name, musicSaved: user._musicSaved, albumSaved: user._albumSaved, artistsSaved: user._artistsSaved})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -133,12 +207,13 @@ userRouter.post('/login', async(req, res)=> {
         const password = req.body.password
         const checkUser = await collections?.users?.findOne({email: email})
         if(!checkUser){
-            res.status(404).send("Usuário não encontrado não encontrado")
+            res.status(404).send("Usuário não encontrado")
         }
         
         if(checkUser?.password === password){
             const token = jwt.sign({sub: checkUser?._id},`${ACESS_SECRET}`)
-            res.json({accesToken: token})
+            res.json({accessToken: token})
+            res.status(200)
         }else{
             res.status(404).send("Usuário não encontrado")
         }        
@@ -179,7 +254,7 @@ userRouter.delete('/:id', async(req, res)=> {
         const result = await collections?.users?.deleteOne(query)
 
         if(result && result.deletedCount){
-            res.status(201).send({"message": "usuario deletado com sucesso"})
+            res.status(200).send({"message": "usuario deletado com sucesso"})
         }else if (!result){
             res.status(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
         }else if (!result.deletedCount){

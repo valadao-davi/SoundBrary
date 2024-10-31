@@ -5,7 +5,11 @@
     </div>
 
     <div class="conteudo">
+      <div class="title-song">
         <h1 class="nome_artista">{{ artistItem.name }}</h1>
+        <button (click)="saveArtistOrRemove(artistItem.id, saved)"><img src="../../../assets/Vector.png" *ngIf="!saved" alt=""><img src="../../../assets/salvado.png" *ngIf="saved" alt=""></button>
+
+      </div>
 
         <div class="generos_sec">
             <h3>Gêneros do artista: </h3>

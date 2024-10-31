@@ -1,12 +1,14 @@
 <div id="profile_left">
-  <div id="profile_left-top" *ngIf="user === undefined">
+  <div id="profile_left-top" *ngIf="accessToken.length === 0">
       <div id="grey_circle"></div>
+      <img class="grey_circle" src="../../../assets/icon_0.png" alt="">
       <h3>Você ainda não criou uma conta</h3>
       <h5>Crie uma conta para uma experiência completa do Soundbrary</h5>
+
   </div>
 
-  <div id="profile_left-top" *ngIf="user">
-    <img class="grey_circle"class="grey_circle" *ngIf="user.image === undefined" src="../../../assets/icon_0.png" alt="">
+  <div id="profile_left-top">
+    <img class="grey_circle" *ngIf="user.image === undefined" src="../../../assets/icon_0.png" alt="">
     <h3>{{user.name}}</h3>
 </div>
 

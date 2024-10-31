@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { User } from 'src/app/layouts/User';
+import { of } from 'rxjs';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 
 
@@ -71,9 +72,10 @@ export class CadastroComponent {
         }else if(code.status === 500){
           alert("Erro no servidor: " + code.error)
         }else if(code.status !== 201){
-          alert("Erro desconhecido")
+          alert("Erro desconhecido");
+          return throwError(()=> code)
         }
-        return throwError(() => code)
+        return of(null)
       })
     ).subscribe({
       next:(response) => {

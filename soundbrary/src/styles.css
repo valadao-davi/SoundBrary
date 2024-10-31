@@ -10,6 +10,12 @@ button {
   cursor: pointer;
   border: none;
 }
+.title-song{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 
 app-left-info {
   display: flex;

@@ -60,7 +60,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                 },
                 musicSaved: {
                     bsonType: ["array", "null"],
-                    description: "MusicsSaved is an optional string parameter or null",
+                    description: "MusicsSaved is an optional list object parameter that can be null",
                     items: {
                         bsonType: "string",
                         minLength: 1,
@@ -69,18 +69,18 @@ async function applySchemaValidation(db: mongodb.Db) {
                 },
                 albumSaved: {
                     bsonType: ["array", "null"],
-                    description: "AlbumSaved is an optional string parameter or null",
+                    description: "AlbumSaved is an optional list object parameter that can be null",
                     items: {
-                        bsonType: "string",
+                        bsonType: "object",
                         minLength: 1,
                         maxLength: 128
                     }
                 },
                 artistsSaved: {
                     bsonType: ["array", "null"],
-                    description: "ArtistsSaved is an optional string parameter or null",
+                    description: "ArtistsSaved an optional list object parameter that can be null",
                     items: {
-                        bsonType: "string",
+                        bsonType: "object",
                         minLength: 1,
                         maxLength: 128
                     }

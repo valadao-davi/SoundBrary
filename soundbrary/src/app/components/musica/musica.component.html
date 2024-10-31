@@ -7,7 +7,7 @@
     <div class="conteudo">
         <div class="title-song">
           <h1><span *ngFor="let artist of musicItem.artists; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ musicItem.name }} </h1>
-          <button><img src="../../../assets/Vector.png" *ngIf="!saved" alt="" (click)="saveSong(musicItem.id)"><img src="../../../assets/salvado.png" *ngIf="saved" alt=""></button>
+          <button (click)="saveSongOrRemove(musicItem.id, saved)"><img src="../../../assets/Vector.png" *ngIf="!saved" alt=""><img src="../../../assets/salvado.png" *ngIf="saved" alt=""></button>
         </div>
 
         <div class="generos_sec">

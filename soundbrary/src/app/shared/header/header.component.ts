@@ -23,6 +23,7 @@ export class HeaderComponent {
   }
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
+    console.log(this.accessToken)
   }
 
   isSearchRoute(): boolean {

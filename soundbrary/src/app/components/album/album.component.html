@@ -5,8 +5,11 @@
     </div>
 
     <div class="conteudo">
+      <div class="title-song">
         <h1><span *ngFor="let artist of albumItem.artists; let isLast = last"><button (click)="navigateArtist(artist.id)">{{artist.name}}</button><span *ngIf="!isLast">, </span> </span> - {{ albumItem.albumName }} </h1>
+        <button (click)="saveAlbumOrRemove(albumItem.id, saved)"><img src="../../../assets/Vector.png" *ngIf="!saved" alt=""><img src="../../../assets/salvado.png" *ngIf="saved" alt=""></button>
 
+      </div>
         <div class="generos_sec">
             <h3>Tipo de lançamento: </h3>
             <div class="generos">

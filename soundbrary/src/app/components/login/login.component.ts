@@ -35,8 +35,8 @@ export class LoginComponent {
 
   logar() {
     this.service.loginUser(this.getEmailForm().value, this.getPasswordForm().value).subscribe((response) => {
-      if(response.accesToken){
-        this.token = response.accesToken
+      if(response.accessToken){
+        this.token = response.accessToken
         localStorage.setItem('token', this.token)
         this.navigateHome()
       }else{

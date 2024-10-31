@@ -12,8 +12,8 @@ export class ServiceUserService {
 
   constructor(private http: HttpClient) {}
 
-  loginUser(email: String, password: string): Observable<{accesToken: string}>{
-    return this.http.post<{accesToken: string}>(`${this.API}/login`, {
+  loginUser(email: String, password: string): Observable<{accessToken: string}>{
+    return this.http.post<{accessToken: string}>(`${this.API}/login`, {
       email,
       password
     });
@@ -47,6 +47,32 @@ export class ServiceUserService {
       Authorization: `Bearer ${token}`
     })
     return this.http.patch<void>(`${this.API}/removeFavorites/songs`, {id: item}, {headers})
+  }
+  saveArtistsToFavorite(token: string, item: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.patch<void>(`${this.API}/addToFavorites/artists`, {id: item}, {headers})
+  }
+
+  removeArtistsFavorites(token: string, item: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.patch<void>(`${this.API}/removeFavorites/artists`, {id: item}, {headers})
+  }
+  saveAlbumToFavorite(token: string, item: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.patch<void>(`${this.API}/addToFavorites/albums`, {id: item}, {headers})
+  }
+
+  removeAlbumFavorites(token: string, item: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.patch<void>(`${this.API}/removeFavorites/albums`, {id: item}, {headers})
   }
 
 

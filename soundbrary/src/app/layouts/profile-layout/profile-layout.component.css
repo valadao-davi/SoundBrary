@@ -48,6 +48,12 @@
   width: 24px;
   height: 24px;
 }
+.slider {
+  display: inline-flex;
+  width: max-content;
+  gap: 16px;
+  margin-bottom: 8px;
+}
 
 .perfil_right {
   display: flex;

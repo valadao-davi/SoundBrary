@@ -8,11 +8,6 @@
   padding-right: 108px;
   width: 900;
 }
-.title-song{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
 button {
   all: unset;
