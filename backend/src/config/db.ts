@@ -93,7 +93,12 @@ async function applySchemaValidation(db: mongodb.Db) {
     const dissaySchema = {
         $dissaySchema: {
             BSONType: "object",
-            required: ['name', 'desc', 'musicId', 'userId']
+            required: ['name', 'musicId', 'userId', 'instruments'],
+            additionalProperties: false,
+            // properties: {
+            //     _id: {},
+            //     name:
+            // }
         }
     }
     // aguarda o banco de dados modificar os dados da coleção se ela não existe criar a coleção
