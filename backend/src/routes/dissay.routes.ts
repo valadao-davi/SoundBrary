@@ -53,12 +53,20 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
             musicId: musicId,
             userName: userName,
             instruments: req.body.instruments,
-            createdAt: dateToday
+            createdAt: new Date()  
         }
-        const result = await collections?.dissays?.insertOne(dissay)
-        if(result?.acknowledged){
-            res.status(200).json({message: "Dissay criado"})
+        const findUser = await collections?.users?.findOne({userName: userName})
+        if(findUser){
+            const result = await collections?.dissays?.insertOne(dissay)
+            if(result?.insertedId){
+                const addToUser = await collections?.users?.updateOne({_id: findUser._id}, {$push: { dissaysCreated: result.insertedId.toString()}})
+                if(addToUser){
+                    return res.status(200).json({message: "Dissay criado"})
+                }
+            }
         }
+        
+        
     }catch(error){
         console.error("Erro no método criar post: ", error)
         return res.status(500).json({error: error})

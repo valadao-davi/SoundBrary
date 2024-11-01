@@ -287,7 +287,7 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({userName: user.userName, email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved})
+            res.status(200).send({email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -295,6 +295,7 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
         res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
     }
 })
+
 
 //Retorna todos os usuarios - TESTE
 userRouter.get('/', async(_req, res)=> {
@@ -312,7 +313,7 @@ userRouter.get('/profile/:query', async(req, res)=> {
         if(name){
             const userFound = await collections?.users?.findOne({userName: name})
             if(userFound){
-                res.status(200).json({userName: userFound.userName, name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved})
+                res.status(200).json({userName: userFound.userName, name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved, dissaySaved: userFound.dissaySaved, dissaysCreated: userFound.dissaysCreated})
             }
         }
     }catch(error){

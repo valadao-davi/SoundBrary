@@ -95,6 +95,15 @@ async function applySchemaValidation(db: mongodb.Db) {
                         maxLength: 128
                     }
                 },
+                dissaysCreated: {
+                    bsonType: ["array", "null"],
+                    description: "DissaysCreated is an optional array parameter or null",
+                    items: {
+                        bsonType: "string",
+                        minLength: 1,
+                        maxLength: 128
+                    }
+                },
 
                 
             }
