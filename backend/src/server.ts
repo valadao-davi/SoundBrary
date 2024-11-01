@@ -1,7 +1,6 @@
 import { dissayRouter } from './routes/dissay.routes';
 import { getAcessToken } from './config/spotifyConfig';
 import { userRouter } from './routes/user.routes';
-import {dissayRouter} from './routes/dissay.routes'
 import * as dotenv from 'dotenv';
 import express from 'express'
 import cors from 'cors'

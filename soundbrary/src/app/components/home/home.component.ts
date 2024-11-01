@@ -41,6 +41,7 @@ export class HomeComponent  {
         })
 
         this.albumItems = Array.from(albumMap.values())
+        this.dataload = true
         console.log(this.albumItems)
       },
       (error) => {

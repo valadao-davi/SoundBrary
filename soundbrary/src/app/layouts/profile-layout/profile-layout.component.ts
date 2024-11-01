@@ -119,13 +119,14 @@ export class ProfileLayoutComponent {
       )
     }
     if(this.listIdsDissays.length > 0){
-      const items = this.listIdsDissays.map(id => 
+      console.log(this.listIdsDissays)
+      const items = this.listIdsDissays.map(id =>
         this.serviceDissay.getDissayById(id)
-      )
+    )
       forkJoin(items).subscribe(
         (results) => {
           this.dissaysList = results
-          console.log(this.dissaysList[0])
+          console.log(this.dissaysList)
         }
       )
     }
