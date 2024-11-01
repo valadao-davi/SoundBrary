@@ -102,7 +102,7 @@ async function applySchemaValidation(db: mongodb.Db) {
     };
     const dissaySchema = {  
             bsonType: "object",
-            required: ['name', 'userName', 'musicId', 'userId', 'instruments'],
+            required: ['name', 'userName', 'musicId', 'instruments'],
             additionalProperties: false,
             properties: {
                 _id: {},
