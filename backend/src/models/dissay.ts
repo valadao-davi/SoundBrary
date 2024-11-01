@@ -9,7 +9,7 @@ export interface Dissay {
     desc?: string;
     createdAt: Date;
     musicId: string;
-    userId: string;
+    userName: string;
     instruments: Instrument[];
     tone?: string;
     bpm?: number;

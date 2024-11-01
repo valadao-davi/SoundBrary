@@ -332,8 +332,8 @@ userRouter.post('/login', async(req, res)=> {
         }
         
         if(checkUser?.password === password){
-            const token = jwt.sign({sub: checkUser?._id},`${ACCESS_SECRET}`)
-            return res.json({accessToken: token})
+            const token = jwt.sign({sub: checkUser?._id, userName: checkUser?.userName},`${ACCESS_SECRET}`)
+            res.json({accessToken: token})
         }else{
             return res.status(404).send("Usuário não encontrado")
         }        
