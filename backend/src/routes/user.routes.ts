@@ -43,10 +43,11 @@ userRouter.post('/createUser', async(req, res)=> {
         const existUserEmail = await collections?.users?.findOne({email: email})
         const existUserName = await collections?.users?.findOne({name: name})
 
-        if(existUserEmail || existUserName){
-            res.status(400).send("Usuário já existente")
-        }
-        else{
+        if(existUserName){
+            return res.status(409).json({account: "user"})
+        }if(existUserEmail){
+            return res.status(409).send({account: "email"})
+        }else{
             const result = await collections?.users?.insertOne(user)
             if(result?.acknowledged){
                 res.status(200).send()

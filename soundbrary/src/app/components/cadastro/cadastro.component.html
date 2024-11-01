@@ -14,6 +14,7 @@
                             <img src="./assets/cadeado_icon.svg">
                         </div>
                         <div class="erroValidacao" *ngIf="getNameForm().invalid && formDir.submitted">Nome inválido</div>
+                        <div class="erroValidacao" *ngIf="invalidUser && formDir.submitted">Nome já existente</div>
                     </div>
                     <div id="input_item">
                       <p>Email</p>
@@ -22,6 +23,7 @@
                           <img src="./assets/cadeado_icon.svg">
                       </div>
                       <div class="input_item" class="erroValidacao" *ngIf="getEmailForm().invalid && formDir.submitted">Email inválido</div>
+                      <div class="erroValidacao" *ngIf="invalidEmail && formDir.submitted">Email já existente</div>
                   </div>
                     <div id="input_item">
                         <p>Senha</p>

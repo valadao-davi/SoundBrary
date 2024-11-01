@@ -25,6 +25,9 @@ export class CadastroComponent {
           confirmaSenha: new FormControl('', [Validators.required])
         })
 
+        this.getNameForm().valueChanges.subscribe(()=> {
+          this.invalidUser = false;
+        })
         this.getEmailForm().valueChanges.subscribe(() => {
           this.invalidEmail = false;
         })
@@ -39,6 +42,7 @@ export class CadastroComponent {
   invalidEmail!: boolean;
   senhasNaoConferem!: boolean;
   inputValue!: String;
+  invalidUser = false;
 
   onChange(event: Event): void {
     this.senhasNaoConferem = this.comparaSenhas(this.cadastroForm);
@@ -67,13 +71,21 @@ export class CadastroComponent {
     }
     this.service.createUser(userJson).pipe(
       catchError((code)=> {
-        if(code.status === 400){
-           alert("Erro: " + code.error)
-        }else if(code.status === 500){
-          alert("Erro no servidor: " + code.error)
+        if(code.status === 409){
+          return throwError(()=> {
+            console.log(code.error.account)
+            if(code.error.account === "email"){
+              console.log("awui")
+              this.invalidEmail = true
+            }else if(code.error.account === "user"){
+              this.invalidUser = true
+            }
+          })
+        }
+        else if(code.status === 500){
+          return throwError(()=> alert("Erro no servidor: " + code.error))
         }else if(code.status !== 200){
-          alert("Erro desconhecido");
-          return throwError(()=> console.log('aqui'))
+          return throwError(()=> alert("Erro desconhecido: " + code.error))
         }
         return of(null)
       })
