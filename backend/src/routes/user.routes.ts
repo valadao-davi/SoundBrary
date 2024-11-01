@@ -39,10 +39,12 @@ userRouter.post('/createUser', async(req, res)=> {
     try{
         const user = req.body
         const email = req.body.email
-        const existUser = await collections?.users?.findOne({email: email})
+        const name = req.body.name
+        const existUserEmail = await collections?.users?.findOne({email: email})
+        const existUserName = await collections?.users?.findOne({name: name})
 
-        if(existUser){
-            res.status(400).send("Email já existente")
+        if(existUserEmail || existUserName){
+            res.status(400).send("Usuário já existente")
         }
         else{
             const result = await collections?.users?.insertOne(user)
@@ -290,6 +292,21 @@ userRouter.get('/', async(_req, res)=> {
     try{
         const users = await collections?.users?.find({}).toArray();
         res.status(200).send(users)
+        console.log("funcionando")
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Unknown error");
+    }
+})
+
+userRouter.get('/profile/:query', async(req, res)=> {
+    try{
+        const name = req.params?.query
+        if(name){
+            const userFound = await collections?.users?.findOne({name: name})
+            if(userFound){
+                res.status(200).json({name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved})
+            }
+        }
         console.log("funcionando")
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Unknown error");

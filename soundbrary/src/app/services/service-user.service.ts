@@ -26,6 +26,10 @@ export class ServiceUserService {
     return this.http.get<User>(`${this.API}/profile`, {headers})
   }
 
+  getUserName(query: string): Observable<User>{
+    return this.http.get<User>(`${this.API}/profile/${query}`)
+  }
+
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.API}/createUser`, user)
   }
@@ -110,6 +114,6 @@ export class ServiceUserService {
       })
     )
   }
- 
+
 
 }

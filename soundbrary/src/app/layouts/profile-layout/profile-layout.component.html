@@ -1,31 +1,37 @@
 <app-header></app-header>
 <div class="layout_perfil">
+
   <div class="perfil_left">
-    <h1 class="informacoes">Informações da conta</h1>
+    <h1 class="informacoes"*ngIf="isOwnProfile">Informações da conta</h1>
+    <h1 class="informacoes" *ngIf="!isOwnProfile">Perfil de usuário</h1>
+
     <div class="imagem">
       <img class="img_perfil" src="../../../assets/icone_1.png">
-      <img class="img_edit" src="../../../assets/edit_icon.svg">
+      <img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
+
     <div class="nome">
-      <h1>{{user.name}}</h1>
-      <img class="img_edit" src="../../../assets/edit_icon.svg">
+      <h1 *ngIf="isOwnProfile">{{myUser.name}}</h1>
+      <h1 *ngIf="!isOwnProfile">{{user.name}}</h1>
+      <img  *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
-    <div class="email">
-      <h3>Email: {{user.email}}</h3>
-      <img class="img_edit" src="../../../assets/edit_icon.svg">
+    <div  *ngIf="isOwnProfile" class="email">
+      <h3>Email: {{myUser.email}}</h3>
+      <img  class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
-    <div class="senha">
+    <div  *ngIf="isOwnProfile" class="senha">
       <h3>Alterar senha</h3>
       <img class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
-    <div class="agradecimento">
+    <div  *ngIf="isOwnProfile" class="agradecimento">
       <h3>Receba agradecimentos!</h3>
       <img src="../../../assets/donate_icon.svg">
     </div>
   </div>
 
   <div class="perfil_right">
-    <h1>Meu perfil</h1>
+    <h1 *ngIf="isOwnProfile">Meu perfil</h1>
+    <h1 *ngIf="!isOwnProfile">{{user.name}}</h1>
     <div class="dissays_perfil">
       <div class="section">
         <div class="titulo_slider">
@@ -41,7 +47,6 @@
             </div>
         </div>
       </div>
-
       <div class="section">
         <div class="titulo_slider">
           <h1>Musicas salvas</h1>
@@ -102,13 +107,5 @@
       </div>
       </div>
     </div>
-
-
-
-
-
-
   </div>
-
-
 </div>

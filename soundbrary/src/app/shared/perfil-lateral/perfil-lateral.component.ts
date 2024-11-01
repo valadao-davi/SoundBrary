@@ -18,9 +18,10 @@ export class PerfilLateralComponent {
     navigatePerfil() {
       if(this.accessToken === ""){
         this.router.navigate(['/login'])
-        return 
+        return
       }
-      this.router.navigate(['/perfil']);
+      this.router.navigate([`/perfil/${this.user.name}`]);
+      
     }
 
 
@@ -32,6 +33,7 @@ export class PerfilLateralComponent {
       this.serviceUsers.getUser(this.accessToken).subscribe(user => {
         this.user = user
         console.log(this.user)
+
       })
 
   }
