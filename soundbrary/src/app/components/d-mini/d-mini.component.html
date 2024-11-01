@@ -5,7 +5,7 @@
           <div class="d_mini_info">
               <div class="d_mini_text">
                 <h4>{{name}}</h4>
-                <h5>{{userName}}</h5>
+                <h5>{{namePerson}}</h5>
               </div>
               <div class="d_mini_rating_save">
                   <div class="d_mini_rating">
@@ -21,9 +21,10 @@
           </div>
           <img class="d_mini_cover" [src]="musicDissay.albumImages[0].link" alt="">
       </div>
-      <div class="d_mini_instruments" *ngFor="let instrument of listInstruments">
-        <app-instrumento-mini [name]="instrument.nameInstrument"></app-instrumento-mini>
+      <div class="d_mini_instruments" >
+          <app-instrumento-mini *ngFor="let instrument of listInstruments | slice:0:3" [name]="instrument.nameInstrument"></app-instrumento-mini>
       </div>
+
   </div>
   </button>
 

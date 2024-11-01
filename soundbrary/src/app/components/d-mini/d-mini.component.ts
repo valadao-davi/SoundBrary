@@ -16,9 +16,10 @@ export class DMiniComponent {
   @Input() name!: string;
   @Input() listInstruments!: Instrument[];
   @Input() musicId!: string;
-  @Input() userId!: string
+  @Input() userName!: string
 
-  userName!: string
+  namePerson!: string
+
   musicDissay!: Music;
 
   constructor(private router: Router,private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){}
@@ -28,14 +29,16 @@ export class DMiniComponent {
   }
 
   ngOnInit(){
-    if(this.musicId && this.userId){
+    console.log(this.musicId, this.userName)
+    if(this.musicId && this.userName){
+      console.log("teste")
       this.serviceSpotify.getMusicById(this.musicId).subscribe(music => {
         this.musicDissay = music
         console.log(this.musicDissay)
       })
-      this.serviceUser.getUserById(this.userId).subscribe(user => {
-        this.userName = user
-        console.log(this.userName)
+      this.serviceUser.getUserName(this.userName).subscribe(user => {
+        this.namePerson = user.name
+        console.log(user.name)
       })
     }
   }

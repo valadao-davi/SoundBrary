@@ -60,10 +60,12 @@
 .d_mini_cover{
   height: 80px;
   width: 80px;
+  border-radius: 8px;
 }
 
 .d_mini_instruments{
   display: flex;
+  flex-direction: row;
   gap: 32px;
 }
 
