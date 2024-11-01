@@ -20,8 +20,8 @@ export class PerfilLateralComponent {
         this.router.navigate(['/login'])
         return
       }
-      this.router.navigate([`/perfil/${this.user.name}`]);
-      
+      this.router.navigate([`/perfil/@${this.user.name}`]);
+
     }
 
 

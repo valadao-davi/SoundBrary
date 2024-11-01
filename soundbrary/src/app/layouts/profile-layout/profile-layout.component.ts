@@ -45,7 +45,9 @@ export class ProfileLayoutComponent {
     if(this.acessToken.length > 0){
       this.serviceUser.getUser(this.acessToken).subscribe(user => {
         this.myUser = user
-        if(this.myUser.name === query){
+        console.log(this.myUser.userName)
+        console.log(query)
+        if(this.myUser.userName === query){
           this.isOwnProfile = true
           this.listIdsString.musics = this.myUser.musicSaved ?? []
           this.listIdsString.albums = this.myUser.albumSaved ?? []
@@ -53,10 +55,13 @@ export class ProfileLayoutComponent {
           this.getIdsObjects()
         }else{
           this.getUserName(query)
+          console.log("usuario pesquisado")
+
         }
       })
     }else{
       this.getUserName(query)
+      console.log("usuario pesquisado")
     }
   }
 

@@ -58,7 +58,7 @@ userRouter.post('/createUser', async(req, res)=> {
             }
             const result = await collections?.users?.insertOne(newUser)
             if(result?.acknowledged){
-                res.status(200).send()
+                return res.status(200).send()
             }else{
                 res.status(500).send("Ocorreu um erro ao criar o usuário")
             }
@@ -287,7 +287,7 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved})
+            res.status(200).send({userName: user.userName, email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -301,7 +301,6 @@ userRouter.get('/', async(_req, res)=> {
     try{
         const users = await collections?.users?.find({}).toArray();
         res.status(200).send(users)
-        console.log("funcionando")
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Unknown error");
     }
@@ -316,7 +315,6 @@ userRouter.get('/profile/:query', async(req, res)=> {
                 res.status(200).json({userName: userFound.userName, name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved})
             }
         }
-        console.log("funcionando")
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Unknown error");
     }
@@ -335,9 +333,9 @@ userRouter.post('/login', async(req, res)=> {
         
         if(checkUser?.password === password){
             const token = jwt.sign({sub: checkUser?._id},`${ACCESS_SECRET}`)
-            res.json({accessToken: token})
+            return res.json({accessToken: token})
         }else{
-            res.status(404).send("Usuário não encontrado")
+            return res.status(404).send("Usuário não encontrado")
         }        
     }catch(error){
         console.error(error)

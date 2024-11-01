@@ -6,8 +6,8 @@
 }
 
 .perfil_left {
-  width: 320px;
-  padding: 0px 32px;
+  width: 280px;
+  padding: 0px 48px;
   background-color: #f2f2f2;
   align-items: center;
   display: flex;
@@ -60,6 +60,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 48px;
+  margin-bottom: 64px;
+}
+
+.dissays_perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  margin-top: 32px;
 }
 
 .section {
@@ -78,6 +88,14 @@
   overflow-x: scroll; /* Permite o scroll horizontal */
   white-space: nowrap; /* Mantém os slides em uma única linha */
 
+}
+
+.no_slider_space{
+  height: 180px;
+  align-items: center;
+  display: flex;
+  color: #808080;
+  justify-content: center;
 }
 
 .slider {
@@ -113,16 +131,11 @@
   border-radius: 6px; /* Cantos arredondados */
 }
 
-.dissays_perfil {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  width: 100%;
-}
 
 .sem_itens {
   color: #808080;
-  margin: 80px 0px;
+  height: 160px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
