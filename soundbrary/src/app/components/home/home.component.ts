@@ -1,5 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Album } from 'src/app/layouts/Album';
+import { Dissay } from 'src/app/layouts/Dissay';
+import { Music } from 'src/app/layouts/Music';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,39 +13,52 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
 })
 export class HomeComponent  {
 
-  topDay: any[] = []
-  albumItems: any[] = []
+  topDay: Music[] = []
+  dissays: Dissay[] =[]
+  dissaysMusic!: string[]
+  dissaysUser!: string[]
+  albumItems: Album[] = []
+  dataload: boolean = false
 
-  constructor(private serviceMusic: ServiceMusicService){ }
+  constructor(private serviceMusic: ServiceMusicService, private serviceDissay: ServiceDissayService, private serviceUser: ServiceUserService){ }
 
   loadTracks(): void {
     this.serviceMusic.getTracksPlaylist().subscribe(
       (tracks) => {
         this.topDay = tracks
+        console.log(this.topDay)
         const albumMap = new Map();
 
         this.topDay.forEach(item => {
-          if(item.album_type === "album") {
+          if(item.albumType === "album") {
             const albumData = {
-              id: item.album_id,
-              album_name: item.album_name,
-              artist: item.artist_name[0].name,
-              url: item.image_urls[1].link
+              id: item.albumId,
+              albumName: item.albumName,
+              artists: item.artists[0].name,
+              albumImage: item.albumImages[0].link
             }
             albumMap.set(albumData.id, albumData)
           }
         })
 
         this.albumItems = Array.from(albumMap.values())
+        console.log(this.albumItems)
       },
       (error) => {
         console.error(error)
       }
     )
   }
+  loadDissays(): void {
+    this.serviceDissay.getAllDissays().subscribe(dissays => {
+      this.dissays = dissays
+      console.log(this.dissays)
+    })
+  }
 
   ngOnInit(): void {
     this.loadTracks()
+    this.loadDissays()
   }
 
 

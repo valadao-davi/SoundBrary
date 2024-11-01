@@ -30,6 +30,10 @@ export class ServiceUserService {
     return this.http.get<User>(`${this.API}/profile/${query}`)
   }
 
+  getUserById(id: string): Observable<string>{
+    return this.http.get<string>(`${this.API}/${id}`)
+  }
+
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.API}/createUser`, user)
   }
