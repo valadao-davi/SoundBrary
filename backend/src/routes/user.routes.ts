@@ -39,25 +39,33 @@ userRouter.post('/createUser', async(req, res)=> {
     try{
         const user = req.body
         const email = req.body.email
-        const name = req.body.name
+        const getUserName =  req.body.userName
+        const userNameFormatted = `@${getUserName}`
         const existUserEmail = await collections?.users?.findOne({email: email})
-        const existUserName = await collections?.users?.findOne({name: name})
+        const existUserName = await collections?.users?.findOne({userName: userNameFormatted})
 
         if(existUserName){
-            return res.status(409).json({account: "user"})
+            console.log("aqui")
+            return res.status(409).json({account: "userName"})
         }if(existUserEmail){
             return res.status(409).send({account: "email"})
         }else{
-            const result = await collections?.users?.insertOne(user)
+            const newUser = {
+                name: user.name,
+                email: email,
+                userName: userNameFormatted,
+                password: user.password
+            }
+            const result = await collections?.users?.insertOne(newUser)
             if(result?.acknowledged){
-                res.status(200).send()
+                return res.status(200).send()
             }else{
-                res.status(500).send("Ocorreu um erro ao criar o usuário")
+                return res.status(500).send("Ocorreu um erro ao criar o usuário")
             }
         }
     }catch(error){
         console.error(error)
-        res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
+        return res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
     }
 })
 
@@ -279,7 +287,7 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved})
+            res.status(200).send({userName: user.userName,email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -288,25 +296,12 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
     }
 })
 
+
 //Retorna todos os usuarios - TESTE
 userRouter.get('/', async(_req, res)=> {
     try{
         const users = await collections?.users?.find({}).toArray();
         res.status(200).send(users)
-        console.log("funcionando")
-    }catch(error){
-        res.status(500).send(error instanceof Error ? error.message : "Unknown error");
-    }
-})
-
-userRouter.get('/:id', async(req, res)=> {
-    try{
-        const id = req.params.id
-        if(id){
-            const users = await collections?.users?.findOne({_id: new ObjectId(id)});
-            res.status(200).json(users?.name)
-        }
-        console.log("funcionando")
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Unknown error");
     }
@@ -316,12 +311,11 @@ userRouter.get('/profile/:query', async(req, res)=> {
     try{
         const name = req.params?.query
         if(name){
-            const userFound = await collections?.users?.findOne({name: name})
+            const userFound = await collections?.users?.findOne({userName: name})
             if(userFound){
-                res.status(200).json({name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved})
+                res.status(200).json({userName: userFound.userName, name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved, dissaySaved: userFound.dissaySaved, dissaysCreated: userFound.dissaysCreated})
             }
         }
-        console.log("funcionando")
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Unknown error");
     }
@@ -331,20 +325,18 @@ userRouter.get('/profile/:query', async(req, res)=> {
 
 userRouter.post('/login', async(req, res)=> {
     try {
-        const email = req.body.email
+        const userOrEmail = req.body.userOrEmail
         const password = req.body.password
-        const checkUser = await collections?.users?.findOne({email: email})
+        const checkUser = await collections?.users?.findOne({$or: [{email: userOrEmail}, {userName: userOrEmail}]})
         if(!checkUser){
-            console.log("aqui")
-            res.status(404).send("Usuário não encontrado")
+            return res.status(404).send("Usuário não encontrado")
         }
         
         if(checkUser?.password === password){
-            const token = jwt.sign({sub: checkUser?._id},`${ACCESS_SECRET}`)
-            res.json({accessToken: token})
+            const token = jwt.sign({sub: checkUser?._id, userName: checkUser?.userName},`${ACCESS_SECRET}`)
+            return res.json({accessToken: token})
         }else{
-            console.log("senha")
-            res.status(404).send("Usuário não encontrado")
+            return res.status(404).send("Usuário não encontrado")
         }        
     }catch(error){
         console.error(error)

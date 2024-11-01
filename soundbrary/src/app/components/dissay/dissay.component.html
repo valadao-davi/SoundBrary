@@ -63,12 +63,56 @@
         <h1 class="secao_titulo">Comentários</h1>
         <div class="linha"></div>
         <div class="zona_comentario">
-          <img src="../../../assets/icone_0.png">
+          <img class="mini_avatar" src="../../../assets/icone_0.png">
           <div class="campo_comentario">
             <textarea #textarea_comentario (input)="adjustHeight(textarea_comentario)" spellcheck="false" class="comentario" placeholder="Adicione um comentário..."></textarea>
             <div class="botoes_comentario">
               <button><h4 class="cancelar">Cancelar</h4></button>
               <button><h4 class="publicar">Publicar</h4></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="respostas">
+          <div class="resposta">
+            <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
+            <div class="resposta_right">
+              <div class="nome_data">
+                <h5>Mariana R.</h5>
+                <p>27/08/2024 11:05pm</p>
+              </div>
+              <div class="resposta_text">
+                <p>Acho que os efeitos da guitarra estão na ordem errada.</p>
+                <p>Estaria mais certo se fosse:</p>
+                <br>
+                <p>- Equalização</p>
+                <p>- Chorus</p>
+                <p>- Drive</p>
+                <p>- Reverb</p>
+                <p>- Delay</p>
+              </div>
+              <div class="responder_usuario">
+                <h5 class="responder">Responder</h5>
+                <h5 class="usuario_respondido">para: Teste</h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="resposta nivel_1">
+            <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
+            <div class="resposta_right">
+              <div class="nome_data">
+                <h5>Mariana R.</h5>
+                <p>27/08/2024 11:05pm</p>
+              </div>
+              <div class="resposta_text">
+                <p>Acho que os efeitos da guitarra estão na ordem errada.</p>
+                <p>Estaria mais certo se fosse:</p>
+              </div>
+              <div class="responder_usuario">
+                <h5 class="responder">Responder</h5>
+                <h5 class="usuario_respondido">para: Teste</h5>
+              </div>
             </div>
           </div>
         </div>

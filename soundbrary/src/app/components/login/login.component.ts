@@ -15,7 +15,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.email, Validators.required]),
+      userOrEmail: new FormControl('', [Validators.required]),
       senha: new FormControl('', [Validators.required])
     })
   }
@@ -34,7 +34,13 @@ export class LoginComponent {
   }
 
   logar() {
-    this.service.loginUser(this.getEmailForm().value, this.getPasswordForm().value).subscribe((response) => {
+    let value = this.getUserOrEmail().value
+    if(!value.includes('.com')){
+      console.log("aqui")
+      value = "@" + this.getUserOrEmail().value
+    }
+    console.log(value)
+    this.service.loginUser(value, this.getPasswordForm().value).subscribe((response) => {
       if(response.accessToken){
         this.token = response.accessToken
         localStorage.setItem('token', this.token)
@@ -45,8 +51,8 @@ export class LoginComponent {
     }
     )
   }
-  getEmailForm(){
-    return this.loginForm.get('email')!
+  getUserOrEmail(){
+    return this.loginForm.get('userOrEmail')!
   }
   getPasswordForm(){
     return this.loginForm.get('senha')!

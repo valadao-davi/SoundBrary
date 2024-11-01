@@ -27,10 +27,16 @@ export async function connectToDatabase(uri: string) {
 async function applySchemaValidation(db: mongodb.Db) {
     const userSchema = {
             bsonType: "object",
-            required: ["name", "email", "password"],
+            required: ["userName", "name", "email", "password"],
             additionalProperties: false,
             properties: {
                 _id: {},
+                userName: {
+                    bsonType: "string",
+                    description: "username is required and is a string",
+                    minLength: 2,
+                    maxLength: 50
+                },
                 name: {
                     bsonType: "string",
                     description: "'name is required and is a string'",
@@ -75,7 +81,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: ["array", "null"],
                     description: "AlbumSaved is an optional list object parameter that can be null",
                     items: {
-                        bsonType: "object",
+                        bsonType: "string",
                         minLength: 1,
                         maxLength: 128
                     }
@@ -84,7 +90,16 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: ["array", "null"],
                     description: "ArtistsSaved an optional list object parameter that can be null",
                     items: {
-                        bsonType: "object",
+                        bsonType: "string",
+                        minLength: 1,
+                        maxLength: 128
+                    }
+                },
+                dissaysCreated: {
+                    bsonType: ["array", "null"],
+                    description: "DissaysCreated is an optional array parameter or null",
+                    items: {
+                        bsonType: "string",
                         minLength: 1,
                         maxLength: 128
                     }
@@ -94,131 +109,124 @@ async function applySchemaValidation(db: mongodb.Db) {
             }
         
     };
-    const dissaySchema = {
-        $dissaySchema: {
-            BSONType: "object",
-            required: ['name', 'musicId', 'userId', 'instruments'],
+    const dissaySchema = {  
+            bsonType: "object",
+            required: ['name', 'userName', 'musicId', 'instruments'],
             additionalProperties: false,
             properties: {
                 _id: {},
-                nameInstrument:{
+                userName: {
+                    bsonType: "string",
+                    description: "username is required and is a string",
+                    minLength: 2,
+                    maxLength: 50
+                },
+                name: {
                     bsonType: "string",
                     description: "'name is required and is a string'",
                     minLength: 2,
                     maxLength: 50
                 },
-                musicId:{
+                musicId: {
                     bsonType: "string",
-                    description: "'musicId is required and is a string'",
-                    minLength: 2,
-                    maxLength: 50
-                },
-                userId:{
-                    bsonType: "string",
-                    description: "'userId is required and is a string'",
+                    description: "musicId is required and is a string",
                     minLength: 2,
                     maxLength: 50
                 },
                 instruments: {
                     bsonType: "array",
-                    description: "Instruments are required and its are a string'",
                     items: {
                         bsonType: "object",
-                        description: "Each instruments has a name",
+                        required: ["nameInstrument", "effects"],
                         properties: {
-                            name: {
+                            nameInstrument: {
                                 bsonType: "string",
-                                description: "Instrument name"
-                            },
-                            effects: {
-                                bsonType: "object",
-                                description: "Dynamic effects for instrument",
-                                additionalProperties: {
-                                    bsonType: "double",
-                                    description: "each effect is a number"
-                                }
-                            }
-                        },
-                        required: ["name", "effects"],
-                    },
-                },
-                tone: {
-                    bsonType: "string",
-                    minLength: 1,
-                    maxLength: 1,
-                    description: "Tone its a optional string"
-                },
-                bpm: {
-                    bsonType: "int",
-                    description: "Bpm its a optional integer"
-                },
-                avaliations: {
-                    bsonType: ["array", "null"],
-                    description: "Avaliations its a optional array object",
-                    items: {
-                        bsonType: "object",
-                        required: ["userId", "rateNumber", "date"],
-                        properties: {
-                            _id: {},
-                            userId: {
-                                bsonType: "string",
-                                description: "userId is required and is a string'",
+                                description: "Name of the instrument",
                                 minLength: 2,
                                 maxLength: 50
                             },
-                            rateNumber: {
+                            effects: {
+                                bsonType: "object",
+                                description: "Effects of the instrument",
+                                additionalProperties: {
+                                    bsonType: "double"
+                                }
+                            }
+                        }
+                    }
+                },
+                tone: {
+                    bsonType: ["string", "null"],
+                    description: "Tone its optional and is a string",
+                    minLength: 1,
+                    maxLength: 10
+                },
+                bpm: {
+                    bsonType: ["number", "null"],
+                    description: "bpm its optional and is a string",
+                },
+                avaliations: {
+                    bsonType: ["array", "null"],
+                    description: "avaliations its optional and is array object",
+                    items: {
+                        bsonType: "object",
+                        required: ["userName", "rate", "date"],
+                        properties: {
+                            _id: {},
+                            userName: {
+                                bsonType: "string",
+                                description: "username is required and is a string",
+                                minLength: 2,
+                                maxLength: 50
+                            },
+                            rate: {
                                 bsonType: "double",
-                                description: "Rate number is double that is required to rate",
-
+                                description: "rate its the number of avaliation"
                             },
                             date: {
                                 bsonType: "date",
-                                description: "Date the avaliation was made"
+                                description: "The date was made"
                             }
                         }
-                    }   
+                    },
+                    
                 },
                 comments: {
                     bsonType: ["array", "null"],
-                    description: "Comments its a array of objects that can be null",
+                    description: "avaliations its optional and is array object",
                     items: {
                         bsonType: "object",
-                        required: ["userId", "text", "date"],
+                        required: ["userName", "text", "date"],
                         properties: {
-                            _id:{},
-                            userId: {
+                            _id: {},
+                            userName: {
                                 bsonType: "string",
-                                description: "userId is required and is a string'",
+                                description: "username is required and is a string",
                                 minLength: 2,
                                 maxLength: 50
                             },
                             text: {
                                 bsonType: "string",
-                                description: "Text is required and is a string'",
+                                description: "username is required and is a string",
                                 minLength: 2,
-                                maxLength: 125
+                                maxLength: 125,
                             },
                             idParent: {
                                 bsonType: "string",
-                                description: "idParent is optional and is a string'",
+                                description: "its an optional string that connects to parent comment",
                                 minLength: 2,
                                 maxLength: 50
                             },
                             date: {
                                 bsonType: "date",
-                                description: "Date the avaliation was made"
+                                description: "The date was made"
                             }
                         }
-                    }
-
-                },
-                createdAt: {
-                    bsonType: "date",
-                    description: "Date the dissay was made"
+                    },
+                    
                 }
 
             }
-        }
     }
     // aguarda o banco de dados modificar os dados da coleção se ela não existe criar a coleção
     await db.command({
@@ -234,7 +242,7 @@ async function applySchemaValidation(db: mongodb.Db) {
         validator: {$jsonSchema: dissaySchema}
     }).catch(async (error: mongodb.MongoServerError) => {
         if (error.codeName === "NamespaceNotFound") {
-            await db.createCollection("dissays", {validator: {$jsonSchema: dissaySchema}});
+            await db.createCollection("dissay", {validator: {$jsonSchema: dissaySchema}});
         }
     });
 

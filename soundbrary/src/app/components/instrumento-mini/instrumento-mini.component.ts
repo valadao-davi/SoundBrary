@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-instrumento-mini',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./instrumento-mini.component.css']
 })
 export class InstrumentoMiniComponent {
-
+  @Input() name!: string;
 }
