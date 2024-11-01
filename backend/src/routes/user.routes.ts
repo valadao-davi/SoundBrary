@@ -60,12 +60,12 @@ userRouter.post('/createUser', async(req, res)=> {
             if(result?.acknowledged){
                 return res.status(200).send()
             }else{
-                res.status(500).send("Ocorreu um erro ao criar o usuário")
+                return res.status(500).send("Ocorreu um erro ao criar o usuário")
             }
         }
     }catch(error){
         console.error(error)
-        res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
+        return res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
     }
 })
 
@@ -287,7 +287,7 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated})
+            res.status(200).send({userName: user.userName,email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -329,12 +329,12 @@ userRouter.post('/login', async(req, res)=> {
         const password = req.body.password
         const checkUser = await collections?.users?.findOne({$or: [{email: userOrEmail}, {userName: userOrEmail}]})
         if(!checkUser){
-            res.status(404).send("Usuário não encontrado")
+            return res.status(404).send("Usuário não encontrado")
         }
         
         if(checkUser?.password === password){
             const token = jwt.sign({sub: checkUser?._id, userName: checkUser?.userName},`${ACCESS_SECRET}`)
-            res.json({accessToken: token})
+            return res.json({accessToken: token})
         }else{
             return res.status(404).send("Usuário não encontrado")
         }        

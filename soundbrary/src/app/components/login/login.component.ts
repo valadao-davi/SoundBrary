@@ -34,7 +34,13 @@ export class LoginComponent {
   }
 
   logar() {
-    this.service.loginUser(this.getUserOrEmail().value, this.getPasswordForm().value).subscribe((response) => {
+    let value = this.getUserOrEmail().value
+    if(!value.includes('.com')){
+      console.log("aqui")
+      value = "@" + this.getUserOrEmail().value
+    }
+    console.log(value)
+    this.service.loginUser(value, this.getPasswordForm().value).subscribe((response) => {
       if(response.accessToken){
         this.token = response.accessToken
         localStorage.setItem('token', this.token)

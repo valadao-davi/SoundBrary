@@ -9,4 +9,6 @@ export interface User {
   musicSaved?: string[];
   albumSaved?: string[];
   artistsSaved?: string[];
+  dissaysCreated?: string[];
+
 }

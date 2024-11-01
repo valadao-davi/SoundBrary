@@ -47,7 +47,6 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
     try{
         const userName = req.token?.userName
         const musicId = req.params.musicId
-        const dateToday = new Date()
         const dissay = {
             name: req.body.name,
             musicId: musicId,
@@ -59,10 +58,16 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
         if(findUser){
             const result = await collections?.dissays?.insertOne(dissay)
             if(result?.insertedId){
+                console.log("Dissay criado")
                 const addToUser = await collections?.users?.updateOne({_id: findUser._id}, {$push: { dissaysCreated: result.insertedId.toString()}})
                 if(addToUser){
+                    console.log("Adicionado ao usuario")
                     return res.status(200).json({message: "Dissay criado"})
+                }else{
+                    return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")
                 }
+            }else{
+                return res.status(404).send("Dissay nao encontrado")
             }
         }
         
@@ -70,5 +75,20 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
     }catch(error){
         console.error("Erro no método criar post: ", error)
         return res.status(500).json({error: error})
+    }
+})
+
+dissayRouter.get('/:id', async(req, res)=> {
+    try{
+        const id = req.params?.id
+        if(id){
+            const dissay = await collections?.dissays?.findOne({_id: new ObjectId(id)})
+            if(dissay){
+                res.status(200).send(dissay)
+            }
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Unknown error");
+
     }
 })

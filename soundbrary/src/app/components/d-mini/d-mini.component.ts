@@ -29,7 +29,7 @@ export class DMiniComponent {
   }
 
   ngOnInit(){
-    console.log(this.musicId, this.userName)
+    console.log("musicId: ", this.musicId, " userName: ", this.userName)
     if(this.musicId && this.userName){
       console.log("teste")
       this.serviceSpotify.getMusicById(this.musicId).subscribe(music => {

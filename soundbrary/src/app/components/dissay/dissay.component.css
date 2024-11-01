@@ -112,7 +112,7 @@
   gap: 12px;
 }
 
-.zona_comentario img {
+.mini_avatar {
   width: 48px;
   height: 48px;
   border-radius: 100px
@@ -139,6 +139,12 @@
   margin: 24px 0px 24px 0px;
   white-space: nowrap;
   align-items: center;
+}
+
+.comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .comentario {
@@ -183,4 +189,61 @@ button {
   padding: 0px;
 }
 
+.respostas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
+.resposta {
+  display: flex;
+  gap: 12px;
+}
+
+.nivel_1 {
+  margin-left: 64px;
+}
+
+.resposta_right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.nome_data {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nome_data h5 {
+  font-size: 18px;
+  color: #6313A1;
+}
+
+.nome_data p {
+  color: #bfbfbf;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.resposta_text {
+  font-size: 18px;
+  width: 100%;
+}
+
+.responder_usuario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.responder {
+  color: #6313A1;
+}
+
+.usuario_respondido {
+  color: #0F73FF;
+}

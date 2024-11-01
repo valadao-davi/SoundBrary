@@ -14,4 +14,7 @@ export class ServiceDissayService {
   getAllDissays(): Observable<Dissay[]>{
     return this.http.get<Dissay[]>(`${this.API}`)
   }
+  getDissayById(id: string): Observable<Dissay>{
+    return this.http.get<Dissay>(`${this.API}/${id}`)
+  }
 }

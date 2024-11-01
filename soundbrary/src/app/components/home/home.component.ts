@@ -26,7 +26,6 @@ export class HomeComponent  {
     this.serviceMusic.getTracksPlaylist().subscribe(
       (tracks) => {
         this.topDay = tracks
-        console.log(this.topDay)
         const albumMap = new Map();
 
         this.topDay.forEach(item => {
@@ -34,7 +33,7 @@ export class HomeComponent  {
             const albumData = {
               id: item.albumId,
               albumName: item.albumName,
-              artists: item.artists[0].name,
+              artists: item.artists,
               albumImage: item.albumImages
             }
             albumMap.set(albumData.id, albumData)

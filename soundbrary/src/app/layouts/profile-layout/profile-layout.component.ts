@@ -7,6 +7,8 @@ import { Music } from '../Music';
 import { Artist } from '../Artists';
 import { Album } from '../Album';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
+import { Dissay } from '../Dissay';
 
 @Component({
   selector: 'app-profile-layout',
@@ -18,18 +20,22 @@ export class ProfileLayoutComponent {
   user!: User
   myUser!: User
   isOwnProfile: boolean = false
+  listIdsDissays!: string[]
 
-  listIdsString: { musics: string[], albums: string[], artists: string[]} = {
+  listIdsString: { musics: string[], albums: string[], artists: string[], dissays: []} = {
     musics: [],
     albums: [],
-    artists: []
+    artists: [],
+    dissays: []
   }
   musicsList!: Music[]
   albumsList!: Album[]
+  dissaysList!: Dissay[]
+
   artistsList!: Artist[]
   query!: string | null
 
-  constructor(private router: ActivatedRoute, private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService){}
+  constructor(private router: ActivatedRoute, private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService, private serviceDissay: ServiceDissayService){}
 
   ngOnInit(){
     this.acessToken = localStorage.getItem('token') ?? ""
@@ -52,6 +58,8 @@ export class ProfileLayoutComponent {
           this.listIdsString.musics = this.myUser.musicSaved ?? []
           this.listIdsString.albums = this.myUser.albumSaved ?? []
           this.listIdsString.artists = this.myUser.artistsSaved ?? []
+          this.listIdsDissays = this.myUser.dissaysCreated ?? []
+          console.log(this.listIdsDissays)
           this.getIdsObjects()
         }else{
           this.getUserName(query)
@@ -71,6 +79,7 @@ export class ProfileLayoutComponent {
       this.listIdsString.musics = this.user.musicSaved ?? []
       this.listIdsString.albums = this.user.albumSaved ?? []
       this.listIdsString.artists = this.user.artistsSaved ?? []
+      this.listIdsDissays = this.user.dissaysCreated ?? []
       this.getIdsObjects()
   })
  }
@@ -106,6 +115,17 @@ export class ProfileLayoutComponent {
       forkJoin(items).subscribe(
         (results) => {
           this.albumsList = results
+        }
+      )
+    }
+    if(this.listIdsDissays.length > 0){
+      const items = this.listIdsDissays.map(id => 
+        this.serviceDissay.getDissayById(id)
+      )
+      forkJoin(items).subscribe(
+        (results) => {
+          this.dissaysList = results
+          console.log(this.dissaysList[0])
         }
       )
     }
