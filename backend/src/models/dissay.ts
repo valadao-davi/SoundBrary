@@ -1,18 +1,19 @@
 import * as mongodb from 'mongodb'
-import {Instrumento} from './instrumento'
-import {Avaliacao} from './avaliacao'
-import {Comentario} from './comentario'
+import {Instrument} from './instrumento'
+import {Avaliation} from './avaliacao'
+import {Comment} from './comentario'
 
 export interface Dissay {
-    _id?: mongodb.ObjectId
+    _id?: mongodb.ObjectId;
     name: string;
-    desc: string;
+    desc?: string;
     createdAt: Date;
     musicId: string;
     userId: string;
-    instruments: Instrumento;
-    tone: string;
-    bpm: number;
-    avaliations: Avaliacao[];
-    comments: Comentario[];
-}
+    instruments: Instrument[];
+    tone?: string;
+    bpm?: number;
+    avaliations?: Avaliation[];
+    comments?: Comment[];
+  }
+  

@@ -12,9 +12,9 @@ export class ServiceUserService {
 
   constructor(private http: HttpClient) {}
 
-  loginUser(email: String, password: string): Observable<{accessToken: string}>{
+  loginUser(userOrEmail: String, password: string): Observable<{accessToken: string}>{
     return this.http.post<{accessToken: string}>(`${this.API}/login`, {
-      email,
+      userOrEmail,
       password
     });
   }

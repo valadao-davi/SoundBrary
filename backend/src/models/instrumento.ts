@@ -1,3 +1,5 @@
-export interface Instrumento {
-    [instrumento: string]: { [efeito: string]: number}
-}
+export interface Instrument {
+    nameInstrument: string;
+    effects: {[effect: string]: number}
+  }
+  

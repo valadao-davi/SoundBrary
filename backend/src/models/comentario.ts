@@ -1,9 +1,10 @@
 import * as mongodb from 'mongodb'
 
-export interface Comentario {
-    _id?: mongodb.ObjectId
-    userId: string;
-    idParent: string;
-    title: string;
+
+export interface Comment {
+    _id?: mongodb.ObjectId;
+    userName: string;
+    idParent?: string;
     text: string;
+    date: Date;
 }

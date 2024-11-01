@@ -19,15 +19,17 @@ export class CadastroComponent {
   ngOnInit(): void {
         this.cadastroForm = new FormGroup({
           id: new FormControl(''),
+          username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
           name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
           email: new FormControl('', [Validators.required, Validators.email]),
           senha: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50)] ),
           confirmaSenha: new FormControl('', [Validators.required])
         })
 
-        this.getNameForm().valueChanges.subscribe(()=> {
-          this.invalidUser = false;
+        this.getUserNameForm().valueChanges.subscribe(()=> {
+          this.invalidUser = false
         })
+
         this.getEmailForm().valueChanges.subscribe(() => {
           this.invalidEmail = false;
         })
@@ -65,6 +67,7 @@ export class CadastroComponent {
     }
 
     const userJson = {
+      "userName": this.getUserNameForm().value,
       "name": this.getNameForm().value,
       "email": this.getEmailForm().value,
       "password": this.getPasswordForm().value,
@@ -97,6 +100,9 @@ export class CadastroComponent {
     });
   }
 
+  getUserNameForm(){
+    return this.cadastroForm.get('username')!
+  }
   getNameForm(){
     return this.cadastroForm.get('name')!
   }

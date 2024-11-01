@@ -7,6 +7,15 @@
             <div id="inputs_texto">
                 <h3>Cadastre sua conta</h3>
                 <div id="inputs_column">
+                  <div id="input_item">
+                    <p>Nome de usuário</p>
+                    <div id="input_frame">
+                        <input type="text" placeholder="Insira um nome" formControlName="username" required/>
+                        <img src="./assets/cadeado_icon.svg">
+                    </div>
+                    <div class="erroValidacao" *ngIf="getUserNameForm().invalid && formDir.submitted">Nome de usuário inválido</div>
+                    <div class="erroValidacao" *ngIf="invalidUser && formDir.submitted">Nome de usuário já existente</div>
+                </div>
                     <div id="input_item">
                         <p>Nome</p>
                         <div id="input_frame">

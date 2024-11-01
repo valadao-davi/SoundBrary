@@ -2,6 +2,7 @@ import { Dissay } from './dissay';
 import * as mongodb from "mongodb"
 
 export interface User {
+    userName: string;
     name: string;
     email: string;
     password: string;

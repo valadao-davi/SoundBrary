@@ -39,16 +39,24 @@ userRouter.post('/createUser', async(req, res)=> {
     try{
         const user = req.body
         const email = req.body.email
-        const name = req.body.name
+        const getUserName =  req.body.userName
+        const userNameFormatted = `@${getUserName}`
         const existUserEmail = await collections?.users?.findOne({email: email})
-        const existUserName = await collections?.users?.findOne({name: name})
+        const existUserName = await collections?.users?.findOne({userName: userNameFormatted})
 
         if(existUserName){
-            return res.status(409).json({account: "user"})
+            console.log("aqui")
+            return res.status(409).json({account: "userName"})
         }if(existUserEmail){
             return res.status(409).send({account: "email"})
         }else{
-            const result = await collections?.users?.insertOne(user)
+            const newUser = {
+                name: user.name,
+                email: email,
+                userName: userNameFormatted,
+                password: user.password
+            }
+            const result = await collections?.users?.insertOne(newUser)
             if(result?.acknowledged){
                 res.status(200).send()
             }else{
@@ -303,9 +311,9 @@ userRouter.get('/profile/:query', async(req, res)=> {
     try{
         const name = req.params?.query
         if(name){
-            const userFound = await collections?.users?.findOne({name: name})
+            const userFound = await collections?.users?.findOne({userName: name})
             if(userFound){
-                res.status(200).json({name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved})
+                res.status(200).json({userName: userFound.userName, name: userFound.name, image: userFound.image, musicSaved: userFound.musicSaved, albumSaved: userFound.albumSaved, artistsSaved: userFound.artistsSaved})
             }
         }
         console.log("funcionando")
@@ -318,9 +326,9 @@ userRouter.get('/profile/:query', async(req, res)=> {
 
 userRouter.post('/login', async(req, res)=> {
     try {
-        const email = req.body.email
+        const userOrEmail = req.body.userOrEmail
         const password = req.body.password
-        const checkUser = await collections?.users?.findOne({email: email})
+        const checkUser = await collections?.users?.findOne({$or: [{email: userOrEmail}, {userName: userOrEmail}]})
         if(!checkUser){
             res.status(404).send("Usuário não encontrado")
         }

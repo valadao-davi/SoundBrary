@@ -12,7 +12,7 @@
 
     <div class="nome">
       <h1 *ngIf="isOwnProfile">{{myUser.name}}</h1>
-      <h1 *ngIf="!isOwnProfile">{{user.name}}</h1>
+      <h1 *ngIf="!isOwnProfile">{{user.userName}}</h1>
       <img  *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg">
     </div>
     <div  *ngIf="isOwnProfile" class="email">

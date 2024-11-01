@@ -1,8 +1,8 @@
 import * as mongodb from 'mongodb'
 
-export interface Avaliacao {
+export interface Avaliation {
     _id?: mongodb.ObjectId
-    userId: string;
+    userName: string;
     rate: number;
     date: Date;
 }

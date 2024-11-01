@@ -35,7 +35,7 @@ export class HomeComponent  {
               id: item.albumId,
               albumName: item.albumName,
               artists: item.artists[0].name,
-              albumImage: item.albumImages[0].link
+              albumImage: item.albumImages
             }
             albumMap.set(albumData.id, albumData)
           }
