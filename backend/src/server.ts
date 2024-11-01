@@ -1,3 +1,4 @@
+import { dissayRouter } from './routes/dissay.routes';
 import { getAcessToken } from './config/spotifyConfig';
 import { userRouter } from './routes/user.routes';
 import * as dotenv from 'dotenv';
@@ -36,6 +37,7 @@ connectToDatabase(MONGODB_URI)
     .then(()=> {
         //Usa a rota de users
        app.use('/users', userRouter)
+       app.use("/dissays", dissayRouter)
        console.log("Conectado")
         
     })

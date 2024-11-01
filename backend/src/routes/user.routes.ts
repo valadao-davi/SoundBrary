@@ -299,6 +299,19 @@ userRouter.get('/', async(_req, res)=> {
     }
 })
 
+userRouter.get('/:id', async(req, res)=> {
+    try{
+        const id = req.params.id
+        if(id){
+            const users = await collections?.users?.findOne({_id: new ObjectId(id)});
+            res.status(200).json(users?.name)
+        }
+        console.log("funcionando")
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Unknown error");
+    }
+})
+
 userRouter.get('/profile/:query', async(req, res)=> {
     try{
         const name = req.params?.query
@@ -322,6 +335,7 @@ userRouter.post('/login', async(req, res)=> {
         const password = req.body.password
         const checkUser = await collections?.users?.findOne({email: email})
         if(!checkUser){
+            console.log("aqui")
             res.status(404).send("Usuário não encontrado")
         }
         
@@ -329,6 +343,7 @@ userRouter.post('/login', async(req, res)=> {
             const token = jwt.sign({sub: checkUser?._id},`${ACCESS_SECRET}`)
             res.json({accessToken: token})
         }else{
+            console.log("senha")
             res.status(404).send("Usuário não encontrado")
         }        
     }catch(error){

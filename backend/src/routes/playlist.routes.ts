@@ -13,15 +13,15 @@ router.get('/playlistTracks/:id', async(req, res)=> {
         }else{
             const formatted = playlistData.map(item => ({
                 id: item.track?.id,
-                track_name: item.track?.name,
-                artist_name: item.track?.artists.map(artist => ({
+                name: item.track?.name,
+                artists: item.track?.artists.map(artist => ({
                     id: artist.id,
                     name: artist.name
                 })),
-                album_name: item.track?.album.name,
-                album_type: item.track?.album.album_type,
-                album_id: item.track?.album.id,
-                image_urls: item.track?.album.images.map(image => ({
+                albumName: item.track?.album.name,
+                albumType: item.track?.album.album_type,
+                albumId: item.track?.album.id,
+                albumImages: item.track?.album.images.map(image => ({
                     link: image.url,
                     width: image.width,
                     height: image.height
