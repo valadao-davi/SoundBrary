@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/layouts/User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-lateral',
@@ -10,13 +11,12 @@ import { ServiceUserService } from 'src/app/services/service-user.service';
 })
 export class PerfilLateralComponent {
 
-  accessToken!: string;
-  user!: User;
+  @Input() user!: User | null
 
   constructor(private router: Router, private serviceUsers: ServiceUserService){}
 
     navigatePerfil() {
-      if(this.accessToken === ""){
+      if(this.user === null){
         this.router.navigate(['/login'])
         return
       }
@@ -24,20 +24,6 @@ export class PerfilLateralComponent {
 
     }
 
-
-
-  ngOnInit(): void {
-    this.accessToken = localStorage.getItem('token') ?? ""
-    console.log(this.accessToken)
-    if(this.accessToken){
-      this.serviceUsers.getUser(this.accessToken).subscribe(user => {
-        this.user = user
-        console.log(this.user)
-
-      })
-
-  }
-  }
 
 
 

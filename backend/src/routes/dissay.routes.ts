@@ -78,7 +78,7 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
     }
 })
 
-dissayRouter.get('/:id', async(req, res)=> {
+dissayRouter.get('/getDissay/:id', async(req, res)=> {
     try{
         const id = req.params?.id
         if(id){
@@ -93,14 +93,15 @@ dissayRouter.get('/:id', async(req, res)=> {
     }
 })
 
-dissayRouter.put('/:id', auth, async(req: CustomRequest, res: Response)=> {
+dissayRouter.put('/editDissay/:id', auth, async(req: CustomRequest, res: Response)=> {
     try{
         const dissayId = req.params?.id
         const userName = req.token?.userName
         const findUser = await collections?.users?.findOne({userName: userName})
-        if(dissayId && findUser){
+        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
+        if(findUser && findDissay){
             const dissay = req.body.dissay
-            const result = await collections?.dissays?.findOneAndUpdate({_id: new ObjectId(dissayId)}, {$set: dissay})
+            const result = await collections?.dissays?.findOneAndUpdate({_id: new ObjectId(findDissay._id)}, {$set: dissay})
             console.log(result)
             if(result){
                 return res.status(200).json({message: "Dissay atualizado com sucesso"})
@@ -114,13 +115,14 @@ dissayRouter.put('/:id', auth, async(req: CustomRequest, res: Response)=> {
     }
 })
 
-dissayRouter.delete('/:id', auth, async(req: CustomRequest, res: Response)=> {
+dissayRouter.delete('/deleteDissay/:id', auth, async(req: CustomRequest, res: Response)=> {
     try{
         const dissayId = req.params?.id
         const userName = req.token?.userName
         const findUser = await collections?.users?.findOne({userName: userName})
+        
         if(dissayId && findUser){
-            const dissay = req.body.dissay
+            
             const result = await collections?.dissays?.findOneAndDelete({_id: new ObjectId(dissayId)})
             if(result){
                 return res.status(200).json({message: "Dissay deletado com sucesso"})
@@ -130,6 +132,29 @@ dissayRouter.delete('/:id', auth, async(req: CustomRequest, res: Response)=> {
         }
     }catch(error){
         console.error("Erro no método editar post: ", error)
+        return res.status(500).json({error: error})
+    }
+})
+
+dissayRouter.post("/avaliateDissay/:id", auth, async(req: CustomRequest, res:Response)=> {
+    try {
+        const dissayId = req.params?.id
+        const userName = req.token?.userName
+        const findUser = await collections?.users?.findOne({userName: userName})
+        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
+        if(findUser && findDissay) {
+            const avaliation = {
+                userName: findUser.userName,
+                rate: req.body.rate,
+                date: new Date()
+            }
+            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {avaliations: avaliation}})
+            if(editedDissay){
+                res.status(200).json({avaliations: editedDissay.avaliations})
+            }
+        }
+    }catch(error){
+        console.error("Erro ao adicionar avaliação: ", error)
         return res.status(500).json({error: error})
     }
 })

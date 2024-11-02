@@ -1,6 +1,6 @@
-<app-header></app-header>
+<app-header [user]="user"></app-header>
 <main>
-  <app-perfil-lateral></app-perfil-lateral>
+  <app-perfil-lateral [user]="user"></app-perfil-lateral>
   <div class="main_filho"><router-outlet></router-outlet></div>
   <app-ads></app-ads>
 </main>

@@ -87,7 +87,7 @@ export const detailsGeneral = async<T>(type: 'artists' | 'tracks' | 'albums', id
         })
         return response.data
     }catch(e){
-        console.error('Erro: ', e)
+        console.error(`Erro no método get por id no tipo ${type}, no ${id}`)
         return null
     }
 

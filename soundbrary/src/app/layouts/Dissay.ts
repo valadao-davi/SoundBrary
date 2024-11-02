@@ -10,7 +10,6 @@ export interface Dissay {
   userName: string;
   instruments: Instrument[];
   tone?: string;
-  bpm?: number;
   avaliations?: Avaliation[];
   comments?: Comment[];
 }

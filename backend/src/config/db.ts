@@ -149,7 +149,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                                 bsonType: "object",
                                 description: "Effects of the instrument",
                                 additionalProperties: {
-                                    bsonType: "double"
+                                    bsonType: "string"
                                 }
                             }
                         }
@@ -160,10 +160,6 @@ async function applySchemaValidation(db: mongodb.Db) {
                     description: "Tone its optional and is a string",
                     minLength: 1,
                     maxLength: 10
-                },
-                bpm: {
-                    bsonType: ["number", "null"],
-                    description: "bpm its optional and is a string",
                 },
                 avaliations: {
                     bsonType: ["array", "null"],

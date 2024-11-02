@@ -1,5 +1,6 @@
 import { Router, RouterModule } from '@angular/router';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
+import { User } from 'src/app/layouts/User';
 
 RouterModule
 
@@ -9,7 +10,7 @@ RouterModule
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  accessToken!: string
+  @Input() user!: User | null
 
 
   @ViewChild('input_pesquisa') inputElement!: ElementRef;
@@ -21,10 +22,7 @@ export class HeaderComponent {
   focusInput() {
     this.inputElement.nativeElement.focus();
   }
-  ngOnInit(){
-    this.accessToken = localStorage.getItem('token') ?? ""
-    console.log(this.accessToken)
-  }
+  
 
   isSearchRoute(): boolean {
     return this.router.url.startsWith('/search');

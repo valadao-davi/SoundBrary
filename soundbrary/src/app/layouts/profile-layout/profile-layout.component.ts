@@ -2,7 +2,7 @@ import { ServiceMusicService } from './../../services/service-music.service';
 import { Component, Input } from '@angular/core';
 import { User } from '../User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Music } from '../Music';
 import { Artist } from '../Artists';
 import { Album } from '../Album';
@@ -16,8 +16,9 @@ import { Dissay } from '../Dissay';
   styleUrls: ['./profile-layout.component.css']
 })
 export class ProfileLayoutComponent {
-  acessToken!: string;
-  user!: User
+  accessToken!: string;
+  userAuth!: User | null;
+  otherUser!: User
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissays!: string[]
@@ -31,40 +32,52 @@ export class ProfileLayoutComponent {
   musicsList!: Music[]
   albumsList!: Album[]
   dissaysList!: Dissay[]
-
+  dataLoad: boolean = false;
   artistsList!: Artist[]
   query!: string | null
 
   constructor(private router: ActivatedRoute, private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService, private serviceDissay: ServiceDissayService){}
 
   ngOnInit(){
-    this.acessToken = localStorage.getItem('token') ?? ""
-    this.router.paramMap.subscribe((params)=> {
-      this.query = params.get('query')
-      if(this.query){
-        this.getAllUser(this.query)
+    this.accessToken = localStorage.getItem('token') ?? ""
+    if(this.accessToken){
+      this.serviceUser.getUser(this.accessToken).pipe(
+        catchError(error => {
+          if (error.status === 404) {
+            this.dataLoad = true
+            this.userAuth = null
+          }
+          return of(null);
+        })
+      ).subscribe(user => {
+        this.userAuth = user
+        if(this.userAuth !== null){
+          this.dataLoad = true
+        }
+      })
       }
-    })
+      this.router.paramMap.subscribe((params)=> {
+        this.query = params.get('query')
+        if(this.query){
+          this.getAllUser(this.query)
+        }
+      })
   }
 
   getAllUser(query: string){
-    if(this.acessToken.length > 0){
-      this.serviceUser.getUser(this.acessToken).subscribe(user => {
+    if(this.accessToken.length > 0){
+      this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.myUser = user
-        console.log(this.myUser.userName)
-        console.log(query)
         if(this.myUser.userName === query){
           this.isOwnProfile = true
           this.listIdsString.musics = this.myUser.musicSaved ?? []
           this.listIdsString.albums = this.myUser.albumSaved ?? []
           this.listIdsString.artists = this.myUser.artistsSaved ?? []
           this.listIdsDissays = this.myUser.dissaysCreated ?? []
-          console.log(this.listIdsDissays)
           this.getIdsObjects()
         }else{
           this.getUserName(query)
           console.log("usuario pesquisado")
-
         }
       })
     }else{
@@ -74,12 +87,12 @@ export class ProfileLayoutComponent {
   }
 
   getUserName(query: string){
-    this.serviceUser.getUserName(query).subscribe(user => {
-      this.user = user
-      this.listIdsString.musics = this.user.musicSaved ?? []
-      this.listIdsString.albums = this.user.albumSaved ?? []
-      this.listIdsString.artists = this.user.artistsSaved ?? []
-      this.listIdsDissays = this.user.dissaysCreated ?? []
+    this.serviceUser.getUserName(query).subscribe(subUser => {
+      this.otherUser = subUser
+      this.listIdsString.musics = this.otherUser.musicSaved ?? []
+      this.listIdsString.albums = this.otherUser.albumSaved ?? []
+      this.listIdsString.artists = this.otherUser.artistsSaved ?? []
+      this.listIdsDissays = this.otherUser.dissaysCreated ?? []
       this.getIdsObjects()
   })
  }
@@ -132,6 +145,7 @@ export class ProfileLayoutComponent {
     }
     }
   }
+
 
 
 

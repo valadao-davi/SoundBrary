@@ -1,6 +1,6 @@
-<app-header></app-header>
+<app-header [user]="userAuth"></app-header>
 
-<div class="layout_perfil" *ngIf="user?.name || myUser">
+<div class="layout_perfil" *ngIf="otherUser?.name || myUser">
 
   <div class="perfil_left">
     <h1 class="informacoes"*ngIf="isOwnProfile">Informações da conta</h1>
@@ -32,7 +32,7 @@
 
   <div class="perfil_right">
     <h1 *ngIf="isOwnProfile">Meu perfil</h1>
-    <h1 *ngIf="!isOwnProfile">{{user.name}}</h1>
+    <h1 *ngIf="!isOwnProfile">{{otherUser.name}}</h1>
     <div class="dissays_perfil">
 
       <div class="section" *ngIf="listIdsDissays.length > 0">
