@@ -17,6 +17,7 @@ export class MainLayoutComponent {
   constructor(private serviceUsers: ServiceUserService){}
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
+    console.log(this.accessToken)
     if(this.accessToken){
       this.serviceUsers.getUser(this.accessToken).pipe(
         catchError(error => {
@@ -35,6 +36,8 @@ export class MainLayoutComponent {
 
       })
 
+  }else{
+    this.user = null
   }
   }
 }

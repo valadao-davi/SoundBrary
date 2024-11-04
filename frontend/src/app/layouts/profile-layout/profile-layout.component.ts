@@ -1,4 +1,4 @@
-import { ServiceMusicService } from './../../services/service-music.service';
+import { ServiceMusicService } from '../../services/service-music.service';
 import { Component, Input } from '@angular/core';
 import { User } from '../User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
