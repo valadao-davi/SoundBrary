@@ -13,6 +13,9 @@ export class LoginComponent {
 
   constructor(private router: Router, private service: ServiceUserService) {}
 
+  sucesso!: boolean;
+  falha!: boolean;
+
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       userOrEmail: new FormControl('', [Validators.required]),
@@ -45,8 +48,10 @@ export class LoginComponent {
         this.token = response.accessToken
         localStorage.setItem('token', this.token)
         this.navigateHome()
+        this.sucessoNotification()
       }else{
         console.error("Token não encontrado")
+        this.falhaNotification()
       }
     }
     )
@@ -57,4 +62,21 @@ export class LoginComponent {
   getPasswordForm(){
     return this.loginForm.get('senha')!
   }
+
+
+  sucessoNotification() {
+    if (!this.falha) { // Verifica se a notificação de publicação não está visível
+      this.sucesso = true;
+      setTimeout(() => {
+        this.sucesso = false; // Ocultar notificação após 3 segundos
+      }, 3000);}
+    }
+
+  falhaNotification() {
+    if (!this.sucesso) { // Verifica se a notificação de publicação não está visível
+      this.falha = true;
+      setTimeout(() => {
+        this.falha = false; // Ocultar notificação após 3 segundos
+      }, 3000);}
+    }
 }

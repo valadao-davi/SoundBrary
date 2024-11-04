@@ -16,6 +16,9 @@ export class CadastroComponent {
 
   constructor(private router: Router, private service: ServiceUserService) {}
 
+  falha!: boolean;
+  sucesso!: boolean;
+
   ngOnInit(): void {
         this.cadastroForm = new FormGroup({
           id: new FormControl(''),
@@ -114,4 +117,19 @@ export class CadastroComponent {
   }
 
 
+  sucessoNotification() {
+    if (!this.falha) { // Verifica se a notificação de publicação não está visível
+      this.sucesso = true;
+      setTimeout(() => {
+        this.sucesso = false; // Ocultar notificação após 3 segundos
+      }, 3000);}
+    }
+
+  falhaNotification() {
+    if (!this.sucesso) { // Verifica se a notificação de publicação não está visível
+      this.falha = true;
+      setTimeout(() => {
+        this.falha = false; // Ocultar notificação após 3 segundos
+      }, 3000);}
+    }
 }

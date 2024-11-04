@@ -27,9 +27,12 @@ avaliationRouter.post("/avaliateDissay/:id", auth, async(req: CustomRequest, res
                 rate: req.body.rate,
                 date: new Date()
             }
+            if(avaliation.rate > 5){
+                return res.status(500).json({message: "quantidade inválida"})
+            }
             const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {avaliations: avaliation}})
             if(editedDissay){
-                res.status(200).json({avaliations: editedDissay.avaliations})
+                return res.status(200).json({avaliations: editedDissay.avaliations})
             }
         }
     }catch(error){
