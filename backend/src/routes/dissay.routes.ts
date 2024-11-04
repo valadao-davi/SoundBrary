@@ -136,25 +136,3 @@ dissayRouter.delete('/deleteDissay/:id', auth, async(req: CustomRequest, res: Re
     }
 })
 
-dissayRouter.post("/avaliateDissay/:id", auth, async(req: CustomRequest, res:Response)=> {
-    try {
-        const dissayId = req.params?.id
-        const userName = req.token?.userName
-        const findUser = await collections?.users?.findOne({userName: userName})
-        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
-        if(findUser && findDissay) {
-            const avaliation = {
-                userName: findUser.userName,
-                rate: req.body.rate,
-                date: new Date()
-            }
-            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {avaliations: avaliation}})
-            if(editedDissay){
-                res.status(200).json({avaliations: editedDissay.avaliations})
-            }
-        }
-    }catch(error){
-        console.error("Erro ao adicionar avaliação: ", error)
-        return res.status(500).json({error: error})
-    }
-})

@@ -203,9 +203,9 @@ async function applySchemaValidation(db: mongodb.Db) {
                             },
                             text: {
                                 bsonType: "string",
-                                description: "username is required and is a string",
+                                description: "text is required and is a string",
                                 minLength: 2,
-                                maxLength: 125,
+                                maxLength: 1125,
                             },
                             idParent: {
                                 bsonType: "string",

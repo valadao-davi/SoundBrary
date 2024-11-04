@@ -23,6 +23,7 @@ avaliationRouter.post("/avaliateDissay/:id", auth, async(req: CustomRequest, res
         const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
         if(findUser && findDissay) {
             const avaliation = {
+                _id: new ObjectId(),
                 userName: findUser.userName,
                 rate: req.body.rate,
                 date: new Date()
@@ -38,11 +39,32 @@ avaliationRouter.post("/avaliateDissay/:id", auth, async(req: CustomRequest, res
     }
 })
 
+avaliationRouter.get("/getAvaliationUser/:id", auth, async(req: CustomRequest, res: Response)=> {
+    try{
+        const dissayId = req.params?.id
+        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
+        const userName = req.token?.userName
+        if( findDissay?.avaliations && findDissay.avaliations?.length > 0){
+            const indexAvaliation = findDissay.avaliations?.findIndex(av => av.userName === userName)
+            if(indexAvaliation !== -1){
+                return res.status(200).json({avaliation: findDissay.avaliations[indexAvaliation]})
+            }else{
+                return null
+            }
+        }else{
+            return null
+        }
+    }catch(error){
+        console.error("Erro ao pegar avaliacao: ", error)
+        return res.status(500).json({error: error})
+    }
+})
+
 avaliationRouter.get("/getAvaliationTotal/:id", async(req: CustomRequest, res:Response)=> {
     try{
         const dissayId = req.params?.id
         const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
-        if(findDissay){
+        if(findDissay?.avaliations && findDissay.avaliations?.length > 0){
             if(findDissay.avaliations){
                 const rateAll = findDissay.avaliations.reduce((acc, avaliation) => acc + avaliation.rate, 0);
                 const rateTotal = rateAll / findDissay.avaliations.length
@@ -51,6 +73,55 @@ avaliationRouter.get("/getAvaliationTotal/:id", async(req: CustomRequest, res:Re
         }
     }catch(error){
         console.error("Erro ao pegar itens: ", error)
+        return res.status(500).json({error: error})
+    }
+})
+
+avaliationRouter.put("/editAvaliation/:id", auth, async(req: CustomRequest, res: Response)=> {
+    try {
+        const dissayId = req.params?.id
+        const userName = req.token?.userName
+        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
+        if(findDissay) {
+            const avaliationIndex = findDissay.avaliations?.findIndex(av => av.userName == userName)
+            if(avaliationIndex !== -1){
+                const updateAvaliation = {
+                    [`avaliations.${avaliationIndex}.rate`]: req.body.rate,
+                    [`avaliations.${avaliationIndex}.date`]: new Date(),
+                };
+                const editedDissay = await collections?.dissays?.updateOne({_id: findDissay._id}, {$set:updateAvaliation})
+                if(editedDissay){
+                    return res.status(200).json({message: "avaliado com sucesso"})
+                }else{
+                    return res.status(400).json({message: "ocorreu um erro ao editar"})
+                }
+            }else{
+                return res.status(404).json({message: "usuário não encontrado"})
+            }
+        }
+    }catch(error){
+        console.error("Erro ao adicionar avaliação: ", error)
+        return res.status(500).json({error: error})
+    }
+})
+
+avaliationRouter.delete("/removeAvaliation/:id", auth, async(req: CustomRequest, res: Response)=> {
+    try{
+        const dissayId = req.params?.id
+        const userName = req.token?.userName
+        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
+        if(findDissay) {
+            const deleteAvaliation = await collections?.dissays?.updateOne({_id: findDissay._id}, {$pull: {avaliations: {userName: userName}}})
+            if(deleteAvaliation?.acknowledged){
+                return res.status(200).json({message:"avaliação removida"})
+            }else{
+                return res.status(400).json({message: "ocorreu um erro ao remover"})
+            }
+        }else{
+            return res.status(404).json({message: "dissay não encontrado"})
+        }
+    }catch(error){
+        console.error("Erro ao excluir avaliação: ", error)
         return res.status(500).json({error: error})
     }
 })
