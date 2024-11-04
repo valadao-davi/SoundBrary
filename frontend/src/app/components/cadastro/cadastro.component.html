@@ -72,3 +72,10 @@
 </form>
 </div>
 
+<div *ngIf="sucesso" class="publish-notification" [ngClass]="{'slide': sucesso}">
+  Logado com sucesso!
+</div>
+
+<div *ngIf="falha" class="cancel-notification" [ngClass]="{'slide': falha}">
+  Login falhou! Tente novamente.
+</div>

@@ -192,16 +192,20 @@ button {
 .respostas {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .resposta {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
 }
 
 .nivel_1 {
   margin-left: 64px;
+}
+
+.nivel_2 {
+  margin-left: 128px;
 }
 
 .resposta_right {
@@ -247,3 +251,9 @@ button {
 .usuario_respondido {
   color: #0F73FF;
 }
+
+.conteudo_resposta {
+  display: flex;
+  gap: 12px;
+}
+
