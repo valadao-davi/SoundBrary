@@ -12,6 +12,7 @@ import { DissayComponent } from './components/dissay/dissay.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtistaComponent } from './components/artista/artista.component';
 import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.component';
+import { CriarDissayComponent } from './components/criar-dissay/criar-dissay.component';
 
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'musica/:id', component: MusicaComponent},
     {path: 'dissay', component: DissayComponent},
+    {path: 'dissay/criar', component: CriarDissayComponent},
     {path: 'album/:id', component: AlbumComponent},
     {path: 'artista/:id', component: ArtistaComponent},
     {path: 'user/:id', component: UsuarioComponent},
