@@ -50,7 +50,7 @@ avaliationRouter.get("/getAvaliationUser/:id", auth, async(req: CustomRequest, r
         if( findDissay?.avaliations && findDissay.avaliations?.length > 0){
             const indexAvaliation = findDissay.avaliations?.findIndex(av => av.userName === userName)
             if(indexAvaliation !== -1){
-                return res.status(200).json({avaliation: findDissay.avaliations[indexAvaliation]})
+                return res.status(200).json({avaliation: findDissay.avaliations[indexAvaliation].rate})
             }else{
                 return null
             }
