@@ -6,8 +6,9 @@
 
 .conteudo {
   width: 100%;
-  padding: 48px 108px 120px 64px;
+  padding: 48px 0px 120px 0px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 16px;
 }
@@ -16,6 +17,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 90%;
+  justify-self: center;
+  align-self: center;
 }
 
 .dissay_content h1{
@@ -59,11 +63,11 @@
 
 .instrumentos_secao {
   display: flex;
-  justify-content: space-between;
+  gap: 64px;
 }
 
-.instrumentos{
-  width: 568px;
+.instrumentos {
+  width: 100%;  /* Ajuste a largura para ocupar toda a área disponível */
 }
 
 .secao_titulo {
@@ -79,15 +83,17 @@
   background-color: #bfbfbf;
 }
 
-.lista_instrumentos{
+.lista_instrumentos {
   margin-top: 24px;
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));  /* Adapta os elementos para caberem dentro da tela */
+  gap: 16px;  /* Espaçamento entre os elementos */
+  width: 100%;  /* O grid ocupa 100% da largura disponível */
+  justify-items: center;  /* Centraliza os itens dentro do grid */
 }
 
 .afinacao {
-  margin-top: 18px;
+  margin-top: 27px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -95,7 +101,7 @@
 }
 
 .descricao {
-  margin-top: 8px ;
+  margin-top: 16px ;
 }
 
 .campo_texto {
@@ -257,7 +263,7 @@ button {
   gap: 12px;
 }
 
-.aviso { 
+.aviso {
   position: fixed;
   bottom: -50px; /* Fora da tela inicialmente */
   left: 50%;
@@ -277,13 +283,13 @@ button {
 
 .aviso.sumir {
   bottom: -50px;
-  opacity: 1; 
+  opacity: 1;
 }
 
-.success { 
+.success {
   background-color: #4CAF50; /* Verde para sucesso */
 }
 
-.error { 
+.error {
   background-color: #f44336; /* Vermelho para erro */
 }

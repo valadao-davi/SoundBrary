@@ -26,6 +26,8 @@ import { DissayItemComponent } from './components/dissay-item/dissay-item.compon
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { ArtistaComponent } from './components/artista/artista.component';
 import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.component';
+import { CriarDissayComponent } from './components/criar-dissay/criar-dissay.component';
+import { CriarDissayCardsComponent } from './components/criar-dissay-cards/criar-dissay-cards.component';
 
 
 
@@ -53,7 +55,9 @@ import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.
     DissayItemComponent,
     CapitalizePipe,
     ArtistaComponent,
-    ProfileLayoutComponent
+    ProfileLayoutComponent,
+    CriarDissayComponent,
+    CriarDissayCardsComponent
   ],
   imports: [
     BrowserModule,
