@@ -5,6 +5,8 @@ import { Music } from 'src/app/layouts/Music';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 import { catchError, tap, throwError } from 'rxjs';
+import { Dissay } from 'src/app/layouts/Dissay';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 
 @Component({
   selector: 'app-musica',
@@ -16,10 +18,11 @@ export class MusicaComponent {
   accessToken!: string
   musicItem?: Music;
   saved: boolean = false;
+  listDissays!: Dissay[]
   user?: User;
 
   id!: string | null;
-  constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){
+  constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private dissayService: ServiceDissayService){
 
   }
   ngOnInit(){
@@ -51,6 +54,12 @@ export class MusicaComponent {
       })
     }
   }
+
+  // loadDissays(id: string){
+  //   this.dissayService.getDissayById(id).subscribe(dissays => {
+  //     this.listDissays = dissays
+  //   })
+  // }
 
   saveSongOrRemove(id: string, isSaved: boolean): void {
     console.log(isSaved)

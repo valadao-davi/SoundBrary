@@ -93,6 +93,21 @@ dissayRouter.get('/getDissay/:id', async(req, res)=> {
     }
 })
 
+dissayRouter.get("/getDissayByMusic/:musicId", async(req, res)=> {
+    try{
+        const musicId = req.params?.musicId
+        if(musicId){
+            const dissay = collections?.dissays?.find({musicId: musicId})
+            if(dissay){
+                res.status(200).send(dissay)
+            }
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Unknown error");
+
+    }
+})
+
 dissayRouter.put('/editDissay/:id', auth, async(req: CustomRequest, res: Response)=> {
     try{
         const dissayId = req.params?.id
