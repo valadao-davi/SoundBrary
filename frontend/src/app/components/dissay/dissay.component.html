@@ -1,15 +1,16 @@
 <div class="layout">
-  <div>
-    <app-left-info></app-left-info>
+  <div *ngIf="dataLoaded">
+    <app-left-info [urlLink]="musicData.externalLink" [trackName]="musicData.name" [urlImage]="musicData.albumImages[0].link" [albumId]="musicData.albumId"></app-left-info>
   </div>
   <div class="conteudo">
     <div class="dissay_content">
-      <h1>Titulo do Dissay</h1>
+      <h1>{{dissayData.name}}</h1>
 
       <div class="perfil_avaliacao">
         <div class="dissay_perfil">
           <img src="../../../assets/perfil_icon.png">
-          <h2>Luana</h2>
+          <h2>{{userData.name}}</h2>
+          <h3>{{userData.userName}}</h3>
         </div>
         <div class="dissay_avaliacao">
           <div class="estrelas_avaliacao">
@@ -19,7 +20,7 @@
             <img src="../../../assets/estrela_cheia.svg">
             <img src="../../../assets/estrela_cheia.svg">
           </div>
-          <h2>4.7</h2>
+          <h2>{{dissayData.totalRate ?? 0.0}}</h2>
         </div>
       </div>
 
@@ -27,18 +28,8 @@
         <div class="instrumentos">
           <h1 class="secao_titulo">Instrumentos</h1>
           <div class="linha"></div>
-          <div class="lista_instrumentos">
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
-            <app-instrumento-mini-2></app-instrumento-mini-2>
+          <div class="lista_instrumentos" *ngFor="let instrumento of dissayData.instruments">
+            <app-instrumento-mini-2 [nameInstrument]="instrumento.nameInstrument"></app-instrumento-mini-2>
           </div>
         </div>
         <div class="afinacao">
@@ -51,9 +42,7 @@
         <h1 class="secao_titulo">Descrição</h1>
         <div class="linha"></div>
         <div class="campo_texto">
-          <p>O piano é gravado de forma analógica, então talvez seja mais difícil de obter o timbre ideal, no entanto, alguns plugins de DAWs como FL Studio e Ableton conseguem simular bem o som analógico. Para alcançar um som autêntico, recomendo o uso do plugin RC-20 Retro Color, que adiciona uma leve saturação e ruído de fita, imitando as imperfeições de uma gravação analógica. Além disso, o uso de um compressor suave, como o LA-2A, pode ajudar a manter a dinâmica natural do piano enquanto dá uma coloração mais quente ao som.</p>
-          <br>
-          <p>No FL Studio, utilizar o equalizador Parametric EQ 2 para cortar um pouco dos médios graves em torno de 250Hz e realçar as altas frequências em 8kHz pode trazer mais clareza e brilho ao som, especialmente se a gravação original estiver um pouco abafada. Para finalizar, o reverb Valhalla VintageVerb com um tempo de decaimento médio e um mix em torno de 20% pode adicionar uma profundidade espacial que simula a acústica de uma sala de gravação vintage.</p>
+         {{dissayData.desc}}
         </div>
       </div>
 
@@ -74,23 +63,23 @@
         </div>
 
         <div class="respostas">
-          <div *ngFor="let resposta of respostas; let i = index">
+          <div *ngFor="let comentario of comments; let i = index">
           <div class="resposta" >
             <div  class="conteudo_resposta">
               <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
             <div class="resposta_right">
               <div class="nome_data">
-                <h5>{{ resposta.nome }}</h5>
-                <p>{{ resposta.data }}</p>
+                <h5>{{ comentario.userName }}</h5>
+                <p>{{ comentario.date }}</p>
               </div>
               <div class="resposta_text">
-                <p>{{ resposta.texto }}</p>
+                <p>{{comentario.text}}</p>
               </div>
               <div class="responder_usuario">
                 <button (click)="toggleResposta(i)">
                   <h5 class="responder">Responder</h5>
                 </button>
-                <h5 class="usuario_respondido">para: {{ resposta.para }}</h5>
+                <h5 class="usuario_respondido">para: {{ comentario.userName }}</h5>
               </div>
             </div>
             </div>

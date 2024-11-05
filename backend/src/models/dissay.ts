@@ -13,6 +13,7 @@ export interface Dissay {
     instruments: Instrument[];
     tone?: string;
     avaliations?: Avaliation[];
+    totalRate?: number;
     comments?: Comment[];
   }
   

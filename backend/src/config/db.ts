@@ -149,11 +149,19 @@ async function applySchemaValidation(db: mongodb.Db) {
                                 bsonType: "object",
                                 description: "Effects of the instrument",
                                 additionalProperties: {
-                                    bsonType: "string"
+                                    bsonType: "string",
+                                    minLength: 2,
+                                    maxLength: 50
                                 }
                             }
                         }
                     }
+                },
+                desc: {
+                    bsonType: ["string", "null"],
+                    description: "Description its optional and is a string",
+                    minLength: 2,
+                    maxLength: 1125
                 },
                 tone: {
                     bsonType: ["string", "null"],
@@ -186,6 +194,10 @@ async function applySchemaValidation(db: mongodb.Db) {
                         }
                     },
                     
+                },
+                totalRate: {
+                    bsonType: ["double", "null"],
+                    description: "Total rate its calculate after an avaliation"
                 },
                 comments: {
                     bsonType: ["array", "null"],

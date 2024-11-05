@@ -31,10 +31,15 @@ avaliationRouter.post("/avaliateDissay/:id", auth, async(req: CustomRequest, res
             if(avaliation.rate > 5){
                 return res.status(500).json({message: "quantidade inválida"})
             }
-            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {avaliations: avaliation}})
+            const totalAvaliations = (findDissay.avaliations?.length || 0) + 1;
+            const rateAll = (findDissay.avaliations?.reduce((acc, avaliation) => acc + avaliation.rate, 0) || 0) + avaliation.rate;
+            const rateTotal = rateAll / totalAvaliations
+            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {avaliations: avaliation}, $set: {totalRate: rateTotal}})
             if(editedDissay){
                 return res.status(200).json({avaliations: editedDissay.avaliations})
             }
+        }else{
+            return res.status(404).json({message: "Dissay ou usuário não encontrado"})
         }
     }catch(error){
         console.error("Erro ao adicionar avaliação: ", error)

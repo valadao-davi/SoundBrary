@@ -30,7 +30,8 @@ export class MusicaComponent {
     this.route.paramMap.subscribe((params)=> {
       this.id = params.get('id')
       if(this.id){
-        this.loadMusic(this.id!)
+        this.loadMusic(this.id)
+        this.loadDissays(this.id)
       }
     })
 
@@ -55,11 +56,21 @@ export class MusicaComponent {
     }
   }
 
-  // loadDissays(id: string){
-  //   this.dissayService.getDissayById(id).subscribe(dissays => {
-  //     this.listDissays = dissays
-  //   })
-  // }
+  loadDissays(id: string){
+    this.dissayService.getDissayByMusic(id).subscribe(dissays => {
+      this.listDissays = dissays
+      this.listDissays = this.listDissays.map(dissay => ({
+        name: dissay.name,
+        userName: dissay.userName,
+        musicId: dissay.musicId,
+        desc: dissay.desc ?? "",
+        instruments: dissay.instruments,
+        createdAt: new Date(dissay.createdAt).toLocaleDateString(),
+        totalRate: dissay.totalRate ?? 0.0,
+      }))
+      console.log(this.listDissays)
+    })
+  }
 
   saveSongOrRemove(id: string, isSaved: boolean): void {
     console.log(isSaved)

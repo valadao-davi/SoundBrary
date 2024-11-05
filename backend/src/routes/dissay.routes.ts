@@ -52,7 +52,8 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
             musicId: musicId,
             userName: userName,
             instruments: req.body.instruments,
-            createdAt: new Date()  
+            createdAt: new Date(),
+            desc: req.body?.description,
         }
         const findUser = await collections?.users?.findOne({userName: userName})
         if(findUser){
@@ -97,14 +98,13 @@ dissayRouter.get("/getDissayByMusic/:musicId", async(req, res)=> {
     try{
         const musicId = req.params?.musicId
         if(musicId){
-            const dissay = collections?.dissays?.find({musicId: musicId})
+            const dissay = await collections?.dissays?.find({musicId: musicId}).toArray()
             if(dissay){
                 res.status(200).send(dissay)
             }
         }
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Unknown error");
-
     }
 })
 

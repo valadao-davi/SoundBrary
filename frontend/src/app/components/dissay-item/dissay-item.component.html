@@ -1,10 +1,11 @@
+<ng-container *ngIf="dataLoaded"></ng-container>
 <div class="dissay">
   <div class="topo">
     <div class="topo_textos">
-      <h3>Esse é o título do Dissay</h3>
+      <h3>{{name}}</h3>
       <div class="info_perfil">
         <img src="../../../assets/perfil_icon.png">
-        <div class="info_perfil_texto"><span>Luana </span>- atualizado em: <span>06/10/2024</span></div>
+        <div class="info_perfil_texto"><span>{{userName}} </span>- atualizado em: <span>{{date}}</span></div>
       </div>
     </div>
     <div class="topo_avaliacao">
@@ -15,7 +16,7 @@
         <img src="../../../assets/estrela_cheia.svg">
         <img src="../../../assets/estrela_cheia.svg">
       </div>
-      <h4>4.7</h4>
+      <h4>{{rateNumber}}</h4>
     </div>
   </div>
 
@@ -26,6 +27,6 @@
       <app-instrumento-mini></app-instrumento-mini>
       <app-instrumento-mini></app-instrumento-mini>
     </div>
-    <div class="texto_dissay">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Non cumque ut deleniti porro commodi ab dolorem eius culpa tempora rerum repudiandae! Voluptate pariatur eius vel perspiciatis libero, perferendis temporibus aasdf Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur omnis iste tempora sapiente voluptate, fugit expedita vitae, quas corporis maiores cumque doloribus quos optio illo architecto? Quaerat mollitia eveniet nihil!.</div>
+    <div class="texto_dissay">{{desc}}</div>
   </div>
 </div>

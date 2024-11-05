@@ -41,7 +41,7 @@ commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Re
             const comment = {
                 _id: new ObjectId(),
                 userName: userName,
-                text: req.body,
+                text: req.body.text,
                 date: new Date()
             }
             const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}})
@@ -68,7 +68,7 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
                 _id: new ObjectId(),
                 userName: userName,
                 idParent: commentId,
-                text: req.body,
+                text: req.body.text,
                 date: new Date()
             }
             const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}})

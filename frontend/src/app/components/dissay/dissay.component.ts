@@ -1,4 +1,12 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Coment } from 'src/app/layouts/Comment';
+import { Dissay } from 'src/app/layouts/Dissay';
+import { Music } from 'src/app/layouts/Music';
+import { User } from 'src/app/layouts/User';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
+import { ServiceMusicService } from 'src/app/services/service-music.service';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
   selector: 'app-dissay',
@@ -12,12 +20,67 @@ export class DissayComponent {
     { nome: 'Carlos A.', data: '27/08/2024 11:10pm', texto: 'Concordo com a Mariana!', para: 'aaa', showInput: false }
     // Adicione mais respostas conforme necessário
   ];
+  dataLoaded!: boolean;
+  dissayData!: Dissay;
+  musicData!: Music;
+  accessToken!: string
+  comments!:Coment[]
+  id!: string | null;
+  userData!: User
+
   respostaAbertaIndex: number | null = null;
   mostrarAviso = false;
   sumirAviso = true;
   mensagemAviso = '';
   tipoAviso = '';
   timeoutAviso: any;
+
+  constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){}
+
+  ngOnInit(){
+    this.accessToken = localStorage.getItem('token') ?? ""
+    this.route.paramMap.subscribe((params)=> {
+      this.id = params.get('id')
+      if(this.id){
+        this.loadDissay(this.id)
+      }
+    })
+  }
+
+  loadDissay(id: string){
+    this.serviceDissay.getDissayById(id).subscribe(dissay => {
+      this.dissayData = dissay
+      this.comments = dissay.comments ?? []
+      this.comments = this.comments.map(comment => ({
+        userName: comment.userName,
+        idParent: comment.idParent ?? "",
+        text: comment.text,
+        date: new Date(comment.date).toLocaleDateString()
+      }))
+      this.loadMusic(this.dissayData.musicId)
+      this.loadUser(this.dissayData.userName)
+    })
+  }
+
+  loadUser(user: string){
+    this.serviceUser.getUserName(user).subscribe(user=> {
+      this.userData = user
+
+    })
+  }
+
+  loadMusic(id: string){
+    this.serviceSpotify.getMusicById(id).subscribe(music => {
+      this.musicData = music
+      console.log(this.musicData)
+      this.dataLoaded = true
+    })
+  }
+
+  
+
+
+
 
 
   adjustHeight(textarea: HTMLTextAreaElement) {
