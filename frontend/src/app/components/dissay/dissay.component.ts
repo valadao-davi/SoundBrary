@@ -13,10 +13,11 @@ export class DissayComponent {
     // Adicione mais respostas conforme necessário
   ];
   respostaAbertaIndex: number | null = null;
-
-  notificationVisible!: boolean;
-  cancelNotificationVisible!: boolean;
-
+  mostrarAviso = false;
+  sumirAviso = true;
+  mensagemAviso = '';
+  tipoAviso = '';
+  timeoutAviso: any;
 
 
   adjustHeight(textarea: HTMLTextAreaElement) {
@@ -43,23 +44,39 @@ export class DissayComponent {
   publicarResposta(index: number, texto: string) {
     if (texto) {
       console.log(`Publicar resposta para a resposta ${index}: ${texto}`);
-      if (!this.cancelNotificationVisible) { // Verifica se a notificação de cancelamento não está visível
-        this.notificationVisible = true;
-        setTimeout(() => {
-          this.notificationVisible = false; // Ocultar notificação após 3 segundos
-        }, 3000);
-      }
-      this.cancelarResposta(index);
+      this.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
+      this.respostaAbertaIndex = null;
+      this.respostas[index].showInput = false; // Fechar o campo de resposta
     }
   }
 
-  cancelarResposta(index: number) {
+  cancelarResposta(index: number, texto: string) {
     this.respostaAbertaIndex = null;
     this.respostas[index].showInput = false; // Fechar o campo de resposta
-    if (!this.notificationVisible) { // Verifica se a notificação de publicação não está visível
-      this.cancelNotificationVisible = true;
-      setTimeout(() => {
-        this.cancelNotificationVisible = false; // Ocultar notificação após 3 segundos
-      }, 3000);}
+    if (texto) {
+      if (this.mostrarAviso) {
+        clearTimeout(this.timeoutAviso);
+      }
+      this.mostrarAvisoTemporario('Resposta cancelada.', 'error');
+    }
+    }
+
+    mostrarAvisoTemporario(mensagem: string, tipo: string) {
+      if (this.mostrarAviso) {
+        clearTimeout(this.timeoutAviso);
+      }
+      this.mensagemAviso = mensagem;
+      this.tipoAviso = tipo;
+      this.mostrarAviso = true;
+      this.sumirAviso = false;
+      console.log("chegou")
+      this.timeoutAviso = setTimeout(() => {
+        this.sumirAviso = true;
+        setTimeout(() => {
+          this.mostrarAviso = false;
+          console.log("foi")
+        }, 500)
+      }, 3000); // Oculta o aviso após 3 segundos
+
     }
 }
