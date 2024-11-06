@@ -46,7 +46,7 @@ export class DissayComponent {
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
-    if(this.accessToken.length > 0){
+    if(this.accessToken !== ""){
       this.loadAuthUser(this.accessToken)
     }
     this.route.paramMap.subscribe((params)=> {
@@ -61,6 +61,7 @@ export class DissayComponent {
     this.serviceDissay.getDissayById(id).subscribe(dissay => {
       this.dissayData = dissay
       this.comments = dissay.comments ?? []
+
       this.getAvaliationUser(this.dissayData._id!)
       if(this.totalRateUser === null){
         this.totalRate = dissay.totalRate ?? 0.0
@@ -72,9 +73,9 @@ export class DissayComponent {
         text: comment.text,
         date: new Date(comment.date).toLocaleDateString()
       }))
+      console.log(this.comments)
       this.loadMusic(this.dissayData.musicId)
       this.loadDissayUser(this.dissayData.userName)
-      console.log(this.userData)
     })
   }
 
@@ -103,6 +104,7 @@ export class DissayComponent {
   avaliateDissay(rate: number){
     if(this.accessToken === ""){
       this.router.navigate(["/login"])
+      return;     
     }else{
       this.serviceAvaliate.avaliateDissay(this.accessToken, this.dissayData._id!, rate).subscribe(params => {
         this.loadDissay(this.id!)
@@ -184,6 +186,7 @@ export class DissayComponent {
     if(texto) {
       if(this.accessToken === ""){
          this.router.navigate(["/login"])
+         return;
       }else {
         this.serviceComment.postComment(this.accessToken, this.dissayData._id!, texto).pipe(
           catchError((code)=> {
@@ -205,11 +208,17 @@ export class DissayComponent {
 
     }
   }
-
+  getUserNameByIdParent(idParent: string): string | null {
+    console.log(idParent)
+    const comentarioPrincipal = this.comments.find(comment => comment._id === idParent );
+    console.log(comentarioPrincipal)
+    return comentarioPrincipal ? comentarioPrincipal.userName : null;
+  }
   publicarResposta(index: number,idPai: string, texto: string) {
     if(texto) {
       if(this.accessToken === ""){
          this.router.navigate(["/login"])
+         return;
       }else{
         this.serviceComment.awnserComment(this.accessToken, idPai, texto).pipe(
           catchError((code)=> {

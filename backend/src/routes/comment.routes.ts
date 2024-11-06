@@ -32,6 +32,24 @@ commentRouter.get("/getCommentsDissay/:id", async(req: CustomRequest, res: Respo
     }
 })
 
+commentRouter.get("/getCommentId/:id", async(req: CustomRequest, res: Response)=> {
+    try{
+        const commentId = req.params?.id
+        const findDissay = await collections?.dissays?.findOne( 
+        { "comments._id": new ObjectId(commentId) },
+        { projection: { "comments.$": 1 } } )
+        if(findDissay?.comments && findDissay.comments?.length > 0){
+            return res.status(200).json(findDissay.comments[0])
+        }else{
+            return res.status(404).json({message: "Dissay não encontrado"})
+        }
+    }catch(error){
+        console.error("Erro ao pegar comentários do dissay: ", error)
+        return res.status(500).json({error: error})
+    }
+})
+
+
 commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Response)=> {
     try{
         const dissayId = req.params?.id

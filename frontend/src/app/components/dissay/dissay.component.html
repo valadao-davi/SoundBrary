@@ -1,4 +1,4 @@
-<ng-container *ngIf="dissayData && userData">
+<ng-container *ngIf="dissayData && userDissayData">
 <div class="layout">
   <div *ngIf="dataLoaded">
     <app-left-info [urlLink]="musicData.externalLink" [trackName]="musicData.name" [urlImage]="musicData.albumImages[0].link" [albumId]="musicData.albumId"></app-left-info>
@@ -75,7 +75,7 @@
 
         <div class="respostas">
           <div *ngFor="let comentario of comments; let i = index">
-          <div>
+          <div *ngIf="comentario.idParent!.length === 0">
             <div class="resposta" >
               <div  class="conteudo_resposta">
                 <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
@@ -83,17 +83,54 @@
                 <div class="nome_data">
                   <h5>{{ comentario.userName }}</h5>
                   <p>{{ comentario.date }}</p>
-                  <button (click)="excluirComentario(comentario._id!)" *ngIf="comentario.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
+                  <div *ngIf="userData">
+                    <button (click)="excluirComentario(comentario._id!)" *ngIf="comentario.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
+                  </div>
                 </div>
                 <div class="resposta_text">
                   <p>{{comentario.text}}</p>
-                  
                 </div>
+                
                 <div class="responder_usuario">
                   <button (click)="toggleResposta(i)">
                     <h5 class="responder">Responder</h5>
                   </button>
-                  <h5 class="usuario_respondido">para: {{ comentario.userName }}</h5>
+                </div>
+                <div *ngFor="let resposta of comments; let j = index">
+                  <div class="resposta" *ngIf="resposta.idParent === comentario._id">
+                    <div  class="conteudo_resposta">
+                      <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
+                    <div class="resposta_right">
+                      <div class="nome_data">
+                        <h5>{{ resposta.userName }}</h5>
+                        <p>{{ resposta.date }}</p>
+                        <div *ngIf="userData">
+                          <button (click)="excluirComentario(resposta._id!)" *ngIf="resposta.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
+                        </div>
+                      </div>
+                      <div class="resposta_text">
+                        <p>{{resposta.text}}</p>
+                      </div>
+                      
+                      <div class="responder_usuario">
+                        <button (click)="toggleResposta(j)">
+                          <h5 class="responder">Responder</h5>
+                        </button>
+                        <h5 class="usuario_respondido">para: {{ getUserNameByIdParent(resposta.idParent!) }}</h5>
+                      </div>
+                    </div>
+                    </div>
+                    <div *ngIf="isRespostaOpen(j)" class="zona_comentario">
+                      <img class="mini_avatar" src="../../../assets/icone_0.png">
+                      <div class="campo_comentario">
+                        <textarea #textarea_resposta (input)="adjustHeight(textarea_resposta)" spellcheck="false" class="comentario" placeholder="Adicione uma resposta..."></textarea>
+                        <div class="botoes_comentario">
+                          <button (click)="cancelarResposta(i, textarea_resposta.value)"><h4 class="cancelar">Cancelar</h4></button>
+                          <button (click)="publicarResposta(i,resposta._id!, textarea_resposta.value)"><h4 class="publicar">Publicar</h4></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               </div>
@@ -108,7 +145,7 @@
                   </div>
                 </div>
               </div>
-              <div class="respostas nivel_1"></div>
+              <div class="respostas"></div>
             </div>
 
           </div>

@@ -209,10 +209,6 @@ button {
   margin-left: 64px;
 }
 
-.nivel_2 {
-  margin-left: 128px;
-}
-
 .resposta_right {
   display: flex;
   flex-direction: column;
