@@ -72,9 +72,9 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
                 text: req.body.text,
                 date: new Date()
             }
-            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}})
+            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}},{ returnDocument: "after" })
             if(editedDissay){
-                return res.status(200).json({comment: editedDissay.comments})
+                return res.status(200).json({editedDissay})
             }
         }else{
             return res.status(404).json({message: "Dissay ou usuário não encontrado"})

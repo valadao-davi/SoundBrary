@@ -76,15 +76,20 @@ avaliationRouter.put("/editAvaliation/:id", auth, async(req: CustomRequest, res:
         const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
         if(findDissay) {
             const avaliationIndex = findDissay.avaliations?.findIndex(av => av.userName == userName)
-            if(avaliationIndex !== -1){
-                const updateAvaliation = {
+            if(avaliationIndex !== -1 && findDissay.avaliations){
+                const oldRate = findDissay.avaliations[avaliationIndex!].rate;
+
+                findDissay.avaliations[avaliationIndex!].rate = req.body.rate;
+                findDissay.avaliations[avaliationIndex!].date = new Date();
+                
+                const totalAvaliations = (findDissay.avaliations?.length);
+                const rateAll = (findDissay.avaliations?.reduce((acc, avaliation) => acc + avaliation.rate, 0));
+                const rateTotal = rateAll / totalAvaliations
+                const editedDissay = await collections?.dissays?.updateOne({_id: findDissay._id}, 
+                    {$set: {
                     [`avaliations.${avaliationIndex}.rate`]: req.body.rate,
                     [`avaliations.${avaliationIndex}.date`]: new Date(),
-                };
-                const totalAvaliations = (findDissay.avaliations?.length || 0) + 1;
-                const rateAll = (findDissay.avaliations?.reduce((acc, avaliation) => acc + avaliation.rate, 0) || 0) + req.body.rate;
-                const rateTotal = rateAll / totalAvaliations
-                const editedDissay = await collections?.dissays?.updateOne({_id: findDissay._id}, {$set:{updateAvaliation, totalRate: rateTotal}})
+                    totalRate: rateTotal}})
                 if(editedDissay){
                     return res.status(200).json({message: "avaliado com sucesso"})
                 }else{

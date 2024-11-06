@@ -33,6 +33,7 @@ export class DissayComponent {
 
   id!: string | null;
   userData!: User
+  userDissayData!: User
 
   respostaAbertaIndex: number | null = null;
   mostrarAviso = false;
@@ -45,6 +46,9 @@ export class DissayComponent {
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
+    if(this.accessToken.length > 0){
+      this.loadAuthUser(this.accessToken)
+    }
     this.route.paramMap.subscribe((params)=> {
       this.id = params.get('id')
       if(this.id){
@@ -69,13 +73,21 @@ export class DissayComponent {
         date: new Date(comment.date).toLocaleDateString()
       }))
       this.loadMusic(this.dissayData.musicId)
-      this.loadUser(this.dissayData.userName)
+      this.loadDissayUser(this.dissayData.userName)
+      console.log(this.userData)
     })
   }
 
-  loadUser(user: string){
-    this.serviceUser.getUserName(user).subscribe(user=> {
+  loadAuthUser(user: string){
+    this.serviceUser.getUser(user).subscribe(user=> {
       this.userData = user
+
+    })
+  }
+
+  loadDissayUser(user: string){
+    this.serviceUser.getUserName(user).subscribe(user=> {
+      this.userDissayData = user
 
     })
   }
@@ -89,8 +101,34 @@ export class DissayComponent {
   }
 
   avaliateDissay(rate: number){
-    this.serviceAvaliate.avaliateDissay(this.accessToken, this.dissayData._id!, rate).subscribe(params => {
-      this.loadDissay(this.id!)
+    if(this.accessToken === ""){
+      this.router.navigate(["/login"])
+    }else{
+      this.serviceAvaliate.avaliateDissay(this.accessToken, this.dissayData._id!, rate).subscribe(params => {
+        this.loadDissay(this.id!)
+        this.totalRateUser = rate
+        this.totalRate = null
+      })
+    }
+  }
+  editAvaliation(rate: number){
+    this.serviceAvaliate.editAvaliationUser(this.accessToken, this.dissayData._id!, rate).pipe(
+      catchError((code)=> {
+        if(code.status === 400){
+           alert("Erro: " + code.error)
+        }else if(code.status === 500){
+          alert("Erro no servidor: " + code.error)
+        }else if(code.status !== 200){
+          alert("Erro desconhecido")
+          console.log(code.error)
+        }
+        return throwError(() => code)
+      })
+    ).subscribe(params => {
+        this.totalRateUser = rate
+        console.log(this.totalRateUser)
+        this.loadDissay(this.id!)
+        this.totalRate = null
     })
   }
 
@@ -168,15 +206,33 @@ export class DissayComponent {
     }
   }
 
-  publicarResposta(index: number, texto: string) {
+  publicarResposta(index: number,idPai: string, texto: string) {
     if(texto) {
       if(this.accessToken === ""){
          this.router.navigate(["/login"])
+      }else{
+        this.serviceComment.awnserComment(this.accessToken, idPai, texto).pipe(
+          catchError((code)=> {
+            if(code.status === 400){
+               alert("Erro: " + code.error)
+            }else if(code.status === 500){
+              alert("Erro no servidor: " + code.error)
+            }else if(code.status !== 200){
+              alert("Erro desconhecido")
+            }
+            return throwError(() => code)
+          })
+        ).subscribe(comment => {
+          this.comments.push(comment)
+          this.loadDissay(this.id!)
+          this.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
+        })
+        console.log(`Publicar resposta para a resposta ${index}: ${texto}`);
+        this.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
+        this.respostaAbertaIndex = null;
+        this.respostas[index].showInput = false; // Fechar o campo de resposta
       }
-      console.log(`Publicar resposta para a resposta ${index}: ${texto}`);
-      this.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
-      this.respostaAbertaIndex = null;
-      this.respostas[index].showInput = false; // Fechar o campo de resposta
+    
     }
   }
 

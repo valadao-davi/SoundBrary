@@ -54,7 +54,8 @@
 }
 
 .d_mini_rating{
-
+  display: flex;
+  gap: 2px;
 }
 
 .d_mini_cover{

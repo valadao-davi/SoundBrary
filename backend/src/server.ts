@@ -17,8 +17,9 @@ import playlistRoutes from '../src/routes/playlist.routes'
 dotenv.config({path: './src/.env'})
 
 const { MONGODB_URI } = process.env;
+
 if( !MONGODB_URI ) {
-    console.error("Não foi definido nenhuma variável no config.env");
+    console.error("Nã foi definido nenhuma variável no config.env");
     process.exit(1)
 }
 

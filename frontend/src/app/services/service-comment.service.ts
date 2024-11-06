@@ -19,11 +19,11 @@ export class ServiceCommentService {
     return this.http.post<Coment>(`${this.API}/commentDissay/${id}`,{text: content}, {headers})
   }
 
-  awnserComment(token: string, idParent: string, content: string): Observable<void>{
+  awnserComment(token: string, idParent: string, content: string):  Observable<Coment>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     })
-    return this.http.post<void>(`${this.API}/awnserDissay/${idParent}`,{text: content}, {headers})
+    return this.http.post<Coment>(`${this.API}/awnserDissay/${idParent}`,{text: content}, {headers})
   }
 
   deleteComment(token: string, idComment: string): Observable<void>{

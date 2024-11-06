@@ -28,6 +28,6 @@ export class ServiceAvaliateService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     })
-    return this.http.post<void>(`${this.API}/editAvaliation/${dissayId}`,{rate: rate}, {headers})
+    return this.http.put<void>(`${this.API}/editAvaliation/${dissayId}`,{rate: rate}, {headers})
   }
 }
