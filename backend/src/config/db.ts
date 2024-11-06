@@ -137,13 +137,26 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: "array",
                     items: {
                         bsonType: "object",
-                        required: ["nameInstrument", "effects"],
+                        required: ["defaultInstrument", "effects"],
                         properties: {
-                            nameInstrument: {
-                                bsonType: "string",
-                                description: "Name of the instrument",
-                                minLength: 2,
-                                maxLength: 50
+                            defaultInstrument: {
+                                bsonType: "object",
+                                description: "Kind of the instrument",
+                                required: ["imageUrl", "nameInstrument"],
+                                properties: {
+                                    imageUrl: {
+                                        bsonType: "string",
+                                        description: "url of the image",
+                                        minLength: 2,
+                                        maxLength: 100
+                                    },
+                                    nameInstrument: {
+                                        bsonType: "string",
+                                        description: "name of the imagem",
+                                        minLength: 2,
+                                        maxLength: 100
+                                    }
+                                }
                             },
                             effects: {
                                 bsonType: "object",
@@ -235,7 +248,8 @@ async function applySchemaValidation(db: mongodb.Db) {
                 }
 
             }
-    }
+    };
+
     // aguarda o banco de dados modificar os dados da coleção se ela não existe criar a coleção
     await db.command({
         collMod: "users",
@@ -250,7 +264,7 @@ async function applySchemaValidation(db: mongodb.Db) {
         validator: {$jsonSchema: dissaySchema}
     }).catch(async (error: mongodb.MongoServerError) => {
         if (error.codeName === "NamespaceNotFound") {
-            await db.createCollection("dissay", {validator: {$jsonSchema: dissaySchema}});
+            await db.createCollection("dissays", {validator: {$jsonSchema: dissaySchema}});
         }
     });
 

@@ -55,7 +55,7 @@ avaliationRouter.get("/getAvaliationUser/:id", auth, async(req: CustomRequest, r
         if( findDissay?.avaliations && findDissay.avaliations?.length > 0){
             const indexAvaliation = findDissay.avaliations?.findIndex(av => av.userName === userName)
             if(indexAvaliation !== -1){
-                return res.status(200).json({avaliation: findDissay.avaliations[indexAvaliation].rate})
+                return res.status(200).json(findDissay.avaliations[indexAvaliation].rate)
             }else{
                 return null
             }
@@ -68,22 +68,6 @@ avaliationRouter.get("/getAvaliationUser/:id", auth, async(req: CustomRequest, r
     }
 })
 
-avaliationRouter.get("/getAvaliationTotal/:id", async(req: CustomRequest, res:Response)=> {
-    try{
-        const dissayId = req.params?.id
-        const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
-        if(findDissay?.avaliations && findDissay.avaliations?.length > 0){
-            if(findDissay.avaliations){
-                const rateAll = findDissay.avaliations.reduce((acc, avaliation) => acc + avaliation.rate, 0);
-                const rateTotal = rateAll / findDissay.avaliations.length
-                return res.json({rateTotal})
-            }
-        }
-    }catch(error){
-        console.error("Erro ao pegar itens: ", error)
-        return res.status(500).json({error: error})
-    }
-})
 
 avaliationRouter.put("/editAvaliation/:id", auth, async(req: CustomRequest, res: Response)=> {
     try {
@@ -97,7 +81,10 @@ avaliationRouter.put("/editAvaliation/:id", auth, async(req: CustomRequest, res:
                     [`avaliations.${avaliationIndex}.rate`]: req.body.rate,
                     [`avaliations.${avaliationIndex}.date`]: new Date(),
                 };
-                const editedDissay = await collections?.dissays?.updateOne({_id: findDissay._id}, {$set:updateAvaliation})
+                const totalAvaliations = (findDissay.avaliations?.length || 0) + 1;
+                const rateAll = (findDissay.avaliations?.reduce((acc, avaliation) => acc + avaliation.rate, 0) || 0) + req.body.rate;
+                const rateTotal = rateAll / totalAvaliations
+                const editedDissay = await collections?.dissays?.updateOne({_id: findDissay._id}, {$set:{updateAvaliation, totalRate: rateTotal}})
                 if(editedDissay){
                     return res.status(200).json({message: "avaliado com sucesso"})
                 }else{
