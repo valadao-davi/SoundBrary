@@ -17,6 +17,9 @@ export class DMiniComponent {
   @Input() listInstruments!: Instrument[];
   @Input() musicId!: string;
   @Input() userName!: string
+  @Input() idDissay!: string;
+  @Input() rateNumber: number = 0.0
+
 
   namePerson!: string
 
@@ -24,8 +27,8 @@ export class DMiniComponent {
 
   constructor(private router: Router,private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){}
 
-  navigateDissay() {
-    this.router.navigate(['/dissay']);
+  navigateDissay(id: string) {
+    this.router.navigate([`/dissay/${id}`]);
   }
 
   ngOnInit(){

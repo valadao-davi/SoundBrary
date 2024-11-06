@@ -1,5 +1,6 @@
+import { DefaultInstrument } from './defaultInstrument';
 export interface Instrument {
-    nameInstrument: string;
+    defaultInstrument: DefaultInstrument;
     effects: {[effect: string]: string}
   }
   

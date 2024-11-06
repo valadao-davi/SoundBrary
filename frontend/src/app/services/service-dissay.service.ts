@@ -15,11 +15,11 @@ export class ServiceDissayService {
     return this.http.get<Dissay[]>(`${this.API}`)
   }
 
-  getDissayByMusic(): Observable<Dissay[]>{
-    return this.http.get<Dissay[]>(`${this.API}`)
+  getDissayByMusic(idMusic: string): Observable<Dissay[]>{
+    return this.http.get<Dissay[]>(`${this.API}/getDissayByMusic/${idMusic}`)
   }
 
   getDissayById(id: string): Observable<Dissay>{
-    return this.http.get<Dissay>(`${this.API}/${id}`)
+    return this.http.get<Dissay>(`${this.API}/getDissay/${id}`)
   }
 }

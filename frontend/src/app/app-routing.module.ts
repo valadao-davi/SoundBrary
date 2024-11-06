@@ -23,7 +23,7 @@ const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'musica/:id', component: MusicaComponent},
-    {path: 'dissay', component: DissayComponent},
+    {path: 'dissay/:id', component: DissayComponent},
     {path: 'dissay/criar', component: CriarDissayComponent},
     {path: 'album/:id', component: AlbumComponent},
     {path: 'artista/:id', component: ArtistaComponent},

@@ -8,7 +8,6 @@
   width: 100%;
   padding: 48px 0px 120px 0px;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   gap: 16px;
 }

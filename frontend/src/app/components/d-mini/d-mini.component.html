@@ -1,5 +1,5 @@
 <ng-container *ngIf="musicDissay">
-  <button (click)="navigateDissay()">
+  <button (click)="navigateDissay(idDissay)">
     <div class="d_mini">
       <div class="d_mini_content">
           <div class="d_mini_info">
@@ -8,14 +8,14 @@
                 <h5>{{namePerson}}</h5>
               </div>
               <div class="d_mini_rating_save">
-                  <div class="d_mini_rating">
-                    <img src="../../../assets/estrela_cheia.svg">
-                    <img src="../../../assets/estrela_cheia.svg">
-                    <img src="../../../assets/estrela_cheia.svg">
-                    <img src="../../../assets/estrela_cheia.svg">
-                    <img src="../../../assets/estrela_cheia.svg">
+                <div class="d_mini_rating">
+                  <div *ngFor="let i of [1,2,3,4,5]">
+                    <img *ngIf="rateNumber! >=i" src="../../../assets/estrela_cheia.svg">
+                    <img *ngIf="rateNumber! < i"  src="../../../assets/estrela_vazia.svg">
                   </div>
-                  <h4>4.7</h4>
+                </div>  
+                
+                  <h4>{{rateNumber}}</h4>
                   <img class="imagem_album" src="../../../assets/save_icon.svg" alt="save_icon">
               </div>
           </div>
