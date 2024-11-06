@@ -1,13 +1,13 @@
 .card {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 16px 32px;
+    gap: 8px;
+    padding: 24px 48px;
     border: 1px solid black;
     align-items: center;
     border-radius: 20px;
-    width: 208px;
-    height: 180px;
+    width: 130px;
+    height: 140px;
     align-items: center;
     justify-content: center;
 }
@@ -24,8 +24,8 @@
 }
 
 .card_imagem {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
 }
 
 .card_text {

@@ -1,16 +1,40 @@
 <div class="layout">
     <div class="left_criar">
-        <img class="seta_voltar" src="">
-        <div>
+        <img class="seta_voltar" src="../../../assets/left_arrow_icon.svg">
+        <div class="criar_dissay">
+
             <h1>Criar Dissay</h1>
-            <input class="input" placeholder="Título do Dissay..." type="text"><img src="../../../assets/edit_icon.svg"/>
-            <input class="input" placeholder="Procure sua música..." type="text"><img src="../../../assets/lupa_icon.svg"/>
+
+            <div class="campo_input">
+                <input placeholder="Título do Dissay..." type="text">
+                <img class="input_icon" src="../../../assets/edit_icon.svg"/>
+            </div>
+
+            <div class="campo_input">
+                <input placeholder="Procure sua música..." type="text">
+                <img src="../../../assets/lupa_icon_black_80.svg">
+            </div>
+
             <div class="marcar_dissay">
                 <input type="checkbox" name="privado" id="privadoId">
                 <p class="light_text">Marcar Dissay como privado</p>
                 <img src="../../../assets/info_icon.svg">
             </div>
-            <div></div>
+
+            <div class="secao_instrumentos">
+                <div class="titulo">
+                    <h2>Instrumentos</h2>
+                    <p>Adicione um efeito ou clique em um para editá-lo</p>
+                </div>
+                <div class="linha"></div>
+                <div class="lista_instrumentos_criar">
+                    <app-criar-dissay-cards></app-criar-dissay-cards>
+                    <app-criar-dissay-cards></app-criar-dissay-cards>
+                    <app-criar-dissay-cards></app-criar-dissay-cards>
+                </div>
+                <div class="linha"></div>
+            </div>
+
             <div></div>
         </div>
     </div>
