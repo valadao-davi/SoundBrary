@@ -27,13 +27,10 @@
                     <p>Adicione um efeito ou clique em um para editá-lo</p>
                 </div>
                 <div class="linha"></div>
-                <div class="lista_instrumentos_criar">
+                <div class="lista_instrumentos_criar" >
+                    <app-criar-dissay-cards *ngFor="let card of instrumentos" [instrumento]="card"></app-criar-dissay-cards>
                     <app-criar-dissay-cards></app-criar-dissay-cards>
-                    <app-criar-dissay-cards></app-criar-dissay-cards>
-                    <app-criar-dissay-cards></app-criar-dissay-cards>
-                    <app-criar-dissay-cards></app-criar-dissay-cards>
-                    <app-criar-dissay-cards></app-criar-dissay-cards>
-                    <app-criar-dissay-cards></app-criar-dissay-cards>
+
                 </div>
                 <div class="linha"></div>
                 <div class="descricao campo_input">
@@ -50,7 +47,7 @@
         <div class="imagem_album"></div>
         <div class="afinacao">
             <h1>Inserir afinação</h1>
-            <app-criar-dissay-cards></app-criar-dissay-cards>
+            <app-criar-dissay-cards [afinacao]="'Inserir afinação'"></app-criar-dissay-cards>
         </div>
         <button class="publicar_dissay">
             <h3>Publicar Dissay</h3>

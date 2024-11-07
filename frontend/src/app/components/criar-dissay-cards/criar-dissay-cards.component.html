@@ -1,8 +1,24 @@
-<div class="card">
-    <div class="card_icons">
-        <img class="card_icon" src="../../../assets/edit_icon.svg">
-        <img class="card_icon" src="../../../assets/trash_icon.svg">
-    </div>
-    <img class="card_imagem" src="../../../assets/guitarra_icon.svg">
-    <div class="card_text">Guitarra</div>
+<button *ngIf="instrumento">
+    <div class="card">
+      <div class="card_icons">
+          <img class="card_icon" src="../../../assets/edit_icon.svg">
+          <img class="card_icon" src="../../../assets/trash_icon.svg">
+      </div>
+      <img class="card_imagem" src="../../../assets/guitarra_icon.svg">
+      <div class="card_text">{{instrumento.nameInstrument}}</div>
+  </div>
+</button>
+
+<button *ngIf="afinacao && !instrumento">
+  <div class="card">
+    <img class="card_imagem" src="../../../assets/clava_sol_icon.svg">
+    <div class="card_text">{{afinacao}}</div>
 </div>
+</button>
+
+<button *ngIf="!instrumento && !afinacao">
+  <div class="card">
+    <img class="card_imagem" src="../../../assets/big_add_icon.svg">
+    <div class="card_text mais">Adicionar instrumento</div>
+</div>
+</button>

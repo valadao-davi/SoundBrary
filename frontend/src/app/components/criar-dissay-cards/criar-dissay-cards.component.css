@@ -31,4 +31,9 @@
 .card_text {
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
+}
+
+.mais {
+  font-weight: 400;
 }

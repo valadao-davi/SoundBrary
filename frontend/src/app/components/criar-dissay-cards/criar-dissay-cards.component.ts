@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Instrument } from 'src/app/layouts/Instrument';
 
 @Component({
   selector: 'app-criar-dissay-cards',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./criar-dissay-cards.component.css']
 })
 export class CriarDissayCardsComponent {
+  @Input() instrumento!: Instrument
+  @Input() afinacao!: string
 
 }
