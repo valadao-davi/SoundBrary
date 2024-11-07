@@ -48,7 +48,6 @@
 }
 
 .campo_input {
-    color: rgba(0, 0, 0, 0.8);
     background-color: rgba(0, 0, 0, 0.1);
     font-size: 18px;
     padding: 12px 24px;
@@ -56,6 +55,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+input {
+    color: black;
 }
 
 .campo_input input {
@@ -128,6 +131,7 @@ button {
 .titulo p {
     color: rgba(0, 0, 0, 0.5);
     font-size: 14px;
+    text-align: end;
 }
 
 .linha {
@@ -142,4 +146,21 @@ button {
     gap: 16px;  /* Espaçamento entre os elementos */
     width: 100%;  /* O grid ocupa 100% da largura disponível */
     justify-items: center;  /* Centraliza os itens dentro do grid */
+}
+
+.descricao {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 24px;
+    margin-top: 16px;
+}
+textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    min-height: 212px;
+    background-color: transparent;
 }

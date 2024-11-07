@@ -214,6 +214,7 @@ export class DissayComponent {
     console.log(comentarioPrincipal)
     return comentarioPrincipal ? comentarioPrincipal.userName : null;
   }
+  
   publicarResposta(index: number,idPai: string, texto: string) {
     if(texto) {
       if(this.accessToken === ""){

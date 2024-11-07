@@ -24,7 +24,9 @@ export class PerfilLateralComponent {
 
     }
 
-
+    navigateCreate() {
+      this.router.navigate(['/criar-dissay']);
+    }
 
 
 

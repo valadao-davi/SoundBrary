@@ -238,6 +238,12 @@ async function applySchemaValidation(db: mongodb.Db) {
                                 minLength: 2,
                                 maxLength: 50
                             },
+                            idParentAwnser: {
+                                bsonType: "string",
+                                description: "its an optional string that connects to an awnser parent comment",
+                                minLength: 2,
+                                maxLength: 50
+                            },
                             date: {
                                 bsonType: "date",
                                 description: "The date was made"

@@ -24,7 +24,7 @@ const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'musica/:id', component: MusicaComponent},
     {path: 'dissay/:id', component: DissayComponent},
-    {path: 'dissay/criar', component: CriarDissayComponent},
+    {path: 'criar-dissay', component: CriarDissayComponent},
     {path: 'album/:id', component: AlbumComponent},
     {path: 'artista/:id', component: ArtistaComponent},
     {path: 'user/:id', component: UsuarioComponent},
