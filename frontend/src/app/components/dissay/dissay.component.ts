@@ -70,6 +70,7 @@ export class DissayComponent {
         _id: comment._id,
         userName: comment.userName,
         idParent: comment.idParent ?? "",
+        idParentAwnser: comment.idParentAwnser ?? "",
         text: comment.text,
         date: new Date(comment.date).toLocaleDateString()
       }))
@@ -208,20 +209,17 @@ export class DissayComponent {
 
     }
   }
-  getUserNameByIdParent(idParent: string): string | null {
-    console.log(idParent)
-    const comentarioPrincipal = this.comments.find(comment => comment._id === idParent );
-    console.log(comentarioPrincipal)
-    return comentarioPrincipal ? comentarioPrincipal.userName : null;
+  getUserNameByIdParent(id: string): string | undefined {
+    const comment = this.comments.find(c => c._id === id);
+    return comment ? comment.userName : undefined;
   }
-  
-  publicarResposta(index: number,idPai: string, texto: string) {
+  publicarResposta(index: number,idPai: string, texto: string, idResposta?:string) {
     if(texto) {
       if(this.accessToken === ""){
          this.router.navigate(["/login"])
          return;
       }else{
-        this.serviceComment.awnserComment(this.accessToken, idPai, texto).pipe(
+        this.serviceComment.awnserComment(this.accessToken, idPai, texto, idResposta).pipe(
           catchError((code)=> {
             if(code.status === 400){
                alert("Erro: " + code.error)

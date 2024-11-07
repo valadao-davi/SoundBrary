@@ -87,7 +87,7 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
                 _id: new ObjectId(),
                 userName: userName,
                 idParent: commentId,
-                idAwnserParent: req.body.idAwnser ?? null,
+                idParentAwnser: req.body.idAwnser ?? null,
                 text: req.body.text,
                 date: new Date()
             }

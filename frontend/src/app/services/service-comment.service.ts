@@ -23,7 +23,7 @@ export class ServiceCommentService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     })
-    return this.http.post<Coment>(`${this.API}/awnserDissay/${idParent}`,{text: content, idAwnserParent: idResposta ?? null},  {headers})
+    return this.http.post<Coment>(`${this.API}/awnserDissay/${idParent}`,{text: content, idAwnser: idResposta ?? null},  {headers})
   }
 
   deleteComment(token: string, idComment: string): Observable<void>{
