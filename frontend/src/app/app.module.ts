@@ -28,6 +28,7 @@ import { ArtistaComponent } from './components/artista/artista.component';
 import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.component';
 import { CriarDissayComponent } from './components/criar-dissay/criar-dissay.component';
 import { CriarDissayCardsComponent } from './components/criar-dissay-cards/criar-dissay-cards.component';
+import { InstrumentoOverlayComponent } from './overlays/instrumento-overlay/instrumento-overlay.component';
 
 
 
@@ -57,7 +58,8 @@ import { CriarDissayCardsComponent } from './components/criar-dissay-cards/criar
     ArtistaComponent,
     ProfileLayoutComponent,
     CriarDissayComponent,
-    CriarDissayCardsComponent
+    CriarDissayCardsComponent,
+    InstrumentoOverlayComponent
   ],
   imports: [
     BrowserModule,

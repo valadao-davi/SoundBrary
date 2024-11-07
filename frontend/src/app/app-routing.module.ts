@@ -13,6 +13,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ArtistaComponent } from './components/artista/artista.component';
 import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.component';
 import { CriarDissayComponent } from './components/criar-dissay/criar-dissay.component';
+import { InstrumentoOverlayComponent } from './overlays/instrumento-overlay/instrumento-overlay.component';
 
 
 
@@ -40,9 +41,9 @@ const routes: Routes = [
     {path: '',  component: CadastroComponent}
   ]},
 
-  {path: 'perfil/:query', component: ProfileLayoutComponent}
+  {path: 'perfil/:query', component: ProfileLayoutComponent},
 
-
+  {path: 'overlay', component: InstrumentoOverlayComponent}
 ];
 
 @NgModule({
