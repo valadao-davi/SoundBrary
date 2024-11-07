@@ -156,7 +156,7 @@ button {
     padding: 24px;
     margin-top: 16px;
 }
-textarea {
+.campo_descricao {
     width: 100%;
     border: none;
     outline: none;

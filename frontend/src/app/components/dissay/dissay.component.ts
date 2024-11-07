@@ -104,7 +104,7 @@ export class DissayComponent {
   avaliateDissay(rate: number){
     if(this.accessToken === ""){
       this.router.navigate(["/login"])
-      return;     
+      return;
     }else{
       this.serviceAvaliate.avaliateDissay(this.accessToken, this.dissayData._id!, rate).subscribe(params => {
         this.loadDissay(this.id!)
@@ -214,7 +214,7 @@ export class DissayComponent {
     console.log(comentarioPrincipal)
     return comentarioPrincipal ? comentarioPrincipal.userName : null;
   }
-  
+
   publicarResposta(index: number,idPai: string, texto: string) {
     if(texto) {
       if(this.accessToken === ""){
@@ -242,7 +242,7 @@ export class DissayComponent {
         this.respostaAbertaIndex = null;
         this.respostas[index].showInput = false; // Fechar o campo de resposta
       }
-    
+
     }
   }
 
