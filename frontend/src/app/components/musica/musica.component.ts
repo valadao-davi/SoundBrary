@@ -18,7 +18,7 @@ export class MusicaComponent {
   accessToken!: string
   musicItem?: Music;
   saved: boolean = false;
-  listDissays!: Dissay[]
+  listDissays: Dissay[] = []
   user?: User;
 
   id!: string | null;
