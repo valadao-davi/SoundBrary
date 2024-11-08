@@ -1,8 +1,11 @@
-<app-header [user]="user"></app-header>
+<ng-container *ngIf="dataLoad">
+  <app-header [user]="user"></app-header>
 <main>
   <app-perfil-lateral [user]="user"></app-perfil-lateral>
   <div class="main_filho"><router-outlet></router-outlet></div>
   <app-ads></app-ads>
 </main>
+<ng-container/>
+
 
 

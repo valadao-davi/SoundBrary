@@ -1,3 +1,5 @@
+import { Notiffication } from "./Notification";
+
 export interface User {
   userName: string;
   name: string;
@@ -9,6 +11,7 @@ export interface User {
   musicSaved?: string[];
   albumSaved?: string[];
   artistsSaved?: string[];
+  notifications?: Notiffication[];
   dissaysCreated?: string[];
 
 }
