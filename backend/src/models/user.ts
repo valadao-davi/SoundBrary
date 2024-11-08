@@ -1,5 +1,5 @@
-import { Dissay } from './dissay';
 import * as mongodb from "mongodb"
+import { Notiffication } from "./Notificacao";
 
 export interface User {
     userName: string;
@@ -12,5 +12,6 @@ export interface User {
     musicSaved?: string[];
     albumSaved?: string[];
     artistsSaved?: string[];
+    notifications?: Notiffication[];
     dissaysCreated?: string[];
 }

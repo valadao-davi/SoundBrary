@@ -38,6 +38,7 @@ export class MainLayoutComponent {
 
   }else{
     this.user = null
+    this.dataLoad = true
   }
   }
 }

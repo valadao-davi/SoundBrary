@@ -1,6 +1,7 @@
 import { Router, RouterModule } from '@angular/router';
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { User } from 'src/app/layouts/User';
+import { Notiffication } from 'src/app/layouts/Notification';
 
 RouterModule
 
@@ -11,6 +12,7 @@ RouterModule
 })
 export class HeaderComponent {
   @Input() user!: User | null
+  listNotification: Notiffication[] = []
 
 
   @ViewChild('input_pesquisa') inputElement!: ElementRef;
@@ -18,6 +20,18 @@ export class HeaderComponent {
   text!: string;
 
   constructor(private router: Router) {}
+
+  ngOnInit(){
+    if(this.user !== null){
+      console.log(this.user)
+      console.log(this.user.notifications)
+      if(this.user.notifications! && this.user.notifications.length > 0){
+        this.listNotification = this.user.notifications
+      }else{
+        this.listNotification = []
+      }
+    }
+  }
 
   focusInput() {
     this.inputElement.nativeElement.focus();

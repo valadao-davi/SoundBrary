@@ -95,6 +95,34 @@ async function applySchemaValidation(db: mongodb.Db) {
                         maxLength: 128
                     }
                 },
+                notifications: {
+                    bsonType: ["array","null"],
+                    description: "Notifications its optional and is array object",
+                    items: {
+                        bsonType: "object",
+                        required: ["title", "type", "idObject"],
+                        properties: {
+                            title: {
+                                bsonType: "string",
+                                description: "username is required and is a string",
+                                minLength: 2,
+                                maxLength: 50
+                            },
+                            type: {
+                                bsonType: "string",
+                                description: "username is required and is a string",
+                                minLength: 2,
+                                maxLength: 50
+                            },
+                            idObject: {
+                                bsonType: "string",
+                                description: "ObjectId is required and is a string",
+                                minLength: 2,
+                                maxLength: 50
+                            }
+                        }
+                    } 
+                },
                 dissaysCreated: {
                     bsonType: ["array", "null"],
                     description: "DissaysCreated is an optional array parameter or null",
@@ -137,7 +165,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: "array",
                     items: {
                         bsonType: "object",
-                        required: ["defaultInstrument", "effects"],
+                        required: ["defaultInstrument", "effects", "model"],
                         properties: {
                             defaultInstrument: {
                                 bsonType: "object",
@@ -166,6 +194,12 @@ async function applySchemaValidation(db: mongodb.Db) {
                                     minLength: 2,
                                     maxLength: 50
                                 }
+                            },
+                            model: {
+                                bsonType: "string",
+                                description: "name of the imagem",
+                                minLength: 2,
+                                maxLength: 100
                             }
                         }
                     }
@@ -212,6 +246,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: ["double", "null"],
                     description: "Total rate its calculate after an avaliation"
                 },
+                
                 comments: {
                     bsonType: ["array", "null"],
                     description: "avaliations its optional and is array object",
