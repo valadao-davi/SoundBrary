@@ -25,6 +25,10 @@ export class PerfilLateralComponent {
     }
 
     navigateCreate() {
+      if(this.user === null){
+        this.router.navigate(['/login'])
+        return
+      }
       this.router.navigate(['/criar-dissay']);
     }
 

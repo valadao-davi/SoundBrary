@@ -39,7 +39,7 @@
           <h1 class="secao_titulo">Instrumentos</h1>
           <div class="linha"></div>
           <div class="lista_instrumentos" *ngFor="let instrumento of dissayData.instruments">
-            <app-instrumento-mini-2 [nameInstrument]="instrumento.nameInstrument"></app-instrumento-mini-2>
+            <app-instrumento-mini-2 [nameInstrument]="instrumento.defaultInstrument.nameInstrument"></app-instrumento-mini-2>
           </div>
         </div>
         <div class="afinacao" *ngIf="dissayData.tone">

@@ -26,20 +26,22 @@
 
         <div class="secao_dissays">
           <div class="secao_dissays_topo">
-            <h1>Dissays <span>(4)</span></h1>
+            <h1>Dissays do álbum<span> ({{dissaysAlbums?.length}})</span></h1>
             <div class="linha"></div>
           </div>
 
-          <div class="filtragem">
-            <img src="../../../assets/filter_icon.svg">
-            <p>por avaliação</p>
-          </div>
 
-          <div class="lista_dissays">
-            <app-dissay-item></app-dissay-item>
-            <app-dissay-item></app-dissay-item>
-            <app-dissay-item></app-dissay-item>
-            <app-dissay-item></app-dissay-item>
+          <div class="lista_dissays" *ngFor="let musics of albumItem.tracks">
+            <h1>{{musics.orderTrack}}.  {{musics.name}}</h1>
+            <ng-container *ngIf="hasDissaysForMusic(musics.id); else noDissay">
+              <ng-container *ngFor="let dissay of dissaysAlbums">
+                <app-dissay-item *ngIf="musics.id === dissay.musicId"></app-dissay-item>
+              </ng-container> 
+            </ng-container>
+            <ng-template #noDissay>
+              <h3>Sem dissays para essa música</h3>
+            </ng-template>
+            
           </div>
         </div>
 

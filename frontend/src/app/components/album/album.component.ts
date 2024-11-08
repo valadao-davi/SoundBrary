@@ -1,8 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, forkJoin, throwError } from 'rxjs';
 import { Album } from 'src/app/layouts/Album';
+import { Dissay } from 'src/app/layouts/Dissay';
+import { Music } from 'src/app/layouts/Music';
 import { User } from 'src/app/layouts/User';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 
@@ -18,9 +21,11 @@ export class AlbumComponent {
   accessToken!: string
   saved: boolean = false;
   user?: User;
+  musicsIds?: string[]
+  dissaysAlbums?: Dissay[]
   dataLoaded!: boolean
   id!: string | null;
-  constructor(private route: ActivatedRoute, private router: Router, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){
+  constructor(private route: ActivatedRoute, private router: Router, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceDissay: ServiceDissayService){
 
   }
 
@@ -87,12 +92,30 @@ export class AlbumComponent {
     this.serviceSpotify.getAlbumById(id).subscribe(
       album => {
         this.albumItem = album
+        this.musicsIds = this.albumItem.tracks.map(music => {
+          return music.id
+        })
         this.dataLoaded = true
         this.getUser()
-
+        this.loadDissay()
       }
     )
-
   }
 
+  loadDissay(){
+    if(this.musicsIds && this.musicsIds.length > 0){
+      const items = this.musicsIds?.map(id =>
+        this.serviceDissay.getDissayByMusic(id)
+      )
+      forkJoin(items).subscribe(
+        (results) => {
+          this.dissaysAlbums = results.flat()
+        }
+      )
+    }
+    
+  }
+  hasDissaysForMusic(musicId: string): boolean {
+    return this.dissaysAlbums?.some(dissay => dissay.musicId === musicId) ?? false;
+  }
 }
