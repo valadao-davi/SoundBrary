@@ -26,7 +26,7 @@
 
         <div class="secao_dissays">
           <div class="secao_dissays_topo">
-            <h1>Dissays <span>({{listDissays.length}})</span></h1>
+            <h1>Dissays <span>({{listDissays!.length}})</span></h1>
             <div class="linha"></div>
           </div>
 
@@ -35,7 +35,7 @@
             <p>por avaliação</p>
           </div>
 
-      <div *ngIf="listDissays.length > 0">
+      <div *ngIf="listDissays!.length > 0">
           <div *ngFor="let dissays of listDissays" class="lista_dissays">
             <app-dissay-item [name]="dissays.name" [userName]="dissays.userName" [date]="dissays.createdAt" [rateNumber]="dissays.totalRate ?? 0.0" [desc]="dissays.desc ?? 'Sem descrições' "></app-dissay-item>
           </div>
