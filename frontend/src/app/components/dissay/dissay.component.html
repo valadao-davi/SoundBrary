@@ -39,7 +39,7 @@
           <h1 class="secao_titulo">Instrumentos</h1>
           <div class="linha"></div>
           <div class="lista_instrumentos" >
-            <app-instrumento-mini-2 *ngFor="let instrumento of dissayData.instruments" [nameInstrument]="instrumento.defaultInstrument.nameInstrument" [imgInstrument]="instrumento.defaultInstrument.imageUrl"></app-instrumento-mini-2>
+            <app-instrumento-mini-2 *ngFor="let instrumento of dissayData.instruments" [instrumentData]="instrumento"></app-instrumento-mini-2>
           </div>
         </div>
         <div class="afinacao" *ngIf="dissayData.tone">

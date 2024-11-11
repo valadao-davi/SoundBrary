@@ -190,9 +190,24 @@ async function applySchemaValidation(db: mongodb.Db) {
                                 bsonType: "object",
                                 description: "Effects of the instrument",
                                 additionalProperties: {
-                                    bsonType: "string",
-                                    minLength: 2,
-                                    maxLength: 50
+                                    bsonType: "array",
+                                    items: {
+                                        bsonType: "object",
+                                        properties: {
+                                            parameterName: {
+                                                bsonType: "string",
+                                                description: "Name of the effect parameter",
+                                                minLength: 2,
+                                                maxLength: 50
+                                            },
+                                            value: {
+                                                bsonType: "string",
+                                                description: "Value of the effect parameter",
+                                                minLength: 1,
+                                                maxLength: 50
+                                            }
+                                        },
+                                        additionalProperties: false,
                                 }
                             },
                             model: {
@@ -289,6 +304,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                 }
 
             }
+        }
     };
 
     // aguarda o banco de dados modificar os dados da coleção se ela não existe criar a coleção

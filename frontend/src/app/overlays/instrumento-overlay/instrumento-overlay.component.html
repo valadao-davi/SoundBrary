@@ -2,19 +2,16 @@
   <div class="topo">
     <div class="modelo coluna">
       <h3>Modelo:</h3>
-      <h4>Les Paul Strinberg</h4>
+      <h4>{{instrumentParams.model}}</h4>
     </div>
-    <h1 class="nome_instrumento">Guitarra</h1>
-    <img class="icone_instrumento" src="../../../assets/guitarra_icon.svg">
+    <h1 class="nome_instrumento">{{instrumentParams.defaultInstrument.nameInstrument}}</h1>
+    <img class="icone_instrumento" [src]=instrumentParams.defaultInstrument.imageUrl>
   </div>
   <div class="principal">
     <div class="efeitos_especif">
       <h3>Efeitos/Especificações</h3>
       <div class="efeitos_lista">
-        <div class="efeito selecionado"><p>1. Super OverDrive</p></div>
-        <div class="efeito"><p>2. Chorus</p></div>
-        <div class="efeito"><p>3. Compressor multibanda</p></div>
-        <div class="efeito"><p>4. Reverb</p></div>
+        <div class="efeito" *ngFor="let efeito of instrumentParams.effects | keyvalue"><p>{{efeito.key}}</p></div>
       </div>
     </div>
 

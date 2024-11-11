@@ -1,10 +1,10 @@
 <button (click)="openInstrument()">
   <div class="instrumento-mini-2">
-    <img [src]="imgInstrument">
-    <h4>{{nameInstrument}}</h4>
+    <img [src]="instrumentData.defaultInstrument.imageUrl">
+    <h4>{{instrumentData.defaultInstrument.nameInstrument}}</h4>
   </div>  
 </button>
 
  <ng-template cdkPortal>
-  <app-instrumento-overlay></app-instrumento-overlay>
+  <app-instrumento-overlay [instrumentParams]="instrumentData"></app-instrumento-overlay>
  </ng-template>

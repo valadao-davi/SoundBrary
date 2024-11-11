@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Instrument } from 'src/app/layouts/Instrument';
 
 @Component({
   selector: 'app-instrumento-overlay',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./instrumento-overlay.component.css']
 })
 export class InstrumentoOverlayComponent {
-  
+  @Input() instrumentParams!: Instrument;
 }
