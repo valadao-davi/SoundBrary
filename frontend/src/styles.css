@@ -1,3 +1,5 @@
+@import '@angular/cdk/overlay-prebuilt.css';
+
 * {
   font-family: "Inter";
   margin: 0px;

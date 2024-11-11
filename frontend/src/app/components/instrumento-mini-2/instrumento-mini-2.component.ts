@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Overlay } from '@angular/cdk/overlay';
+import { CdkPortal } from '@angular/cdk/portal';
+import { Component, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-instrumento-mini-2',
@@ -7,4 +9,13 @@ import { Component, Input } from '@angular/core';
 })
 export class InstrumentoMini2Component {
   @Input() nameInstrument!: string
+  @Input() imgInstrument!: string;
+  @ViewChild(CdkPortal) portal!: CdkPortal
+
+  constructor(private overlay: Overlay){}
+
+  openInstrument(){
+    const overlayRef = this.overlay.create();
+    overlayRef.attach(this.portal);
+  }
 }

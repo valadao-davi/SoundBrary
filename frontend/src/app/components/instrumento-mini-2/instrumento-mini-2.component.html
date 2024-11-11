@@ -1,4 +1,10 @@
-<div class="instrumento-mini-2">
-  <img src="../../../assets/guitarra_icon.svg">
-  <h4>{{nameInstrument}}</h4>
-</div>
+<button (click)="openInstrument()">
+  <div class="instrumento-mini-2">
+    <img [src]="imgInstrument">
+    <h4>{{nameInstrument}}</h4>
+  </div>  
+</button>
+
+ <ng-template cdkPortal>
+  <app-instrumento-overlay></app-instrumento-overlay>
+ </ng-template>

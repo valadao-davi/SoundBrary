@@ -29,6 +29,8 @@ import { ProfileLayoutComponent } from './layouts/profile-layout/profile-layout.
 import { CriarDissayComponent } from './components/criar-dissay/criar-dissay.component';
 import { CriarDissayCardsComponent } from './components/criar-dissay-cards/criar-dissay-cards.component';
 import { InstrumentoOverlayComponent } from './overlays/instrumento-overlay/instrumento-overlay.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
 
 
 
@@ -66,7 +68,9 @@ import { InstrumentoOverlayComponent } from './overlays/instrumento-overlay/inst
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    OverlayModule,
+    PortalModule
   ],
   providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent]

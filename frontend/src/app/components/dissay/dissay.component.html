@@ -38,8 +38,8 @@
         <div class="instrumentos">
           <h1 class="secao_titulo">Instrumentos</h1>
           <div class="linha"></div>
-          <div class="lista_instrumentos" *ngFor="let instrumento of dissayData.instruments">
-            <app-instrumento-mini-2 [nameInstrument]="instrumento.defaultInstrument.nameInstrument"></app-instrumento-mini-2>
+          <div class="lista_instrumentos" >
+            <app-instrumento-mini-2 *ngFor="let instrumento of dissayData.instruments" [nameInstrument]="instrumento.defaultInstrument.nameInstrument" [imgInstrument]="instrumento.defaultInstrument.imageUrl"></app-instrumento-mini-2>
           </div>
         </div>
         <div class="afinacao" *ngIf="dissayData.tone">
@@ -53,6 +53,7 @@
         <div class="linha"></div>
         <div class="campo_texto">
          {{dissayData.desc}}
+         <h2 *ngIf="!dissayData.desc">Dissay sem descrição no momento...</h2>
         </div>
       </div>
 
