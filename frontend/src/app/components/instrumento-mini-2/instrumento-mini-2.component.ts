@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class InstrumentoMini2Component {
   @Input() nameInstrument!: string
+  
 }
