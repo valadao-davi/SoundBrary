@@ -32,6 +32,7 @@ import { InstrumentoOverlayComponent } from './overlays/instrumento-overlay/inst
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { LimitInputDirective } from './directives/limit-input.directive';
+import { SearchOverlayComponent } from './overlays/search-overlay/search-overlay.component';
 
 
 
@@ -63,7 +64,8 @@ import { LimitInputDirective } from './directives/limit-input.directive';
     CriarDissayComponent,
     CriarDissayCardsComponent,
     InstrumentoOverlayComponent,
-    LimitInputDirective
+    LimitInputDirective,
+    SearchOverlayComponent
   ],
   imports: [
     BrowserModule,

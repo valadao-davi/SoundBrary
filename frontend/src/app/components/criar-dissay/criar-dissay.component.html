@@ -19,8 +19,11 @@
             <div *ngIf="charCountTitle >= maxLengthTitle">Limite de caracteres excedido</div>
 
             <div class="campo_input">
-                <input placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
+                <input #inputElement placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
                 <img src="../../../assets/lupa_icon_black_80.svg">
+                <ng-template class="overlay-container" #searchOverlayComponent>
+                    <app-search-overlay *ngFor="let track of tracksSearched"></app-search-overlay>
+                </ng-template>
             </div>
 
             <div class="marcar_dissay">

@@ -186,3 +186,10 @@ button {
     font-weight: 500;
     color: black !important;
 }
+.overlay-container {
+    position: absolute;
+    top: 100%;  /* Isso posiciona o overlay abaixo do input */
+    left: 0;    /* Alinha o overlay ao lado esquerdo do input */
+    width: 100%; /* Ou defina um tamanho fixo conforme necessário */
+    z-index: 9999; /* Garante que o overlay fique acima de outros elementos */
+  }

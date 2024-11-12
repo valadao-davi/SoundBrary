@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { Component, ElementRef, ViewChild, AfterViewInit, TemplateRef, ViewContainerRef, OnDestroy } from '@angular/core';
 import { debounceTime, Subject } from 'rxjs';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
-import { Instrument } from 'src/app/layouts/Instrument';
 import { Music } from 'src/app/layouts/Music';
 import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
@@ -11,15 +12,22 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
   templateUrl: './criar-dissay.component.html',
   styleUrls: ['./criar-dissay.component.css']
 })
-export class CriarDissayComponent {
+export class CriarDissayComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('inputElement') inputElement!: ElementRef;
+  @ViewChild('searchOverlayComponent') searchOverlayComponent!: TemplateRef<any>;
+  
   searchQuery!: string;
   tracksSearched!: Music[]
   private searchSubject: Subject<string> = new Subject<string>();
+  overlayRef!: OverlayRef;
 
-  constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService){
+  constructor(private overlay: Overlay,private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private viewContainerRef: ViewContainerRef){
     this.searchSubject.pipe(debounceTime(1000)).subscribe(value => {
       this.getTracksQuery(value)
     })
+  }
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
   }
 
   listDefaultInstruments: DefaultInstrument[] = [];
@@ -44,9 +52,52 @@ export class CriarDissayComponent {
       })
     }
   }
-  onSearchChange(value: string){
-    this.searchQuery = value
-    this.searchSubject.next(this.searchQuery)
+  onSearchChange(value: string) {
+    this.searchQuery = value;
+    this.searchSubject.next(this.searchQuery);
+
+    if (value && !this.overlayRef) {
+      this.openOverlay();
+    } else if (!value && this.overlayRef) {
+      this.closeOverlay();
+    } else if (value && this.overlayRef) {
+      this.closeOverlay();
+      this.openOverlay();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+    }
+  }
+
+  openOverlay(){
+    const positionStrategy = this.overlay.position()
+    .flexibleConnectedTo(this.inputElement)
+    .withPositions([
+      {
+        originX: 'start',
+        originY: 'bottom',
+        overlayX: 'start',
+        overlayY: 'top'
+      }
+    ])
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      hasBackdrop: false
+    })
+
+    this.overlayRef.attach(new TemplatePortal(this.searchOverlayComponent, this.viewContainerRef));
+
+    this.overlayRef.backdropClick().subscribe(() => this.closeOverlay());
+  }
+
+  closeOverlay() {
+    if (this.overlayRef) {
+      this.overlayRef.detach();
+    }
   }
 
   // Ajusta dinamicamente a altura do textarea conforme o conteúdo
@@ -57,8 +108,6 @@ export class CriarDissayComponent {
 
   // Função para atualizar os contadores e verificar o limite
   onInput(event: Event, type: string): void {
-    console.log (this.charCountDescription)
-    console.log (this.maxLengthDescription)
     
     const target = event.target as HTMLTextAreaElement | HTMLInputElement;
     if (target) {
