@@ -19,7 +19,7 @@
           </div>
           <div class="estrelas_avaliacao" *ngIf="dissayData.totalRate === undefined">
             <div *ngFor="let i of [1,2,3,4,5]">
-              <img src="../../../assets/estrela_vazia.svg">
+              <button (click)="avaliateDissay(i)"><img src="../../../assets/estrela_vazia.svg"></button>
             </div>
           </div>
           <h2>{{dissayData.totalRate}}</h2>

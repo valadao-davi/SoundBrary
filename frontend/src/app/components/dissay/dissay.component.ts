@@ -103,6 +103,7 @@ export class DissayComponent {
   }
 
   avaliateDissay(rate: number){
+    console.log(rate)
     if(this.accessToken === ""){
       this.router.navigate(["/login"])
       return;
