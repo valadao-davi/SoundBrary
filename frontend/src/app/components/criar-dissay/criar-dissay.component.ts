@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
-import { Instrument } from 'src/app/layouts/Instrument';
 import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 
 @Component({
@@ -10,15 +9,41 @@ import { ServiceInstrumentsImageService } from 'src/app/services/service-instrum
 })
 export class CriarDissayComponent {
 
-  listDefaultInstruments: DefaultInstrument[] = []
+  listDefaultInstruments: DefaultInstrument[] = [];
+  maxLengthTitle: number = 100        // Limite para o título
+  maxLengthDescription: number = 1000; // Limite para a descrição
+  charCountTitle: number = 0;          // Contador para o título
+  charCountDescription: number = 0;    // Contador para a descrição
 
-  constructor(private serviceDefaultImages: ServiceInstrumentsImageService){}
+  titleValue: string = '';
+  descriptionValue: string = '';
 
-  ngOnInit(){
-    this.listDefaultInstruments = this.serviceDefaultImages.getDefaultInstruments()
+  constructor(private serviceDefaultImages: ServiceInstrumentsImageService) {}
+
+  ngOnInit() {
+    this.listDefaultInstruments = this.serviceDefaultImages.getDefaultInstruments();
   }
+
+  // Ajusta dinamicamente a altura do textarea conforme o conteúdo
   adjustHeight(textarea: HTMLTextAreaElement) {
-    textarea.style.height = 'auto'; // Reseta a altura
-    textarea.style.height = `${textarea.scrollHeight}px`; // Define a nova altura
+    textarea.style.height = 'auto';  // Reseta a altura para o valor 'auto' antes de recalcular
+    textarea.style.height = `${textarea.scrollHeight}px`;  // Ajusta a altura conforme o conteúdo
+  }
+
+  // Função para atualizar os contadores e verificar o limite
+  onInput(event: Event, type: string): void {
+    console.log (this.charCountDescription)
+    console.log (this.maxLengthDescription)
+    
+    const target = event.target as HTMLTextAreaElement | HTMLInputElement;
+    if (target) {
+      if (type === 'title') {
+        this.charCountTitle = target.value.length;
+        this.titleValue = target.value;
+      } else if (type === 'description') {
+        this.charCountDescription = target.value.length;
+        this.descriptionValue = target.value;
+      }
+    }
   }
 }

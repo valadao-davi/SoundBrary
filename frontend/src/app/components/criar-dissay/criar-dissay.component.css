@@ -155,6 +155,12 @@ button {
     align-items: start;
     padding: 24px;
     margin-top: 16px;
+    flex-direction: column;
+    gap: 8px;
+}
+.texto_editar {
+    display: flex;
+    width: 100%;
 }
 .campo_descricao {
     width: 100%;
@@ -163,4 +169,20 @@ button {
     resize: none;
     min-height: 212px;
     background-color: transparent;
+}
+
+.contagem {
+    align-self: last baseline;
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+}
+
+.vermelho {
+    color: red;
+}
+
+.contagem span {
+    font-weight: 500;
+    color: black !important;
 }

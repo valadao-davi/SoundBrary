@@ -31,6 +31,7 @@ import { CriarDissayCardsComponent } from './components/criar-dissay-cards/criar
 import { InstrumentoOverlayComponent } from './overlays/instrumento-overlay/instrumento-overlay.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
+import { LimitInputDirective } from './directives/limit-input.directive';
 
 
 
@@ -61,7 +62,8 @@ import { PortalModule } from '@angular/cdk/portal';
     ProfileLayoutComponent,
     CriarDissayComponent,
     CriarDissayCardsComponent,
-    InstrumentoOverlayComponent
+    InstrumentoOverlayComponent,
+    LimitInputDirective
   ],
   imports: [
     BrowserModule,
