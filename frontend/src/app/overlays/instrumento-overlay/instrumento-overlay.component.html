@@ -11,45 +11,20 @@
     <div class="efeitos_especif">
       <h3>Efeitos/Especificações</h3>
       <div class="efeitos_lista">
-        <div class="efeito" *ngFor="let efeito of instrumentParams.effects | keyvalue"><p>{{efeito.key}}</p></div>
+        <button  class="efeito"  *ngFor="let efeito of instrumentParams.effects | keyvalue" [ngClass]="{'selecionado' : efeito.key === nameEffect}" (click)="loadListParams(efeito)" ><p >{{efeito.key}}</p></button>
       </div>
     </div>
 
     <div class="linha_vertical"></div>
 
     <div class="conteudo">
-      <h1 class="nome_efeito">Super Overdrive</h1>
+      <h1 class="nome_efeito">{{nameEffect}}</h1>
       <div class="linha_horizontal"></div>
       <div class="parametros coluna">
-        <div class="parametro">
-          <h2>Tone:</h2><p>50/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Drive:</h2><p>25/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
-        </div>
-        <div class="parametro">
-          <h2>Level:</h2><p>70/100</p>
+        <div *ngFor="let param of listParams">
+          <div class="parametro" *ngFor="let entry of param | keyvalue">
+            <h2>{{entry.key}}:</h2><p>{{entry.value}}</p>
+          </div>
         </div>
       </div>
     </div>
