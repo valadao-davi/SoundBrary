@@ -7,9 +7,17 @@
             <h1 *ngIf="musicSelected">Dissay - {{musicSelected.name}}</h1>
 
             <div class="campo_input">
-                <input placeholder="Título do Dissay..." type="text">
+                <input
+                placeholder="Título do Dissay..." 
+                type="text"
+                [(ngModel)]="titleValue"
+                (input)="onInput($event, 'title')" 
+                [attr.maxlength]="maxLengthTitle"
+                >
                 <img class="input_icon" src="../../../assets/edit_icon.svg"/>
             </div>
+
+            <div *ngIf="charCountTitle >= maxLengthTitle">Limite de caracteres excedido</div>
 
             <div class="input_e_pesquisas">
                 <div class="campo_input">
@@ -48,12 +56,20 @@
                 </div>
                 <div class="linha"></div>
                 <div class="descricao campo_input">
-                  <textarea #textarea_descricao name="descricao" class="campo_descricao" placeholder="Adicione uma descrição pro seu Dissay (opcional)" (input)="adjustHeight(textarea_descricao)"></textarea>
-                  <img class="input_icon" src="../../../assets/edit_icon.svg"/>
+                  <div class="texto_editar">
+                    <textarea #textarea_descricao 
+                    name="descricao" 
+                    class="campo_descricao" 
+                    placeholder="Adicione uma descrição pro seu Dissay (opcional)" 
+                    (input)="adjustHeight(textarea_descricao)" 
+                    (input)="onInput($event, 'description')"
+                    [attr.maxlength]="maxLengthDescription"
+                    rows="5" cols="5"></textarea>
+                    <img class="input_icon" src="../../../assets/edit_icon.svg"/>
+                    </div>
+                  <p class="contagem" [ngClass]="{'vermelho' : charCountDescription >= maxLengthDescription}">{{ maxLengthDescription - charCountDescription }}<span *ngIf="charCountDescription >= maxLengthDescription">Limite de caracteres excedido</span></p>
                 </div>
             </div>
-
-            <div></div>
         </div>
     </div>
 
