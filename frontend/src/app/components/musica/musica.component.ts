@@ -7,6 +7,7 @@ import { ServiceUserService } from 'src/app/services/service-user.service';
 import { catchError, tap, throwError } from 'rxjs';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-musica',
@@ -70,6 +71,13 @@ export class MusicaComponent {
       }))
       console.log(this.listDissays)
     })
+  }
+  navigateCreate(id: string) {
+    if(this.user === null){
+      this.router.navigate(['/login'])
+      return
+    }
+    this.router.navigate([`/criar-dissay`], { queryParams: { value: id } });
   }
 
   saveSongOrRemove(id: string, isSaved: boolean): void {

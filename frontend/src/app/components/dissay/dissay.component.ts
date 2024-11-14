@@ -47,6 +47,7 @@ export class DissayComponent {
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
     if(this.accessToken !== ""){
+      console.log("contem acesso token")
       this.loadAuthUser(this.accessToken)
     }
     this.route.paramMap.subscribe((params)=> {
@@ -62,7 +63,6 @@ export class DissayComponent {
       this.dissayData = dissay
       this.comments = dissay.comments ?? []
 
-      this.getAvaliationUser(this.dissayData._id!)
       if(this.totalRateUser === null){
         this.totalRate = dissay.totalRate ?? 0.0
       }
@@ -74,7 +74,6 @@ export class DissayComponent {
         text: comment.text,
         date: new Date(comment.date).toLocaleDateString()
       }))
-      console.log(this.comments)
       this.loadMusic(this.dissayData.musicId)
       this.loadDissayUser(this.dissayData.userName)
     })
@@ -83,7 +82,8 @@ export class DissayComponent {
   loadAuthUser(user: string){
     this.serviceUser.getUser(user).subscribe(user=> {
       this.userData = user
-
+      this.getAvaliationUser(this.dissayData._id!)
+      console.log("funcao sendo chamada")
     })
   }
 
