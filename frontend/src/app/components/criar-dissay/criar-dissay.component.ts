@@ -21,10 +21,15 @@ export class CriarDissayComponent {
   @Input() musicSelected!: Music;
   private searchSubject: Subject<string> = new Subject<string>();
   listDefaultInstruments: DefaultInstrument[] = []
-
+  maxLengthTitle: number = 100;
+  maxLengthDescription: number = 1000;
+  charCountTitle: number = 0;
+  charCountDescription: number = 0;
+  titleValue: string = '';
+  descriptionValue: string = '';
 
   constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute){
-    this.searchSubject.pipe(debounceTime(1000)).subscribe(value => {
+    this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
       this.getTracksQuery(value)
     })
 
@@ -70,7 +75,18 @@ export class CriarDissayComponent {
    
   }
 
-
+  onInput(event: Event, type: string): void {
+    const target = event.target as HTMLTextAreaElement | HTMLInputElement
+    if(target){
+      if(type === 'title'){
+        this.charCountTitle = target.value.length
+        this.titleValue = target.value
+      }else if(type === 'description'){
+        this.charCountDescription = target.value.length
+        this.descriptionValue = target.value
+    }
+  }
+  }
   // Ajusta dinamicamente a altura do textarea conforme o conteúdo
   adjustHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto'; // Reseta a altura
