@@ -33,6 +33,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { LimitInputDirective } from './directives/limit-input.directive';
 import { SearchOverlayComponent } from './overlays/search-overlay/search-overlay.component';
+import { InstrumentoCriarOverlayComponent } from './overlays/instrumento-criar-overlay/instrumento-criar-overlay.component';
+import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrumento.component';
 
 
 
@@ -65,7 +67,9 @@ import { SearchOverlayComponent } from './overlays/search-overlay/search-overlay
     CriarDissayCardsComponent,
     InstrumentoOverlayComponent,
     LimitInputDirective,
-    SearchOverlayComponent
+    SearchOverlayComponent,
+    InstrumentoCriarOverlayComponent,
+    AddInstrumentoComponent,
   ],
   imports: [
     BrowserModule,

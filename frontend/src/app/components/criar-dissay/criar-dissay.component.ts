@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { debounceTime, Subject } from 'rxjs';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
+import { Instrument } from 'src/app/layouts/Instrument';
 import { Music } from 'src/app/layouts/Music';
 import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
@@ -27,6 +28,7 @@ export class CriarDissayComponent {
   charCountDescription: number = 0;
   titleValue: string = '';
   descriptionValue: string = '';
+  instrumentsDissay: Instrument[] = []
 
   constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
