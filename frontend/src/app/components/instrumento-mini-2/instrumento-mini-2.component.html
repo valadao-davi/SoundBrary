@@ -1,10 +1,33 @@
-<button (click)="openInstrument()">
+<button *ngIf="instrumentData && !instrumentDefault" (click)="openInstrument()">
   <div class="instrumento-mini-2">
     <img [src]="instrumentData.defaultInstrument.imageUrl">
     <h4>{{instrumentData.defaultInstrument.nameInstrument}}</h4>
   </div>  
 </button>
 
- <ng-template cdkPortal>
+<button *ngIf="!instrumentData && instrumentDefault" (click)="openInstrument()">
+  <div class="instrumento-mini-2">
+    <img [src]="instrumentDefault.imageUrl">
+    <h4>{{instrumentDefault.nameInstrument}}</h4>
+  </div>  
+</button>
+
+<button *ngIf="!instrumentData && !instrumentDefault" (click)="openInstrument()">
+  <div class="instrumento-mini-2">
+    <img src="../../../assets/outros.svg">
+    <h4>Outro...</h4>
+  </div>  
+</button>
+
+
+ <ng-template cdkPortal *ngIf="instrumentData && !instrumentDefault">
   <app-instrumento-overlay [instrumentParams]="instrumentData"></app-instrumento-overlay>
+ </ng-template>
+
+ <ng-template cdkPortal *ngIf="!instrumentData && instrumentDefault">
+  <app-instrumento-criar-overlay [instrument]="instrumentDefault"></app-instrumento-criar-overlay>
+ </ng-template>
+
+ <ng-template cdkPortal *ngIf="!instrumentData && !instrumentDefault">
+  <app-instrumento-criar-overlay></app-instrumento-criar-overlay>
  </ng-template>

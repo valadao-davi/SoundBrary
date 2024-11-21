@@ -30,7 +30,7 @@ export class ServiceInstrumentsImageService {
       imageUrl: "../../../assets/cordas.svg"
     },
     {
-      nameInstrument: "Vocais",
+      nameInstrument: "Vocal",
       imageUrl: "../../../assets/vocais.svg"
     },
     {
@@ -40,6 +40,14 @@ export class ServiceInstrumentsImageService {
     {
       nameInstrument: "Metais",
       imageUrl: "../../../assets/metais.svg"
+    },
+    {
+      nameInstrument: "Violão",
+      imageUrl: "../../../assets/violao.svg"
+    },
+    {
+      nameInstrument: "Sintetizador",
+      imageUrl: "../../../assets/sintetizador.svg"
     },
 
   ]

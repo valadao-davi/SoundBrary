@@ -3,31 +3,38 @@
     <div class="topo">
       <div class="modelo coluna">
         <h3>Informe o modelo:</h3>
-        <input type="text">
+        <input type="text" placeholder="Modelo do instrumento">
       </div>
-      <h1 class="nome_instrumento">{{instrument.nameInstrument}}</h1>
-      <img class="icone_instrumento" [src]=instrument.imageUrl>
+      <div *ngIf="instrument">
+
+      </div>
+      <h1 *ngIf="instrument" class="nome_instrumento">{{instrument.nameInstrument}}</h1>
+      <img *ngIf="instrument" class="icone_instrumento" [src]=instrument.imageUrl>
+      <input *ngIf="!instrument" type="text" value="Informe o nome do instrumento">
+      <img *ngIf="!instrument" src="../../../assets/outros.svg" alt="">
     </div>
     <div class="principal">
       <div class="efeitos_especif">
         <h3>Efeitos/Especificações</h3>
         <div class="efeitos_lista">
-          <div class="add_efeito">
-            <h4>Adicione efeito/especificação</h4>
-            <button><img src="../../../assets/black_add.svg" alt=""></button>
-          </div>
+          <button class="add_efeito">
+            <h4>Adicione efeito</h4>
+            <img src="../../../assets/REAL_black_add.svg" alt="">
+          </button>
         </div>
+        <input class="salvar_configuracao" type="submit" value="Salvar configuração">
       </div>
   
       <div class="linha_vertical"></div>
   
       <div class="conteudo">
-        <h1 class="nome_efeito">Informe o nome do efeito</h1>
+        <div class="nome_efeito"><input placeholder="Informe o nome do efeito" required><label><span class="required">*</span></label>
+        </div>
         <div class="linha_horizontal"></div>
         <div class="parametros coluna">
-          <h1>informe os parametros do efeito</h1>
-        </div>
+          <h2>informe os parametros do efeito</h2>
+          
+        </div>  
       </div>
     </div>
-    <input id="btn_criar_dissay" type="submit" value="Salvar configuração!">
   </div>

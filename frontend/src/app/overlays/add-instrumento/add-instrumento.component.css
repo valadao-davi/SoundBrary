@@ -1,0 +1,53 @@
+.overlay {
+  display: flex;
+  height: 640px;
+  background-color: white;
+  padding: 32px 32px 32px 48px;
+   width: fit-content;
+   border-radius: 12px;
+}
+
+.add_layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
+    
+}
+
+.tipo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-right: 32px;
+
+}
+
+.secao_titulo {
+    width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
+    margin-bottom: 8px;
+  }
+  
+  .linha {
+    height: 2px;
+    width: 100%;
+    background-color: #bfbfbf;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 12px; /* Altura da barra de rolagem */
+  }
+  
+  /* Estilo do "trilho" da barra de rolagem */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do fundo da barra */
+  }
+  
+  /* Estilo do "polegar" ao passar o mouse */
+  ::-webkit-scrollbar-thumb {
+    background: #808080; /* Cor do polegar ao passar o mouse */
+    border-radius: 6px; /* Cantos arredondados */
+  }

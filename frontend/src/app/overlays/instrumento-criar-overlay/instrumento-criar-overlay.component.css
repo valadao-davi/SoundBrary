@@ -73,21 +73,33 @@
   }
   .add_efeito{
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    font-size: 16px;
+    justify-content: space-between;
+  }
+  .add_efeito img {
+    height: 32px;
   }
 
+  .modelo input {
+    border: none;
+    text-align: center;
+    color: black;
+    font-size: 20px;
+  }
   
-#btn_criar_dissay {
+.salvar_configuracao {
     padding: 16px;
     background-color: #FD47BC;
     display: flex;
     gap: 8px;
     color: white;
-    border-radius: 24px;
+    border-radius: 32px;
     align-items: center;
     text-align: center;
-    width: 20%;
-    margin: 2%;
+    margin-top: auto;
+    border: none;
+    cursor: pointer;
 }
   .efeito p {
     margin: 0px 24px;
@@ -121,11 +133,25 @@
     padding: 48px 64px 8px 64px;
   }
   
+  .nome_efeito input {
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+  }
+
+  .required {
+    color: red;
+    font-size: 1rem; /* Ajuste conforme necessário */
+    margin-left: 4px; /* Espaço entre o texto e o asterisco */
+  }
+  
   .parametros {
     margin: 32px 64px;
     gap: 16px;
     max-height: 240px; /* Limita a altura máxima da div */
     overflow-y: auto;
+    height: 100%;
   }
   
   .parametro {
