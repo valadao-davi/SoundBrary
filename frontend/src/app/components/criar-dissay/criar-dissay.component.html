@@ -3,7 +3,8 @@
         <img class="seta_voltar" src="../../../assets/left_arrow_icon.svg">
         <div class="criar_dissay">
 
-            <h1>Criar Dissay</h1>
+            <h1 *ngIf="!musicSelected">Criar Dissay</h1>
+            <h1 *ngIf="musicSelected">Dissay - {{musicSelected.name}}</h1>
 
             <div class="campo_input">
                 <input
@@ -18,13 +19,23 @@
 
             <div *ngIf="charCountTitle >= maxLengthTitle">Limite de caracteres excedido</div>
 
-            <div class="campo_input">
-                <input #inputElement placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
-                <img src="../../../assets/lupa_icon_black_80.svg">
-                <ng-template class="overlay-container" #searchOverlayComponent>
-                    <app-search-overlay *ngFor="let track of tracksSearched"></app-search-overlay>
-                </ng-template>
+            <div class="input_e_pesquisas">
+                <div class="campo_input">
+                    <input placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
+                    <img src="../../../assets/lupa_icon_black_80.svg">
+                </div>
+                <div *ngIf="showResults" class="pesquisas">
+                    <button  *ngFor="let track of tracksSearched"class="button_pesquisa" (click)="selectMusic(track.id)">
+                        <div class="pesquisa">
+                            <img [src]="track.albumImages[2].link" alt="https://i.scdn.co/image/ab67616d000048517005885df706891a3c182a57">
+                            <div>{{track.name}} - {{track.artists[0].name}}</div>
+                        </div>
+                    </button>
             </div>
+            </div>
+            
+
+            
 
             <div class="marcar_dissay">
                 <input type="checkbox" name="privado" id="privadoId">
@@ -39,7 +50,6 @@
                 </div>
                 <div class="linha"></div>
                 <div class="lista_instrumentos_criar" >
-                    <app-criar-dissay-cards *ngFor="let defaults of listDefaultInstruments" [instrumento]="defaults"></app-criar-dissay-cards>
                     <app-criar-dissay-cards></app-criar-dissay-cards>
 
                 </div>
@@ -63,7 +73,9 @@
     </div>
 
     <div class="right_criar">
-        <div class="imagem_album"></div>
+        <div class="imagem_album">
+            <img class="img_src_album" *ngIf="musicSelected" [src]="musicSelected.albumImages[0].link" alt="">
+        </div>
         <div class="afinacao">
             <h1>Inserir afinação</h1>
             <app-criar-dissay-cards [afinacao]="'Inserir afinação'"></app-criar-dissay-cards>

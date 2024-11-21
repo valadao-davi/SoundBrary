@@ -12,6 +12,7 @@ RouterModule
 })
 export class HeaderComponent {
   @Input() user!: User | null
+  showNotifications: boolean = false;
   listNotification: Notiffication[] = []
 
 
@@ -30,6 +31,13 @@ export class HeaderComponent {
       }else{
         this.listNotification = []
       }
+    }
+  }
+
+  openAndCloseNotifications(){
+    this.showNotifications = !this.showNotifications
+    if(this.listNotification.length > 0){
+      this.listNotification = []
     }
   }
 
