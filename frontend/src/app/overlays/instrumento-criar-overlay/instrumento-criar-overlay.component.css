@@ -76,6 +76,7 @@
     align-items: center;
     font-size: 16px;
     justify-content: space-between;
+    font-weight: 400;
   }
   .add_efeito img {
     height: 32px;
@@ -131,13 +132,39 @@
   
   .nome_efeito {
     padding: 48px 64px 8px 64px;
+    display: flex;
+    justify-content: space-between;
   }
   
-  .nome_efeito input {
+  .input_param {
     font-size: 24px;
     background-color: transparent;
+    padding: 0px;
+    outline: none;
     border: none;
-    width: fit-content;
+    width: 90%;
+  }
+
+  .input_param:focus {
+    outline: none;
+  }
+
+  .input_parametro {
+    width: 33%;
+    
+    border-bottom: black solid 1px;
+    border-right: transparent solid 0px;
+    border-top: transparent solid 0px;
+    border-left: transparent solid 0px;
+  }
+
+  .input_valor {
+    width: 100%;
+    
+    border-bottom: black solid 1px;
+    border-right: transparent solid 0px;
+    border-top: transparent solid 0px;
+    border-left: transparent solid 0px;
   }
 
   .required {
@@ -145,6 +172,7 @@
     font-size: 1rem; /* Ajuste conforme necessário */
     margin-left: 4px; /* Espaço entre o texto e o asterisco */
   }
+  
   
   .parametros {
     margin: 32px 64px;
