@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
+import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 
 @Component({
   selector: 'app-add-instrumento',
@@ -6,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-instrumento.component.css']
 })
 export class AddInstrumentoComponent {
+  listDefaultInstruments: DefaultInstrument[] = []
 
+  constructor(private serviceDefaultImages: ServiceInstrumentsImageService){}
+  ngOnInit(){
+    this.listDefaultInstruments = this.serviceDefaultImages.getDefaultInstruments()
+  }
 }

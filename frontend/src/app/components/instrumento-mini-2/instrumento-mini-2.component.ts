@@ -1,6 +1,7 @@
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { CdkPortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild } from '@angular/core';
+import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
 import { Instrument } from 'src/app/layouts/Instrument';
 
 @Component({
@@ -10,6 +11,7 @@ import { Instrument } from 'src/app/layouts/Instrument';
 })
 export class InstrumentoMini2Component {
   @Input() instrumentData!: Instrument;
+  @Input() instrumentDefault!: DefaultInstrument;
   @ViewChild(CdkPortal) portal!: CdkPortal
 
   constructor(private overlay: Overlay){}
@@ -25,4 +27,6 @@ export class InstrumentoMini2Component {
     overlayRef.attach(this.portal);
     overlayRef.backdropClick().subscribe(()=> overlayRef.detach())
   }
+
+ 
 }

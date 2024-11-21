@@ -16,7 +16,7 @@
 </div>
 </button>
 
-<button *ngIf="!instrumento && !afinacao">
+<button (click)="openInstrument()" *ngIf="!instrumento && !afinacao">
   <div class="card">
     <img class="card_imagem" src="../../../assets/big_add_icon.svg">
     <div class="card_text mais">Adicionar instrumento</div>
@@ -28,5 +28,5 @@
  </ng-template>
 
  <ng-template cdkPortal *ngIf="!instrumento">
-
+  <app-add-instrumento></app-add-instrumento>
  </ng-template>
