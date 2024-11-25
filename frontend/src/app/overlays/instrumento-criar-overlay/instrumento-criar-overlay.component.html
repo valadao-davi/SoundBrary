@@ -3,15 +3,17 @@
     <div class="topo">
       <div class="modelo coluna">
         <h3>Informe o modelo:</h3>
-        <input type="text" placeholder="Modelo do instrumento">
+        <input type="text" [(ngModel)]="modelInstrument" placeholder="Modelo do instrumento">
       </div>
       <div *ngIf="instrument">
 
       </div>
-      <h1 *ngIf="instrument" class="nome_instrumento">{{instrument.nameInstrument}}</h1>
-      <img *ngIf="instrument" class="icone_instrumento" [src]=instrument.imageUrl>
-      <input *ngIf="!instrument" type="text" value="Informe o nome do instrumento">
-      <img *ngIf="!instrument" src="../../../assets/outros.svg" alt="">
+      <h1 *ngIf="instrument" class="nome_instrumento">{{instrument.defaultInstrument.nameInstrument}}</h1>
+      <img *ngIf="instrument" class="icone_instrumento" [src]=instrument.defaultInstrument.imageUrl>
+      <h1 *ngIf="defaultInstrument" class="nome_instrumento">{{defaultInstrument.nameInstrument}}</h1>
+      <img *ngIf="defaultInstrument" class="icone_instrumento" [src]=defaultInstrument.imageUrl>
+      <input [(ngModel)]="nameInputInstrument" *ngIf="!defaultInstrument && !instrument" type="text" value="Informe o nome do instrumento">
+      <img *ngIf="!defaultInstrument && !instrument" src="../../../assets/outros.svg" alt="">
     </div>
     <div class="principal">
       <div class="efeitos_especif">
@@ -22,12 +24,12 @@
             <div class="edit_icon"><img src="../../../assets/edit_icon.svg"></div>
             
           </button>
-          <button class="add_efeito novo" (click)="changeEffect(null)">
+          <button [ngClass]="{'selecionado' : efeito.name.length === 0}" class="add_efeito novo" (click)="clearEffects()">
             <p>Adicione efeito</p>
             <img src="../../../assets/REAL_black_add.svg" alt="">
           </button>
         </div>
-        <input class="salvar_configuracao" type="submit" value="Salvar configuração">
+        <button (click)="saveInstrument()" class="salvar_configuracao">Salvar configuração</button>
       </div>
   
       <div class="linha_vertical"></div>
@@ -39,7 +41,7 @@
 
         </div>
         <div class="linha_horizontal"></div>
-        <div class="parametros coluna">
+        <div class="parametros coluna" *ngIf="efeitoNomeTemp.length > 0">
           <div class="parametro">
             <input *ngIf="!editMode" (input)="parametroInput($event)" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro" >
             <input *ngIf="editMode" (input)="parametroInput($event)" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro" >

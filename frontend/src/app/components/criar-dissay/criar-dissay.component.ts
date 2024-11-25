@@ -5,6 +5,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
 import { Instrument } from 'src/app/layouts/Instrument';
 import { Music } from 'src/app/layouts/Music';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
 
@@ -21,7 +22,6 @@ export class CriarDissayComponent {
   showResults: boolean = false;
   @Input() musicSelected!: Music;
   private searchSubject: Subject<string> = new Subject<string>();
-  listDefaultInstruments: DefaultInstrument[] = []
   maxLengthTitle: number = 100;
   maxLengthDescription: number = 1000;
   charCountTitle: number = 0;
@@ -30,7 +30,7 @@ export class CriarDissayComponent {
   descriptionValue: string = '';
   instrumentsDissay: Instrument[] = []
 
-  constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute){
+  constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
       this.getTracksQuery(value)
     })
@@ -38,7 +38,6 @@ export class CriarDissayComponent {
   }
 
   ngOnInit(){
-    this.listDefaultInstruments = this.serviceDefaultImages.getDefaultInstruments()
     this.route.queryParams.subscribe(params => {
       if(params['value']){
         this.serviceSpotify.getMusicById(params['value']).subscribe(music => {
@@ -48,6 +47,8 @@ export class CriarDissayComponent {
         console.log("No value")
       }
     })
+    
+    this.instrumentsDissay = this.serviceDissay.getInstruments()
   }
 
   getTracksQuery(query: string): void {
@@ -60,6 +61,10 @@ export class CriarDissayComponent {
       this.tracksSearched = []
       this.showResults = false
     }
+  }
+
+  addInstrumentToList(newInstrument: Instrument){
+    this.instrumentsDissay.push(newInstrument)
   }
   selectMusic(id: string){
     if(this.tracksSearched){

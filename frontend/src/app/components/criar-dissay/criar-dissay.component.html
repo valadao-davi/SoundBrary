@@ -49,10 +49,10 @@
                     <p>Adicione um efeito ou clique em um para editá-lo</p>
                 </div>
                 <div class="linha"></div>
-                <div class="lista_instrumentos_criar" >
+                <div class="lista_instrumentos_criar">
+                    <div *ngFor="let instrument of instrumentsDissay"><app-criar-dissay-cards [instrumento]="instrument"></app-criar-dissay-cards></div>
                     <app-criar-dissay-cards></app-criar-dissay-cards>
-
-                </div>
+                </div>  
                 <div class="linha"></div>
                 <div class="descricao campo_input">
                   <div class="texto_editar">

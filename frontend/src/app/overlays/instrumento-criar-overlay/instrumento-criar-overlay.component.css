@@ -77,8 +77,8 @@
     font-size: 16px;
     justify-content: space-between;
     font-weight: 400;
-    padding: 8px;
-    border-radius: 4px 8px;
+    padding: 4px 16px;
+    border-radius: 32px;
   }
   .add_efeito img {
     height: 32px;

@@ -25,7 +25,7 @@
  </ng-template>
 
  <ng-template cdkPortal *ngIf="!instrumentData && instrumentDefault">
-  <app-instrumento-criar-overlay [instrument]="instrumentDefault"></app-instrumento-criar-overlay>
+  <app-instrumento-criar-overlay [defaultInstrument]="instrumentDefault"></app-instrumento-criar-overlay>
  </ng-template>
 
  <ng-template cdkPortal *ngIf="!instrumentData && !instrumentDefault">
