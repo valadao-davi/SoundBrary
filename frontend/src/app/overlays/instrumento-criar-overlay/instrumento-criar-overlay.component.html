@@ -33,9 +33,12 @@
         <div class="linha_horizontal"></div>
         <div class="parametros coluna">
           <div class="parametro">
-            <input (input)="parametroInput($event)" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro">
+            <input
+            [ngClass]="{'input-vazio': !chave, 'input-preenchido': chave}"
+            placeholder="Parâmetro" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro">
             <span>:</span>
-            <input class="input_param input_valor" [(ngModel)]="valor" placeholder="Valor">
+            <input [ngClass]="{'input-vazio': !valor, 'input-preenchido': valor}"
+            class="input_param input_valor" [(ngModel)]="valor" placeholder="Valor">
             <button (click)="adicionarParametro(chave, valor)"><img src="../../../assets/REAL_black_add.svg" alt=""></button>
           </div>
           <div class="parametro" *ngFor="let param of effect.parametros">

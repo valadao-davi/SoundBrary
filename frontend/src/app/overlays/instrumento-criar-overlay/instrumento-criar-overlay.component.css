@@ -210,3 +210,12 @@
     background: #808080; /* Cor do polegar ao passar o mouse */
     border-radius: 6px; /* Cantos arredondados */
   }
+
+
+  .input-vazio {
+    border-bottom: 2px solid red;
+  }
+  
+  .input-preenchido {
+    border-bottom: 2px solid black;
+  }

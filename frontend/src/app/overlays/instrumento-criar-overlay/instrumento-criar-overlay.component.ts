@@ -14,6 +14,7 @@ export class InstrumentoCriarOverlayComponent {
   parametroEscrito: boolean = false; // Inicializa a variável como falsa
   valorEscrito: boolean = false; // Inicializa a variável como falsa
 
+
   chave: string = '';
   valor: string = '';
 
@@ -53,13 +54,5 @@ export class InstrumentoCriarOverlayComponent {
     requiredElement.style.display = this.nomeEscrito ? 'none' : 'inline';
   }
 
-  parametroInput(event: Event): void {
-    const parametroInput = event.target as HTMLInputElement; // Obtém o elemento do input
-    this.parametroEscrito = parametroInput.value.trim() !== ''; // Atualiza a variável se o campo não estiver vazio
-
-    // Se `nomeEscrito` for true, oculta o asterisco
-    this.effect.nome = parametroInput.value;
-    const requiredElement = document.querySelector('.input_parametro') as HTMLElement;
-    requiredElement.style.border = this.parametroEscrito ? 'solid 0px transparent' : 'solid 1px black';
-  }
+  
 }
