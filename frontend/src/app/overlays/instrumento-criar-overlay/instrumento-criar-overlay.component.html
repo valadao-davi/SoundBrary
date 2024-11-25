@@ -17,8 +17,13 @@
       <div class="efeitos_especif">
         <h3>Efeitos/Especificações</h3>
         <div class="efeitos_lista">
-          <button class="add_efeito">
-            <h3>Adicione efeito</h3>
+          <button [ngClass]="{'selecionado' : effects.name === efeito.name}" (click)="changeEffect(effects)" class="add_efeito" *ngFor="let effects of instrumentMade.effects">
+            <h3 >{{effects.name}}</h3>
+            <div class="edit_icon"><img src="../../../assets/edit_icon.svg"></div>
+            
+          </button>
+          <button class="add_efeito novo" (click)="changeEffect(null)">
+            <p>Adicione efeito</p>
             <img src="../../../assets/REAL_black_add.svg" alt="">
           </button>
         </div>
@@ -28,23 +33,33 @@
       <div class="linha_vertical"></div>
   
       <div class="conteudo">
-        <div class="nome_efeito"><input class="input_param" (input)="nomeEfeito($event)" placeholder="Informe o nome do efeito" required><span *ngIf="!nomeEscrito" class="required">*</span>
+        <div class="nome_efeito">
+          <input *ngIf="efeito.name.length === 0" class="input_param" (input)="nomeEfeito($event)" [(ngModel)]="efeitoNomeTemp" placeholder="Informe o nome do efeito" required><span *ngIf="!nomeEscrito && efeito.name.length === 0" class="required">*</span>
+          <input *ngIf="efeito.name.length > 0" class="input_param" (input)="nomeEfeito($event)" [(ngModel)]="efeitoNomeTemp" placeholder="Informe o nome do efeito" required><span  *ngIf="!nomeEscrito && efeito.name.length > 0" class="required">*</span>
+
         </div>
         <div class="linha_horizontal"></div>
         <div class="parametros coluna">
           <div class="parametro">
-            <input
-            [ngClass]="{'input-vazio': !chave, 'input-preenchido': chave}"
-            placeholder="Parâmetro" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro">
+            <input *ngIf="!editMode" (input)="parametroInput($event)" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro" >
+            <input *ngIf="editMode" (input)="parametroInput($event)" class="input_param input_parametro" [(ngModel)]="chave" placeholder="Parâmetro" >
+
             <span>:</span>
-            <input [ngClass]="{'input-vazio': !valor, 'input-preenchido': valor}"
-            class="input_param input_valor" [(ngModel)]="valor" placeholder="Valor">
-            <button (click)="adicionarParametro(chave, valor)"><img src="../../../assets/REAL_black_add.svg" alt=""></button>
+            <input *ngIf="!editMode" class="input_param input_valor" [(ngModel)]="valor" placeholder="Valor">
+            <input *ngIf="editMode" class="input_param input_valor" [(ngModel)]="valor" placeholder="Valor">
+
+            <button (click)="adicionarParametro(chave, valor)"><img *ngIf="!editMode" src="../../../assets/REAL_black_add.svg" alt=""><img *ngIf="editMode" src="../../../assets/check_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg"></button>
+
           </div>
-          <div class="parametro" *ngFor="let param of effect.parametros">
-              <h2>{{param.chave}}:</h2><p>{{param.valor}}</p>
+          
+          <div *ngFor="let param of efeito.parameters | keyvalue">
+            <div class="parametro"  *ngIf="param.key !== chave">
+                <div class="parametro_content"><h2>{{param.key}}:</h2><p>{{param.value}}</p></div>
+                <button (click)="toggleEdit(param.key, param.value)" class="edit_icon"><img *ngIf="!editMode" src="../../../assets/edit_icon.svg" alt=""></button>
+              </div>
           </div>
-        </div>  
-      </div>
-    </div>
-  </div>
+          <button (click)="saveEffect()"><img src="../../../assets/black_add.svg" alt="" set=""></button>
+
+          <div  >
+              
+          </div>

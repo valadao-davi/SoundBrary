@@ -187,34 +187,32 @@ async function applySchemaValidation(db: mongodb.Db) {
                                 }
                             },
                             effects: {
-                                bsonType: "object",
+                                bsonType: "array",
                                 description: "Effects of the instrument",
-                                additionalProperties: {
-                                    bsonType: "array",
-                                    items: {
-                                        bsonType: "object",
-                                        properties: {
-                                            parameterName: {
-                                                bsonType: "string",
-                                                description: "Name of the effect parameter",
-                                                minLength: 2,
-                                                maxLength: 50
-                                            },
-                                            value: {
-                                                bsonType: "string",
-                                                description: "Value of the effect parameter",
-                                                minLength: 1,
-                                                maxLength: 50
-                                            }
+                                items: {
+                                    bsonType: "object",
+                                    required: ["name", "parameters"],
+                                    properties: {
+                                        name: {
+                                            bsonType: "string",
+                                            description: "Name of the effect type",
+                                            minLength: 2,
+                                            maxLength: 150
                                         },
-                                        additionalProperties: false,
-                                }
-                            },
+                                        parameters: {
+                                            bsonType: "object",
+                                            description: "Parameters of the effect",
+                                            additionalProperties: {
+                                                bsonType: "string"
+                                            }
+                                        }
+                                    },
+                                },
                             model: {
                                 bsonType: "string",
-                                description: "name of the imagem",
+                                description: "Model of the instrument",
                                 minLength: 2,
-                                maxLength: 100
+                                maxLength: 500
                             }
                         }
                     }

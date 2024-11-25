@@ -77,6 +77,8 @@
     font-size: 16px;
     justify-content: space-between;
     font-weight: 400;
+    padding: 8px;
+    border-radius: 4px 8px;
   }
   .add_efeito img {
     height: 32px;
@@ -186,6 +188,13 @@
     display: flex;
     gap: 8px;
     font-size: 24px;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .parametro_content {
+    display: flex;
+    gap: 8px;
   }
   
   .parametro p {
@@ -211,11 +220,20 @@
     border-radius: 6px; /* Cantos arredondados */
   }
 
-
-  .input-vazio {
-    border-bottom: 2px solid red;
+  .edit_icon{
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
-  
-  .input-preenchido {
-    border-bottom: 2px solid black;
+
+  .edit_icon img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .novo {
+    font-weight: 500;
+    font-size: 20px;
   }
