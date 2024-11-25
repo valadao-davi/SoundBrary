@@ -1,9 +1,10 @@
 import { DefaultInstrument } from "./DefaultInstrument";
+import { Effect } from "./Effect";
+
 
 export interface Instrument {
-  defaultInstrument: DefaultInstrument;
-  effects: {
-    [effect: string]: Array<{ [parameter: string]: string }>
-  };
-  model: string;
-}
+    defaultInstrument: DefaultInstrument;
+    effects: Effect[]
+    model: string;
+  }
+  
