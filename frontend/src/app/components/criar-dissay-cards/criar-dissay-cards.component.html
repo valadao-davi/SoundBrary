@@ -9,12 +9,13 @@
   </div>
 </button>
 
-<button *ngIf="afinacao && !instrumento">
+<button (click)="openInstrument()" *ngIf="afinacao && !instrumento">
   <div class="card">
     <img class="card_imagem" src="../../../assets/clava_sol_icon.svg">
     <div class="card_text">{{afinacao}}</div>
 </div>
 </button>
+
 
 <button (click)="openInstrument()" *ngIf="!instrumento && !afinacao">
   <div class="card">
@@ -27,6 +28,10 @@
   <app-instrumento-criar-overlay [instrument]="instrumento"></app-instrumento-criar-overlay>
  </ng-template>
 
- <ng-template cdkPortal *ngIf="!instrumento">
-  <app-add-instrumento></app-add-instrumento>
+ <ng-template cdkPortal *ngIf="!instrumento && !afinacao">
+  <app-add-instrumento ></app-add-instrumento>
+ </ng-template>
+
+ <ng-template cdkPortal *ngIf="afinacao && !instrumento">
+  <app-add-instrumento [isAfinacao]="true"></app-add-instrumento>
  </ng-template>

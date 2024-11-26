@@ -34,4 +34,5 @@ export class CriarDissayCardsComponent {
     this.serviceDissay.deleteInstrument(nameInstrument)
   }
 
+    
 }

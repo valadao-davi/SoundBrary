@@ -9,8 +9,18 @@
   width: fit-content;
   height: fit-content;
 }
+button {
+  padding: 0px;
+}
 
-.instrumento-mini-2 img {
+.instrumento-mini-2 h4 {
+  max-width: 80px;
+}
+
+.espaco_img {
   width: 80px;
-  max-height: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

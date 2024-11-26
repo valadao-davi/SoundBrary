@@ -1,21 +1,28 @@
-<button *ngIf="instrumentData && !instrumentDefault" (click)="openInstrument()">
+<button *ngIf="instrumentData && !instrumentDefault && !nomeAfinacao" (click)="openInstrument()">
   <div class="instrumento-mini-2">
-    <img [src]="instrumentData.defaultInstrument.imageUrl">
+    <img class="espaco_img" [src]="instrumentData.defaultInstrument.imageUrl">
     <h4>{{instrumentData.defaultInstrument.nameInstrument}}</h4>
   </div>  
 </button>
 
-<button *ngIf="!instrumentData && instrumentDefault" (click)="openInstrument()">
+<button *ngIf="!instrumentData && instrumentDefault && !nomeAfinacao" (click)="openInstrument()">
   <div class="instrumento-mini-2">
-    <img [src]="instrumentDefault.imageUrl">
+    <img class="espaco_img" [src]="instrumentDefault.imageUrl">
     <h4>{{instrumentDefault.nameInstrument}}</h4>
   </div>  
 </button>
 
-<button *ngIf="!instrumentData && !instrumentDefault" (click)="openInstrument()">
+<button *ngIf="!instrumentData && !instrumentDefault && !nomeAfinacao" (click)="openInstrument()">
   <div class="instrumento-mini-2">
-    <img src="../../../assets/outros.svg">
+    <img class="espaco_img" src="../../../assets/outros.svg">
     <h4>Outro...</h4>
+  </div>  
+</button>
+
+<button *ngIf="!instrumentData && !instrumentDefault && nomeAfinacao" (click)="setAfinacao(nomeAfinacao)">
+  <div class="instrumento-mini-2">
+    <div class="espaco_img"><h1>{{nomeBigAfinacao}}</h1></div>
+    <h4>{{nomeAfinacao}}</h4>
   </div>  
 </button>
 

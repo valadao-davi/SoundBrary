@@ -1,8 +1,9 @@
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal } from '@angular/cdk/portal';
 import { Component, Input, ViewChild } from '@angular/core';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
 import { Instrument } from 'src/app/layouts/Instrument';
+import { OverlayService } from 'src/app/services/overlay.service';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 
 @Component({
@@ -15,9 +16,12 @@ export class InstrumentoMini2Component {
   @Input() instrumentDefault!: DefaultInstrument;
   @ViewChild(CdkPortal) portal!: CdkPortal
   listDissayInstruments: Instrument[] = []
+  @Input() nomeAfinacao!: string;
+  @Input() nomeBigAfinacao!: string;
+  
 
 
-  constructor(private overlay: Overlay, private serviceDissay: ServiceDissayService){}
+  constructor(private overlay: Overlay, private serviceDissay: ServiceDissayService, private overlayRefSerivce: OverlayService){}
 
   ngOnInit(){
     this.listDissayInstruments = this.serviceDissay.getInstruments()
@@ -52,5 +56,11 @@ export class InstrumentoMini2Component {
     }
   }
 
- 
+  setAfinacao(nomeAfinacao: string) {
+    console.log("funcionando")
+    this.serviceDissay.setTone(nomeAfinacao)
+    console.log(this.serviceDissay.getTone())
+    this.overlayRefSerivce.closeAllOverlays()
+
+  }
 }

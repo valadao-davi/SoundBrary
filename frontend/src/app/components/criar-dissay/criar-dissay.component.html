@@ -75,9 +75,13 @@
         <div class="imagem_album">
             <img class="img_src_album" *ngIf="musicSelected" [src]="musicSelected.albumImages[0].link" alt="">
         </div>
-        <div class="afinacao">
-            <h1>Inserir afinação</h1>
-            <app-criar-dissay-cards [afinacao]="'Inserir afinação'"></app-criar-dissay-cards>
+        <div class="afinacao" *ngIf="toneDissay.length === 0">
+            <h1>Inserir tonalidade</h1>
+            <app-criar-dissay-cards [afinacao]="'Inserir tonalidade'"></app-criar-dissay-cards>
+        </div>
+        <div class="afinacao" *ngIf="toneDissay.length > 0">
+            <h1>Tonalidade</h1>
+            <app-criar-dissay-cards [afinacao]="toneDissay"></app-criar-dissay-cards>
         </div>
         <button class="publicar_dissay">
             <h3>Publicar Dissay</h3>

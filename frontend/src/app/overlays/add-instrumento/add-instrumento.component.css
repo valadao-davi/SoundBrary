@@ -36,6 +36,13 @@
     background-color: #bfbfbf;
   }
 
+  .lista_conteudo{
+    display: flex;
+    align-items: start;
+    max-width: 588px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
 
   ::-webkit-scrollbar {
     width: 12px; /* Altura da barra de rolagem */

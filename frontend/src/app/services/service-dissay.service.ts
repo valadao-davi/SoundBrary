@@ -10,6 +10,8 @@ import  {Instrument} from '../layouts/Instrument'
 export class ServiceDissayService {
   private readonly API = 'http://localhost:3000/dissays'
   private instruments: Instrument[] = [];
+  private toneDissay = new BehaviorSubject<string>(''); // Valor inicial
+
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +28,15 @@ export class ServiceDissayService {
   getInstruments(): Instrument[] {
     return this.instruments
   }
+
+  getTone() {
+    return this.toneDissay.asObservable()
+  }
+
+  setTone(tone: string): void {
+    this.toneDissay.next(tone)
+  }
+
   deleteInstrument(instrumentName: string): void{
     const indexInstrument = this.instruments.findIndex(i => i.defaultInstrument.nameInstrument === instrumentName)
     if(indexInstrument !== -1){
