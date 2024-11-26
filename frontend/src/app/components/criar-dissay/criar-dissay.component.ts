@@ -29,6 +29,7 @@ export class CriarDissayComponent {
   titleValue: string = '';
   descriptionValue: string = '';
   instrumentsDissay: Instrument[] = []
+  toneDissay!: string;
 
   constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
@@ -47,8 +48,12 @@ export class CriarDissayComponent {
         console.log("No value")
       }
     })
-    
+    this.serviceDissay.getTone().subscribe(tone => {
+      this.toneDissay = tone
+    })
+    console.log(this.toneDissay)
     this.instrumentsDissay = this.serviceDissay.getInstruments()
+
   }
 
   getTracksQuery(query: string): void {

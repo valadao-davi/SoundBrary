@@ -1,9 +1,9 @@
-<div class="overlay">
+<div class="overlay" *ngIf="!isAfinacao">
     <div class="add_layout">
         <div class="tipo">
             <h2>Corda</h2>
             <div class="linha"></div>
-            <div>
+            <div class="lista_conteudo">
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[0]"></app-instrumento-mini-2>
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[2]"></app-instrumento-mini-2>
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[8]"></app-instrumento-mini-2>
@@ -14,7 +14,7 @@
         <div class="tipo">
             <h2>Teclas</h2>
             <div class="linha"></div>
-            <div>
+            <div class="lista_conteudo">
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[3]"></app-instrumento-mini-2>
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[9]"></app-instrumento-mini-2>
             </div>
@@ -23,7 +23,7 @@
         <div class="tipo">
             <h2>Sopro</h2>
             <div class="linha"></div>
-            <div>
+            <div class="lista_conteudo">
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[6]"></app-instrumento-mini-2>
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[7]"></app-instrumento-mini-2>        </div>
         </div>
@@ -31,7 +31,7 @@
         <div class="tipo">
             <h2>Outros</h2>
             <div class="linha"></div>
-            <div>
+            <div class="lista_conteudo">
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[1]"></app-instrumento-mini-2>
                 <app-instrumento-mini-2 [instrumentDefault]="listDefaultInstruments[5]"></app-instrumento-mini-2>
                 <app-instrumento-mini-2 ></app-instrumento-mini-2>
@@ -40,3 +40,68 @@
         </div>
     </div>
     </div>
+
+
+
+    <div class="overlay" *ngIf="isAfinacao">
+        <div class="add_layout">
+            <div class="tipo">
+                <h2>Tonalidades maiores</h2>
+                <div class="linha"></div>
+                <div class="lista_conteudo">
+                    <app-instrumento-mini-2 [nomeAfinacao]="'C Maior'" [nomeBigAfinacao]="'C'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'C# Maior'" [nomeBigAfinacao]="'C#'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'D Maior'" [nomeBigAfinacao]="'D'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'D# Maior'" [nomeBigAfinacao]="'D#'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'E Maior'" [nomeBigAfinacao]="'E'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'F Maior'" [nomeBigAfinacao]="'F'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'F# Maior'" [nomeBigAfinacao]="'F#'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'G Maior'" [nomeBigAfinacao]="'G'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'G# Maior'" [nomeBigAfinacao]="'G#'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'A Maior'" [nomeBigAfinacao]="'A'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'A# Maior'" [nomeBigAfinacao]="'A#'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'B Maior'" [nomeBigAfinacao]="'B'"></app-instrumento-mini-2>
+
+                </div>
+            </div>
+            
+            <div class="tipo">
+                <h2>Tonalidades menores</h2>
+                <div class="linha"></div>
+                <div class="lista_conteudo">
+                    <app-instrumento-mini-2 [nomeAfinacao]="'C Menor'" [nomeBigAfinacao]="'Cm'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'C# Menor'" [nomeBigAfinacao]="'C#m'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'D Menor'" [nomeBigAfinacao]="'Dm'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'D# Menor'" [nomeBigAfinacao]="'D#m'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'E Menor'" [nomeBigAfinacao]="'Em'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'F Menor'" [nomeBigAfinacao]="'Fm'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'F# Menor'" [nomeBigAfinacao]="'F#m'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'G Menor'" [nomeBigAfinacao]="'Gm'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'G# Menor'" [nomeBigAfinacao]="'G#m'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'A Menor'" [nomeBigAfinacao]="'Am'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'A# Menor'" [nomeBigAfinacao]="'A#m'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'B Menor'" [nomeBigAfinacao]="'Bm'"></app-instrumento-mini-2>
+   
+                </div>
+            </div>
+        
+            <div class="tipo">
+                <h2>Tonalidades diminutas</h2>
+                <div class="linha"></div>
+                <div class="lista_conteudo">
+                    <app-instrumento-mini-2 [nomeAfinacao]="'C Diminuto'" [nomeBigAfinacao]="'C dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'C# Diminuto'" [nomeBigAfinacao]="'C# dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'D Diminuto'" [nomeBigAfinacao]="'D dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'D# Diminuto'" [nomeBigAfinacao]="'D# dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'E Diminuto'" [nomeBigAfinacao]="'E dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'F Diminuto'" [nomeBigAfinacao]="'F dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'F# Diminuto'" [nomeBigAfinacao]="'F# dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'G Diminuto'" [nomeBigAfinacao]="'G dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'G# Diminuto'" [nomeBigAfinacao]="'G# dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'A Diminuto'" [nomeBigAfinacao]="'A dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'A# Diminuto'" [nomeBigAfinacao]="'A# dim'"></app-instrumento-mini-2>
+                    <app-instrumento-mini-2 [nomeAfinacao]="'B Diminuto'" [nomeBigAfinacao]="'B dim'"></app-instrumento-mini-2>
+
+            </div>
+        </div>
+        </div>

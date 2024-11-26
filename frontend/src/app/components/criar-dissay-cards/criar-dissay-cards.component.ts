@@ -27,4 +27,5 @@ export class CriarDissayCardsComponent {
     overlayRef.backdropClick().subscribe(()=> overlayRef.detach())
   }
 
+    
 }

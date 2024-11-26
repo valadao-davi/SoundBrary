@@ -26,6 +26,10 @@
     align-items: center;
     gap: 4px;
   }
+
+  .modelo input {
+    width: 98%; 
+  }
   
   .nome_instrumento {
     width: 240px;
@@ -79,6 +83,7 @@
     font-weight: 400;
     padding: 4px 16px;
     border-radius: 32px;
+    white-space: nowrap;
   }
 
   .add_efeito h3 {
@@ -159,7 +164,7 @@
   }
 
   .input_parametro {
-    width: 33%;
+    width: 35%;
     
     border-bottom: black solid 1px;
     border-right: transparent solid 0px;
@@ -182,7 +187,6 @@
     margin-left: 4px; /* Espaço entre o texto e o asterisco */
   }
   
-  
   .parametros {
     margin: 32px 64px;
     gap: 16px;
@@ -201,7 +205,9 @@
 
   .parametro_content {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+    width: 100%;
   }
   
   .parametro p {
@@ -245,3 +251,32 @@
     font-size: 20px;
   }
   
+  #parametro-chave {
+    max-width: 45%;
+     word-wrap: break-word;  /* Força a quebra de linha se o texto ultrapassar a largura */
+  white-space: normal;  /* Garante que o texto pode quebrar normalmente */
+  overflow-wrap: break-word;
+  }
+
+  #parametro-valor {
+    max-width: 45%;
+     word-wrap: break-word;  /* Força a quebra de linha se o texto ultrapassar a largura */
+  white-space: normal;  /* Garante que o texto pode quebrar normalmente */
+  overflow-wrap: break-word;
+  }
+
+  .salvar_efeitos {
+    padding: 16px;
+    background-color: #FD47BC;
+    display: flex;
+    gap: 8px;
+    color: white;
+    border-radius: 32px;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    margin-top: auto;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+  }

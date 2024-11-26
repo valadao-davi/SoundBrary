@@ -250,3 +250,5 @@ button {
     width: 100%; /* Ou defina um tamanho fixo conforme necessário */
     z-index: 9999; /* Garante que o overlay fique acima de outros elementos */
   }
+
+

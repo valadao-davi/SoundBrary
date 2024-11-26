@@ -203,7 +203,9 @@ async function applySchemaValidation(db: mongodb.Db) {
                                             bsonType: "object",
                                             description: "Parameters of the effect",
                                             additionalProperties: {
-                                                bsonType: "string"
+                                                bsonType: "string",
+                                                minLength: 2,
+                                                maxLength: 100
                                             }
                                         }
                                     },
