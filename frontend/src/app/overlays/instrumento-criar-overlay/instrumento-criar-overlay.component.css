@@ -80,6 +80,13 @@
     padding: 4px 16px;
     border-radius: 32px;
   }
+
+  .add_efeito h3 {
+    width: 100%;
+    overflow: hidden;
+    text-align: start;
+    text-overflow: ellipsis;
+  }
   .add_efeito img {
     height: 32px;
   }
@@ -237,3 +244,4 @@
     font-weight: 500;
     font-size: 20px;
   }
+  

@@ -71,6 +71,7 @@ export class CriarDissayComponent {
       const foundTrack = this.tracksSearched.find(track => track.id === id)
       if(foundTrack){
         this.musicSelected = foundTrack
+        this.titleValue = 'Dissay ' + foundTrack.name
         this.showResults = false
       }
     }
