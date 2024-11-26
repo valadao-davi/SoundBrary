@@ -35,6 +35,7 @@ import { LimitInputDirective } from './directives/limit-input.directive';
 import { SearchOverlayComponent } from './overlays/search-overlay/search-overlay.component';
 import { InstrumentoCriarOverlayComponent } from './overlays/instrumento-criar-overlay/instrumento-criar-overlay.component';
 import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrumento.component';
+import { NotificationsComponent } from './overlays/notifications/notifications.component';
 
 
 
@@ -70,6 +71,7 @@ import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrume
     SearchOverlayComponent,
     InstrumentoCriarOverlayComponent,
     AddInstrumentoComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
