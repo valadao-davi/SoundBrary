@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Dissay } from '../layouts/Dissay';
@@ -50,5 +50,12 @@ export class ServiceDissayService {
 
   getDissayById(id: string): Observable<Dissay>{
     return this.http.get<Dissay>(`${this.API}/getDissay/${id}`)
+  }
+
+  createDissay(token: string,dissayData: any): Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.post<any>(`${this.API}/createDissay/${dissayData.musicId}`,  dissayData, {headers})
   }
 }

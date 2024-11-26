@@ -19,6 +19,7 @@ export class CriarDissayComponent {
   searchQuery!: string;
   tracksSearched!: Music[]
   idParam!: string;
+  
   showResults: boolean = false;
   @Input() musicSelected!: Music;
   private searchSubject: Subject<string> = new Subject<string>();
@@ -30,6 +31,7 @@ export class CriarDissayComponent {
   descriptionValue: string = '';
   instrumentsDissay: Instrument[] = []
   toneDissay!: string;
+  accessToken!: string;
 
   constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
@@ -39,6 +41,8 @@ export class CriarDissayComponent {
   }
 
   ngOnInit(){
+    this.accessToken = localStorage.getItem('token') ?? ""
+
     this.route.queryParams.subscribe(params => {
       if(params['value']){
         this.serviceSpotify.getMusicById(params['value']).subscribe(music => {
@@ -110,5 +114,28 @@ export class CriarDissayComponent {
     this.serviceSpotify.getMusicById(id).subscribe(music => {
       this.musicSelected = music
     })
+  }
+
+  publishDissay(){
+  if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
+      console.log("Dissay inválido")
+    }else {
+      console.log(this.accessToken)
+      this.serviceDissay.createDissay(this.accessToken,{
+        musicId: this.musicSelected.id,
+        name: this.titleValue,
+        description: this.descriptionValue ?? "",
+        instruments: this.instrumentsDissay,
+        tone: this.toneDissay ?? ""
+      }).subscribe({
+        next: response => {
+          this.instrumentsDissay = []
+          this.toneDissay = ""
+        },
+        error: (err) => {
+          console.error('Erro ao publicar Dissay:', err);
+        }
+      });
+    } 
   }
 }

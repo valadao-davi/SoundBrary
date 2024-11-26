@@ -83,7 +83,7 @@
             <h1>Tonalidade</h1>
             <app-criar-dissay-cards [afinacao]="toneDissay"></app-criar-dissay-cards>
         </div>
-        <button class="publicar_dissay">
+        <button (click)="publishDissay()" class="publicar_dissay">
             <h3>Publicar Dissay</h3>
             <img src="../../../assets/enviar_icon.svg"></button>
     </div>

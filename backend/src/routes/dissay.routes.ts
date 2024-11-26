@@ -46,6 +46,8 @@ dissayRouter.get("/recentDissays", async(_req, res)=> {
 dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res: Response)=> {
     try{
         const userName = req.token?.userName
+        console.log(userName)
+
         const musicId = req.params.musicId
         const dissay = {
             name: req.body.name,

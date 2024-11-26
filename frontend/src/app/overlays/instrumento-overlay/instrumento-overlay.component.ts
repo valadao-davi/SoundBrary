@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Effect } from 'src/app/layouts/Effect';
 import { Instrument } from 'src/app/layouts/Instrument';
 
 @Component({
@@ -8,21 +9,21 @@ import { Instrument } from 'src/app/layouts/Instrument';
 })
 export class InstrumentoOverlayComponent {
   @Input() instrumentParams!: Instrument;
-  listParams!: Array<{ [key: string]: string }>;
+    listParams!: Effect[];
     nameEffect!: string
+    efeito: Effect = {name: '', parameters: {}}
+
 
     ngOnInit() {
       const firstEffect = this.instrumentParams.effects ? Object.entries(this.instrumentParams.effects)[0] : null;
+      this.listParams = this.instrumentParams.effects
+      this.efeito = this.listParams[0]
       console.log(this.instrumentParams.effects)
       console.log(firstEffect)
-      if(firstEffect) {
-        this.loadListParams({ key: firstEffect[0], value: firstEffect[1] });
-      }
     }
 
-  loadListParams(effect: any){
-    this.nameEffect = effect.key
-    this.listParams = effect.value
-    console.log(this.listParams)
+  loadListParams(effect: Effect){
+    this.efeito = effect
+
   }
 }

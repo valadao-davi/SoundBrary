@@ -11,19 +11,19 @@
     <div class="efeitos_especif">
       <h3>Efeitos/Especificações</h3>
       <div class="efeitos_lista">
-        <button  class="efeito"  *ngFor="let efeito of instrumentParams.effects | keyvalue" [ngClass]="{'selecionado' : efeito.key === nameEffect}" (click)="loadListParams(efeito)" ><p >{{efeito.key}}</p></button>
+        <button [ngClass]="{'selecionado' : effects.name === efeito.name}" class="efeito"  *ngFor="let effects of listParams"  (click)="loadListParams(effects)" ><p >{{effects.name}}</p></button>
       </div>
     </div>
 
     <div class="linha_vertical"></div>
 
     <div class="conteudo">
-      <h1 class="nome_efeito">{{nameEffect}}</h1>
+      <h1 class="nome_efeito">{{efeito.name}}</h1>
       <div class="linha_horizontal"></div>
       <div class="parametros coluna">
-        <div *ngFor="let param of listParams">
-          <div class="parametro" *ngFor="let entry of param | keyvalue">
-            <h2>{{entry.key}}:</h2><p>{{entry.value}}</p>
+        <div *ngFor="let param of efeito.parameters | keyvalue">
+          <div class="parametro">
+            <h2>{{param.key}}:</h2><p>{{param.value}}</p>
           </div>
         </div>
       </div>
