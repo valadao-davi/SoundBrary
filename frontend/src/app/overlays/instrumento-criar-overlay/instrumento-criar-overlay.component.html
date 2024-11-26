@@ -60,7 +60,7 @@
                 <button (click)="toggleEdit(param.key, param.value)" class="edit_icon"><img *ngIf="!editMode" src="../../../assets/edit_icon.svg" alt=""></button>
               </div>
           </div>
-          <button (click)="saveEffect()"><img src="../../../assets/black_add.svg" alt="" set=""></button>
+          <button *ngIf="TemParametros()" (click)="saveEffect()"><img src="../../../assets/black_add.svg" alt="" set=""></button>
 
           <div  >
               

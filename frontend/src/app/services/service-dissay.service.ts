@@ -20,8 +20,17 @@ export class ServiceDissayService {
   addInstrument(instrument: Instrument): void {
     this.instruments.push(instrument);
   }
+  updateInstrument(instrument: Instrument, index:number): void{
+    this.instruments[index] = instrument
+  }
   getInstruments(): Instrument[] {
     return this.instruments
+  }
+  deleteInstrument(instrumentName: string): void{
+    const indexInstrument = this.instruments.findIndex(i => i.defaultInstrument.nameInstrument === instrumentName)
+    if(indexInstrument !== -1){
+      this.instruments.splice(indexInstrument, 1)
+    }
   }
 
   getDissayByMusic(idMusic: string): Observable<Dissay[]>{

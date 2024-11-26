@@ -29,6 +29,9 @@ export class InstrumentoCriarOverlayComponent {
   constructor(private overlayRefSerivce: OverlayService, private dissayService: ServiceDissayService){}
   
   ngOnInit(){
+    const listInstruments = this.dissayService.getInstruments()
+    console.log("Instrumentos na lista: ", listInstruments)
+
     if(this.instrument === undefined && this.defaultInstrument){
       //cria um padrão com base no card que foi clicado
       this.instrumentMade = {
@@ -36,6 +39,7 @@ export class InstrumentoCriarOverlayComponent {
         effects: [],
         model: ''
       }
+      console.log(this.instrumentMade.defaultInstrument.nameInstrument)
       console.log("instrumento padrao definido")
 
     }else if(this.instrument === undefined && this.defaultInstrument === undefined){
@@ -53,6 +57,7 @@ export class InstrumentoCriarOverlayComponent {
       console.log(this.instrument)
       console.log("instrumento definido")
       this.instrumentMade = this.instrument
+      this.modelInstrument = this.instrument.model
     }
     
   }
@@ -93,20 +98,31 @@ export class InstrumentoCriarOverlayComponent {
       this.efeitoNomeTemp = effectTo.name
     }
   }
-  naoTemParametros(): boolean {
-    return Object.keys(this.efeito.parameters).length === 0;
+  TemParametros(): boolean {
+    return Object.keys(this.efeito.parameters).length > 0;
   }
 
 
   saveInstrument(){
-    this.overlayRefSerivce.closeAllOverlays()
+    //pega os inputs do layout e ja insere no objeto InstrumentMade
+    this.instrumentMade.model = this.modelInstrument
     if(this.instrument === undefined && this.defaultInstrument === undefined){
       this.instrumentMade.defaultInstrument.nameInstrument = this.nameInputInstrument
     }
-    this.dissayService.addInstrument(this.instrumentMade)
-    this.instrumentMade.model = this.modelInstrument
-
-    console.log(this.instrumentMade)
+    //Pega a lista e verifica com base no nome se esse instrumento já existe
+    const listInstruments = this.dissayService.getInstruments()
+    console.log('Nome do instrumento para salvar:', this.instrumentMade.defaultInstrument.nameInstrument);
+    console.log("Instrumentos na lista: ", listInstruments)
+    const indexFinded = listInstruments.findIndex(i => i.defaultInstrument.nameInstrument === this.instrumentMade.defaultInstrument.nameInstrument)
+    if(indexFinded !== -1){
+      
+      this.dissayService.updateInstrument(this.instrumentMade, indexFinded)
+    }else{
+      this.dissayService.addInstrument(this.instrumentMade)
+    }
+    
+    
+    this.overlayRefSerivce.closeAllOverlays()
   }
 
   saveEffect(){

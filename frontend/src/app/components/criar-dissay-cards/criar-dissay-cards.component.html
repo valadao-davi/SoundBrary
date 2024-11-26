@@ -1,8 +1,8 @@
 <button (click)="openInstrument()" *ngIf="instrumento">
     <div class="card">
       <div class="card_icons">
-          <img class="card_icon" src="../../../assets/edit_icon.svg">
-          <img class="card_icon" src="../../../assets/trash_icon.svg">
+          <button ><img class="card_icon" src="../../../assets/edit_icon.svg"></button>
+          <button (click)="deleteInstrument(instrumento.defaultInstrument.nameInstrument)"><img class="card_icon" src="../../../assets/trash_icon.svg"></button>
       </div>
       <img class="card_imagem" [src]="instrumento.defaultInstrument.imageUrl">
       <div class="card_text">{{instrumento.defaultInstrument.nameInstrument}}</div>

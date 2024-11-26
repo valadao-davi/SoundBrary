@@ -4,6 +4,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
 import { Instrument } from 'src/app/layouts/Instrument';
 import { OverlayService } from 'src/app/services/overlay.service';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 
 @Component({
   selector: 'app-criar-dissay-cards',
@@ -15,7 +16,7 @@ export class CriarDissayCardsComponent {
   @Input() afinacao!: string
   @ViewChild(CdkPortal) portal!: CdkPortal;
 
-  constructor(private overlay: Overlay, private overlayService: OverlayService){}
+  constructor(private overlay: Overlay, private overlayService: OverlayService, private serviceDissay: ServiceDissayService){}
 
   openInstrument(){
     const config = new OverlayConfig({
@@ -27,6 +28,10 @@ export class CriarDissayCardsComponent {
     overlayRef.attach(this.portal);
     overlayRef.backdropClick().subscribe(()=> overlayRef.detach())
     this.overlayService.addOverlay(overlayRef)
+  }
+
+  deleteInstrument(nameInstrument: string){
+    this.serviceDissay.deleteInstrument(nameInstrument)
   }
 
 }
