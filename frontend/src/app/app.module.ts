@@ -36,6 +36,7 @@ import { SearchOverlayComponent } from './overlays/search-overlay/search-overlay
 import { InstrumentoCriarOverlayComponent } from './overlays/instrumento-criar-overlay/instrumento-criar-overlay.component';
 import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrumento.component';
 import { NotificationsComponent } from './overlays/notifications/notifications.component';
+import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profile-pic-overlay.component';
 
 
 
@@ -72,6 +73,7 @@ import { NotificationsComponent } from './overlays/notifications/notifications.c
     InstrumentoCriarOverlayComponent,
     AddInstrumentoComponent,
     NotificationsComponent,
+    ProfilePicOverlayComponent,
   ],
   imports: [
     BrowserModule,

@@ -54,20 +54,17 @@
   width: 100%; /* Ajuste conforme necessário */
   overflow-x: scroll; /* Permite o scroll horizontal */
   white-space: nowrap; /* Mantém os slides em uma única linha */
-
+  display: flex;
+  gap: 16px;
 }
 
 .slider {
   display: inline-flex;
   width: max-content;
   gap: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
-.slider_space{
-  display: flex;
-  gap: 8px;
-}
 
 .progress-bar {
   width: 100%;

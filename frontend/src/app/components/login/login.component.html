@@ -39,12 +39,10 @@
 
   </div>
 </form>
+
+<div [ngClass]="{'aviso': true, 'success': tipoAviso === 'success', 'error': tipoAviso === 'error', 'mostrar': mostrarAviso, 'sumir': sumirAviso}">
+  {{ mensagemAviso }}
 </div>
 
-<div *ngIf="sucesso" class="publish-notification" [ngClass]="{'slide': sucesso}">
-  Logado com sucesso!
 </div>
 
-<div *ngIf="falha" class="cancel-notification" [ngClass]="{'slide': falha}">
-  Login falhou! Tente novamente.
-</div>
