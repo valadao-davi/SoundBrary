@@ -7,26 +7,26 @@
     <h1 class="informacoes" *ngIf="!isOwnProfile">Perfil de usuário</h1>
 
     <div class="imagem">
-      <img class="img_perfil" src="../../../assets/icone_1.png">
-      <img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg">
+      <button ><img class="img_perfil" src="../../../assets/icone_1.png"></button>
+      <button><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
     </div>
 
     <div class="nome">
       <h1 *ngIf="isOwnProfile">{{myUser.name}}</h1>
-      <h1 *ngIf="!isOwnProfile">a</h1>
-      <img  *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg">
+      <h1 *ngIf="!isOwnProfile">Teste</h1>
+      <button><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
     </div>
     <div  *ngIf="isOwnProfile" class="email">
-      <h3>Email: {{myUser.email}}</h3>
-      <img  class="img_edit" src="../../../assets/edit_icon.svg">
+      <button><h3>Email: {{myUser.email}}</h3></button>
+      <button><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
     </div>
-    <div  *ngIf="isOwnProfile" class="senha">
-      <h3>Alterar senha</h3>
-      <img class="img_edit" src="../../../assets/edit_icon.svg">
+    <div *ngIf="isOwnProfile" class="senha">
+      <button><h3>Alterar senha</h3></button>
+      <button><img class="img_edit" src="../../../assets/edit_icon.svg"></button>
     </div>
-    <div  *ngIf="isOwnProfile" class="agradecimento">
-      <h3>Receba agradecimentos!</h3>
-      <img src="../../../assets/donate_icon.svg">
+    <div *ngIf="isOwnProfile" class="agradecimento">
+      <button><h3>Receba agradecimentos!</h3></button>
+      <button><img src="../../../assets/donate_icon.svg"></button>
     </div>
   </div>
 
@@ -35,55 +35,43 @@
     <h1 *ngIf="!isOwnProfile">{{otherUser.name}}</h1>
     <div class="dissays_perfil">
 
-      <div class="section" *ngIf="listIdsDissays.length > 0">
+      <div class="section" >
         <div class="titulo_slider">
             <h1>Dissays criados</h1>
         </div>
-        <div class="slider_space" >
+        <div class="slider_space" *ngIf="listIdsDissays.length > 0">
             <div class="slider" *ngFor="let dissay of dissaysList">
               <app-d-mini [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments"></app-d-mini>
             </div>
         </div>
+        <div class="no_slider_space slider_space" *ngIf="listIdsDissays.length === 0">
+          <div class="slider">
+            <p>Não há Dissays criados</p>
+          </div>
+      </div>
       </div>
 
-      <div class="section" *ngIf="listIdsDissays.length === 0">
-        <div class="titulo_slider">
-            <h1>Dissays criados</h1>
-        </div>
-        <div class="no_slider_space slider_space" >
-            <div class="slider">
-              <h2>Não há dissays criados</h2>
-            </div>
-        </div>
-      </div>
-
-      <div class="section" *ngIf="listIdsString.albums.length > 0">
+      <div class="section" >
         <div class="titulo_slider">
             <h1>Dissays salvos</h1>
         </div>
-        <div class="slider_space" >
+        <div class="slider_space" *ngIf="listIdsString.albums.length > 0">
             <div class="slider">
               <app-d-mini></app-d-mini>
             </div>
         </div>
+        <div class="no_slider_space slider_space" *ngIf="listIdsString.albums.length === 0">
+          <div class="slider">
+            <p>Não há Dissays salvos</p>
+          </div>
+      </div>
       </div>
 
-      <div class="section" *ngIf="listIdsString.albums.length === 0">
-        <div class="titulo_slider">
-            <h1>Top Dissays</h1>
-        </div>
-        <div class="no_slider_space slider_space" >
-            <div class="slider">
-              <h2>Não há dissays salvos</h2>
-            </div>
-        </div>
-      </div>
-
-      <div *ngIf="listIdsString.musics.length > 0" class="section">
+      <div class="section">
         <div class="titulo_slider">
           <h1>Musicas salvas</h1>
         </div>
-        <div class="slider_space">
+        <div class="slider_space" *ngIf="listIdsString.musics.length > 0">
           <div class="slider" *ngFor="let item of musicsList">
             <app-m-mini
             [isAlbum]="false"
@@ -94,22 +82,17 @@
             ></app-m-mini>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="listIdsString.musics.length === 0" class="section">
-        <div class="titulo_slider">
-          <h1>Musicas salvas</h1>
-        </div>
-        <div class="no_slider_space slider_space" >
-          <h2>Não há músicas salvas</h2>
+        <div class="no_slider_space slider_space" *ngIf="listIdsString.musics.length === 0">
+          <p>Não há músicas salvas</p>
         </div>
       </div>
 
-      <div *ngIf="listIdsString.albums.length > 0" class="section">
+
+      <div class="section">
         <div class="titulo_slider">
           <h1>Álbuns salvos</h1>
         </div>
-        <div class="slider_space">
+        <div class="slider_space" *ngIf="listIdsString.albums.length > 0">
           <div class="slider" *ngFor="let item of albumsList">
             <app-m-mini
             [isAlbum]="true"
@@ -120,24 +103,17 @@
             ></app-m-mini>
           </div>
         </div>
-      </div>
-
-      <div  *ngIf="listIdsString.albums.length === 0" class="section">
-        <div class="titulo_slider">
-          <h1>Albums salvos</h1>
-          <img src="../../../assets/estrela_cheia.svg">
-        </div>
-        <div class="no_slider_space slider_space" >
-          <h2>Não há álbuns salvos</h2>
+        <div class="no_slider_space slider_space" *ngIf="listIdsString.albums.length === 0">
+          <p>Não há álbuns salvos</p>
         </div>
       </div>
 
 
-      <div *ngIf="listIdsString.artists.length > 0" class="section">
+      <div class="section">
         <div class="titulo_slider">
           <h1>Álbuns salvos</h1>
         </div>
-        <div class="slider_space">
+        <div class="slider_space" *ngIf="listIdsString.artists.length > 0">
           <div class="slider" *ngFor="let item of artistsList">
             <app-m-mini
             [isAlbum]="false"
@@ -147,14 +123,8 @@
             ></app-m-mini>
           </div>
         </div>
-      </div>
-
-      <div  *ngIf="listIdsString.artists.length === 0" class="section">
-        <div class="titulo_slider">
-          <h1>Artistas salvos</h1>
-        </div>
         <div class="no_slider_space slider_space" >
-          <h2>Não há artistas salvos</h2>
+          <p>Não há artistas salvos</p>
         </div>
       </div>
     </div>

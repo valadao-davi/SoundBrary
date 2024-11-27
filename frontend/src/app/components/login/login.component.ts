@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { AvisosService } from "src/app/services/avisos.service";
 import { ServiceUserService } from "src/app/services/service-user.service";
 
 
@@ -11,10 +12,13 @@ import { ServiceUserService } from "src/app/services/service-user.service";
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private service: ServiceUserService) {}
+  constructor(private router: Router, private service: ServiceUserService, private avisosService: AvisosService) {}
 
-  sucesso!: boolean;
-  falha!: boolean;
+  mostrarAviso = false;
+  sumirAviso = true;
+  mensagemAviso = '';
+  tipoAviso = '';
+  timeoutAviso: any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -39,7 +43,8 @@ export class LoginComponent {
   logar() {
     let value = this.getUserOrEmail().value
     if(!value.includes('.com')){
-      console.log("aqui")
+      console.log("tentativa de login")
+
       value = "@" + this.getUserOrEmail().value
     }
     console.log(value)
@@ -47,11 +52,13 @@ export class LoginComponent {
       if(response.accessToken){
         this.token = response.accessToken
         localStorage.setItem('token', this.token)
+        this.avisosService.mostrarAvisoTemporario('Login feito com sucesso!', 'success');
+        console.log("deu bom")
         this.navigateHome()
-        this.sucessoNotification()
       }else{
+        this.avisosService.mostrarAvisoTemporario('O login falhou', 'error');
         console.error("Token não encontrado")
-        this.falhaNotification()
+        console.log("deu erro")
       }
     }
     )
@@ -63,20 +70,4 @@ export class LoginComponent {
     return this.loginForm.get('senha')!
   }
 
-
-  sucessoNotification() {
-    if (!this.falha) { // Verifica se a notificação de publicação não está visível
-      this.sucesso = true;
-      setTimeout(() => {
-        this.sucesso = false; // Ocultar notificação após 3 segundos
-      }, 3000);}
-    }
-
-  falhaNotification() {
-    if (!this.sucesso) { // Verifica se a notificação de publicação não está visível
-      this.falha = true;
-      setTimeout(() => {
-        this.falha = false; // Ocultar notificação após 3 segundos
-      }, 3000);}
-    }
 }
