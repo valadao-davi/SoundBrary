@@ -21,9 +21,9 @@ export class ProfileLayoutComponent {
   otherUser!: User
   myUser!: User
   isOwnProfile: boolean = false
-  listIdsDissays!: string[]
+  listIdsDissaysCreated!: string[]
 
-  listIdsString: { musics: string[], albums: string[], artists: string[], dissays: []} = {
+  listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
     musics: [],
     albums: [],
     artists: [],
@@ -73,7 +73,8 @@ export class ProfileLayoutComponent {
           this.listIdsString.musics = this.myUser.musicSaved ?? []
           this.listIdsString.albums = this.myUser.albumSaved ?? []
           this.listIdsString.artists = this.myUser.artistsSaved ?? []
-          this.listIdsDissays = this.myUser.dissaysCreated ?? []
+          this.listIdsString.dissays = this.myUser.dissaySaved ?? []
+          this.listIdsDissaysCreated = this.myUser.dissaysCreated ?? []
           this.getIdsObjects()
         }else{
           this.getUserName(query)
@@ -92,7 +93,8 @@ export class ProfileLayoutComponent {
       this.listIdsString.musics = this.otherUser.musicSaved ?? []
       this.listIdsString.albums = this.otherUser.albumSaved ?? []
       this.listIdsString.artists = this.otherUser.artistsSaved ?? []
-      this.listIdsDissays = this.otherUser.dissaysCreated ?? []
+      this.listIdsString.dissays = this.otherUser.dissaySaved ?? []
+      this.listIdsDissaysCreated = this.otherUser.dissaysCreated ?? []
       this.getIdsObjects()
   })
  }
@@ -131,9 +133,9 @@ export class ProfileLayoutComponent {
         }
       )
     }
-    if(this.listIdsDissays.length > 0){
-      console.log(this.listIdsDissays)
-      const items = this.listIdsDissays.map(id =>
+    if(this.listIdsDissaysCreated.length > 0){
+      console.log(this.listIdsDissaysCreated)
+      const items = this.listIdsDissaysCreated.map(id =>
         this.serviceDissay.getDissayById(id)
     )
       forkJoin(items).subscribe(

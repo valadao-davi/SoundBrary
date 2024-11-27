@@ -18,7 +18,7 @@ export class ServiceDissayService {
   getAllDissays(): Observable<Dissay[]>{
     return this.http.get<Dissay[]>(`${this.API}`)
   }
-  
+
   addInstrument(instrument: Instrument): void {
     this.instruments.push(instrument);
   }
@@ -57,5 +57,12 @@ export class ServiceDissayService {
       Authorization: `Bearer ${token}`
     })
     return this.http.post<any>(`${this.API}/createDissay/${dissayData.musicId}`,  dissayData, {headers})
+  }
+
+  deleteDissay(token: string, dissayId: string): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.delete<void>(`${this.API}/deleteDissay/${dissayId}`, {headers})
   }
 }

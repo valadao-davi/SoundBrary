@@ -41,31 +41,36 @@ export class DissayComponent {
   mensagemAviso = '';
   tipoAviso = '';
   timeoutAviso: any;
+  ownerDissay: boolean = false;
 
   constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService){}
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
-    if(this.accessToken !== ""){
-      console.log("contem acesso token")
-      this.loadAuthUser(this.accessToken)
-    }
+
     this.route.paramMap.subscribe((params)=> {
       this.id = params.get('id')
       if(this.id){
-        this.loadDissay(this.id)
+          this.loadDissay(this.id)
       }
     })
+
+    if(this.accessToken){
+      this.loadAuthUser(this.accessToken)
+    }
+
+
   }
 
-  loadDissay(id: string){
+  loadDissay(id: string) {
     this.serviceDissay.getDissayById(id).subscribe(dissay => {
-      this.dissayData = dissay
-      this.comments = dissay.comments ?? []
+      this.dissayData = dissay;
+      this.comments = dissay.comments ?? [];
 
-      if(this.totalRateUser === null){
-        this.totalRate = dissay.totalRate ?? 0.0
+      if (this.totalRateUser === null) {
+        this.totalRate = dissay.totalRate ?? 0.0;
       }
+
       this.comments = this.comments.map(comment => ({
         _id: comment._id,
         userName: comment.userName,
@@ -73,25 +78,40 @@ export class DissayComponent {
         idParentAwnser: comment.idParentAwnser ?? "",
         text: comment.text,
         date: new Date(comment.date).toLocaleDateString()
-      }))
-      this.loadMusic(this.dissayData.musicId)
-      this.loadDissayUser(this.dissayData.userName)
-    })
+      }));
+
+      this.loadMusic(this.dissayData.musicId);
+
+      // Carrega o usuário que criou o dissay e verifica a propriedade
+      this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
+        this.userDissayData = user;
+        this.verifyDissayCreatedByUser(); // Verifica o ownership aqui mesmo
+      });
+    });
   }
 
+  //Usuario que esta visualizando o dissay
   loadAuthUser(user: string){
     this.serviceUser.getUser(user).subscribe(user=> {
       this.userData = user
+
+      if(this.dissayData){
+        this.verifyDissayCreatedByUser()
+      }
+
       this.getAvaliationUser(this.dissayData._id!)
-      console.log("funcao sendo chamada")
     })
   }
 
-  loadDissayUser(user: string){
-    this.serviceUser.getUserName(user).subscribe(user=> {
-      this.userDissayData = user
 
-    })
+  //Verifica se sao os mesmos usuarios
+  verifyDissayCreatedByUser(){
+    if((this.userData) && this.userData._id === this.userDissayData._id){
+      this.ownerDissay = true
+    }else{
+      this.ownerDissay = false
+    }
+    console.log(this.ownerDissay)
   }
 
   loadMusic(id: string){
@@ -143,6 +163,16 @@ export class DissayComponent {
     })
   }
 
+  deleteDissay(dissayId: string){
+    this.serviceDissay.deleteDissay(this.accessToken, dissayId).subscribe({
+      next: (response) => {
+        this.router.navigate(['/home'])
+      },
+      error: (err) => {
+        console.error('Erro ao deletar dissay')
+      }
+    })
+  }
 
   adjustHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto'; // Reseta a altura

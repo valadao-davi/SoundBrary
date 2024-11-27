@@ -6,7 +6,6 @@
   <div class="conteudo">
     <div class="dissay_content">
       <h1>{{dissayData.name}}</h1>
-
       <div class="perfil_avaliacao">
         <div class="dissay_perfil">
           <img src="../../../assets/perfil_icon.png">
@@ -14,17 +13,26 @@
         </div>
         <div class="dissay_avaliacao" *ngIf="totalRate !== null">
           <div class="estrelas_avaliacao" *ngFor="let i of [1,2,3,4,5]">
-            <button (click)="avaliateDissay(i)"><img *ngIf="dissayData.totalRate! >=i" src="../../../assets/estrela_cheia.svg"></button>
-            <button (click)="avaliateDissay(i)"><img *ngIf="dissayData.totalRate! < i"  src="../../../assets/estrela_vazia.svg"></button> 
+            <button (click)="avaliateDissay(i)" *ngIf="!ownerDissay"><img *ngIf="dissayData.totalRate! >=i" src="../../../assets/estrela_cheia.svg"></button>
+            <button (click)="avaliateDissay(i)" *ngIf="!ownerDissay"><img *ngIf="dissayData.totalRate! < i"  src="../../../assets/estrela_vazia.svg"></button>
           </div>
-          <div class="estrelas_avaliacao" *ngIf="dissayData.totalRate === undefined">
+          <div class="estrelas_avaliacao" *ngIf="dissayData.totalRate === undefined && !ownerDissay">
             <div *ngFor="let i of [1,2,3,4,5]">
               <button (click)="avaliateDissay(i)"><img src="../../../assets/estrela_vazia.svg"></button>
             </div>
           </div>
+          <div class="estrelas_avaliacao" *ngIf="ownerDissay">
+            <div *ngFor="let i of [1,2,3,4,5]">
+              <img *ngIf="dissayData.totalRate! >=i" src="../../../assets/estrela_cheia.svg">
+              <img *ngIf="dissayData.totalRate! < i"  src="../../../assets/estrela_vazia.svg">
+            </div>
+          </div>
           <h2>{{dissayData.totalRate}}</h2>
         </div>
-        <div class="dissay_avaliacao" *ngIf="totalRateUser !== undefined">
+        <div *ngIf="ownerDissay">
+          <button (click)="deleteDissay(dissayData._id!)"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt=""></button>
+        </div>
+        <div class="dissay_avaliacao" *ngIf="totalRateUser !== undefined && !ownerDissay">
           <div class="estrelas_avaliacao" *ngFor="let i of [1,2,3,4,5]">
             <button (click)="editAvaliation(i)"><img *ngIf="totalRateUser >=i" src="../../../assets/estrela_cheia.svg"></button>
             <button (click)="editAvaliation(i)"><img *ngIf="totalRateUser < i"  src="../../../assets/estrela_vazia.svg"></button>
@@ -90,7 +98,7 @@
                 <div class="resposta_text">
                   <p>{{comentario.text}}</p>
                 </div>
-                
+
                 <div class="responder_usuario">
                   <button (click)="toggleResposta(i)">
                     <h5 class="responder">Responder</h5>
@@ -111,7 +119,7 @@
                       <div class="resposta_text">
                         <p>{{resposta.text}}</p>
                       </div>
-                      
+
                       <div class="responder_usuario">
                         <button (click)="toggleResposta(j)">
                           <h5 class="responder">Responder</h5>
@@ -135,7 +143,7 @@
                 </div>
               </div>
               </div>
-  
+
               <div *ngIf="isRespostaOpen(i)" class="zona_comentario">
                 <img class="mini_avatar" src="../../../assets/icone_0.png">
                 <div class="campo_comentario">

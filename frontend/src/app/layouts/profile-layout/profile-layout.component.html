@@ -35,18 +35,18 @@
     <h1 *ngIf="!isOwnProfile">{{otherUser.name}}</h1>
     <div class="dissays_perfil">
 
-      <div class="section" *ngIf="listIdsDissays.length > 0">
+      <div class="section" *ngIf="dissaysList">
         <div class="titulo_slider">
             <h1>Dissays criados</h1>
         </div>
         <div class="slider_space" >
             <div class="slider" *ngFor="let dissay of dissaysList">
-              <app-d-mini [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments"></app-d-mini>
+              <app-d-mini [idDissay]="dissay._id!" [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments" [musicId]="dissay.musicId"></app-d-mini>
             </div>
         </div>
       </div>
 
-      <div class="section" *ngIf="listIdsDissays.length === 0">
+      <div class="section" *ngIf="listIdsDissaysCreated.length === 0">
         <div class="titulo_slider">
             <h1>Dissays criados</h1>
         </div>
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="section" *ngIf="listIdsString.albums.length > 0">
+      <div class="section" *ngIf="listIdsString.dissays.length > 0">
         <div class="titulo_slider">
             <h1>Dissays salvos</h1>
         </div>
@@ -68,9 +68,9 @@
         </div>
       </div>
 
-      <div class="section" *ngIf="listIdsString.albums.length === 0">
+      <div class="section" *ngIf="listIdsString.dissays.length === 0">
         <div class="titulo_slider">
-            <h1>Top Dissays</h1>
+            <h1>Dissays salvos</h1>
         </div>
         <div class="no_slider_space slider_space" >
             <div class="slider">
@@ -135,7 +135,7 @@
 
       <div *ngIf="listIdsString.artists.length > 0" class="section">
         <div class="titulo_slider">
-          <h1>Álbuns salvos</h1>
+          <h1>Artistas salvos</h1>
         </div>
         <div class="slider_space">
           <div class="slider" *ngFor="let item of artistsList">

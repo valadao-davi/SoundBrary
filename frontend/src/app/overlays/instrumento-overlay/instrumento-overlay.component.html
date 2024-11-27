@@ -1,8 +1,11 @@
 <div class="layout coluna">
   <div class="topo">
-    <div class="modelo coluna">
+    <div class="modelo coluna" *ngIf="instrumentParams.model.length > 0">
       <h3>Modelo:</h3>
       <h4>{{instrumentParams.model}}</h4>
+    </div>
+    <div class="modelo coluna" *ngIf="instrumentParams.model.length === 0">
+      <h3>Modelo não informado</h3>
     </div>
     <h1 class="nome_instrumento">{{instrumentParams.defaultInstrument.nameInstrument}}</h1>
     <img class="icone_instrumento" [src]=instrumentParams.defaultInstrument.imageUrl>
