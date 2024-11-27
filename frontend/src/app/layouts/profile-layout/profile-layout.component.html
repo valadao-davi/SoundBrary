@@ -39,7 +39,7 @@
         <div class="titulo_slider">
             <h1>Dissays criados</h1>
         </div>
-        <div class="slider_space" *ngIf="listIdsDissays.length > 0">
+        <div class="slider_space" *ngIf="listIdsDissaysCreated.length > 0">
             <div class="slider" *ngFor="let dissay of dissaysList">
               <app-d-mini [idDissay]="dissay._id!" [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments" [musicId]="dissay.musicId"></app-d-mini>
             </div>
