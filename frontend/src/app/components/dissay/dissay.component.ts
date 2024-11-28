@@ -83,10 +83,12 @@ export class DissayComponent {
 
       this.loadMusic(this.dissayData.musicId);
 
-      // Carrega o usuário que criou o dissay e verifica a propriedade
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;
-        this.verifyDissayCreatedByUser(); // Verifica o ownership aqui mesmo
+        if(this.userData && this.userDissayData){
+          this.verifyDissayCreatedByUser(this.userData, this.userDissayData); // Verifica o ownership aqui mesmo
+
+        }
       });
     });
   }
@@ -96,23 +98,22 @@ export class DissayComponent {
     this.serviceUser.getUser(user).subscribe(user=> {
       this.userData = user
 
-      if(this.dissayData){
-        this.verifyDissayCreatedByUser()
-      }
-
       this.getAvaliationUser(this.dissayData._id!)
     })
   }
 
 
   //Verifica se sao os mesmos usuarios
-  verifyDissayCreatedByUser(){
-    if((this.userData) && this.userData._id === this.userDissayData._id){
+  verifyDissayCreatedByUser(userData: User, userOwner: User){
+
+
+    if((userData && userOwner) && userData.userName === userOwner.userName){
+      console.log('Id do usuário visualizando: ', userData._id)
+      console.log('Id do usuário criador: ', userOwner._id)
       this.ownerDissay = true
     }else{
       this.ownerDissay = false
     }
-    console.log(this.ownerDissay)
   }
 
   loadMusic(id: string){

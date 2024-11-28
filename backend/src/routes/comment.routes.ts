@@ -63,7 +63,14 @@ commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Re
                 text: req.body.text,
                 date: new Date()
             }
+            const notification = {
+                title: 'Um usuário comentou no seu Dissay',
+                type: 'Comment',
+                idObject: `${findDissay._id}`,
+                idOptional: `${findUser._id}`
+            }
             const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}}, { returnDocument: "after" })
+            await collections?.users?.findOneAndUpdate({userName: findDissay.userName}, {$push: {notifications: notification}})
             if(editedDissay){
                 return res.status(200).json({editedDissay})
             }
@@ -91,12 +98,37 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
                 text: req.body.text,
                 date: new Date()
             }
-            const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}},{ returnDocument: "after" })
-            if(editedDissay){
-                return res.status(200).json({editedDissay})
+            const parentComment = findDissay.comments?.find((c: any) => c._id.toString() === comment.idParent)
+            if(parentComment){
+                const userNameCommentParent = parentComment.userName
+                const notification = {
+                    title: 'Um usuário te respondeu',
+                    type: 'Comment',
+                    idObject: `${findDissay._id}`,
+                    idOptional: `${findUser._id}`
+                }
+            
+    
+                await collections?.users?.findOneAndUpdate({userName: userNameCommentParent}, {$push: {notifications: notification}})
+                
+                if(comment.idParentAwnser !== null){
+                    const parentCommentAwnser = findDissay.comments?.find((c: any) => c._id.toString() === comment.idParentAwnser)
+                    await collections?.users?.findOneAndUpdate({userName: parentCommentAwnser}, {$push: {notifications: notification}})
+
+                }
+                const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}},{ returnDocument: "after" })
+
+                if(editedDissay){
+                    return res.status(200).json({editedDissay})
+                }else{
+                    return res.status(404).json({message: "Dissay ou usuário não encontrado"})
+                }
+                
+            }else{
+                return res.status(404).json({message: "Usuário pai não encontrado"})
+
             }
-        }else{
-            return res.status(404).json({message: "Dissay ou usuário não encontrado"})
+            
         }
     }catch(error){
         console.error("Erro ao comentar no dissay: ", error)

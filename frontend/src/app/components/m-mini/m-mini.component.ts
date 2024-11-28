@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class MMiniComponent {
 
   constructor(private router: Router) {}
+  @Input() isArtist: boolean = false
   @Input() name!: string;
   @Input() imageUrl!: string;
   @Input() artistName!: string;
@@ -20,7 +21,10 @@ export class MMiniComponent {
       this.router.navigate([`/album/${id}`])
       console.log(`album id: ${id}`)
 
-    }else{
+    }else if(this.isArtist === true){
+      this.router.navigate([`/artista/${id}`])
+    }
+    else{
       this.router.navigate([`/musica/${id}`])
     }
     

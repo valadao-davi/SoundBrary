@@ -23,11 +23,14 @@
             <img src="../../../assets/9-512.webp" alt="Icone relógio">
         </div>
         <div class="slider_space" >
-            <div class="slider" *ngFor="let dissay of dissays">
+            <div class="slider" *ngFor="let dissay of recentDissays">
               <app-d-mini [musicId]="dissay.musicId" [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments" [rateNumber]="dissay.totalRate ?? 0.0" [idDissay]="dissay._id ?? ''"></app-d-mini>
             </div>
         </div>
     </div>
+
+    
+
 
     <div class="section">
       <div class="titulo_slider">
@@ -46,9 +49,19 @@
       </div>
   </div>
     </div>
-
-    <div class="section">
-      <!-- <div class="titulo_slider">
+    <div class="section" *ngIf="dissays.length > 0">
+      <div class="titulo_slider">
+          <h1>Dissays mais bem avaliados</h1>
+          <img src="../../../assets/estrela_cheia.svg" alt="Icone estrela">
+      </div>
+      <div class="slider_space" >
+          <div class="slider" *ngFor="let dissay of topDissays">
+            <app-d-mini [musicId]="dissay.musicId" [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments" [rateNumber]="dissay.totalRate ?? 0.0" [idDissay]="dissay._id ?? ''"></app-d-mini>
+          </div>
+      </div>
+  </div>
+    <!--- <div class="section">
+       <div class="titulo_slider">
         <h1>Dissays recentemente publicados</h1>
         <img class="icone_recente" src="../../../assets/recent_icon.svg" alt="Icone relógio recente">
     </div>

@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { debounceTime, Subject } from 'rxjs';
+import { catchError, debounceTime, Subject } from 'rxjs';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
 import { Instrument } from 'src/app/layouts/Instrument';
 import { Music } from 'src/app/layouts/Music';
+import { AvisosService } from 'src/app/services/avisos.service';
+import { ErrorHandleServiceService } from 'src/app/services/error-handle-service.service';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
@@ -33,7 +35,7 @@ export class CriarDissayComponent {
   toneDissay!: string;
   accessToken!: string;
 
-  constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService){
+  constructor(private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
       this.getTracksQuery(value)
     })
@@ -127,13 +129,16 @@ export class CriarDissayComponent {
         description: this.descriptionValue ?? "",
         instruments: this.instrumentsDissay,
         tone: this.toneDissay ?? ""
-      }).subscribe({
-        next: response => {
+      }).pipe(catchError((code)=> {
+        return this.handleError.handleErrorCode(code)
+      })).subscribe({
+        next: (response) => {
           this.instrumentsDissay = []
           this.toneDissay = ""
-        },
-        error: (err) => {
-          console.error('Erro ao publicar Dissay:', err);
+          console.log("aqui")
+          this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "sucess")
+          this.titleValue = '';
+          this.descriptionValue = '';
         }
       });
     } 

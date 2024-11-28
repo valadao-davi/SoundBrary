@@ -25,6 +25,12 @@ export class ServiceDissayService {
   updateInstrument(instrument: Instrument, index:number): void{
     this.instruments[index] = instrument
   }
+
+  getRecentDissays(): Observable<Dissay[]>{
+    return this.http.get<Dissay[]>(`${this.API}/recentDissays`)
+  }
+
+
   getInstruments(): Instrument[] {
     return this.instruments
   }

@@ -5,6 +5,8 @@ import { catchError, throwError } from 'rxjs';
 import { User } from 'src/app/layouts/User';
 import { of } from 'rxjs';
 import { ServiceUserService } from 'src/app/services/service-user.service';
+import { AvisosService } from 'src/app/services/avisos.service';
+import { ErrorHandleServiceService } from 'src/app/services/error-handle-service.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { ServiceUserService } from 'src/app/services/service-user.service';
 })
 export class CadastroComponent {
 
-  constructor(private router: Router, private service: ServiceUserService) {}
+  constructor(private router: Router, private service: ServiceUserService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService) {}
 
   falha!: boolean;
   sucesso!: boolean;
@@ -77,27 +79,13 @@ export class CadastroComponent {
     }
     this.service.createUser(userJson).pipe(
       catchError((code)=> {
-        if(code.status === 409){
-          return throwError(()=> {
-            console.log(code.error.account)
-            if(code.error.account === "email"){
-              console.log("awui")
-              this.invalidEmail = true
-            }else if(code.error.account === "user"){
-              this.invalidUser = true
-            }
-          })
-        }
-        else if(code.status === 500){
-          return throwError(()=> alert("Erro no servidor: " + code.error))
-        }else if(code.status !== 200){
-          return throwError(()=> alert("Erro desconhecido: " + code.error))
-        }
-        return of(null)
+        
+        return this.handleError.handleErrorCode(code)
       })
     ).subscribe({
       next: (response) => {
           console.log('Usuário criado com sucesso: ', response);
+          this.avisosService.mostrarAvisoTemporario("Usuário cadastrado com sucesso!", "sucess")
           this.navigateLogin();
       }
     });
