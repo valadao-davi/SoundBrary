@@ -5,6 +5,7 @@ import { Coment } from 'src/app/layouts/Comment';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { Music } from 'src/app/layouts/Music';
 import { User } from 'src/app/layouts/User';
+import { AvisosService } from 'src/app/services/avisos.service';
 import { ServiceAvaliateService } from 'src/app/services/service-avaliate.service';
 import { ServiceCommentService } from 'src/app/services/service-comment.service';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
@@ -43,7 +44,7 @@ export class DissayComponent {
   timeoutAviso: any;
   ownerDissay: boolean = false;
 
-  constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService){}
+  constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
@@ -82,10 +83,12 @@ export class DissayComponent {
 
       this.loadMusic(this.dissayData.musicId);
 
-      // Carrega o usuário que criou o dissay e verifica a propriedade
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;
-        this.verifyDissayCreatedByUser(); // Verifica o ownership aqui mesmo
+        if(this.userData && this.userDissayData){
+          this.verifyDissayCreatedByUser(this.userData, this.userDissayData); // Verifica o ownership aqui mesmo
+
+        }
       });
     });
   }
@@ -95,23 +98,22 @@ export class DissayComponent {
     this.serviceUser.getUser(user).subscribe(user=> {
       this.userData = user
 
-      if(this.dissayData){
-        this.verifyDissayCreatedByUser()
-      }
-
       this.getAvaliationUser(this.dissayData._id!)
     })
   }
 
 
   //Verifica se sao os mesmos usuarios
-  verifyDissayCreatedByUser(){
-    if((this.userData) && this.userData._id === this.userDissayData._id){
+  verifyDissayCreatedByUser(userData: User, userOwner: User){
+
+
+    if((userData && userOwner) && userData.userName === userOwner.userName){
+      console.log('Id do usuário visualizando: ', userData._id)
+      console.log('Id do usuário criador: ', userOwner._id)
       this.ownerDissay = true
     }else{
       this.ownerDissay = false
     }
-    console.log(this.ownerDissay)
   }
 
   loadMusic(id: string){
@@ -167,8 +169,10 @@ export class DissayComponent {
     this.serviceDissay.deleteDissay(this.accessToken, dissayId).subscribe({
       next: (response) => {
         this.router.navigate(['/home'])
+        this.avisosService.mostrarAvisoTemporario('O Dissay foi apagado com sucesso!', 'success')
       },
       error: (err) => {
+        this.avisosService.mostrarAvisoTemporario('Erro ao deletar Dissay', 'error')
         console.error('Erro ao deletar dissay')
       }
     })
@@ -210,7 +214,7 @@ export class DissayComponent {
       })
     ).subscribe(comment => {
       this.loadDissay(this.id!)
-      this.mostrarAvisoTemporario('Comentário deletado com sucesso!', 'success');
+      this.avisosService.mostrarAvisoTemporario('Comentário deletado com sucesso!', 'success');
     })
   }
 
@@ -234,7 +238,7 @@ export class DissayComponent {
         ).subscribe(comment => {
           this.comments.push(comment)
           this.loadDissay(this.id!)
-          this.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
+          this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
       }
 
@@ -265,10 +269,10 @@ export class DissayComponent {
         ).subscribe(comment => {
           this.comments.push(comment)
           this.loadDissay(this.id!)
-          this.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
+          this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
         console.log(`Publicar resposta para a resposta ${index}: ${texto}`);
-        this.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
+        this.avisosService.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
         this.respostaAbertaIndex = null;
         this.respostas[index].showInput = false; // Fechar o campo de resposta
       }
@@ -283,26 +287,9 @@ export class DissayComponent {
       if (this.mostrarAviso) {
         clearTimeout(this.timeoutAviso);
       }
-      this.mostrarAvisoTemporario('Resposta cancelada.', 'error');
+      this.avisosService.mostrarAvisoTemporario('Resposta cancelada.', 'error');
     }
     }
 
-    mostrarAvisoTemporario(mensagem: string, tipo: string) {
-      if (this.mostrarAviso) {
-        clearTimeout(this.timeoutAviso);
-      }
-      this.mensagemAviso = mensagem;
-      this.tipoAviso = tipo;
-      this.mostrarAviso = true;
-      this.sumirAviso = false;
-      console.log("chegou")
-      this.timeoutAviso = setTimeout(() => {
-        this.sumirAviso = true;
-        setTimeout(() => {
-          this.mostrarAviso = false;
-          console.log("foi")
-        }, 500)
-      }, 3000); // Oculta o aviso após 3 segundos
-
-    }
+    
 }

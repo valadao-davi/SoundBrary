@@ -10,6 +10,15 @@
   background-color: white;
 }
 
+.instrumento_mini img {
+  height: 48px;
+  width: 48px;
+}
+
 .instrumento_mini h5 {
   font-weight: 700;
+  max-width: 64px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

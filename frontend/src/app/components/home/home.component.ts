@@ -15,10 +15,12 @@ export class HomeComponent  {
 
   topDay: Music[] = []
   dissays: Dissay[] =[]
-  dissaysMusic!: string[]
-  dissaysUser!: string[]
+  topDissays: Dissay[]=[]
+  recentDissays: Dissay[]=[]
   albumItems: Album[] = []
   dataload: boolean = false
+
+  isLoading: boolean = true;
 
   constructor(private serviceMusic: ServiceMusicService, private serviceDissay: ServiceDissayService, private serviceUser: ServiceUserService){ }
 
@@ -52,13 +54,19 @@ export class HomeComponent  {
   loadDissays(): void {
     this.serviceDissay.getAllDissays().subscribe(dissays => {
       this.dissays = dissays
-      console.log(this.dissays)
+      this.topDissays = dissays.filter(d => d.totalRate !== undefined).sort((a,b) => (b.totalRate ?? 0) - (a.totalRate ?? 0)).slice(0,10)
+    })
+    this.serviceDissay.getRecentDissays().subscribe(dissays => {
+      this.recentDissays = dissays
     })
   }
 
   ngOnInit(): void {
     this.loadTracks()
     this.loadDissays()
+    setTimeout(() => {
+      this.isLoading = false; // Define como falso após o conteúdo ser "carregado"
+    }, 1000);
   }
 
 

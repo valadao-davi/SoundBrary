@@ -350,9 +350,9 @@ userRouter.put("/profile/edit", auth, async(req: CustomRequest, res)=> {
     try{
         const id = req.token?.sub
         const existUser = await collections?.users?.findOne({ _id: new ObjectId(id)})
-        const user = req.body
+        const userNew = req.body
         if(existUser){
-            const result = await collections?.users?.updateOne(existUser, {$set: user})
+            const result = await collections?.users?.updateOne(existUser, {$set: userNew})
             if(result && result.matchedCount){
                 res.status(201).send(`Usuário alterado com sucesso: ${result}`)
             }else if(!result){

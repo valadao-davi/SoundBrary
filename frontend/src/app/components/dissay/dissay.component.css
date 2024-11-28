@@ -216,6 +216,11 @@ button {
 
 .nome_data {
   display: flex;
+  justify-content: space-between;
+}
+
+.nome_data div {
+  display: flex;
   gap: 12px;
   align-items: center;
 }
