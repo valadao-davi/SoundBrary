@@ -43,6 +43,28 @@ export class ServiceUserService {
     return this.http.delete<User>(`${this.API}/${id}`)
   }
 
+  setImage(token: string, imageUrl: string): Observable<User>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.put<User>(`${this.API}/profile/edit`, {image: imageUrl}, {headers})
+  }
+
+  changePassword(token: string, newPassword: string): Observable<User>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.put<User>(`${this.API}/profile/edit`, {password: newPassword}, {headers})
+  }
+
+  editUser(token: string, newUser: any): Observable<User>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.put<User>(`${this.API}/profile/edit`, newUser, {headers})
+  }
+
+
   saveSongToFavorite(token: string, item: string): Observable<void>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
@@ -67,6 +89,7 @@ export class ServiceUserService {
       })
     )
   }
+
 
 
   saveAlbumToFavorite(token: string, item: string): Observable<void>{

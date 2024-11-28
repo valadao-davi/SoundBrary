@@ -22,6 +22,7 @@ export class ProfileLayoutComponent {
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
+  
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
     musics: [],

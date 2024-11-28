@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-aviso',
@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./aviso.component.css']
 })
 export class AvisoComponent {
-
 }
