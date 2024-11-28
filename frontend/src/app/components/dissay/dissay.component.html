@@ -89,8 +89,10 @@
                 <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
               <div class="resposta_right">
                 <div class="nome_data">
-                  <h5>{{ comentario.userName }}</h5>
-                  <p>{{ comentario.date }}</p>
+                  <div>
+                    <h5>{{ comentario.userName }}</h5>
+                    <p>{{ comentario.date }}</p>
+                  </div>
                   <div *ngIf="userData">
                     <button (click)="excluirComentario(comentario._id!)" *ngIf="comentario.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
                   </div>
@@ -110,8 +112,10 @@
                       <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
                     <div class="resposta_right">
                       <div class="nome_data">
-                        <h5>{{ resposta.userName }}</h5>
-                        <p>{{ resposta.date }}</p>
+                        <div>
+                          <h5>{{ comentario.userName }}</h5>
+                          <p>{{ comentario.date }}</p>
+                        </div>
                         <div *ngIf="userData">
                           <button (click)="excluirComentario(resposta._id!)" *ngIf="resposta.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
                         </div>

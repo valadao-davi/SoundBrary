@@ -29,18 +29,24 @@
   display: flex;
   flex-direction: column;
   width: 232px;
+  
+}
+
+.d_mini_text h4 {
+  width: 100%;
+  font-size: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.d_mini_text h4 {
-  font-size: 18px;
-}
-
 .d_mini_text h5 {
+  width: 100%;
   color: #406AFF;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .d_mini_rating_save{
