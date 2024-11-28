@@ -1,3 +1,58 @@
-p {
-    background-color: red;
+
+.master_layout {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-right: 10px;
 }
+.notificacoes_layout {
+    width: 500px;
+    height: 100%;
+    background-color: #e6e6e6;
+    border-radius: 12px 0px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    overflow: hidden;
+    margin-top: -10x;
+}
+
+.titulo {
+    margin: 24px 0px 24px 32px;
+}
+
+.linha {
+    width: 100%;
+    height: 1px;
+    background-color: #00000080;
+}
+
+.triangle {
+    width: 0; 
+  height: 0; 
+  border-top: 8px solid transparent;
+
+  border-left: 8px solid transparent;
+  border-right: 8px solid #e6e6e6;
+  border-bottom: 8px solid #e6e6e6;
+}
+
+.notificacao {
+    box-sizing: border-box;
+    padding: 16px 24px;
+    width: 100%;
+    border-bottom: 1px solid #00000080;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.textos > * {
+    width: 100%;
+    box-sizing: border-box;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a duas linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden; /* Oculta o texto que ultrapassa */
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for cortado */
+  }

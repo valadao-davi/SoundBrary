@@ -20,6 +20,7 @@ export class HeaderComponent {
   @Input() user!: User | null
   showNotifications: boolean = false;
   listNotification: Notiffication[] = []
+  dataLoad: boolean = false;
 
   @ViewChild(CdkPortal) portal!: CdkPortal
   private overlayRef!: OverlayRef;
@@ -36,9 +37,13 @@ export class HeaderComponent {
       console.log(this.user.notifications)
       if(this.user.notifications! && this.user.notifications.length > 0){
         this.listNotification = this.user.notifications
+        console.log('aqui')
+        this.dataLoad = true
       }else{
         this.listNotification = []
+        this.dataLoad = true
       }
+      console.log(this.listNotification)
     }
   }
 

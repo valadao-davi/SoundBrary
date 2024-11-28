@@ -20,6 +20,6 @@
   </div>
 </header>
 
-<ng-template cdkPortal>
-  <app-notifications></app-notifications>
+<ng-template cdkPortal *ngIf="dataLoad">
+  <app-notifications [listReceived]="listNotification"></app-notifications>
  </ng-template>
