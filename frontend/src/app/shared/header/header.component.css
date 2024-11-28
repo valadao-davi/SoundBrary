@@ -6,6 +6,12 @@ header {
   padding: 16px 48px;
   height: min-content;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+  box-sizing: border-box;
 }
 div {
   display: flex;
@@ -64,3 +70,7 @@ input::placeholder{
 }
 
 
+.custom-backdrop {
+  background-color: transparent !important; 
+  pointer-events: auto; /* Garante que o clique fora seja detectado */
+}

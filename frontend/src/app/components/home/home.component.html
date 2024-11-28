@@ -1,4 +1,9 @@
-<div *ngIf="dataload">
+<div *ngIf="isLoading" class="loading-container">
+  <p>Carregando...</p>
+  <img src="assets/loading.gif" alt="Carregando">
+</div>
+
+<div *ngIf="!isLoading">
   <div id="home">
     <div id="banner">
         <div id="banner_text">

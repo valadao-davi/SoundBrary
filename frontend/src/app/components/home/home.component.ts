@@ -20,6 +20,8 @@ export class HomeComponent  {
   albumItems: Album[] = []
   dataload: boolean = false
 
+  isLoading: boolean = true;
+
   constructor(private serviceMusic: ServiceMusicService, private serviceDissay: ServiceDissayService, private serviceUser: ServiceUserService){ }
 
   loadTracks(): void {
@@ -59,6 +61,9 @@ export class HomeComponent  {
   ngOnInit(): void {
     this.loadTracks()
     this.loadDissays()
+    setTimeout(() => {
+      this.isLoading = false; // Define como falso após o conteúdo ser "carregado"
+    }, 1000);
   }
 
 

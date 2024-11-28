@@ -94,3 +94,22 @@
   background: #808080; /* Cor do polegar ao passar o mouse */
   border-radius: 6px; /* Cantos arredondados */
 }
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ocupa toda a altura da tela */
+  text-align: center;
+}
+
+.loading-container img {
+  width: 100px; /* Tamanho do GIF */
+  margin-top: 20px;
+}
+
+.loading-container p {
+  font-size: 18px;
+  font-weight: bold;
+}
