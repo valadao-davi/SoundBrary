@@ -22,7 +22,7 @@
           <img class="d_mini_cover" [src]="musicDissay.albumImages[0].link" alt="">
       </div>
       <div class="d_mini_instruments" >
-          <app-instrumento-mini *ngFor="let instrument of listInstruments | slice:0:3" [name]="instrument.defaultInstrument.nameInstrument"></app-instrumento-mini>
+          <app-instrumento-mini *ngFor="let instrument of listInstruments | slice:0:3" [instrumentDefault]="instrument.defaultInstrument"></app-instrumento-mini>
       </div>
 
   </div>

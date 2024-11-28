@@ -5,6 +5,7 @@ import { Coment } from 'src/app/layouts/Comment';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { Music } from 'src/app/layouts/Music';
 import { User } from 'src/app/layouts/User';
+import { AvisosService } from 'src/app/services/avisos.service';
 import { ServiceAvaliateService } from 'src/app/services/service-avaliate.service';
 import { ServiceCommentService } from 'src/app/services/service-comment.service';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
@@ -43,7 +44,7 @@ export class DissayComponent {
   timeoutAviso: any;
   ownerDissay: boolean = false;
 
-  constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService){}
+  constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
@@ -167,8 +168,10 @@ export class DissayComponent {
     this.serviceDissay.deleteDissay(this.accessToken, dissayId).subscribe({
       next: (response) => {
         this.router.navigate(['/home'])
+        this.avisosService.mostrarAvisoTemporario('O Dissay foi apagado com sucesso!', 'success')
       },
       error: (err) => {
+        this.avisosService.mostrarAvisoTemporario('Erro ao deletar Dissay', 'error')
         console.error('Erro ao deletar dissay')
       }
     })
@@ -210,7 +213,7 @@ export class DissayComponent {
       })
     ).subscribe(comment => {
       this.loadDissay(this.id!)
-      this.mostrarAvisoTemporario('Comentário deletado com sucesso!', 'success');
+      this.avisosService.mostrarAvisoTemporario('Comentário deletado com sucesso!', 'success');
     })
   }
 
@@ -234,7 +237,7 @@ export class DissayComponent {
         ).subscribe(comment => {
           this.comments.push(comment)
           this.loadDissay(this.id!)
-          this.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
+          this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
       }
 
@@ -265,10 +268,10 @@ export class DissayComponent {
         ).subscribe(comment => {
           this.comments.push(comment)
           this.loadDissay(this.id!)
-          this.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
+          this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
         console.log(`Publicar resposta para a resposta ${index}: ${texto}`);
-        this.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
+        this.avisosService.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
         this.respostaAbertaIndex = null;
         this.respostas[index].showInput = false; // Fechar o campo de resposta
       }
@@ -283,26 +286,9 @@ export class DissayComponent {
       if (this.mostrarAviso) {
         clearTimeout(this.timeoutAviso);
       }
-      this.mostrarAvisoTemporario('Resposta cancelada.', 'error');
+      this.avisosService.mostrarAvisoTemporario('Resposta cancelada.', 'error');
     }
     }
 
-    mostrarAvisoTemporario(mensagem: string, tipo: string) {
-      if (this.mostrarAviso) {
-        clearTimeout(this.timeoutAviso);
-      }
-      this.mensagemAviso = mensagem;
-      this.tipoAviso = tipo;
-      this.mostrarAviso = true;
-      this.sumirAviso = false;
-      console.log("chegou")
-      this.timeoutAviso = setTimeout(() => {
-        this.sumirAviso = true;
-        setTimeout(() => {
-          this.mostrarAviso = false;
-          console.log("foi")
-        }, 500)
-      }, 3000); // Oculta o aviso após 3 segundos
-
-    }
+    
 }
