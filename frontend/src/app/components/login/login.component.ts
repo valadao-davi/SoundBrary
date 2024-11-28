@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { catchError, of, throwError } from "rxjs";
 import { AvisosService } from "src/app/services/avisos.service";
+import { ErrorHandleServiceService } from "src/app/services/error-handle-service.service";
 import { ServiceUserService } from "src/app/services/service-user.service";
 
 
@@ -12,7 +14,7 @@ import { ServiceUserService } from "src/app/services/service-user.service";
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private service: ServiceUserService, private avisosService: AvisosService) {}
+  constructor(private router: Router, private service: ServiceUserService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService) {}
 
   mostrarAviso = false;
   sumirAviso = true;
@@ -48,19 +50,22 @@ export class LoginComponent {
       value = "@" + this.getUserOrEmail().value
     }
     console.log(value)
-    this.service.loginUser(value, this.getPasswordForm().value).subscribe((response) => {
-      if(response.accessToken){
+    this.service.loginUser(value, this.getPasswordForm().value).pipe(
+      catchError((code)=> {
+        return this.handleError.handleErrorCode(code, 'login')
+      })
+    ).subscribe({
+      next: (response) => {
+        console.log(response)
+      if(response && response.accessToken){
         this.token = response.accessToken
         localStorage.setItem('token', this.token)
         this.avisosService.mostrarAvisoTemporario('Login feito com sucesso!', 'success');
         console.log("deu bom")
         this.navigateHome()
-      }else{
-        this.avisosService.mostrarAvisoTemporario('O login falhou', 'error');
-        console.error("Token não encontrado")
-        console.log("deu erro")
       }
     }
+  }
     )
   }
   getUserOrEmail(){

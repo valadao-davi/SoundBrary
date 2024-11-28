@@ -125,10 +125,13 @@
         <div class="titulo_slider">
           <h1>Artistas salvos</h1>
         </div>
+        <div class="no_slider_space slider_space" *ngIf="listIdsString.artists.length === 0">
+          <p>Não há artistas salvos</p>
+        </div>
         <div class="slider_space" *ngIf="listIdsString.artists.length > 0">
           <div class="slider" *ngFor="let item of artistsList">
             <app-m-mini
-            [isAlbum]="false"
+            [isArtist]="true"
           [id]="item.id"
           [name] = "item.name"
           [imageUrl]="item.artistImages[0].link"
