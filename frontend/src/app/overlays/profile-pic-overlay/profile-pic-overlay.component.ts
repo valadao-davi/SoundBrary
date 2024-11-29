@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,37 @@ import { Component } from '@angular/core';
 })
 export class ProfilePicOverlayComponent {
 
+  link: string = '';
+  validUrl: boolean | null = null
+
+  constructor (private http: HttpClient) {}
+
+  onInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    console.log('Texto digitado:', inputElement.value);
+    if(inputElement.value){
+      this.isImageValid(inputElement.value)
+    }
+  }
+
+  async isImageValid(url: string): Promise<void> {
+    try{
+      const response = await this.http.head(url, {
+        headers: new HttpHeaders().set('Accept', 'image/*'),
+        observe: 'response',
+        responseType: 'text'
+      }).toPromise();
+      if(response && response.status === 200){
+         this.validUrl = true
+         console.log(this.validUrl)
+
+      }else if( response && response.status === 404){
+         this.validUrl = false
+         console.log(this.validUrl)
+      }
+    }catch{
+      console.log(this.validUrl)
+       this.validUrl = false
+    }
+  }
 }

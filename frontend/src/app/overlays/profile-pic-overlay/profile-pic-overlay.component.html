@@ -1,1 +1,11 @@
-<p>profile-pic-overlay works!</p>
+<div class="profile_pic_layout">
+    <h1>Escolha um link url pra sua imagem de perfil</h1>
+    <img class="sua_imagem" src="" alt="">
+    <div class="campos">
+        <div class="campo">
+            <input (input)="onInputChange($event)" [(ngModel)]="link" type="text">
+            <img *ngIf="link.length > 0 && validUrl" src="../../../assets/check_verde.svg">
+        </div>
+        <h3 *ngIf=" link.length > 0 && validUrl == false">O link inserido não é válido</h3>
+    </div>
+</div>
