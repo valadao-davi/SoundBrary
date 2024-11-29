@@ -58,7 +58,8 @@
                     <textarea #textarea_descricao 
                     name="descricao" 
                     class="campo_descricao" 
-                    placeholder="Adicione uma descrição pro seu Dissay (opcional)" 
+                    placeholder="Adicione uma descrição pro seu Dissay (opcional)"
+                    [(ngModel)]="descriptionValue" 
                     (input)="adjustHeight(textarea_descricao)" 
                     (input)="onInput($event, 'description')"
                     [attr.maxlength]="maxLengthDescription"

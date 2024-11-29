@@ -29,7 +29,7 @@
             <img src="../../../assets/REAL_black_add.svg" alt="">
           </button>
         </div>
-        <button (click)="saveInstrument()" class="salvar_configuracao">Salvar configuração</button>
+        <button *ngIf="instrumentMade.effects.length > 0" (click)="saveInstrument()" class="salvar_configuracao">Salvar configuração</button>
       </div>
   
       <div class="linha_vertical"></div>

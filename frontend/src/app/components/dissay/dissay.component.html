@@ -21,10 +21,15 @@
               <button (click)="avaliateDissay(i)"><img src="../../../assets/estrela_vazia.svg"></button>
             </div>
           </div>
-          <div class="estrelas_avaliacao" *ngIf="ownerDissay">
+          <div class="estrelas_avaliacao" *ngIf="ownerDissay && dissayData.totalRate">
             <div *ngFor="let i of [1,2,3,4,5]">
               <img *ngIf="dissayData.totalRate! >=i" src="../../../assets/estrela_cheia.svg">
               <img *ngIf="dissayData.totalRate! < i"  src="../../../assets/estrela_vazia.svg">
+            </div>
+          </div>
+          <div class="estrelas_avaliacao" *ngIf="dissayData.totalRate === undefined && ownerDissay">
+            <div *ngFor="let i of [1,2,3,4,5]">
+              <img src="../../../assets/estrela_vazia.svg">
             </div>
           </div>
           <h2>{{dissayData.totalRate}}</h2>

@@ -56,6 +56,9 @@ export class ProfileLayoutComponent {
           this.dataLoad = true
         }
       })
+      }else{
+        this.dataLoad = true
+        this.userAuth = null
       }
       this.router.paramMap.subscribe((params)=> {
         this.query = params.get('query')

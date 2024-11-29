@@ -85,7 +85,7 @@ export class CadastroComponent {
     ).subscribe({
       next: (response) => {
           console.log('Usuário criado com sucesso: ', response);
-          this.avisosService.mostrarAvisoTemporario("Usuário cadastrado com sucesso!", "sucess")
+          this.avisosService.mostrarAvisoTemporario("Usuário cadastrado com sucesso!", "success")
           this.navigateLogin();
       }
     });
