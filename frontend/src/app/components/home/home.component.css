@@ -58,6 +58,16 @@
   gap: 16px;
 }
 
+.no_slider_space{
+  height: 180px;
+  align-items: center;
+  display: flex;
+  color: #808080;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 24px;
+}
+
 .slider {
   display: inline-flex;
   width: max-content;
