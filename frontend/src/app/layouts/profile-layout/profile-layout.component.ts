@@ -9,7 +9,7 @@ import { Album } from '../Album';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { Dissay } from '../Dissay';
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { OverlayService } from 'src/app/services/overlay.service';
 import { CdkPortal } from '@angular/cdk/portal';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -27,6 +27,7 @@ export class ProfileLayoutComponent {
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
+  private overlayRef!: OverlayRef;
   
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
@@ -53,9 +54,9 @@ export class ProfileLayoutComponent {
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),      hasBackdrop: true
     })
 
-    const overlayRef = this.overlay.create(config);
-    overlayRef.attach(this.portal);
-    overlayRef.backdropClick().subscribe(()=> overlayRef.detach())
+    this.overlayRef = this.overlay.create(config);
+    this.overlayRef.attach(this.portal);
+    this.overlayRef.backdropClick().subscribe(()=> this.overlayRef.detach())
   }
 
   ngOnInit(){
@@ -70,6 +71,7 @@ export class ProfileLayoutComponent {
           return of(null);
         })
       ).subscribe(user => {
+        console.log(user)
         this.userAuth = user
         if(this.userAuth !== null){
           this.dataLoad = true
@@ -86,7 +88,11 @@ export class ProfileLayoutComponent {
         }
       })
   }
-
+  closeCard(){
+    if(this.overlayRef){
+      this.overlayRef.detach()
+    }
+  }
   getAllUser(query: string){
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {

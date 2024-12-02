@@ -8,8 +8,8 @@
       <h1 class="informacoes" *ngIf="!isOwnProfile">Perfil de usuário</h1>
   
       <div class="imagem">
-        <button *ngIf="!isOwnProfile"><img class="img_perfil" src="../../../assets/icone_1.png"></button>
-        <button (click)="openImageSetter()" *ngIf="isOwnProfile"><img class="img_perfil" src="../../../assets/icone_1.png"></button>
+        <button *ngIf="!isOwnProfile"><img class="img_perfil" *ngIf="otherUser.image" [src]="otherUser.image"></button>
+        <button (click)="openImageSetter()" *ngIf="isOwnProfile"><img class="img_perfil" *ngIf="myUser.image" [src]="myUser.image"> <img class="img_perfil " *ngIf="myUser.image?.length === 0" src="../../../assets/icone_1.png"></button>
         <button (click)="openImageSetter()" ><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
       </div>
   
@@ -147,5 +147,5 @@
 </div>
 
 <ng-template cdkPortal>
-  <app-profile-pic-overlay></app-profile-pic-overlay>
+  <app-profile-pic-overlay [link]="myUser.image ? myUser.image : ''" [closeOverlay]="closeCard" [acessToken]="accessToken"></app-profile-pic-overlay>
  </ng-template>
