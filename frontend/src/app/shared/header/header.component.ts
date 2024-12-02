@@ -34,8 +34,7 @@ export class HeaderComponent {
   ngOnInit(){
     if(this.user !== null){
       console.log(this.user)
-      console.log(this.user.notifications)
-      if(this.user.notifications! && this.user.notifications.length > 0){
+      if(this.user.notifications !== undefined){
         this.listNotification = this.user.notifications
         console.log('aqui')
         this.dataLoad = true

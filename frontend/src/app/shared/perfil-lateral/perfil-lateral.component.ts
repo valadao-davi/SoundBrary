@@ -15,6 +15,10 @@ export class PerfilLateralComponent {
 
   constructor(private router: Router, private serviceUsers: ServiceUserService){}
 
+  ngOnInit(){
+    console.log(this.user)
+  }
+
     navigatePerfil() {
       if(this.user === null){
         this.router.navigate(['/login'])

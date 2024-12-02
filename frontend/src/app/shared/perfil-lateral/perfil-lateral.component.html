@@ -7,7 +7,9 @@
   </div>
 
   <button (click)="navigatePerfil()" id="profile_left-top" *ngIf="user">
-    <img class="grey_circle" *ngIf="user.image === undefined" src="../../../assets/icon_0.png" alt="">
+    <img class="grey_circle" *ngIf="user.image === undefined" src="../../../assets/icon_0.png" alt="" >
+    <img class="circle" *ngIf=" user.image" [src]="user.image" alt="">
+
     <h3>{{user.name}}</h3>
 </button>
 

@@ -23,7 +23,7 @@ export class CriarDissayComponent {
   idParam!: string;
   
   showResults: boolean = false;
-  @Input() musicSelected!: Music;
+  @Input() musicSelected: Music | undefined;
   private searchSubject: Subject<string> = new Subject<string>();
   maxLengthTitle: number = 100;
   maxLengthDescription: number = 1000;
@@ -49,6 +49,8 @@ export class CriarDissayComponent {
       if(params['value']){
         this.serviceSpotify.getMusicById(params['value']).subscribe(music => {
           this.musicSelected = music
+          this.titleValue = 'Dissay ' + music.name
+
         })
       }else{
         console.log("No value")
@@ -133,14 +135,22 @@ export class CriarDissayComponent {
         return this.handleError.handleErrorCode(code)
       })).subscribe({
         next: (response) => {
-          this.instrumentsDissay = []
-          this.toneDissay = ""
-          console.log("aqui")
-          this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "sucess")
-          this.titleValue = '';
-          this.descriptionValue = '';
+          this.clearFields()
+          this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+         
+          
         }
       });
     } 
+  }
+
+  clearFields(){
+    this.instrumentsDissay = []
+    this.toneDissay = ""
+    this.titleValue = '';
+    this.descriptionValue = '';
+    this.musicSelected = undefined
+    this.searchQuery = '';
+    this.serviceDissay.clearInstruments()
   }
 }
