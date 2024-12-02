@@ -16,16 +16,26 @@
   gap: 16px;
 }
 
-.perfil_left div {
+.profile_content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
   padding: 8px 0px;
+  justify-content: space-between;
+}
+
+.centro {
+  display: flex;
+  justify-content: center;
+}
+
+.space_between {
+  display: flex;
+  justify-content: space-between;
 }
 
 .informacoes {
-  width: 80%;
+  width: 100%;
   margin-top: 80px;
   text-align: center;
 }
@@ -34,13 +44,19 @@
   width: 200px;
   height: 200px;
   border-radius: 100px;
+  align-self: center;
 }
 
 .imagem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
+  display: flex;
+}
+
+.imagem button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
 }
 
 .img_edit {
