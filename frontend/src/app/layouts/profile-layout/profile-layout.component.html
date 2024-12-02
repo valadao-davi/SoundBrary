@@ -57,16 +57,22 @@
         </div>
       </div>
 
-      <div class="section">
+      <div class="section" *ngIf="listIdsString.dissays.length > 0">
         <div class="titulo_slider">
             <h1>Dissays salvos</h1>
         </div>
         <div class="slider_space" *ngIf="listIdsString.albums.length > 0">
-          <div class="slider">
-            <app-d-mini></app-d-mini>
-          </div>
+            <div class="slider">
+              <app-d-mini></app-d-mini>
+            </div>
+        </div>
       </div>
-        <div class="no_slider_space slider_space" *ngIf="listIdsString.dissays.length === 0" >
+
+      <div class="section" *ngIf="listIdsString.dissays.length === 0">
+        <div class="titulo_slider">
+            <h1>Dissays salvos</h1>
+        </div>
+        <div class="no_slider_space slider_space" >
             <div class="slider">
               <h2>Não há dissays salvos</h2>
             </div>
