@@ -184,6 +184,9 @@ export class DissayComponent {
 
   }
 
+  editDissay(){
+    this.router.navigate(['/criar-dissay'], { queryParams: { id: this.dissayData._id } })
+  }
 
   toggleResposta(index: number) {
     if (this.respostaAbertaIndex === index) {

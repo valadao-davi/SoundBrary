@@ -134,7 +134,10 @@ dissayRouter.put('/editDissay/:id', auth, async(req: CustomRequest, res: Respons
             }
             const result = await collections?.dissays?.findOneAndUpdate({_id: new ObjectId(findDissay._id)}, {$set: dissay})
             if(result){
+                console.log("dissay atualizado")
                 return res.status(200).json({message: "Dissay atualizado com sucesso"})
+            }else{
+                console.log("error ao atualizar")
             }
         }else{
             return res.status(404).json({error: "Usuario nao encontrado"})
