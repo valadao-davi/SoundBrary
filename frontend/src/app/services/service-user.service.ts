@@ -9,7 +9,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class ServiceUserService {
   private readonly API = 'http://localhost:3000/users'
-
+  
   constructor(private http: HttpClient) {}
 
   loginUser(userOrEmail: String, password: string): Observable<{accessToken: string}>{

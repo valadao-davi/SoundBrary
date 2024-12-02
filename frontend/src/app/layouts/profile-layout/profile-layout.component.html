@@ -147,5 +147,5 @@
 </div>
 
 <ng-template cdkPortal>
-  <app-profile-pic-overlay [link]="myUser.image ? myUser.image : ''" [closeOverlay]="closeCard" [acessToken]="accessToken"></app-profile-pic-overlay>
+  <app-profile-pic-overlay [link]="myUser.image ? myUser.image : ''" [closeOverlay]="closeCard.bind(this, overlayRef)" [acessToken]="accessToken"></app-profile-pic-overlay>
  </ng-template>
