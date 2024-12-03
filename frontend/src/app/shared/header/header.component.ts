@@ -35,6 +35,7 @@ export class HeaderComponent {
     if(this.user !== null){
       console.log(this.user)
       if(this.user.notifications !== undefined){
+
         this.listNotification = this.user.notifications
         console.log('aqui')
         this.dataLoad = true
@@ -43,6 +44,8 @@ export class HeaderComponent {
         this.dataLoad = true
       }
       console.log(this.listNotification)
+    }else{
+      this.dataLoad = true
     }
   }
 

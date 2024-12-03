@@ -43,6 +43,7 @@ export class DissayComponent {
   tipoAviso = '';
   timeoutAviso: any;
   ownerDissay: boolean = false;
+  userImage!: string;
 
   constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
@@ -178,6 +179,13 @@ export class DissayComponent {
     })
   }
 
+  getImageUsername(username: string): string {
+    this.serviceUser.getUserName(username).subscribe(user => {
+      this.userImage = user.image ?? ""
+    })
+    return this.userImage
+  }
+
   adjustHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto'; // Reseta a altura
     textarea.style.height = `${textarea.scrollHeight}px`; // Define a nova altura
@@ -294,5 +302,5 @@ export class DissayComponent {
     }
     }
 
-    
+
 }

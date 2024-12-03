@@ -85,7 +85,9 @@
         <h1 class="secao_titulo">Comentários</h1>
         <div class="linha"></div>
         <div class="zona_comentario">
-          <img class="mini_avatar" src="../../../assets/icone_0.png">
+          <img *ngIf="userData === undefined || !userData.image" class="mini_avatar" src="../../../assets/icone_0.png">
+          <img *ngIf="userData.image && userData.image.length > 0" class="mini_avatar" [src]="userData.image">
+
           <div class="campo_comentario">
             <textarea #textarea_comentario (input)="adjustHeight(textarea_comentario)" spellcheck="false" class="comentario" placeholder="Adicione um comentário..."></textarea>
             <div class="botoes_comentario">
@@ -100,7 +102,7 @@
           <div *ngIf="comentario.idParent!.length === 0">
             <div class="resposta" >
               <div  class="conteudo_resposta">
-                <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
+                <img class="mini_avatar" [src]="getImageUsername(comentario.userName)" alt="">
               <div class="resposta_right">
                 <div class="nome_data">
                   <div>
@@ -123,7 +125,7 @@
                 <div *ngFor="let resposta of comments; let j = index">
                   <div class="resposta" *ngIf="resposta.idParent === comentario._id">
                     <div  class="conteudo_resposta">
-                      <img class="mini_avatar" src="../../../assets/icone_1.png" alt="">
+                      <img class="mini_avatar" [src]="getImageUsername(resposta.userName)" alt="">
                     <div class="resposta_right">
                       <div class="nome_data">
                         <div>
