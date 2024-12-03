@@ -107,3 +107,7 @@ input::placeholder{
   font-size: 18px;
   font-weight: 700;
 }
+
+.setinha {
+  height: 24px !important;
+}

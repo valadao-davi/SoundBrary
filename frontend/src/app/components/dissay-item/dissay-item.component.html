@@ -1,32 +1,35 @@
-<ng-container *ngIf="dataLoaded"></ng-container>
-<div class="dissay">
+
+<button (click)="navigateDissay(dissayData._id ?? '')" class="dissay">
   <div class="topo">
     <div class="topo_textos">
-      <h3>{{name}}</h3>
+      <h3>{{dissayData.name}}</h3>
       <div class="info_perfil">
-        <img src="../../../assets/perfil_icon.png">
-        <div class="info_perfil_texto"><span>{{userName}} </span>- atualizado em: <span>{{date}}</span></div>
+        <img *ngIf="userImage.length === 0" src="../../../assets/perfil_icon.png">
+        <img *ngIf="userImage.length > 0" [src]="userImage">
+
+        <div class="info_perfil_texto"><span>{{userName}} </span>- atualizado em: <span>{{dissayData.createdAt}}</span></div>
       </div>
     </div>
     <div class="topo_avaliacao">
-      <div class="estrelas">
-        <img src="../../../assets/estrela_cheia.svg">
-        <img src="../../../assets/estrela_cheia.svg">
-        <img src="../../../assets/estrela_cheia.svg">
-        <img src="../../../assets/estrela_cheia.svg">
-        <img src="../../../assets/estrela_cheia.svg">
+      <div class="estrelas" *ngIf="dissayData.totalRate && dissayData.totalRate > 0">
+        <div *ngFor="let i of [1,2,3,4,5]">
+          <img *ngIf="dissayData.totalRate && dissayData.totalRate >=i" src="../../../assets/estrela_cheia.svg">
+          <img *ngIf="dissayData.totalRate && dissayData.totalRate < i"  src="../../../assets/estrela_vazia.svg">
+        </div>
       </div>
-      <h4>{{rateNumber}}</h4>
+      <div class="estrelas" *ngIf="dissayData.totalRate === 0">
+        <div *ngFor="let i of [1,2,3,4,5]">
+          <img src="../../../assets/estrela_vazia.svg">
+        </div>
+      </div>
+      <h4>{{dissayData.totalRate}}</h4>
     </div>
   </div>
 
   <div class="conteudo">
-    <div class="instrumentos">
-      <app-instrumento-mini></app-instrumento-mini>
-      <app-instrumento-mini></app-instrumento-mini>
-      <app-instrumento-mini></app-instrumento-mini>
-      <app-instrumento-mini></app-instrumento-mini>
+    <div class="instrumentos" *ngFor="let instrument of dissayData.instruments">
+      <app-instrumento-mini [instrumentDefault]="instrument.defaultInstrument"></app-instrumento-mini>
     </div>
     <div class="texto_dissay">{{desc}}</div>
   </div>
-</div>
+</button>

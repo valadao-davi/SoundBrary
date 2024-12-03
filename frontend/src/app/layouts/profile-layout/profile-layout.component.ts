@@ -28,6 +28,7 @@ export class ProfileLayoutComponent {
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
   overlayRef!: OverlayRef;
+  typeCard: string = '';
   
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
@@ -49,7 +50,8 @@ export class ProfileLayoutComponent {
     private overlay: Overlay, private overlayRefSerivce: OverlayService
   ){}
 
-  openImageSetter() {
+  openImageSetter(type: string) {
+    this.typeCard = type
     if (!this.overlayRef) {
       const config = new OverlayConfig({
         positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
