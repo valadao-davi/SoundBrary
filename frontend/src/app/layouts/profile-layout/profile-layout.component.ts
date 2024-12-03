@@ -22,7 +22,7 @@ export class ProfileLayoutComponent {
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
-  
+
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
     musics: [],
@@ -135,7 +135,6 @@ export class ProfileLayoutComponent {
       )
     }
     if(this.listIdsDissaysCreated.length > 0){
-      console.log(this.listIdsDissaysCreated)
       const items = this.listIdsDissaysCreated.map(id =>
         this.serviceDissay.getDissayById(id)
     )

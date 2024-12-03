@@ -72,22 +72,31 @@ export class HeaderComponent {
 
     if (!this.overlayRef) {
       this.overlayRef = this.overlay.create(config);
+      console.log(this.listNotification)
     } else {
       this.overlayRef.updatePositionStrategy(positionStrategy);
     }
 
     if (!this.overlayRef.hasAttached()) {
-      this.overlayRef.attach(new ComponentPortal(NotificationsComponent));
+      const portal = new ComponentPortal(NotificationsComponent);
+      const componentRef = this.overlayRef.attach(portal);
+
+      console.log("Passando dados para o componente:");
+      console.log(this.listNotification);
+
+      componentRef.instance.listReceived = this.listNotification;
+
+      console.log("Valor recebido no componente:");
+      console.log(componentRef.instance.listReceived);
+
       this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
-    } else {
-      this.overlayRef.detach();
     }
   }
 
   focusInput() {
     this.inputElement.nativeElement.focus();
   }
-  
+
 
   isSearchRoute(): boolean {
     return this.router.url.startsWith('/search');
