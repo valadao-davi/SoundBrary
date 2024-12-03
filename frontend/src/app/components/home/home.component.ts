@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { Album } from 'src/app/layouts/Album';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { Music } from 'src/app/layouts/Music';
@@ -18,55 +19,55 @@ export class HomeComponent  {
   topDissays: Dissay[]=[]
   recentDissays: Dissay[]=[]
   albumItems: Album[] = []
+  musicLoad: boolean = false;
   dataload: boolean = false
+  dissayLoad: boolean = false
 
   isLoading: boolean = true;
 
   constructor(private serviceMusic: ServiceMusicService, private serviceDissay: ServiceDissayService, private serviceUser: ServiceUserService){ }
 
-  loadTracks(): void {
-    this.serviceMusic.getTracksPlaylist().subscribe(
-      (tracks) => {
-        this.topDay = tracks
+  loadData(): void {
+    // Usando forkJoin para sincronizar as requisições
+    forkJoin({
+      tracks: this.serviceMusic.getTracksPlaylist(),
+      allDissays: this.serviceDissay.getAllDissays(),
+      recentDissays: this.serviceDissay.getRecentDissays()
+    }).subscribe(
+      ({ tracks, allDissays, recentDissays }) => {
+        // Processando os resultados após todas as requisições concluírem
+        this.topDay = tracks;
         const albumMap = new Map();
-
-        this.topDay.forEach(item => {
-          if(item.albumType === "album") {
+        this.topDay.forEach((item) => {
+          if (item.albumType === 'album') {
             const albumData = {
               id: item.albumId,
               albumName: item.albumName,
               artists: item.artists,
               albumImage: item.albumImages
-            }
-            albumMap.set(albumData.id, albumData)
+            };
+            albumMap.set(albumData.id, albumData);
           }
-        })
+        });
+        this.albumItems = Array.from(albumMap.values());
 
-        this.albumItems = Array.from(albumMap.values())
+        this.dissays = allDissays;
+        this.topDissays = allDissays
+          .filter((d) => d.totalRate !== undefined)
+          .sort((a, b) => (b.totalRate ?? 0) - (a.totalRate ?? 0))
+          .slice(0, 10);
+
+        this.recentDissays = recentDissays;
         this.dataload = true
-        console.log(this.albumItems)
       },
       (error) => {
-        console.error(error)
+        console.error('Erro ao carregar dados:', error);
       }
-    )
-  }
-  loadDissays(): void {
-    this.serviceDissay.getAllDissays().subscribe(dissays => {
-      this.dissays = dissays
-      this.topDissays = dissays.filter(d => d.totalRate !== undefined).sort((a,b) => (b.totalRate ?? 0) - (a.totalRate ?? 0)).slice(0,10)
-    })
-    this.serviceDissay.getRecentDissays().subscribe(dissays => {
-      this.recentDissays = dissays
-    })
+    );
   }
 
   ngOnInit(): void {
-    this.loadTracks()
-    this.loadDissays()
-    setTimeout(() => {
-      this.isLoading = false; // Define como falso após o conteúdo ser "carregado"
-    }, 1000);
+    this.loadData()
   }
 
 

@@ -20,7 +20,9 @@
 
             <div class="input_e_pesquisas">
                 <div class="campo_input">
-                    <input placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
+                    <input *ngIf="dissayEdit === undefined" placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
+                    <input *ngIf="dissayEdit" value={{musicSelected?.name}} readonly>
+
                     <img src="../../../assets/lupa_icon_black_80.svg">
                 </div>
                 <div *ngIf="showResults" class="pesquisas">
@@ -58,7 +60,8 @@
                     <textarea #textarea_descricao 
                     name="descricao" 
                     class="campo_descricao" 
-                    placeholder="Adicione uma descrição pro seu Dissay (opcional)" 
+                    placeholder="Adicione uma descrição pro seu Dissay (opcional)"
+                    [(ngModel)]="descriptionValue" 
                     (input)="adjustHeight(textarea_descricao)" 
                     (input)="onInput($event, 'description')"
                     [attr.maxlength]="maxLengthDescription"
@@ -83,8 +86,11 @@
             <h1>Tonalidade</h1>
             <app-criar-dissay-cards [afinacao]="toneDissay"></app-criar-dissay-cards>
         </div>
-        <button (click)="publishDissay()" class="publicar_dissay">
+        <button *ngIf="!dissayEdit" (click)="publishDissay()" class="publicar_dissay">
             <h3>Publicar Dissay</h3>
             <img src="../../../assets/enviar_icon.svg"></button>
+        <button *ngIf="dissayEdit" (click)="editDissay()" class="publicar_dissay">
+                <h3>Atualizar Dissay</h3>
+        <img src="../../../assets/enviar_icon.svg"></button>
     </div>
 </div>

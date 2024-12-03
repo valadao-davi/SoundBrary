@@ -24,6 +24,12 @@
     border-radius: 50%;
     background-color: #D9D9D9;
 }
+
+.circle{
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+}
 #profile_left-top h5{
     color: #797979;
     font-weight: 700;

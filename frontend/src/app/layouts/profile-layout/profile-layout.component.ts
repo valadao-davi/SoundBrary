@@ -1,5 +1,5 @@
 import { ServiceMusicService } from '../../services/service-music.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { User } from '../User';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -9,6 +9,11 @@ import { Album } from '../Album';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { Dissay } from '../Dissay';
+import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import { OverlayService } from 'src/app/services/overlay.service';
+import { CdkPortal } from '@angular/cdk/portal';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-profile-layout',
@@ -22,6 +27,8 @@ export class ProfileLayoutComponent {
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
+
+  overlayRef!: OverlayRef;
 
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
@@ -37,10 +44,28 @@ export class ProfileLayoutComponent {
   artistsList!: Artist[]
   query!: string | null
 
-  constructor(private router: ActivatedRoute, private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService, private serviceDissay: ServiceDissayService){}
+  @ViewChild(CdkPortal) portal!: CdkPortal
+
+  constructor(private router: ActivatedRoute, private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService, private serviceDissay: ServiceDissayService,
+    private overlay: Overlay, private overlayRefSerivce: OverlayService
+  ){}
+
+  openImageSetter() {
+    if (!this.overlayRef) {
+      const config = new OverlayConfig({
+        positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+        hasBackdrop: true,
+      });
+      this.overlayRef = this.overlay.create(config);
+    }
+    this.overlayRef.attach(this.portal);
+    console.log(this.overlayRef)
+    this.overlayRef.backdropClick().subscribe(() => this.closeCard(this.overlayRef));
+  }
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
+
     if(this.accessToken){
       this.serviceUser.getUser(this.accessToken).pipe(
         catchError(error => {
@@ -51,11 +76,16 @@ export class ProfileLayoutComponent {
           return of(null);
         })
       ).subscribe(user => {
+        console.log(user)
         this.userAuth = user
+
         if(this.userAuth !== null){
           this.dataLoad = true
         }
       })
+      }else{
+        this.dataLoad = true
+        this.userAuth = null
       }
       this.router.paramMap.subscribe((params)=> {
         this.query = params.get('query')
@@ -64,7 +94,13 @@ export class ProfileLayoutComponent {
         }
       })
   }
-
+  closeCard(overlayRef: OverlayRef){
+    if(this.overlayRef?.hasAttached()){
+      this.overlayRef.detach()
+    }else{
+      console.log('não definido')
+    }
+  }
   getAllUser(query: string){
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
@@ -77,6 +113,7 @@ export class ProfileLayoutComponent {
           this.listIdsString.dissays = this.myUser.dissaySaved ?? []
           this.listIdsDissaysCreated = this.myUser.dissaysCreated ?? []
           this.getIdsObjects()
+
         }else{
           this.getUserName(query)
           console.log("usuario pesquisado")
