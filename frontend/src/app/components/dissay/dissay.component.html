@@ -79,9 +79,9 @@
         </div>
       </div>
 
-      <button class="agradecimento"><h3>Esse Dissay te ajudou? Envie um agradecimento!</h3><img src="../../../assets/donate_icon.svg" alt=""></button>
+      <button class="agradecimento" *ngIf="!dissayData.isPrivate"><h3>Esse Dissay te ajudou? Envie um agradecimento!</h3><img src="../../../assets/donate_icon.svg" alt=""></button>
 
-      <div class="comentarios">
+      <div class="comentarios" *ngIf="!dissayData.isPrivate">
         <h1 class="secao_titulo">Comentários</h1>
         <div class="linha"></div>
         <div class="zona_comentario">
