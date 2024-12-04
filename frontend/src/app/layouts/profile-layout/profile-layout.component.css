@@ -15,6 +15,12 @@
   flex-direction: column;
   gap: 16px;
 }
+.grey_circle{
+  width:  200px;
+  height:  200px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+}
 
 .profile_content {
   display: flex;
@@ -122,6 +128,7 @@
   justify-content: center;
   font-weight: 600;
   font-size: 24px;
+  
 }
 
 .slider {

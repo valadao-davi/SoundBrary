@@ -29,10 +29,23 @@ dissayRouter.get("/", async(_req, res)=> {
         res.status(500).send(error instanceof Error ? error.message : "Unknow error")
     }
 })
+
+dissayRouter.get("/publicDissays", async(_req, res)=> {
+    try {
+        const dissays = await collections?.dissays?.find({isPrivate: false}).toArray()
+        if(dissays){
+            res.status(200).json(dissays)
+        }else{
+            res.status(200).send({message: "Não há dissays no momento"})
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Unknow error")
+    }
+})
 //Os 10 primeiros dissays recentes
 dissayRouter.get("/recentDissays", async(_req, res)=> {
     try {
-        const dissays = await collections?.dissays?.find({}).sort({createdAt: -1}).limit(10).toArray()
+        const dissays = await collections?.dissays?.find({isPrivate: false}).sort({createdAt: -1}).limit(10).toArray()
         if(dissays){
             res.status(200).send(dissays)
         }else{
@@ -42,13 +55,12 @@ dissayRouter.get("/recentDissays", async(_req, res)=> {
         res.status(500).send(error instanceof Error ? error.message : "Unknow error")
     }
 })
-
+//Publicamente
 dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res: Response)=> {
     try{
         const userName = req.token?.userName
-        console.log(userName)
-
         const musicId = req.params.musicId
+        const isPrivate = false;
         const dissay = {
             name: req.body.name,
             musicId: musicId,
@@ -56,9 +68,10 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
             instruments: req.body.instruments,
             createdAt: new Date(),
             desc: req.body?.description,
+            isPrivate: isPrivate
         }
         const findUser = await collections?.users?.findOne({userName: userName})
-        if(findUser){
+        if(findUser && dissay.musicId.length > 0){
             const result = await collections?.dissays?.insertOne(dissay)
             if(result?.insertedId){
                 console.log("Dissay criado")
@@ -72,6 +85,43 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
                         idOptional: `${musicId}`
                     }
                     await collections?.users?.updateMany({musicSaved: musicId}, {$push: {notifications: notification}})
+                    return res.status(200).json({message: "Dissay criado"})
+                }else{
+                    return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")
+                }
+            }else{
+                return res.status(404).send("Dissay nao encontrado")
+            }
+        }
+        
+        
+    }catch(error){
+        console.error("Erro no método criar post: ", error)
+        return res.status(500).json({error: error})
+    }
+})
+
+dissayRouter.post("/privateDissay/:musicId", auth, async(req: CustomRequest, res: Response)=> {
+    try{
+        const userName = req.token?.userName
+        const musicId = req.params.musicId
+        const isPrivate = true;
+        const dissay = {
+            name: req.body.name,
+            musicId: musicId,
+            userName: userName,
+            instruments: req.body.instruments,
+            createdAt: new Date(),
+            desc: req.body?.description,
+            isPrivate: isPrivate
+        }
+        const findUser = await collections?.users?.findOne({userName: userName})
+        if(findUser && dissay.musicId.length > 0){
+            const result = await collections?.dissays?.insertOne(dissay)
+            if(result?.insertedId){
+                console.log("Dissay criado")
+                const addToUser = await collections?.users?.updateOne({_id: findUser._id}, {$push: { dissaysCreated: result.insertedId.toString()}})
+                if(addToUser){
                     return res.status(200).json({message: "Dissay criado"})
                 }else{
                     return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")
@@ -107,7 +157,7 @@ dissayRouter.get("/getDissayByMusic/:musicId", async(req, res)=> {
     try{
         const musicId = req.params?.musicId
         if(musicId){
-            const dissay = await collections?.dissays?.find({musicId: musicId}).toArray()
+            const dissay = await collections?.dissays?.find({musicId: musicId, isPrivate: false}).toArray()
             if(dissay){
                 res.status(200).send(dissay)
             }
@@ -134,7 +184,10 @@ dissayRouter.put('/editDissay/:id', auth, async(req: CustomRequest, res: Respons
             }
             const result = await collections?.dissays?.findOneAndUpdate({_id: new ObjectId(findDissay._id)}, {$set: dissay})
             if(result){
+                console.log("dissay atualizado")
                 return res.status(200).json({message: "Dissay atualizado com sucesso"})
+            }else{
+                console.log("error ao atualizar")
             }
         }else{
             return res.status(404).json({error: "Usuario nao encontrado"})
@@ -153,7 +206,7 @@ dissayRouter.delete('/deleteDissay/:id', auth, async(req: CustomRequest, res: Re
         
         if(dissayId && findUser){
             const result = await collections?.dissays?.findOneAndDelete({_id: new ObjectId(dissayId)})
-            const removeOfUser = await collections?.users?.findOneAndUpdate({userName: userName}, {$pull: {dissaysCreated: dissayId}})
+            const removeOfUser = await collections?.users?.findOneAndUpdate({userName: userName}, {$pull: {dissaysCreated: dissayId, notifications: {idObject: dissayId}}})
             if(result && removeOfUser){
                 return res.status(200).json({message: "Dissay deletado com sucesso"})
             }

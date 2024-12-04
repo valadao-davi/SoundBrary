@@ -12,6 +12,7 @@
   gap: 16px;
 }
 
+
 .dissay_content {
   display: flex;
   flex-direction: column;
@@ -42,6 +43,27 @@
   width: 40px;
   height: 40px;
   border-radius: 100px;
+}
+
+.gray_circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  background-color: #D9D9D9;
+}
+
+.avaliacao_excluir {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.edit {
+  height: 32px;
+}
+
+.lixeira {
+  height: 40px;
 }
 
 .dissay_avaliacao{

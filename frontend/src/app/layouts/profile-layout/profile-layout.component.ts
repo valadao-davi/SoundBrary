@@ -27,7 +27,8 @@ export class ProfileLayoutComponent {
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
-  private overlayRef!: OverlayRef;
+  overlayRef!: OverlayRef;
+  typeCard: string = '';
   
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
@@ -49,18 +50,23 @@ export class ProfileLayoutComponent {
     private overlay: Overlay, private overlayRefSerivce: OverlayService
   ){}
 
-  openImageSetter() {
-    const config = new OverlayConfig({
-      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),      hasBackdrop: true
-    })
-
-    this.overlayRef = this.overlay.create(config);
+  openImageSetter(type: string) {
+    this.typeCard = type
+    if (!this.overlayRef) {
+      const config = new OverlayConfig({
+        positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+        hasBackdrop: true,
+      });
+      this.overlayRef = this.overlay.create(config);
+    }
     this.overlayRef.attach(this.portal);
-    this.overlayRef.backdropClick().subscribe(()=> this.overlayRef.detach())
+    console.log(this.overlayRef)
+    this.overlayRef.backdropClick().subscribe(() => this.closeCard(this.overlayRef));
   }
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
+    
     if(this.accessToken){
       this.serviceUser.getUser(this.accessToken).pipe(
         catchError(error => {
@@ -73,6 +79,7 @@ export class ProfileLayoutComponent {
       ).subscribe(user => {
         console.log(user)
         this.userAuth = user
+
         if(this.userAuth !== null){
           this.dataLoad = true
         }
@@ -88,9 +95,11 @@ export class ProfileLayoutComponent {
         }
       })
   }
-  closeCard(){
-    if(this.overlayRef){
+  closeCard(overlayRef: OverlayRef){
+    if(this.overlayRef?.hasAttached()){
       this.overlayRef.detach()
+    }else{
+      console.log('não definido')
     }
   }
   getAllUser(query: string){
@@ -105,6 +114,7 @@ export class ProfileLayoutComponent {
           this.listIdsString.dissays = this.myUser.dissaySaved ?? []
           this.listIdsDissaysCreated = this.myUser.dissaysCreated ?? []
           this.getIdsObjects()
+         
         }else{
           this.getUserName(query)
           console.log("usuario pesquisado")

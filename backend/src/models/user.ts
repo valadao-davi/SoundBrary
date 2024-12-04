@@ -1,5 +1,6 @@
 import * as mongodb from "mongodb"
 import { Notiffication } from "./Notificacao";
+import { Dissay } from "./dissay";
 
 export interface User {
     userName: string;
@@ -14,4 +15,5 @@ export interface User {
     artistsSaved?: string[];
     notifications?: Notiffication[];
     dissaysCreated?: string[];
+    dissaysPrivate?: Dissay[];
 }

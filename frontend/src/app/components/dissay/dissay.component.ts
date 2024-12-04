@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { Coment } from 'src/app/layouts/Comment';
@@ -184,6 +184,9 @@ export class DissayComponent {
 
   }
 
+  editDissay(){
+    this.router.navigate(['/criar-dissay'], { queryParams: { id: this.dissayData._id } })
+  }
 
   toggleResposta(index: number) {
     if (this.respostaAbertaIndex === index) {

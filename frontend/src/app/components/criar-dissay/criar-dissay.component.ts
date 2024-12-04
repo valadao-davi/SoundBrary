@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { catchError, debounceTime, Subject } from 'rxjs';
 import { DefaultInstrument } from 'src/app/layouts/DefaultInstrument';
+import { Dissay } from 'src/app/layouts/Dissay';
 import { Instrument } from 'src/app/layouts/Instrument';
 import { Music } from 'src/app/layouts/Music';
 import { AvisosService } from 'src/app/services/avisos.service';
@@ -33,7 +34,10 @@ export class CriarDissayComponent {
   descriptionValue: string = '';
   instrumentsDissay: Instrument[] = []
   toneDissay!: string;
+  dissayEdit!: Dissay;
   accessToken!: string;
+  isPrivate: boolean = false
+  noMusic: boolean = false;
 
   constructor(private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
@@ -55,13 +59,43 @@ export class CriarDissayComponent {
       }else{
         console.log("No value")
       }
-    })
-    this.serviceDissay.getTone().subscribe(tone => {
-      this.toneDissay = tone
-    })
-    console.log(this.toneDissay)
-    this.instrumentsDissay = this.serviceDissay.getInstruments()
+      console.log(params['id'])
+      if(params['id'] ){
+        this.serviceDissay.getDissayById(params['id']).subscribe(dissay => {
+          this.dissayEdit = dissay
+          this.serviceSpotify.getMusicById(this.dissayEdit.musicId).subscribe(music => {
+            this.musicSelected = music
 
+          })
+          this.titleValue = this.dissayEdit.name
+          this.instrumentsDissay = this.dissayEdit.instruments
+          this.descriptionValue = this.dissayEdit.desc ?? ""
+          this.toneDissay = this.dissayEdit.tone ?? ""
+          this.serviceDissay.setList(this.instrumentsDissay)
+        })
+      }else{
+        this.instrumentsDissay = this.serviceDissay.getInstruments()
+        this.serviceDissay.getTone().subscribe(tone => {
+          this.toneDissay = tone
+        })
+      }
+
+    })
+    console.log(this.instrumentsDissay)
+  }
+
+  activePrivate(){
+    this.isPrivate = !this.isPrivate
+    if(this.isPrivate === false && this.noMusic){
+      this.noMusic = false
+    }
+  }
+
+  activeNoMusic(){
+    if(this.isPrivate === true){
+      this.noMusic = !this.noMusic
+      console.log(this.noMusic)
+    }
   }
 
   getTracksQuery(query: string): void {
@@ -78,9 +112,10 @@ export class CriarDissayComponent {
 
   addInstrumentToList(newInstrument: Instrument){
     this.instrumentsDissay.push(newInstrument)
+    console.log(this.instrumentsDissay)
   }
   selectMusic(id: string){
-    if(this.tracksSearched){
+    if(this.tracksSearched && this.tracksSearched.length > 0){
       const foundTrack = this.tracksSearched.find(track => track.id === id)
       if(foundTrack){
         this.musicSelected = foundTrack
@@ -121,28 +156,100 @@ export class CriarDissayComponent {
   }
 
   publishDissay(){
+
   if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
       console.log("Dissay inválido")
     }else {
       console.log(this.accessToken)
-      this.serviceDissay.createDissay(this.accessToken,{
-        musicId: this.musicSelected.id,
-        name: this.titleValue,
-        description: this.descriptionValue ?? "",
-        instruments: this.instrumentsDissay,
-        tone: this.toneDissay ?? ""
-      }).pipe(catchError((code)=> {
-        return this.handleError.handleErrorCode(code)
-      })).subscribe({
-        next: (response) => {
-          this.clearFields()
-          this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
-         
-          
-        }
-      });
+      if(this.isPrivate === true){
+        this.serviceDissay.createPrivateDissay(this.accessToken,{
+          musicId: this.musicSelected.id,
+          name: this.titleValue,
+          description: this.descriptionValue ?? "",
+          instruments: this.instrumentsDissay,
+          tone: this.toneDissay ?? ""
+        }).pipe(catchError((code)=> {
+          return this.handleError.handleErrorCode(code)
+        })).subscribe({
+          next: (response) => {
+            this.clearFields()
+            this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+           
+            
+          }
+        });
+      }else{
+        this.serviceDissay.createDissay(this.accessToken,{
+          musicId: this.musicSelected.id,
+          name: this.titleValue,
+          description: this.descriptionValue ?? "",
+          instruments: this.instrumentsDissay,
+          tone: this.toneDissay ?? ""
+        }).pipe(catchError((code)=> {
+          return this.handleError.handleErrorCode(code)
+        })).subscribe({
+          next: (response) => {
+            this.clearFields()
+            this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+           
+            
+          }
+        });
+      }
+      
     } 
   }
+
+  publishPrivateNoMusic(){
+
+    if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.noMusic === false){
+        console.log("Dissay inválido")
+      }else {
+        console.log(this.accessToken)
+        this.serviceDissay.createDissay(this.accessToken,{
+          musicId: this.musicSelected?.id ?? "",
+          name: this.titleValue,
+          description: this.descriptionValue ?? "",
+          instruments: this.instrumentsDissay,
+          tone: this.toneDissay ?? ""
+        }).pipe(catchError((code)=> {
+          return this.handleError.handleErrorCode(code)
+        })).subscribe({
+          next: (response) => {
+            this.clearFields()
+            this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+           
+            
+          }
+        });
+      } 
+    }
+
+  editDissay(){
+    if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
+        console.log("Dissay inválido")
+      }else {
+        if(this.dissayEdit && this.dissayEdit._id){
+          this.serviceDissay.editDissay(this.accessToken, this.dissayEdit._id, {
+            musicId: this.musicSelected.id,
+            name: this.titleValue,
+            description: this.descriptionValue ?? "",
+            instruments: this.instrumentsDissay,
+            tone: this.toneDissay ?? ""
+          }).pipe(catchError((code)=> {
+            return this.handleError.handleErrorCode(code)
+          })).subscribe({
+            next: (response) => {
+              this.clearFields()
+              this.avisosService.mostrarAvisoTemporario("Dissay editado com sucesso!", "success")
+             
+              
+            }
+          });
+        }
+        
+      } 
+    }
 
   clearFields(){
     this.instrumentsDissay = []

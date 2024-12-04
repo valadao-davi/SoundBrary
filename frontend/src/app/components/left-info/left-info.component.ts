@@ -20,6 +20,7 @@ export class LeftInfoComponent {
   constructor(private router: Router,private serviceSpotify: ServiceMusicService){
 
   }
+  
 
   navigateAlbum(id: string) {
     this.router.navigate([`/album/${id}`])
@@ -33,6 +34,7 @@ export class LeftInfoComponent {
     if(this.isArtistPage === false){
       this.loadAlbumTracks(this.albumId!)
     }
+    console.log(this.albumItem)
   }
 
   loadAlbumTracks(id: string): void {

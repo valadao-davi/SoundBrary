@@ -18,9 +18,11 @@
 
             <div *ngIf="charCountTitle >= maxLengthTitle">Limite de caracteres excedido</div>
 
-            <div class="input_e_pesquisas">
+            <div class="input_e_pesquisas" *ngIf="!noMusic">
                 <div class="campo_input">
-                    <input placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
+                    <input *ngIf="dissayEdit === undefined" placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
+                    <input *ngIf="dissayEdit" value={{musicSelected?.name}} readonly>
+
                     <img src="../../../assets/lupa_icon_black_80.svg">
                 </div>
                 <div *ngIf="showResults" class="pesquisas">
@@ -37,8 +39,14 @@
             
 
             <div class="marcar_dissay">
-                <input type="checkbox" name="privado" id="privadoId">
+                <input (click)="activePrivate()" type="checkbox" name="privado" id="privadoId">
                 <p class="light_text">Marcar Dissay como privado</p>
+                <img src="../../../assets/info_icon.svg">
+            </div>
+
+            <div class="marcar_dissay" *ngIf="isPrivate">
+                <input (click)="activeNoMusic()" type="checkbox" name="semMusica" id="privadoId">
+                <p class="light_text">Criar Dissay sem música</p>
                 <img src="../../../assets/info_icon.svg">
             </div>
 
@@ -84,8 +92,11 @@
             <h1>Tonalidade</h1>
             <app-criar-dissay-cards [afinacao]="toneDissay"></app-criar-dissay-cards>
         </div>
-        <button (click)="publishDissay()" class="publicar_dissay">
+        <button *ngIf="!dissayEdit" (click)="publishDissay()" class="publicar_dissay">
             <h3>Publicar Dissay</h3>
             <img src="../../../assets/enviar_icon.svg"></button>
+        <button *ngIf="dissayEdit" (click)="editDissay()" class="publicar_dissay">
+                <h3>Atualizar Dissay</h3>
+        <img src="../../../assets/enviar_icon.svg"></button>
     </div>
 </div>

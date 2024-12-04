@@ -9,7 +9,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class ServiceUserService {
   private readonly API = 'http://localhost:3000/users'
-
+  
   constructor(private http: HttpClient) {}
 
   loginUser(userOrEmail: String, password: string): Observable<{accessToken: string}>{
@@ -55,6 +55,13 @@ export class ServiceUserService {
       Authorization: `Bearer ${token}`
     })
     return this.http.put<User>(`${this.API}/profile/edit`, {password: newPassword}, {headers})
+  }
+
+  setNewName(token: string, newName: string): Observable<User>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.put<User>(`${this.API}/profile/edit`, {name: newName}, {headers})
   }
 
   editUser(token: string, newUser: any): Observable<User>{

@@ -132,9 +132,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                         maxLength: 128
                     }
                 },
-
-                
-            }
+    }
         
     };
     const dissaySchema = {  
@@ -153,7 +151,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: "string",
                     description: "'name is required and is a string'",
                     minLength: 2,
-                    maxLength: 50
+                    maxLength: 165
                 },
                 musicId: {
                     bsonType: "string",
@@ -301,6 +299,10 @@ async function applySchemaValidation(db: mongodb.Db) {
                         }
                     },
                     
+                },
+                isPrivate: {
+                    bsonType: "boolean",
+                    description: "isPrivate is a parameter that verify if its private or not"
                 }
 
             }

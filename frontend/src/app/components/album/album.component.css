@@ -15,6 +15,23 @@ button {
   all: unset;
   cursor: pointer;
 }
+.slider_space{
+  width: 100%; /* Ajuste conforme necessário */
+  overflow-x: scroll; /* Permite o scroll horizontal */
+  white-space: nowrap; /* Mantém os slides em uma única linha */
+
+}
+
+.no_slider_space{
+  height: 180px;
+  align-items: center;
+  display: flex;
+  color: #808080;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 24px;
+  border-bottom: 1px solid #00000080;
+}
 .title-song{
   display: flex;
   flex-direction: row;

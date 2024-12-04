@@ -16,15 +16,26 @@ export class ProfilePicOverlayComponent {
   validUrl: boolean | null = null
   @Input() acessToken!: string;
   @Input() closeOverlay!: () => void
+  @Input() typeCard!:string;
+  nameUser: string = '';
+  validName: boolean | null = null
 
   constructor (private http: HttpClient, private userService: ServiceUserService, private handleError: ErrorHandleServiceService, private avisosService: AvisosService) {}
 
 
-  onInputChange(event: Event): void {
+  onInputChangeImage(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     console.log('Texto digitado:', inputElement.value);
     if(inputElement.value){
       this.isImageValid(inputElement.value)
+    }
+  }
+
+  onInputChangeName(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    console.log('Texto digitado:', inputElement.value);
+    if(inputElement.value){
+      this.isNameValid(inputElement.value)
     }
   }
 
@@ -40,6 +51,28 @@ export class ProfilePicOverlayComponent {
         this.closeOverlay()
       }
     })
+  }
+
+  editName(){
+    this.userService.setNewName(this.acessToken, this.nameUser).pipe(
+      catchError((code)=> {
+        return this.handleError.handleErrorCode(code)
+      })
+    ).subscribe({
+      next: () => {
+        this.avisosService.mostrarAvisoTemporario("Nome editado com sucesso!", "success")
+        this.closeOverlay()
+      }
+    })
+  }
+
+  isNameValid(name: string){
+    console.log('lendo')
+    if(name.length === 0 || name.length > 25){
+      this.validName = false
+    }else{
+      this.validName = true
+    }    
   }
 
   async isImageValid(url: string): Promise<void> {

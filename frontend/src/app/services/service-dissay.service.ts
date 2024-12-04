@@ -16,11 +16,14 @@ export class ServiceDissayService {
   constructor(private http: HttpClient) { }
 
   getAllDissays(): Observable<Dissay[]>{
-    return this.http.get<Dissay[]>(`${this.API}`)
+    return this.http.get<Dissay[]>(`${this.API}/publicDissays`)
   }
 
   addInstrument(instrument: Instrument): void {
     this.instruments.push(instrument);
+  }
+  setList(instruments: Instrument[]): void {
+    this.instruments = instruments
   }
   updateInstrument(instrument: Instrument, index:number): void{
     this.instruments[index] = instrument
@@ -68,10 +71,23 @@ export class ServiceDissayService {
     return this.http.post<any>(`${this.API}/createDissay/${dissayData.musicId}`,  dissayData, {headers})
   }
 
+  createPrivateDissay(token: string,dissayData: any): Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.post<any>(`${this.API}/privateDissay/${dissayData.musicId}`,  dissayData, {headers})
+  }
   deleteDissay(token: string, dissayId: string): Observable<void>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     })
     return this.http.delete<void>(`${this.API}/deleteDissay/${dissayId}`, {headers})
+  }
+
+  editDissay(token: string, dissayId: string, dissayData: any): Observable<void>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.put<void>(`${this.API}/editDissay/${dissayId}`, dissayData, {headers})
   }
 }
