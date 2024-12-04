@@ -57,7 +57,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: ["string", "null"],
                     description: "Image is an optional string parameter or null",
                     minLength: 8,
-                    maxLength: 128
+                    maxLength: 300
                 },
                 dissaySaved: {
                     bsonType: ["array", "null"],
