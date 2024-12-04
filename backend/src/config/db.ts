@@ -132,9 +132,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                         maxLength: 128
                     }
                 },
-
-                
-            }
+    }
         
     };
     const dissaySchema = {  
@@ -301,6 +299,10 @@ async function applySchemaValidation(db: mongodb.Db) {
                         }
                     },
                     
+                },
+                isPrivate: {
+                    bsonType: "boolean",
+                    description: "isPrivate is a parameter that verify if its private or not"
                 }
 
             }

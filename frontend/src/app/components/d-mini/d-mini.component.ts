@@ -19,6 +19,7 @@ export class DMiniComponent {
   @Input() userName!: string
   @Input() idDissay!: string;
   @Input() rateNumber: number = 0.0
+  @Input() isPrivate: boolean = false;
 
 
   namePerson!: string
