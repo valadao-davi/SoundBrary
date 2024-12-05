@@ -57,8 +57,9 @@ commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Re
         const findUser = await collections?.users?.findOne({userName: userName})
         const findDissay = await collections?.dissays?.findOne({_id: new ObjectId(dissayId)})
         if(findUser && findDissay){
+            const commentId = new ObjectId()
             const comment = {
-                _id: new ObjectId(),
+                _id: commentId,
                 userName: userName,
                 text: req.body.text,
                 date: new Date()
@@ -67,9 +68,10 @@ commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Re
                 title: 'Um usuário comentou no seu Dissay',
                 type: 'Comment',
                 idObject: `${findDissay._id}`,
-                idOptional: `${findUser._id}`
+                idOptional: `${commentId}`
             }
             const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}}, { returnDocument: "after" })
+           
             await collections?.users?.findOneAndUpdate({userName: findDissay.userName}, {$push: {notifications: notification}})
             if(editedDissay){
                 return res.status(200).json({editedDissay})
@@ -148,6 +150,13 @@ commentRouter.delete("/deleteComment/:id", auth, async(req: CustomRequest, res: 
                 { _id: findDissay._id },
                 { $pull: { comments: { _id: commentId, userName: userName } } }
             );
+            const removeOfUser = await collections?.users?.findOneAndUpdate({userName: userName}, {$pull: {notifications: {idObject: commentId}}}, {returnDocument: 'after'})
+            if(removeOfUser?.notifications?.length === 0){
+                await collections?.users?.updateOne(
+                    { userName: userName },
+                    { $unset: { notifications: "" } }
+                );
+            }
             if(deleteComment?.acknowledged && deleteComment?.modifiedCount > 0){
                 res.status(200).json({ message: "Comentário deletado com sucesso" });
             }else{

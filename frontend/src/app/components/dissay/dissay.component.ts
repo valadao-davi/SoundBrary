@@ -45,6 +45,7 @@ export class DissayComponent {
   ownerDissay: boolean = false;
   userImage!: string;
   allowed: boolean = false;
+  commentText: string = ''
 
   constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
@@ -266,6 +267,7 @@ export class DissayComponent {
         ).subscribe(comment => {
           this.comments.push(comment)
           this.loadDissay(this.id!)
+          this.commentText = ''
           this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
       }
