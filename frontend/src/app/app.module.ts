@@ -38,8 +38,6 @@ import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrume
 import { NotificationsComponent } from './overlays/notifications/notifications.component';
 import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profile-pic-overlay.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +80,7 @@ import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profi
     ReactiveFormsModule,
     FormsModule,
     OverlayModule,
-    PortalModule
+    PortalModule,
   ],
   providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent]

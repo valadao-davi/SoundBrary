@@ -39,6 +39,8 @@ export class CriarDissayComponent {
   isPrivate: boolean = false
   noMusic: boolean = false;
 
+  showTooltip = false;
+
   constructor(private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
       this.getTracksQuery(value)

@@ -251,4 +251,15 @@ button {
     z-index: 9999; /* Garante que o overlay fique acima de outros elementos */
   }
 
-
+.info_icon {
+    position: relative;
+}
+.informacao1 {
+    display: none;
+}
+.info_icon:hover .informacao1 {
+    display: block;
+    padding: 8px;
+    background-color: #c9c9c9;
+    color: black;
+}
