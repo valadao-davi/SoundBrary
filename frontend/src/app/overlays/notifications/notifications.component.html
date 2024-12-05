@@ -16,7 +16,7 @@
             <button *ngIf="notification.type === 'Comment'" (click)="navigateToDissay(notification.idObject)"><div class="notificacao">
               <img *ngIf="notification.idOptional" id="img_music" [src]="linkImagesUser[i]">
               <div class="textos">
-                  <h3>Um usuário comentou: {{commentTextList[i]}}</h3>
+                  <h3>{{notification.title}} {{commentTextList[i]}}</h3>
               </div>
           </div>
           </button>
