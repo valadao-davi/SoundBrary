@@ -4,8 +4,10 @@ import { forkJoin } from 'rxjs';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { Music } from 'src/app/layouts/Music';
 import { Notiffication } from 'src/app/layouts/Notification';
+import { ServiceCommentService } from 'src/app/services/service-comment.service';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
   selector: 'app-notifications',
@@ -16,32 +18,72 @@ export class NotificationsComponent {
   @Input() listReceived: Notiffication[] = []
   listNotificationDissays: Notiffication[] = []
   listNotificationComments: Notiffication[] = []
-  linkImagesMusic!: string[]
+  linkImagesMusic: string[] = []
+  linkImagesUser: string[] = []
+  commentTextList: string[] = []
   dataLoad: boolean = false
 
-  constructor(private serviceMusic: ServiceMusicService, private router: Router){}
+  constructor(private serviceMusic: ServiceMusicService, private router: Router, private serviceComment: ServiceCommentService, private serviceUser: ServiceUserService){}
   ngOnInit(){
  
     this.listNotificationDissays = this.listReceived.filter(i => i.type === 'Dissay')
     this.listNotificationComments = this.listReceived.filter(i => i.type === 'Comment')
     if(this.listNotificationDissays.length > 0){
       this.listNotificationDissays.map(i => {
-        this.addImageToList(i.idOptional)
+        this.addImageToListMusic(i.idOptional)
       })
+    }else{
+      this.dataLoad = true
+    }
+    if(this.listNotificationComments.length > 0){
+      this.listNotificationComments.map(i => {
+        this.addImageToListUser(i.idOptional)
+      })
+    }else{
+      this.dataLoad = true
     }
   }
 
 
 
-  addImageToList(id: string) {
+  addImageToListMusic(id?: string) {
 
     if(id){
       this.serviceMusic.getMusicById(id).subscribe(item => {
         if(item.albumImages){
           const musicImage = item.albumImages[2].link
           this.linkImagesMusic.push(musicImage)
+          if (this.linkImagesMusic.length === this.listNotificationDissays.length) {
+            this.dataLoad = true;
+          }
         }
       })
+      
+    }
+    
+  }
+
+  addImageToListUser(id?: string) {
+
+    if(id){
+      this.serviceComment.getIdComment(id).subscribe(item => {
+        if(item.userName){
+          const userName = item.userName
+          const text = item.text
+          console.log(userName, text)
+          this.serviceUser.getUserName(userName).subscribe( i => {
+            if(i.image){
+              this.linkImagesUser.push(i.image)
+              this.commentTextList.push(text)
+              this.dataLoad = true
+            }else{
+              this.linkImagesUser.push('../../../assets/icone_0.png')
+              this.dataLoad = true
+            }
+          })
+        }
+      })
+      
     }
     
   }
