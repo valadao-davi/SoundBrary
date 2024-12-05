@@ -18,7 +18,7 @@ export class DissayItemComponent {
   @Input() userName!: string
   @Input() desc: string = "Sem descrição"
   @Input() rateNumber: number = 0.0
-  @Input() dissayId: string = ''
+  @Input() dissayId!: string;
   userImage: string = ''
 
   constructor(private router: Router,private serviceUser: ServiceUserService){}
@@ -35,6 +35,7 @@ export class DissayItemComponent {
     console.log(this.name)
   }
   navigateDissay(id: string) {
-    this.router.navigate([`/dissay/${id}`]);
+    console.log(id)
+    this.router.navigate([`/dissay/${id}`])
   }
 }

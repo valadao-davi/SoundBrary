@@ -1,13 +1,13 @@
-<div class="master_layout" *ngIf="listReceived && dataLoad" >
+<div class="master_layout" *ngIf="listReceived" >
     <div class="triangle"></div>
     <div class="notificacoes_layout">
         <h3 class="titulo">Notificações</h3>
         <div class="linha"></div>
         <div *ngFor="let notification of listReceived">
-          <button (click)="navigateMusic(returnIdMusic(notification.idObject))"><div class="notificacao" *ngIf="notification.type === 'Dissay'" >
-            <img id="img_music" [src]="returnImageBaseById(notification.idObject)">
+          <button *ngIf="notification.type === 'Dissay'" (click)="navigateToDissay(notification.idObject)"><div class="notificacao">
+            <img *ngIf="notification.idOptional" id="img_music" [src]="returnImageBaseById(notification.idOptional)">
             <div class="textos">
-                <h3>Uma música que você salvou foi publicada</h3>
+                <h3>Sua música salva teve um Dissay publicado!</h3>
             </div>
         </div></button>
         </div>

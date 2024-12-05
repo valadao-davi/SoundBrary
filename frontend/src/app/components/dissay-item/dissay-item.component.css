@@ -71,16 +71,18 @@
   display: flex;
   gap: 48px;
   width: 100%;
+  justify-content: space-between;
 
 }
 
 .instrumentos {
   display: flex;
   gap: 16px;
-  width: fit-content  ;
+  width: fit-content ;
 }
 
 .texto_dissay {
+  width: 50%;
   font-size: 16px;
   display: -webkit-box;
   -webkit-line-clamp: 4; /* Limita a 4 linhas */
@@ -95,4 +97,36 @@ button {
   width: 100%;
   display: flex;
   
+}
+
+.instrumento_mini {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  border-radius: 8px;
+  width: fit-content;
+  background-color: white;
+}
+
+.instrumento_mini img {
+  height: 48px;
+  width: 48px;
+}
+
+.instrumento_mini h5 {
+  font-weight: 700;
+  max-width: 64px;
+  text-align: center;
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;
+}
+
+.instrumento_mini h1 {
+  height: 48px;
+  width: 48px;
+  align-items: center;
 }

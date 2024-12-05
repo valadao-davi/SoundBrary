@@ -111,6 +111,7 @@ export class AlbumComponent {
         (results) => {
           this.dissaysAlbums = results.flat()
           this.dissaysAlbums = this.dissaysAlbums.map(dissay => ({
+            _id: dissay._id,
             name: dissay.name,
             userName: dissay.userName,
             musicId: dissay.musicId,

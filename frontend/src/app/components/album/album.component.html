@@ -35,7 +35,7 @@
             <h1>{{musics.orderTrack}}.  {{musics.name}}</h1>
             <ng-container *ngIf="hasDissaysForMusic(musics.id); else noDissay">
               <ng-container *ngFor="let dissay of dissaysAlbums">
-                <app-dissay-item [dissayData]="dissay"></app-dissay-item>
+                <app-dissay-item [dissayId]="dissay._id!" [dissayData]="dissay"></app-dissay-item>
               </ng-container> 
             </ng-container>
             <ng-template  #noDissay>

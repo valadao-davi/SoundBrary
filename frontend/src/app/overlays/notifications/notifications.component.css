@@ -16,8 +16,13 @@
     overflow: hidden;
     margin-top: -10x;
 }
-#id_music{
-  
+#img_music{
+  height: 80px;
+  border-radius: 4px;
+}
+
+button {
+    padding: 0px;
 }
 .titulo {
     margin: 24px 0px 24px 32px;
@@ -49,7 +54,7 @@
     align-items: center;
 }
 
-.textos > * {
+.textos {
     width: 100%;
     box-sizing: border-box;
     display: -webkit-box;
@@ -58,3 +63,10 @@
     overflow: hidden; /* Oculta o texto que ultrapassa */
     text-overflow: ellipsis; /* Adiciona "..." se o texto for cortado */
   }
+h3 {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    justify-content: start;
+    font-weight: 600;
+}

@@ -56,6 +56,7 @@ export class CriarDissayComponent {
         this.serviceSpotify.getMusicById(params['value']).subscribe(music => {
           this.musicSelected = music
           this.titleValue = 'Dissay ' + music.name
+          this.searchQuery = music.name
 
         })
       }else{

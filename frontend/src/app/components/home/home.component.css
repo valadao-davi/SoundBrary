@@ -24,9 +24,10 @@
     justify-content: space-between;
     width: auto;
     height: min-content;
-    background-color: #c8e4fc;
+    background-color: #acf7b8;
     align-items: center;
     border-radius: 12px;
+    cursor: pointer;
 }
 
 #banner_text{
@@ -37,6 +38,7 @@
 
 #banner_text h2 {
     width: 400px;
+    font-weight: 400;
 }
 
 #banner_icons {

@@ -44,8 +44,8 @@
         </div>
       </div>
 
-    <div *ngIf="listDissays.length === 0">
-      <h1>Contribua com a comunidade criando um dissay!</h1>
+    <div class="sem_dissay" *ngIf="listDissays.length === 0">
+      <h1>Contribua com a comunidade criando um Dissay para esta música!</h1>
       <button (click)="navigateCreate(musicItem.id)" id="btn_criar_dissay">
         <img src="./assets/add_icon.svg">
         <h5>Crie um Dissay</h5>

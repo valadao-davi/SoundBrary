@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { Coment } from 'src/app/layouts/Comment';
@@ -15,7 +15,7 @@ import { ServiceUserService } from 'src/app/services/service-user.service';
 @Component({
   selector: 'app-dissay',
   templateUrl: './dissay.component.html',
-  styleUrls: ['./dissay.component.css']
+  styleUrls: ['./dissay.component.css'],
 })
 export class DissayComponent {
 
@@ -45,6 +45,8 @@ export class DissayComponent {
   ownerDissay: boolean = false;
   userImage!: string;
   allowed: boolean = false;
+  commentText: string = ''
+  answerText: string = ''
 
   constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
@@ -196,12 +198,7 @@ export class DissayComponent {
     })
   }
 
-  getImageUsername(username: string): string {
-    this.serviceUser.getUserName(username).subscribe(user => {
-      this.userImage = user.image ?? ""
-    })
-    return this.userImage
-  }
+
 
   adjustHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto'; // Reseta a altura
@@ -266,16 +263,14 @@ export class DissayComponent {
         ).subscribe(comment => {
           this.comments.push(comment)
           this.loadDissay(this.id!)
+          this.commentText = ''
           this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
       }
 
     }
   }
-  getUserNameByIdParent(id: string): string | undefined {
-    const comment = this.comments.find(c => c._id === id);
-    return comment ? comment.userName : undefined;
-  }
+ 
 
   publicarResposta(index: number,idPai: string, texto: string, idResposta?:string) {
     if(texto) {

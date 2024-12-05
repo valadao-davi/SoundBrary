@@ -61,6 +61,7 @@ export class MusicaComponent {
     this.dissayService.getDissayByMusic(id).subscribe(dissays => {
       this.listDissays = dissays
       this.listDissays = this.listDissays.map(dissay => ({
+        _id: dissay._id,
         name: dissay.name,
         userName: dissay.userName,
         musicId: dissay.musicId,
