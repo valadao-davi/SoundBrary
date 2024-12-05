@@ -145,13 +145,15 @@ commentRouter.delete("/deleteComment/:id", auth, async(req: CustomRequest, res: 
         const findUser = await collections?.users?.findOne({userName: userName})
         const findDissay = await collections?.dissays?.findOne({"comments._id": new ObjectId(commentId)})
        if(findUser && findDissay){
+            const userOwner = findDissay.userName
             const deleteReplies = await collections?.dissays?.updateOne({_id: findDissay._id}, {$pull: {comments:{idParent: commentId.toString()}}})
             const deleteComment = await collections?.dissays?.updateOne(
                 { _id: findDissay._id },
                 { $pull: { comments: { _id: commentId, userName: userName } } }
             );
-            const removeOfUser = await collections?.users?.findOneAndUpdate({userName: userName}, {$pull: {notifications: {idObject: commentId}}}, {returnDocument: 'after'})
-            if(removeOfUser?.notifications?.length === 0){
+            const removeOfUserOwner = await collections?.users?.findOneAndUpdate({userName: userOwner}, {$pull: {notifications: {idObject: commentId}}}, {returnDocument: 'after'})
+            if(removeOfUserOwner?.notifications?.length === 0){
+                console.log("Deletado da lista do usuario")
                 await collections?.users?.updateOne(
                     { userName: userName },
                     { $unset: { notifications: "" } }

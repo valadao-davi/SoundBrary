@@ -12,6 +12,12 @@ export class ServiceCommentService {
 
   constructor(private http: HttpClient) { }
 
+  getIdComment(id: string): Observable<Coment>{
+
+    return this.http.get<Coment>(`${this.API}/getCommentId/${id}`)
+  }
+
+
   postComment(token: string, id: string, content: string): Observable<Coment>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

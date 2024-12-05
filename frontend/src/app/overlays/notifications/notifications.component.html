@@ -1,16 +1,27 @@
-<div class="master_layout" *ngIf="listReceived" >
+<div class="master_layout" *ngIf="listReceived && dataLoad" >
     <div class="triangle"></div>
     <div class="notificacoes_layout">
         <h3 class="titulo">Notificações</h3>
         <div class="linha"></div>
-        <div *ngFor="let notification of listReceived">
+        <div *ngFor="let notification of listNotificationDissays; let i = index">
           <button *ngIf="notification.type === 'Dissay'" (click)="navigateToDissay(notification.idObject)"><div class="notificacao">
-            <img *ngIf="notification.idOptional" id="img_music" [src]="returnImageBaseById(notification.idOptional)">
+            <img *ngIf="notification.idOptional" id="img_music" [src]="linkImagesMusic[i]">
             <div class="textos">
                 <h3>Sua música salva teve um Dissay publicado!</h3>
             </div>
-        </div></button>
         </div>
+        </button>
+        </div>
+        <div *ngFor="let notification of listNotificationComments; let i = index">
+            <button *ngIf="notification.type === 'Comment'" (click)="navigateToDissay(notification.idObject)"><div class="notificacao">
+              <img *ngIf="notification.idOptional" id="img_music" [src]="linkImagesUser[i]">
+              <div class="textos">
+                  <h3>{{notification.title}} {{commentTextList[i]}}</h3>
+              </div>
+          </div>
+          </button>
+          </div>
+        
 
     </div>
 </div>
