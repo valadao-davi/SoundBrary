@@ -14,4 +14,6 @@ export interface Dissay {
   totalRate?: number;
   avaliations?: Avaliation[];
   comments?: Coment[];
+  isPrivate: boolean;
+
 }

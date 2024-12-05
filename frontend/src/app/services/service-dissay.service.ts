@@ -16,7 +16,7 @@ export class ServiceDissayService {
   constructor(private http: HttpClient) { }
 
   getAllDissays(): Observable<Dissay[]>{
-    return this.http.get<Dissay[]>(`${this.API}`)
+    return this.http.get<Dissay[]>(`${this.API}/publicDissays`)
   }
 
   addInstrument(instrument: Instrument): void {
@@ -71,6 +71,12 @@ export class ServiceDissayService {
     return this.http.post<any>(`${this.API}/createDissay/${dissayData.musicId}`,  dissayData, {headers})
   }
 
+  createPrivateDissay(token: string,dissayData: any): Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.post<any>(`${this.API}/privateDissay/${dissayData.musicId}`,  dissayData, {headers})
+  }
   deleteDissay(token: string, dissayId: string): Observable<void>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

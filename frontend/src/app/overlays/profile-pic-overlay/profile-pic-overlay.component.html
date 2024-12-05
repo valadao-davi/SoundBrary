@@ -1,4 +1,28 @@
-<div class="profile_pic_layout">
+<div class="profile_pic_layout" *ngIf="typeCard === 'Image'">
+    <h1>Escolha um link url pra sua imagem de perfil</h1>
+    <img class="sua_imagem" [src]="link" alt="">
+    <div class="campos">
+        <div class="campo">
+            <input (input)="onInputChangeImage($event)" [(ngModel)]="link" type="text">
+            <button *ngIf="link.length > 0 && validUrl" (click)="saveImage()"><img  src="../../../assets/check_verde.svg"></button>
+        </div>
+        <h3 *ngIf=" link.length > 0 && validUrl == false">O link inserido não é válido</h3>
+    </div>
+</div>
+
+<div class="profile_pic_layout" *ngIf="typeCard === 'Name'">
+    <h1>Escolha um novo nome de usuário</h1>
+    <div class="campos">
+        <div class="campo">
+            <input (input)="onInputChangeName($event)" [(ngModel)]="nameUser" type="text">
+            <button *ngIf="validName" (click)="editName()"><img  src="../../../assets/check_verde.svg"></button>
+        </div>
+        <h3 *ngIf="validName == false">O nome inserido não é válido</h3>
+    </div>
+</div>
+
+<!-- 
+<div class="profile_pic_layout" *ngIf="typeCard === 'Password'">
     <h1>Escolha um link url pra sua imagem de perfil</h1>
     <img class="sua_imagem" [src]="link" alt="">
     <div class="campos">
@@ -8,4 +32,4 @@
         </div>
         <h3 *ngIf=" link.length > 0 && validUrl == false">O link inserido não é válido</h3>
     </div>
-</div>
+</div> -->

@@ -110,6 +110,16 @@ export class AlbumComponent {
       forkJoin(items).subscribe(
         (results) => {
           this.dissaysAlbums = results.flat()
+          this.dissaysAlbums = this.dissaysAlbums.map(dissay => ({
+            name: dissay.name,
+            userName: dissay.userName,
+            musicId: dissay.musicId,
+            desc: dissay.desc ?? "",
+            instruments: dissay.instruments,
+            createdAt: new Date(dissay.createdAt).toLocaleDateString(),
+            totalRate: dissay.totalRate ?? 0.0,
+            isPrivate: dissay.isPrivate
+          }))
         }
       )
     }

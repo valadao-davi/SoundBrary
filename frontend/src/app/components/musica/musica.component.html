@@ -37,7 +37,9 @@
 
       <div *ngIf="listDissays!.length > 0">
           <div *ngFor="let dissays of listDissays" class="lista_dissays">
-            <app-dissay-item [name]="dissays.name" [userName]="dissays.userName" [date]="dissays.createdAt" [rateNumber]="dissays.totalRate ?? 0.0" [desc]="dissays.desc ?? 'Sem descrições' "></app-dissay-item>
+            <app-dissay-item 
+            [dissayData]="dissays"
+            ></app-dissay-item>
           </div>
         </div>
       </div>

@@ -9,23 +9,26 @@
   
       <div class="imagem" [ngClass]="{'space_between': isOwnProfile, 'centro': !isOwnProfile}">
         <img *ngIf="!isOwnProfile && otherUser.image"  class="img_perfil" [src]="otherUser.image">
-        <button (click)="openImageSetter()" *ngIf="isOwnProfile">
+        <img *ngIf="!isOwnProfile && otherUser.image === undefined"  class="grey_circle" src="../../../assets/icon_0.png">
+
+        <button (click)="openImageSetter('Image')" *ngIf="isOwnProfile">
+          <img class="grey_circle" *ngIf="myUser.image === undefined" src="../../../assets/icon_0.png" alt="" >
           <img class="img_perfil" *ngIf="myUser.image" [src]="myUser.image">
         </button>
-        <button (click)="openImageSetter()" ><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
+        <button (click)="openImageSetter('Image')" ><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
       </div>
   
       <div class="nome profile_content" [ngClass]="{'space_between': isOwnProfile, 'centro': !isOwnProfile}">
         <h1 *ngIf="isOwnProfile">{{myUser.name}}</h1>
         <h1 *ngIf="!isOwnProfile">{{otherUser.name}}</h1>
-        <button><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
+        <button (click)="openImageSetter('Name')"><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
       </div>
       <div  *ngIf="isOwnProfile" class="email profile_content">
-        <button><h3>Email: {{myUser.email}}</h3></button>
+        <h3>Email: {{myUser.email}}</h3>
       </div>
       <div *ngIf="isOwnProfile" class="senha profile_content">
         <button><h3>Alterar senha</h3></button>
-        <button><img class="img_edit" src="../../../assets/edit_icon.svg"></button>
+        <button (click)="openImageSetter('Password')"><img class="img_edit" src="../../../assets/edit_icon.svg"></button>
       </div>
       <div *ngIf="isOwnProfile" class="agradecimento profile_content">
         <button><h3>Receba agradecimentos!</h3></button>
@@ -149,5 +152,5 @@
 </div>
 
 <ng-template cdkPortal>
-  <app-profile-pic-overlay [link]="myUser.image ? myUser.image : ''" [closeOverlay]="closeCard.bind(this, overlayRef)" [acessToken]="accessToken"></app-profile-pic-overlay>
+  <app-profile-pic-overlay [typeCard]="typeCard" [link]="myUser.image ? myUser.image : ''" [closeOverlay]="closeCard.bind(this, overlayRef)" [acessToken]="accessToken"></app-profile-pic-overlay>
  </ng-template>

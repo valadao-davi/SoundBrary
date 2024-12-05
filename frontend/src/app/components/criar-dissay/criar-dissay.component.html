@@ -18,7 +18,7 @@
 
             <div *ngIf="charCountTitle >= maxLengthTitle">Limite de caracteres excedido</div>
 
-            <div class="input_e_pesquisas">
+            <div class="input_e_pesquisas" *ngIf="!noMusic">
                 <div class="campo_input">
                     <input *ngIf="dissayEdit === undefined" placeholder="Procure sua música..." type="text" [(ngModel)]="searchQuery" (input)="onSearchChange(searchQuery)">
                     <input *ngIf="dissayEdit" value={{musicSelected?.name}} readonly>
@@ -39,8 +39,14 @@
             
 
             <div class="marcar_dissay">
-                <input type="checkbox" name="privado" id="privadoId">
+                <input (click)="activePrivate()" type="checkbox" name="privado" id="privadoId">
                 <p class="light_text">Marcar Dissay como privado</p>
+                <img src="../../../assets/info_icon.svg">
+            </div>
+
+            <div class="marcar_dissay" *ngIf="isPrivate">
+                <input (click)="activeNoMusic()" type="checkbox" name="semMusica" id="privadoId">
+                <p class="light_text">Criar Dissay sem música</p>
                 <img src="../../../assets/info_icon.svg">
             </div>
 

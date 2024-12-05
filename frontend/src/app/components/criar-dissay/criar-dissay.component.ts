@@ -36,6 +36,8 @@ export class CriarDissayComponent {
   toneDissay!: string;
   dissayEdit!: Dissay;
   accessToken!: string;
+  isPrivate: boolean = false
+  noMusic: boolean = false;
 
   constructor(private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
@@ -80,6 +82,20 @@ export class CriarDissayComponent {
 
     })
     console.log(this.instrumentsDissay)
+  }
+
+  activePrivate(){
+    this.isPrivate = !this.isPrivate
+    if(this.isPrivate === false && this.noMusic){
+      this.noMusic = false
+    }
+  }
+
+  activeNoMusic(){
+    if(this.isPrivate === true){
+      this.noMusic = !this.noMusic
+      console.log(this.noMusic)
+    }
   }
 
   getTracksQuery(query: string): void {
@@ -140,28 +156,74 @@ export class CriarDissayComponent {
   }
 
   publishDissay(){
+
   if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
       console.log("Dissay inválido")
     }else {
       console.log(this.accessToken)
-      this.serviceDissay.createDissay(this.accessToken,{
-        musicId: this.musicSelected.id,
-        name: this.titleValue,
-        description: this.descriptionValue ?? "",
-        instruments: this.instrumentsDissay,
-        tone: this.toneDissay ?? ""
-      }).pipe(catchError((code)=> {
-        return this.handleError.handleErrorCode(code)
-      })).subscribe({
-        next: (response) => {
-          this.clearFields()
-          this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
-         
-          
-        }
-      });
+      if(this.isPrivate === true){
+        this.serviceDissay.createPrivateDissay(this.accessToken,{
+          musicId: this.musicSelected.id,
+          name: this.titleValue,
+          description: this.descriptionValue ?? "",
+          instruments: this.instrumentsDissay,
+          tone: this.toneDissay ?? ""
+        }).pipe(catchError((code)=> {
+          return this.handleError.handleErrorCode(code)
+        })).subscribe({
+          next: (response) => {
+            this.clearFields()
+            this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+           
+            
+          }
+        });
+      }else{
+        this.serviceDissay.createDissay(this.accessToken,{
+          musicId: this.musicSelected.id,
+          name: this.titleValue,
+          description: this.descriptionValue ?? "",
+          instruments: this.instrumentsDissay,
+          tone: this.toneDissay ?? ""
+        }).pipe(catchError((code)=> {
+          return this.handleError.handleErrorCode(code)
+        })).subscribe({
+          next: (response) => {
+            this.clearFields()
+            this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+           
+            
+          }
+        });
+      }
+      
     } 
   }
+
+  publishPrivateNoMusic(){
+
+    if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.noMusic === false){
+        console.log("Dissay inválido")
+      }else {
+        console.log(this.accessToken)
+        this.serviceDissay.createDissay(this.accessToken,{
+          musicId: this.musicSelected?.id ?? "",
+          name: this.titleValue,
+          description: this.descriptionValue ?? "",
+          instruments: this.instrumentsDissay,
+          tone: this.toneDissay ?? ""
+        }).pipe(catchError((code)=> {
+          return this.handleError.handleErrorCode(code)
+        })).subscribe({
+          next: (response) => {
+            this.clearFields()
+            this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
+           
+            
+          }
+        });
+      } 
+    }
 
   editDissay(){
     if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){

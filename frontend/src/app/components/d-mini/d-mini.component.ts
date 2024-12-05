@@ -28,7 +28,7 @@ export class DMiniComponent {
   constructor(private router: Router,private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){}
 
   navigateDissay(id: string) {
-    this.router.navigate([`/dissay/${id}`]);
+    this.router.navigate([`/dissay/${id}`])
   }
 
   ngOnInit(){

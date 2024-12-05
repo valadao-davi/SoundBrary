@@ -9,6 +9,8 @@
 
 .topo{
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .topo_textos {
@@ -19,7 +21,9 @@
 }
 
 .topo_textos h3 {
-  width: 85%;
+  width: 100%;
+  text-align: start;
+
 }
 
 .info_perfil {
@@ -85,4 +89,10 @@
   text-overflow: ellipsis;
   line-height: 1.2em; /* Ajuste a altura da linha para evitar que uma 5ª linha apareça */
   max-height: calc(1.2em * 4);
+}
+
+button {
+  width: 100%;
+  display: flex;
+  
 }

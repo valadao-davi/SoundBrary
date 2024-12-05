@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { Coment } from 'src/app/layouts/Comment';
@@ -44,6 +44,7 @@ export class DissayComponent {
   timeoutAviso: any;
   ownerDissay: boolean = false;
   userImage!: string;
+  allowed: boolean = false;
 
   constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
@@ -63,6 +64,7 @@ export class DissayComponent {
 
 
   }
+
 
   loadDissay(id: string) {
     this.serviceDissay.getDissayById(id).subscribe(dissay => {
@@ -84,11 +86,14 @@ export class DissayComponent {
 
       this.loadMusic(this.dissayData.musicId);
 
+
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;
         if(this.userData && this.userDissayData){
-          this.verifyDissayCreatedByUser(this.userData, this.userDissayData); // Verifica o ownership aqui mesmo
-
+          this.verifyDissayCreatedByUser(this.userData, this.userDissayData, dissay.isPrivate); // Verifica o ownership aqui mesmo
+        }else if(dissay.isPrivate && !this.userData){
+          this.router.navigate(['/home'])
+          this.allowed = false
         }
       });
     });
@@ -105,17 +110,29 @@ export class DissayComponent {
 
 
   //Verifica se sao os mesmos usuarios
-  verifyDissayCreatedByUser(userData: User, userOwner: User){
+  verifyDissayCreatedByUser(userData: User, userOwner: User, isPrivate: boolean){
+    if(isPrivate){
+      if((userData && userOwner) && userData.userName === userOwner.userName){
+        this.ownerDissay = true
+        this.allowed = true
+        console.log("Usuario privado visualizando")
+      }else{
+        console.log("Nao era pra estar visualizando")
+        this.ownerDissay = false
+        this.router.navigate(['/home'])
 
-
-    if((userData && userOwner) && userData.userName === userOwner.userName){
-      console.log('Id do usuário visualizando: ', userData._id)
-      console.log('Id do usuário criador: ', userOwner._id)
-      this.ownerDissay = true
+      }
     }else{
-      this.ownerDissay = false
+      if((userData && userOwner) && userData.userName === userOwner.userName ){
+        this.ownerDissay = true
+        this.allowed = true
+      }else{
+        this.ownerDissay = false
+        this.allowed = false
+      }
     }
   }
+
 
   loadMusic(id: string){
     this.serviceSpotify.getMusicById(id).subscribe(music => {
