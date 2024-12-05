@@ -206,7 +206,19 @@ dissayRouter.delete('/deleteDissay/:id', auth, async(req: CustomRequest, res: Re
         
         if(dissayId && findUser){
             const result = await collections?.dissays?.findOneAndDelete({_id: new ObjectId(dissayId)})
-            const removeOfUser = await collections?.users?.findOneAndUpdate({userName: userName}, {$pull: {dissaysCreated: dissayId, notifications: {idObject: dissayId}}})
+            const removeOfUser = await collections?.users?.findOneAndUpdate({userName: userName}, {$pull: {dissaysCreated: dissayId, notifications: {idObject: dissayId}}}, {returnDocument: 'after'})
+            if(removeOfUser?.dissaysCreated?.length === 0){
+                await collections?.users?.updateOne(
+                    { userName: userName },
+                    { $unset: { dissaysCreated: "" } }
+                );
+            }
+            if(removeOfUser?.notifications?.length === 0){
+                await collections?.users?.updateOne(
+                    { userName: userName },
+                    { $unset: { notifications: "" } }
+                );
+            }
             if(result && removeOfUser){
                 return res.status(200).json({message: "Dissay deletado com sucesso"})
             }

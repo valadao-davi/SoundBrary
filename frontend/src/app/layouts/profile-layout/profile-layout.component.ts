@@ -27,9 +27,11 @@ export class ProfileLayoutComponent {
   myUser!: User
   isOwnProfile: boolean = false
   listIdsDissaysCreated!: string[]
+
   overlayRef!: OverlayRef;
+
   typeCard: string = '';
-  
+
 
   listIdsString: { musics: string[], albums: string[], artists: string[], dissays: string[]} = {
     musics: [],
@@ -66,7 +68,7 @@ export class ProfileLayoutComponent {
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
-    
+
     if(this.accessToken){
       this.serviceUser.getUser(this.accessToken).pipe(
         catchError(error => {
@@ -114,7 +116,7 @@ export class ProfileLayoutComponent {
           this.listIdsString.dissays = this.myUser.dissaySaved ?? []
           this.listIdsDissaysCreated = this.myUser.dissaysCreated ?? []
           this.getIdsObjects()
-         
+
         }else{
           this.getUserName(query)
           console.log("usuario pesquisado")
@@ -173,7 +175,6 @@ export class ProfileLayoutComponent {
       )
     }
     if(this.listIdsDissaysCreated.length > 0){
-      console.log(this.listIdsDissaysCreated)
       const items = this.listIdsDissaysCreated.map(id =>
         this.serviceDissay.getDissayById(id)
     )

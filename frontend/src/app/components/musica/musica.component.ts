@@ -68,6 +68,7 @@ export class MusicaComponent {
         instruments: dissay.instruments,
         createdAt: new Date(dissay.createdAt).toLocaleDateString(),
         totalRate: dissay.totalRate ?? 0.0,
+        isPrivate: dissay.isPrivate
       }))
       console.log(this.listDissays)
     })
