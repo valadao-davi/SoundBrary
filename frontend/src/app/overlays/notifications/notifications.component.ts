@@ -14,36 +14,35 @@ import { ServiceMusicService } from 'src/app/services/service-music.service';
 })
 export class NotificationsComponent {
   @Input() listReceived: Notiffication[] = []
-  listIdDissays!: string[]
-  dissaysItems: Dissay[] = []
+  listNotificationDissays: Notiffication[] = []
+  listNotificationComments: Notiffication[] = []
+  linkImagesMusic!: string[]
   dataLoad: boolean = false
-  imageCache: { [key: string]: string} = {}
 
-  constructor(private serviceDissay: ServiceDissayService, private serviceMusic: ServiceMusicService, private router: Router){}
+  constructor(private serviceMusic: ServiceMusicService, private router: Router){}
   ngOnInit(){
  
-
+    this.listNotificationDissays = this.listReceived.filter(i => i.type === 'Dissay')
+    this.listNotificationComments = this.listReceived.filter(i => i.type === 'Comment')
+    if(this.listNotificationDissays.length > 0){
+      this.listNotificationDissays.map(i => {
+        this.addImageToList(i.idOptional)
+      })
+    }
   }
 
 
 
-  returnImageBaseById(id: string): string{
-    if(id && this.imageCache[id]){
-      return this.imageCache[id]
-    }
+  addImageToList(id: string) {
 
     if(id){
       this.serviceMusic.getMusicById(id).subscribe(item => {
         if(item.albumImages){
           const musicImage = item.albumImages[2].link
-          this.imageCache[id] = musicImage
-        }else{
-          this.imageCache[id] = ''
+          this.linkImagesMusic.push(musicImage)
         }
       })
     }
-
-    return this.imageCache[id] || ''
     
   }
   navigateToDissay(id: string) {
