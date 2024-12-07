@@ -1,6 +1,6 @@
 import { ServiceNotificationService } from 'src/app/services/service-notification.service';
 import { ServiceUserService } from 'src/app/services/service-user.service';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { Notiffication } from 'src/app/layouts/Notification';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
@@ -48,7 +48,17 @@ export class HeaderComponent {
           }
           this.userAuthenticated = true;
           this.dataLoad = true;
-
+          this.router.events.subscribe((event)=> {
+            if(event instanceof NavigationEnd){
+              this.ServiceNotificationService.getUserNotifications(this.accessToken)
+              .subscribe({
+                next: (itens) => {
+                  this.ServiceNotificationService.setClientNotifications(itens)
+                  this.listNotification = this.ServiceNotificationService.getClientNotifications()
+                }
+              })
+            }
+          })
         },
         error: (error) => {
           if (error.status === 404) {
@@ -64,6 +74,8 @@ export class HeaderComponent {
       this.userAuthenticated = false;
       this.dataLoad = true;
     }
+
+
   }
 
 
@@ -73,6 +85,7 @@ export class HeaderComponent {
   openAndCloseNotifications(event: MouseEvent) {
     const button = event.target as HTMLElement;
 
+    // Sempre recrie o PositionStrategy
     const positionStrategy = this.overlay
       .position()
       .flexibleConnectedTo(button)
@@ -93,29 +106,26 @@ export class HeaderComponent {
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
 
-    // Verifique se o overlay já está criado e aberto
-    if (!this.overlayRef) {
-      this.overlayRef = this.overlay.create(config);
-    } else if (this.overlayRef.hasAttached()) {
-      // Se já estiver anexado, desanexamos e fechamos
-      this.closeCard();
-      return;
+    // Limpe o OverlayRef sempre que necessário
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
     }
 
-    if (!this.overlayRef.hasAttached()) {
-      const portal = new ComponentPortal(NotificationsComponent);
-      const componentRef = this.overlayRef.attach(portal);
+    this.overlayRef = this.overlay.create(config);
 
-      componentRef.instance.accessToken = this.accessToken;
-      componentRef.instance.closeOverlay = this.closeCard.bind(this)
+    const portal = new ComponentPortal(NotificationsComponent);
+    const componentRef = this.overlayRef.attach(portal);
 
-      // Fecha o overlay ao clicar no backdrop
-      this.overlayRef.backdropClick().subscribe(() => this.closeCard());
-    }
+    componentRef.instance.accessToken = this.accessToken;
+    componentRef.instance.closeOverlay = this.closeCard.bind(this);
+
+    this.overlayRef.backdropClick().subscribe(() => this.closeCard());
   }
+
   closeCard() {
     if (this.overlayRef?.hasAttached()) {
-      this.overlayRef.detach();
+      this.overlayRef.dispose();
+      this.overlayRef = null!;
     } else {
       console.log('Overlay not defined');
     }
