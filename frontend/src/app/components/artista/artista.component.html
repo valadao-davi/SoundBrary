@@ -1,6 +1,11 @@
 <ng-container *ngIf="artistItem && albumItems && singleItems">
-  <div class="layout">
-    <div *ngIf="dataLoaded && artistItem">
+  <div *ngIf="!dataLoaded" class="loading-container">
+    <p>Carregando...</p>
+    <img src="assets/loading.gif" alt="Carregando">
+  </div>
+
+  <div class="layout" *ngIf="dataLoaded && artistItem">
+    <div>
       <app-left-info [urlImage]="artistItem.artistImages[0].link" [urlLink]="artistItem.externalLink" [isArtistPage]="true"></app-left-info>
     </div>
 
@@ -44,19 +49,22 @@
                 <h3>{{getYearFromReleaseDate(album.releaseDate)}}</h3>
               </div>
               <div class="linha"></div>
+              
             </div>
+            <div *ngIf="albumItems.length === 0" class="no_slider_space">O artista não possui álbuns</div>
             </div>
+
           <div class="lancamentos_secao">
             <div class="lancamentos_secao_topo">
               <div class="lancamentos_secao_texto">
                 <h2>Singles e EPs</h2>
                 <h2>Ano de lançamento</h2>
               </div>
-              <div class="linha"></div>
+              <div *ngIf="singleItems.length > 0" class="linha"></div>
             </div>
 
             <div *ngFor="let single of singleItems">
-              <div class="lancamento">
+              <div  class="lancamento">
                 <img [src]="single.albumImage[0].link">
                 <div class="lancamento_texto">
                   <button (click)="navigateAlbum(single.id)"><h2>{{single.albumName}}</h2></button>
@@ -64,6 +72,7 @@
                 </div>
                 <h3>{{getYearFromReleaseDate(single.releaseDate)}}</h3>
               </div>
+              <div *ngIf="singleItems.length === 0" class="no_slider_space">O artista não possui singles ou EPS</div>
               <div class="linha"></div>
             </div>
 

@@ -21,24 +21,30 @@ export class SearchComponent {
   artistsSearched!: Artist[]
   singleAndEpsSearched!: Album[]
   categoria = "catMusica";
+  dataload: boolean = false
 
   changeMusica() {
+    this.dataload = false
     this.categoria = "catMusica"
     this.getTracksQuery(this.searchQuery)
   }
   changeAlbuns() {
+        this.dataload = false
     this.categoria = "catAlbuns"
     this.getTracksQuery(this.searchQuery)
   }
   changeSinglesEps() {
+        this.dataload = false
     this.categoria = "catSinglesEps"
     this.getTracksQuery(this.searchQuery)
   }
   changeArtistas() {
+        this.dataload = false
     this.categoria = "catArtistas"
     this.getTracksQuery(this.searchQuery)
   }
   changeDissays() {
+        this.dataload = false
     this.categoria = "catDissays"
     this.getTracksQuery(this.searchQuery)
   }
@@ -77,6 +83,7 @@ export class SearchComponent {
         case 'catMusica':
           this.serviceSpotify.getQueryMusic(query).subscribe(items => {
             this.tracksSearched = items
+            this.dataload = true
           });
         break;
         case 'catAlbuns':
@@ -84,18 +91,21 @@ export class SearchComponent {
             this.albumsAndSingles = items
             console.log(this.albumsAndSingles)
             this.albumsSearched = this.albumsAndSingles.filter(items => items.albumType === "album")
+            this.dataload = true
           });
         break;
         case 'catSinglesEps':
           this.serviceSpotify.getQueryAlbum(query).subscribe(items => {
             this.albumsAndSingles = items
             this.singleAndEpsSearched = this.albumsAndSingles.filter(items => items.albumType !== "album")
+            this.dataload = true
           });
         break;
         case 'catArtistas':
           this.serviceSpotify.getQueryArtist(query).subscribe(items => {
             this.artistsSearched = items
             console.log(this.artistsSearched)
+            this.dataload = true
           })
       }
     }else {

@@ -17,7 +17,7 @@ export class ArtistaComponent {
   artistItem?: Artist;
   albumItems:Album[] = [];
   singleItems: Album[] = [];
-  dataLoaded!: boolean;
+  dataLoaded: boolean = false
   itemsAlbum: Album[] = [];
   accessToken!: string
   saved: boolean = false;
@@ -32,8 +32,8 @@ export class ArtistaComponent {
   }
 
   ngOnInit(){
+    this.dataLoaded = false;
     this.accessToken = localStorage.getItem('token') ?? ""
-    this.dataLoaded = true
     this.accessToken = localStorage.getItem('token') ?? ""
     this.route.paramMap.subscribe((params)=> {
       this.id = params.get('id')
@@ -102,6 +102,7 @@ export class ArtistaComponent {
         this.getUser()
       }
     )
+    this.dataLoaded = true
   }
   getArtistsString(artists: Pick<Artist, 'id' | 'name'>[]): string {
     return artists.map(artist => artist.name).join(', ');

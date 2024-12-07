@@ -1,6 +1,11 @@
 <ng-container *ngIf="albumItem">
-  <div class="layout">
-    <div *ngIf="dataLoaded">
+  <div *ngIf="!dataLoaded" class="loading-container">
+    <p>Carregando...</p>
+    <img src="assets/loading.gif" alt="Carregando">
+  </div>
+  
+  <div class="layout" *ngIf="dataLoaded">
+    <div >
       <app-left-info [albumId]="albumItem.id" [urlImage]="albumItem.albumImage[0].link" [albumTitle]="albumItem.albumName" [urlLink]="albumItem.externalLink"></app-left-info>
     </div>
 

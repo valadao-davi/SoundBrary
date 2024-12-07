@@ -13,7 +13,12 @@
     </div>
   </div>
 
-<ng-container *ngIf="categoria === 'catMusica'">
+  <div *ngIf="!dataload" class="loading-container">
+    <p>Carregando...</p>
+    <img src="assets/loading.gif" alt="Carregando">
+  </div>
+
+<ng-container *ngIf="categoria === 'catMusica' && dataload">
   <div *ngFor="let track of tracksSearched">
   <button class="botao_search" (click)="navigateMusic(track.id)">
     <div class="resultados_item">
@@ -35,7 +40,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="categoria === 'catAlbuns'">
+<ng-container *ngIf="categoria === 'catAlbuns' && dataload">
  <div *ngFor="let album of albumsSearched">
   <button class="botao_search" (click)="navigateAlbum(album.id)">
     <div class="resultados_item">
@@ -56,7 +61,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="categoria === 'catSinglesEps'">
+<ng-container *ngIf="categoria === 'catSinglesEps' && dataload">
   <div *ngFor="let item of singleAndEpsSearched">
     <button class="botao_search" (click)="navigateAlbum(item.id)">
       <div class="resultados_item">
@@ -77,7 +82,7 @@
    </div>
  </ng-container>
 
- <ng-container *ngIf="categoria === 'catArtistas'">
+ <ng-container *ngIf="categoria === 'catArtistas' && dataload">
     <div *ngFor="let item of artistsSearched">
       <button class="botao_search" (click)="navigateArtist(item.id)">
         <div class="resultados_item">
@@ -100,3 +105,4 @@
 
 
 </div>
+

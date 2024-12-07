@@ -443,3 +443,33 @@ template {
 }
 
 
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ocupa toda a altura da tela */
+  text-align: center;
+}
+
+.loading-container img {
+  width: 100px; /* Tamanho do GIF */
+  margin-top: 20px;
+}
+
+.loading-container p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.no_slider_space{
+  height: 180px;
+  align-items: center;
+  display: flex;
+  color: #808080;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 24px;
+  border-bottom: 1px solid #00000080;
+}

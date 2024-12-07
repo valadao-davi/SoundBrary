@@ -1,6 +1,11 @@
 <ng-container *ngIf="dissayData && userDissayData">
-<div class="layout">
-  <div *ngIf="dataLoaded">
+  <div *ngIf="!dataLoaded" class="loading-container">
+    <p>Carregando...</p>
+    <img src="assets/loading.gif" alt="Carregando">
+  </div>
+
+<div *ngIf="dataLoaded" class="layout">
+  <div>
     <app-left-info [urlLink]="musicData.externalLink" [trackName]="musicData.name" [urlImage]="musicData.albumImages[0].link" [albumId]="musicData.albumId"></app-left-info>
   </div>
   <div class="conteudo">
