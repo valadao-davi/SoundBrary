@@ -99,29 +99,7 @@ export class ServiceUserService {
   }
 
 
-  getUserNotifications(token: String): Observable<Notiffication[]> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
 
-    return this.http.get<{ user: Notiffication[] }>(`${this.API}/profile/notifications`, { headers }).pipe(
-      map(response => {
-        // Valida se o campo notifications existe
-        if (response && response.user) {
-          return response.user;
-        }
-        throw new Error('Notifications not found in API response');
-      })
-    );
-  }
-
-  deleteNotification(token: String, idNotification: string): Observable<void> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
-    return this.http.delete<void>(`${this.API}/profile/notifications/deleteNotification/${idNotification}`, { headers })
-  }
   saveAlbumToFavorite(token: string, item: string): Observable<void>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

@@ -304,7 +304,8 @@ userRouter.get('/profile/notifications', auth, async(req: CustomRequest, res: Re
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({user: user.notifications})
+            const notifications = user.notifications || []
+            res.status(200).send(notifications)
         }else{
             res.status(404).send("Usuário não encontrado")
         }
@@ -329,8 +330,9 @@ userRouter.delete('/profile/deleteNotification/:id', auth, async(req: CustomRequ
         const deleteNotification = await collections?.users?.findOneAndUpdate({_id: userObjectId}, {$pull: {notifications: {_id: notificationObjectId}}},  { returnDocument: 'after' })
         if(!deleteNotification){
             return res.status(404).send("Notificação nao encontrada");
+        }else{
+            return res.status(200).send(deleteNotification.notifications)
         }
-        res.status(200).send("Deletado")
         
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")

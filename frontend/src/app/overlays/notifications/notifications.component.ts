@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 import { Notiffication } from 'src/app/layouts/Notification';
 import { ServiceCommentService } from 'src/app/services/service-comment.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
+import { ServiceNotificationService } from 'src/app/services/service-notification.service';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
@@ -22,13 +24,14 @@ export class NotificationsComponent {
 
   dataLoad: boolean = false
 
-  constructor(private serviceMusic: ServiceMusicService, private router: Router, private serviceComment: ServiceCommentService, private serviceUser: ServiceUserService){}
+  constructor(private serviceMusic: ServiceMusicService, private router: Router, private serviceComment: ServiceCommentService, private serviceUser: ServiceUserService, private serviceNotification: ServiceNotificationService){}
   ngOnInit(){
     console.log(this.accessToken)
     if(this.accessToken && this.accessToken.length > 0){
-      this.serviceUser.getUserNotifications(this.accessToken).subscribe(list => {
+      this.serviceNotification.getUserNotifications(this.accessToken).subscribe(list => {
         console.log(list)
         this.listReceived = list
+        this.serviceNotification.setClientNotifications(this.listReceived)
         console.log(this.listReceived)
         this.listNotificationDissays = this.listReceived.filter(i => i.type === 'Dissay')
         this.listNotificationComments = this.listReceived.filter(i => i.type === 'Comment')
@@ -78,6 +81,7 @@ export class NotificationsComponent {
       this.serviceComment.getIdComment(id).subscribe(item => {
         if(item.userName){
           const userName = item.userName
+          console.log(userName)
           const text = item.text
           this.commentTextList.push(text)
           console.log(userName, text)
@@ -98,13 +102,30 @@ export class NotificationsComponent {
 
   }
   navigateToDissay(id: string, idNotification: string) {
-    console.log(idNotification)
-      this.serviceUser.deleteNotification(this.accessToken, idNotification).subscribe(i => {
-        this.router.navigate([`/dissay/${id}`])
-        this.closeOverlay()
-      })
-
-
-  }
+    if(idNotification && this.accessToken && id){
+        this.serviceNotification.deleteNotification(this.accessToken, idNotification).pipe(
+          catchError((code)=> {
+            if(code.status === 400){
+               alert("Erro: " + code.error)
+            }else if(code.status === 500){
+              alert("Erro no servidor: " + code.error)
+            }else if(code.status !== 200){
+              alert(code + " , Erro desconhecido")
+            }
+            return throwError(() => code)
+          })
+        ).subscribe({
+          next: (response) => {
+            this.listReceived = response
+            this.serviceNotification.setClientNotifications(this.listReceived)
+          },
+          error: (error) => {
+            console.error("Erro ao deletar notificação", error);
+          }
+        });
+      this.router.navigate([`/dissay/${id}`])
+      this.closeOverlay()
+    }
+    }
 
 }

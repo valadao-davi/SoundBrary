@@ -8,13 +8,13 @@
   </div>
   <div id="h_right">
     <div id="auth_redirects">
-        <button (click)="navigateLogin(false)" *ngIf="user === null"><h3 id="entrar_text" >Entrar</h3></button>
-        <ng-container *ngIf="user !== null">
-          <button (click)="openAndCloseNotifications($event)" *ngIf="!user.notifications || user.notifications && user.notifications.length === 0"><img src="../../../assets/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg"></button>
-          <button (click)="openAndCloseNotifications($event)" *ngIf="user.notifications && user.notifications.length > 0"><img src="../../../assets/notifications_unread_24dp_E8EAED_FILL1_wght400_GRAD0_opsz24.svg"></button>
+        <button (click)="navigateLogin(false)" *ngIf="userAuthenticated === false"><h3 id="entrar_text" >Entrar</h3></button>
+        <ng-container *ngIf="userAuthenticated === true">
+          <button (click)="openAndCloseNotifications($event)" *ngIf="listNotification.length === 0"><img src="../../../assets/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg"></button>
+          <button (click)="openAndCloseNotifications($event)" *ngIf="listNotification.length > 0"><img src="../../../assets/notifications_unread_24dp_E8EAED_FILL1_wght400_GRAD0_opsz24.svg"></button>
         </ng-container>
-        <button (click)="navigateLogin(true)" *ngIf="user !== null"><h3 id="entrar_text" >Sair</h3></button>
-        <button (click)="navigateCadastro()"><h3 *ngIf="user === null">Cadastrar</h3></button>
+        <button (click)="navigateLogin(true)" *ngIf="userAuthenticated === true"><h3 id="entrar_text" >Sair</h3></button>
+        <button (click)="navigateCadastro()"><h3 *ngIf="userAuthenticated === false">Cadastrar</h3></button>
     </div>
     <h3>Sobre</h3>
   </div>
