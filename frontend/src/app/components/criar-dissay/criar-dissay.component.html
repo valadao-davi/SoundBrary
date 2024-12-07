@@ -41,16 +41,21 @@
             <div class="marcar_dissay">
                 <input (click)="activePrivate()" type="checkbox" name="privado" id="privadoId">
                 <p class="light_text">Marcar Dissay como privado</p>
-                <div class="info_icon">
-                    <img src="../../../assets/info_icon.svg">
-                    <div class="informacao1">Texto testando teste</div>
+                <div class="icon-container">
+                    <img class="info-icon"
+                    src="../../../assets/info_icon.svg">
+                    <div class="tooltip">Selecione essa opção para o Dissay ficar visível apenas para você</div>
                 </div>
             </div>
 
             <div class="marcar_dissay" *ngIf="isPrivate">
                 <input (click)="activeNoMusic()" type="checkbox" name="semMusica" id="privadoId">
                 <p class="light_text">Criar Dissay sem música</p>
-                <img src="../../../assets/info_icon.svg">
+                <div class="icon-container">
+                    <img class="info-icon"
+                    src="../../../assets/info_icon.svg">
+                    <div class="tooltip">Selecione essa opção para não vincular uma música ao seu Dissay</div>
+                </div>
             </div>
 
             <div class="secao_instrumentos">

@@ -86,6 +86,7 @@ export class CriarDissayComponent {
     })
     console.log(this.instrumentsDissay)
   }
+  
 
   activePrivate(){
     this.isPrivate = !this.isPrivate
