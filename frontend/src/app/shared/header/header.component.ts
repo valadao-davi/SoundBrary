@@ -1,6 +1,7 @@
+import { ServiceNotificationService } from 'src/app/services/service-notification.service';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 import { Router, RouterModule } from '@angular/router';
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
-import { User } from 'src/app/layouts/User';
 import { Notiffication } from 'src/app/layouts/Notification';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal } from '@angular/cdk/portal';
@@ -17,8 +18,8 @@ RouterModule
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  @Input() user!: User | null
-  @Input() accessToken!: string;
+  userAuthenticated: boolean = false;
+  accessToken!: string;
   showNotifications: boolean = false;
   listNotification: Notiffication[] = []
   dataLoad: boolean = false;
@@ -30,23 +31,44 @@ export class HeaderComponent {
   currentRoute: any;
   text!: string;
 
-  constructor(private overlay: Overlay, private overlayRefSerivce: OverlayService, private router: Router) {}
+  constructor(private overlay: Overlay, private overlayRefSerivce: OverlayService, private router: Router, private ServiceUserService: ServiceUserService, private ServiceNotificationService: ServiceNotificationService) {}
 
-  ngOnInit(){
-    if(this.user !== null){
-      if(this.user.notifications !== undefined){
+  ngOnInit() {
+    this.accessToken = localStorage.getItem('token') ?? '';
+    if (this.accessToken.length > 0) {
+      console.log(this.accessToken)
+      this.ServiceUserService.getUser(this.accessToken).subscribe({
+        next: (i) => {
+          if(i.notifications){
+            this.ServiceNotificationService.setClientNotifications(i.notifications)
+            this.listNotification = this.ServiceNotificationService.getClientNotifications()
+          }else{
+            this.ServiceNotificationService.setClientNotifications([])
+            this.listNotification = this.ServiceNotificationService.getClientNotifications()
+          }
+          this.userAuthenticated = true;
+          this.dataLoad = true;
 
-        this.listNotification = this.user.notifications
-        this.dataLoad = true
-      }else{
-        this.listNotification = []
-        this.dataLoad = true
-      }
-      console.log(this.listNotification)
-    }else{
-      this.dataLoad = true
+        },
+        error: (error) => {
+          if (error.status === 404) {
+            this.dataLoad = true;
+            this.userAuthenticated = false;
+          }
+        }
+      });
+      this.ServiceNotificationService.notifications$.subscribe((notifications) => {
+        this.listNotification = notifications;
+      });
+    } else {
+      this.userAuthenticated = false;
+      this.dataLoad = true;
     }
   }
+
+
+
+
 
   openAndCloseNotifications(event: MouseEvent) {
     const button = event.target as HTMLElement;
@@ -83,6 +105,7 @@ export class HeaderComponent {
     if (!this.overlayRef.hasAttached()) {
       const portal = new ComponentPortal(NotificationsComponent);
       const componentRef = this.overlayRef.attach(portal);
+
       componentRef.instance.accessToken = this.accessToken;
       componentRef.instance.closeOverlay = this.closeCard.bind(this)
 

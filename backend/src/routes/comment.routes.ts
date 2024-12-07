@@ -93,8 +93,10 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
         const findUser = await collections?.users?.findOne({userName: userName})
         const findDissay = await collections?.dissays?.findOne({"comments._id": new ObjectId(commentId)})
         if(findUser && findDissay){
+            const commentAwnserId = new ObjectId() // cria um id para essa resposta
+
             const comment = {
-                _id: new ObjectId(),
+                _id: commentAwnserId, // passa esse id para o comment
                 userName: userName,
                 idParent: commentId,
                 idParentAwnser: req.body.idAwnser ?? null,
@@ -109,7 +111,7 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
                     title: 'Um usuário te respondeu',
                     type: 'Comment',
                     idObject: `${findDissay._id}`,
-                    idOptional: `${findUser._id}`
+                    idOptional: `${commentAwnserId}`
                 }
             
     
