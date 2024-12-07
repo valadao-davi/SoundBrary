@@ -102,6 +102,7 @@ async function applySchemaValidation(db: mongodb.Db) {
                         bsonType: "object",
                         required: ["title", "type", "idObject"],
                         properties: {
+                            _id: {},
                             title: {
                                 bsonType: "string",
                                 description: "username is required and is a string",

@@ -1,6 +1,6 @@
 <ng-container *ngIf="dataLoad">
   <div>
-    <app-header [user]="user"></app-header>
+    <app-header [user]="user" [accessToken]="accessToken"></app-header>
 <main>
   <app-perfil-lateral [user]="user"></app-perfil-lateral>
   <div class="main_filho"><router-outlet></router-outlet></div>

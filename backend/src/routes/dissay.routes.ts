@@ -79,6 +79,7 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
                 if(addToUser){
                     console.log("Adicionado ao usuario")
                     const notification = {
+                        _id: new ObjectId(),
                         title: `Uma música que você salvou foi publicada`,
                         type: "Dissay",
                         idObject: `${result.insertedId.toString()}`,

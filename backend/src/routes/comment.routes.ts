@@ -65,6 +65,7 @@ commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Re
                 date: new Date()
             }
             const notification = {
+                _id: new ObjectId(),
                 title: 'Um usuário comentou no seu Dissay',
                 type: 'Comment',
                 idObject: `${findDissay._id}`,
@@ -104,6 +105,7 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
             if(parentComment){
                 const userNameCommentParent = parentComment.userName
                 const notification = {
+                    _id: new ObjectId(),
                     title: 'Um usuário te respondeu',
                     type: 'Comment',
                     idObject: `${findDissay._id}`,

@@ -1,12 +1,12 @@
 <div *ngIf="dataLoad">
-  <app-header [user]="userAuth"></app-header>
+  <app-header [user]="userAuth" [accessToken]="accessToken"></app-header>
 
   <div class="layout_perfil" *ngIf="otherUser?.name || myUser">
-  
+
     <div class="perfil_left ">
       <h1 class="informacoes"*ngIf="isOwnProfile">Informações da conta</h1>
       <h1 class="informacoes" *ngIf="!isOwnProfile">Perfil de usuário</h1>
-  
+
       <div class="imagem" [ngClass]="{'space_between': isOwnProfile, 'centro': !isOwnProfile}">
         <img *ngIf="!isOwnProfile && otherUser.image"  class="img_perfil" [src]="otherUser.image">
         <img *ngIf="!isOwnProfile && otherUser.image === undefined"  class="grey_circle" src="../../../assets/icon_0.png">
@@ -17,7 +17,7 @@
         </button>
         <button (click)="openImageSetter('Image')" ><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
       </div>
-  
+
       <div class="nome profile_content" [ngClass]="{'space_between': isOwnProfile, 'centro': !isOwnProfile}">
         <h1 *ngIf="isOwnProfile">{{myUser.name}}</h1>
         <h1 *ngIf="!isOwnProfile">{{otherUser.name}}</h1>
@@ -35,12 +35,12 @@
         <button><img src="../../../assets/donate_icon.svg"></button>
       </div>
     </div>
-  
+
     <div class="perfil_right">
       <h1 *ngIf="isOwnProfile">Meu perfil</h1>
       <h1 *ngIf="!isOwnProfile">{{otherUser.name}}</h1>
       <div class="dissays_perfil">
-  
+
         <div class="section" *ngIf="dissaysList">
           <div class="titulo_slider">
               <h1>Dissays criados</h1>
@@ -51,7 +51,7 @@
               </div>
           </div>
         </div>
-  
+
         <div class="section" *ngIf="listIdsDissaysCreated.length === 0">
           <div class="titulo_slider">
               <h1>Dissays criados</h1>
@@ -62,7 +62,7 @@
               </div>
           </div>
         </div>
-  
+
         <div class="section" *ngIf="listIdsString.dissays.length > 0">
           <div class="titulo_slider">
               <h1>Dissays salvos</h1>
@@ -73,7 +73,7 @@
               </div>
           </div>
         </div>
-  
+
         <div class="section" *ngIf="listIdsString.dissays.length === 0">
           <div class="titulo_slider">
               <h1>Dissays salvos</h1>
@@ -84,7 +84,7 @@
               </div>
           </div>
         </div>
-  
+
         <div class="section">
           <div class="titulo_slider">
             <h1>Musicas salvas</h1>
@@ -104,8 +104,8 @@
             <p>Não há músicas salvas</p>
           </div>
         </div>
-  
-  
+
+
         <div class="section">
           <div class="titulo_slider">
             <h1>Álbuns salvos</h1>
@@ -125,8 +125,8 @@
             <p>Não há álbuns salvos</p>
           </div>
         </div>
-  
-  
+
+
         <div class="section">
           <div class="titulo_slider">
             <h1>Artistas salvos</h1>
@@ -174,7 +174,7 @@
     <div class="linha"></div>
     <h4 class="titulo_h4">© 2024 Soundbrary Ltd. Todos os direitos reservados • Termos de uso • Política de privacidade • Políticas legais • Lista de cookies</h4>
   </footer>
-  
+
 </div>
 
 <ng-template cdkPortal>

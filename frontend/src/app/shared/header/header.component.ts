@@ -18,12 +18,13 @@ RouterModule
 })
 export class HeaderComponent {
   @Input() user!: User | null
+  @Input() accessToken!: string;
   showNotifications: boolean = false;
   listNotification: Notiffication[] = []
   dataLoad: boolean = false;
 
   @ViewChild(CdkPortal) portal!: CdkPortal
-  private overlayRef!: OverlayRef;
+  overlayRef!: OverlayRef;
 
   @ViewChild('input_pesquisa') inputElement!: ElementRef;
   currentRoute: any;
@@ -33,11 +34,9 @@ export class HeaderComponent {
 
   ngOnInit(){
     if(this.user !== null){
-      console.log(this.user)
       if(this.user.notifications !== undefined){
 
         this.listNotification = this.user.notifications
-        console.log('aqui')
         this.dataLoad = true
       }else{
         this.listNotification = []
@@ -57,41 +56,45 @@ export class HeaderComponent {
       .flexibleConnectedTo(button)
       .withPositions([
         {
-          originX: 'end',        // Ponto de origem à direita do botão
-          originY: 'bottom',     // Origem no final do botão
-          overlayX: 'end',       // Alinha o início do overlay com a origem à direita
-          overlayY: 'top',       // Overlay aparece em cima do ponto de origem
-          offsetY: 8,            // Margem inferior
+          originX: 'end', // Ponto de origem à direita do botão
+          originY: 'bottom', // Origem no final do botão
+          overlayX: 'end', // Alinha o início do overlay com a origem à direita
+          overlayY: 'top', // Overlay aparece em cima do ponto de origem
+          offsetY: 8, // Margem inferior
         },
       ]);
 
     const config = new OverlayConfig({
       positionStrategy,
       hasBackdrop: true,
-      backdropClass: 'custom-backdrop', // Classe para estilizar o backdrop
+      backdropClass: 'custom-backdrop',
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
 
+    // Verifique se o overlay já está criado e aberto
     if (!this.overlayRef) {
       this.overlayRef = this.overlay.create(config);
-      console.log(this.listNotification)
-    } else {
-      this.overlayRef.updatePositionStrategy(positionStrategy);
+    } else if (this.overlayRef.hasAttached()) {
+      // Se já estiver anexado, desanexamos e fechamos
+      this.closeCard();
+      return;
     }
 
     if (!this.overlayRef.hasAttached()) {
       const portal = new ComponentPortal(NotificationsComponent);
       const componentRef = this.overlayRef.attach(portal);
+      componentRef.instance.accessToken = this.accessToken;
+      componentRef.instance.closeOverlay = this.closeCard.bind(this)
 
-      console.log("Passando dados para o componente:");
-      console.log(this.listNotification);
-
-      componentRef.instance.listReceived = this.listNotification;
-
-      console.log("Valor recebido no componente:");
-      console.log(componentRef.instance.listReceived);
-
-      this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+      // Fecha o overlay ao clicar no backdrop
+      this.overlayRef.backdropClick().subscribe(() => this.closeCard());
+    }
+  }
+  closeCard() {
+    if (this.overlayRef?.hasAttached()) {
+      this.overlayRef.detach();
+    } else {
+      console.log('Overlay not defined');
     }
   }
 

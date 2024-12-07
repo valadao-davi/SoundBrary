@@ -287,10 +287,51 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({userName: user.userName,email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated, notifications: user.notifications, image: user.image})
+            res.status(200).send({userName: user.userName,email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated, image: user.image, notifications: user.notifications})
         }else{
             res.status(404).send("Usuário não encontrado")
         }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+
+userRouter.get('/profile/notifications', auth, async(req: CustomRequest, res: Response)=> {
+    try{
+        const userId = req.token?.sub;
+        const user = await collections?.users?.findOne({_id: new ObjectId(userId)})
+        if(userId && !ObjectId.isValid(userId)){
+            return res.status(400).send("ID de usuário inválido");
+        }
+        if(user){
+            res.status(200).send({user: user.notifications})
+        }else{
+            res.status(404).send("Usuário não encontrado")
+        }
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
+    }
+})
+
+userRouter.delete('/profile/deleteNotification/:id', auth, async(req: CustomRequest, res: Response)=> {
+    try{
+        const userId = req.token?.sub;
+        const idNotification = req.params.id
+        const user = await collections?.users?.findOne({_id: new ObjectId(userId)})
+        if(!userId || !ObjectId.isValid(userId)){
+            return res.status(400).send("ID de usuário inválido");
+        }
+        const userObjectId = new ObjectId(userId)
+        if (!idNotification || idNotification === undefined || !ObjectId.isValid(idNotification)) {
+            return res.status(400).send("ID de notificação inválido");
+        }
+        const notificationObjectId = new ObjectId(idNotification);
+        const deleteNotification = await collections?.users?.findOneAndUpdate({_id: userObjectId}, {$pull: {notifications: {_id: notificationObjectId}}},  { returnDocument: 'after' })
+        if(!deleteNotification){
+            return res.status(404).send("Notificação nao encontrada");
+        }
+        res.status(200).send("Deletado")
+        
     }catch(error){
         res.status(500).send(error instanceof Error ? error.message : "Erro desconhecido")
     }
@@ -386,3 +427,4 @@ userRouter.delete('/:id', async(req, res)=> {
         res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
     }
 })
+

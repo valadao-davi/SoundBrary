@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, forkJoin, throwError } from 'rxjs';
 import { Coment } from 'src/app/layouts/Comment';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { Music } from 'src/app/layouts/Music';
@@ -29,6 +29,8 @@ export class DissayComponent {
   musicData!: Music;
   accessToken!: string
   comments!:Coment[]
+
+  listImages!: string[]
   totalRateUser!: number;
   totalRate!: number | null;
 
@@ -87,7 +89,7 @@ export class DissayComponent {
       }));
 
       this.loadMusic(this.dissayData.musicId);
-
+      this.loadComments(this.dissayData)
 
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;
@@ -142,6 +144,33 @@ export class DissayComponent {
       console.log(this.musicData)
       this.dataLoaded = true
     })
+  }
+
+  loadComments(dissayObject: Dissay){
+    if(dissayObject.comments && dissayObject.comments.length > 0){
+      const usersComments = dissayObject.comments.map(i => {
+        return i.userName
+      })
+      if(usersComments.length > 0){
+        const items = usersComments.map(userName =>
+          this.serviceUser.getUserName(userName)
+        )
+        forkJoin(items).subscribe(
+          (results) => {
+            this.listImages = results.map(user => {
+              return user.image ?? "../../../assets/icone_0.png"
+
+            }
+            )
+          }
+        )
+      }
+    }
+  }
+  
+  getUserNameByIdParent(id: string): string | undefined {
+    const comment = this.comments.find(c => c._id === id);
+    return comment ? comment.userName : undefined;
   }
 
   avaliateDissay(rate: number){
@@ -270,7 +299,7 @@ export class DissayComponent {
 
     }
   }
- 
+
 
   publicarResposta(index: number,idPai: string, texto: string, idResposta?:string) {
     if(texto) {
