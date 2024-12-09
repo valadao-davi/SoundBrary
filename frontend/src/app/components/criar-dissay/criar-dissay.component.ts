@@ -209,20 +209,19 @@ export class CriarDissayComponent {
     if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.noMusic === false){
         console.log("Dissay inválido")
       }else {
-        console.log(this.accessToken)
-        this.serviceDissay.createDissay(this.accessToken,{
-          musicId: this.musicSelected?.id ?? "",
+        this.serviceDissay.createPrivateDissay(this.accessToken,{
+          musicId: "no-id-music",
           name: this.titleValue,
           description: this.descriptionValue ?? "",
           instruments: this.instrumentsDissay,
-          tone: this.toneDissay ?? ""
+          tone: this.toneDissay ?? "",
         }).pipe(catchError((code)=> {
           return this.handleError.handleErrorCode(code)
         })).subscribe({
           next: (response) => {
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
-           
+  
             
           }
         });

@@ -125,6 +125,7 @@ dissayRouter.post("/privateDissay/:musicId", auth, async(req: CustomRequest, res
                 if(addToUser){
                     return res.status(200).json({message: "Dissay criado"})
                 }else{
+                    console.log("aqui")
                     return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")
                 }
             }else{

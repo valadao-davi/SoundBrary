@@ -5,7 +5,7 @@
   </div>
 
 <div *ngIf="dataLoaded" class="layout">
-  <div>
+  <div *ngIf="dissayData.musicId !== 'no-id-music'">
     <app-left-info [urlLink]="musicData.externalLink" [trackName]="musicData.name" [urlImage]="musicData.albumImages[0].link" [albumId]="musicData.albumId"></app-left-info>
   </div>
   <div class="conteudo">
@@ -21,7 +21,7 @@
           <h2>{{userDissayData.name}}</h2>
         </div>
         <div class="avaliacao_excluir">
-          <div class="dissay_avaliacao" *ngIf="totalRate !== null">
+          <div class="dissay_avaliacao" *ngIf="totalRate !== null && !dissayData.isPrivate">
             <div class="estrelas_avaliacao" *ngFor="let i of [1,2,3,4,5]">
               <button (click)="avaliateDissay(i)" *ngIf="!ownerDissay"><img *ngIf="dissayData.totalRate! >=i" src="../../../assets/estrela_cheia.svg"></button>
               <button (click)="avaliateDissay(i)" *ngIf="!ownerDissay"><img *ngIf="dissayData.totalRate! < i"  src="../../../assets/estrela_vazia.svg"></button>

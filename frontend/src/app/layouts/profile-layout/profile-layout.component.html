@@ -58,7 +58,7 @@
           </div>
           <div class="slider_space" *ngIf="listIdsDissaysCreated.length > 0">
               <div class="slider" *ngFor="let dissay of dissaysListPrivate">
-                <app-d-mini [idDissay]="dissay._id!" [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments" [musicId]="dissay.musicId"></app-d-mini>
+                <app-d-mini [isPrivate]="true" [idDissay]="dissay._id!" [userName]="dissay.userName" [name]="dissay.name" [listInstruments]="dissay.instruments" [musicId]="dissay.musicId"></app-d-mini>
               </div>
           </div>
         </div>

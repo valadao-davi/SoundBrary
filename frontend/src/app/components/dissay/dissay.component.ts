@@ -87,9 +87,14 @@ export class DissayComponent {
         text: comment.text,
         date: new Date(comment.date).toLocaleDateString()
       }));
-
-      this.loadMusic(this.dissayData.musicId);
-      this.loadComments(this.dissayData)
+      if(this.dissayData.musicId !== 'no-id-music'){
+        this.loadMusic(this.dissayData.musicId);
+        this.loadComments(this.dissayData)
+        console.log("esta aqui")
+      }else{
+        this.dataLoaded = true
+      }
+     
 
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;

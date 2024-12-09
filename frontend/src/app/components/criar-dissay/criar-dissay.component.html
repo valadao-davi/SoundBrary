@@ -89,8 +89,11 @@
     </div>
 
     <div class="right_criar">
-        <div class="imagem_album">
-            <img class="img_src_album" *ngIf="musicSelected" [src]="musicSelected.albumImages[0].link" alt="">
+        <div *ngIf="!noMusic" class="imagem_album">
+            <img class="img_src_album" *ngIf="musicSelected"  [src]="musicSelected.albumImages[0].link" alt="">
+        </div>
+        <div *ngIf="noMusic" class="imagem_album">
+            <img class="img_src_album" src="../../../assets/no_music.svg" alt="">
         </div>
         <div class="afinacao" *ngIf="toneDissay.length === 0">
             <h1>Inserir tonalidade</h1>
@@ -100,9 +103,12 @@
             <h1>Tonalidade</h1>
             <app-criar-dissay-cards [afinacao]="toneDissay"></app-criar-dissay-cards>
         </div>
-        <button *ngIf="!dissayEdit" (click)="publishDissay()" class="publicar_dissay">
+        <button *ngIf="!dissayEdit && !noMusic" (click)="publishDissay()" class="publicar_dissay">
             <h3>Publicar Dissay</h3>
             <img src="../../../assets/enviar_icon.svg"></button>
+        <button *ngIf="!dissayEdit && noMusic" (click)="publishPrivateNoMusic()" class="publicar_dissay">
+                <h3>Publicar Dissay único</h3>
+                <img src="../../../assets/enviar_icon.svg"></button>
         <button *ngIf="dissayEdit" (click)="editDissay()" class="publicar_dissay">
                 <h3>Atualizar Dissay</h3>
         <img src="../../../assets/enviar_icon.svg"></button>

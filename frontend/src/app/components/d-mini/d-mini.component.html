@@ -1,4 +1,4 @@
-<ng-container *ngIf="musicDissay">
+<ng-container *ngIf="musicDissay || musicId == 'no-id-music'">
   <button (click)="navigateDissay(idDissay)">
     <div class="d_mini">
       <div class="d_mini_content">
@@ -7,7 +7,7 @@
                 <h4>{{name}}</h4>
                 <h5>{{namePerson}}</h5>
               </div>
-              <div class="d_mini_rating_save">
+              <div class="d_mini_rating_save" *ngIf="!isPrivate">
                 <div class="d_mini_rating">
                   <div *ngFor="let i of [1,2,3,4,5]">
                     <img *ngIf="rateNumber! >=i" src="../../../assets/estrela_cheia.svg">
@@ -19,7 +19,9 @@
                   <img class="imagem_album" src="../../../assets/save_icon.svg" alt="save_icon">
               </div>
           </div>
-          <img class="d_mini_cover" [src]="musicDissay.albumImages[0].link" alt="">
+          <img *ngIf="musicId !== 'no-id-music'" class="d_mini_cover" [src]="musicDissay.albumImages[0].link" alt="">
+          <img *ngIf="musicId == 'no-id-music'" class="d_mini_cover" src="../../../assets/no_music.svg" alt="">
+
       </div>
       <div class="d_mini_instruments" >
           <app-instrumento-mini *ngFor="let instrument of listInstruments | slice:0:3" [instrumentDefault]="instrument.defaultInstrument"></app-instrumento-mini>
