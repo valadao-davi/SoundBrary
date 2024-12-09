@@ -40,6 +40,25 @@
   </div>
 </ng-container>
 
+<ng-container *ngIf="categoria === 'catDissays' && dataload">
+  <div *ngFor="let item of DissaysSearched; let i = index">
+  <button class="botao_search" (click)="navigateDissay(item._id ?? '')">
+    <div class="resultados_item">
+      <div class="resultados">
+        <div class="resultado">
+          <img [src]="MusicDissaySearched[i].albumImages[0].link">
+        <div class="resultado_textos">
+          <h2>{{item.name}}</h2>
+          <h4>{{item.userName}}</h4>
+        </div>
+        <img class="setinha" src="../../../assets/setinha_gray.svg">
+        </div>
+        <div class="linha"></div>
+      </div>
+    </div>
+  </button>
+  </div>
+</ng-container>
 <ng-container *ngIf="categoria === 'catAlbuns' && dataload">
  <div *ngFor="let album of albumsSearched">
   <button class="botao_search" (click)="navigateAlbum(album.id)">

@@ -1,11 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { Music } from 'src/app/layouts/Music';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
-import { Subject } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs';
 import { Album } from 'src/app/layouts/Album';
 import { Artist } from 'src/app/layouts/Artists';
 import { Route, Router, ActivatedRoute } from '@angular/router';
+import { Dissay } from 'src/app/layouts/Dissay';
+import { ServiceDissayService } from 'src/app/services/service-dissay.service';
+import { ServiceUserService } from 'src/app/services/service-user.service';
 
 @Component({
   selector: 'app-search',
@@ -19,6 +22,9 @@ export class SearchComponent {
   albumsSearched!: Album[]
   albumsAndSingles!: Album[]
   artistsSearched!: Artist[]
+  DissaysSearched!: Dissay[]
+  MusicIdDissays!: string[]
+  MusicDissaySearched!: Music[]
   singleAndEpsSearched!: Album[]
   categoria = "catMusica";
   dataload: boolean = false
@@ -49,9 +55,10 @@ export class SearchComponent {
     this.getTracksQuery(this.searchQuery)
   }
 
-  constructor(private router: Router, private route: ActivatedRoute, private serviceSpotify: ServiceMusicService){
+  constructor(private router: Router, private route: ActivatedRoute, private serviceSpotify: ServiceMusicService, private serviceDissay: ServiceDissayService, private serviceUser: ServiceUserService){
     this.searchSubject.pipe(debounceTime(1000)).subscribe(value => {
       this.getTracksQuery(value)
+
     })
   }
   navigateMusic(id: string) {
@@ -62,6 +69,9 @@ export class SearchComponent {
   }
   navigateAlbum(id: string) {
     this.router.navigate([`/album/${id}`])
+  }
+  navigateDissay(id: string) {
+    this.router.navigate([`/dissay/${id}`])
   }
   ngOnInit(){
     this.route.params.subscribe(params => {
@@ -107,11 +117,30 @@ export class SearchComponent {
             console.log(this.artistsSearched)
             this.dataload = true
           })
+        break;
+        case 'catDissays':
+          this.serviceDissay.searchDissays(query).subscribe(items => {
+            this.DissaysSearched = items
+            this.MusicIdDissays = this.DissaysSearched.map(i => {
+              return i.musicId
+            })
+            this.dataload = true
+            const images = this.MusicIdDissays.map(i => 
+              this.serviceSpotify.getMusicById(i)
+            )
+            forkJoin(images).subscribe(
+              (results) => {
+                this.MusicDissaySearched = results
+              }
+            )
+          })
+          break;
       }
     }else {
       this.tracksSearched = []
       this.albumsAndSingles = []
       this.albumsAndSingles = []
+      this.DissaysSearched = []
     }
   }
 

@@ -42,6 +42,26 @@ dissayRouter.get("/publicDissays", async(_req, res)=> {
         res.status(500).send(error instanceof Error ? error.message : "Unknow error")
     }
 })
+
+dissayRouter.get("/publicDissays/:query", async(req, res)=> {
+    try {
+        const query = req.params.query
+        if(query){
+            const regex = new RegExp(query, 'i')
+            const dissays = await collections?.dissays?.find({isPrivate: false, name: {$regex: regex}}).toArray()
+            if(dissays){
+                res.status(200).json(dissays)
+            }else{
+                res.status(200).send({message: "Não há dissays no momento"})
+            }
+        }else{
+            res.status(404).json({message: "Query inválida"})
+        }
+        
+    }catch(error){
+        res.status(500).send(error instanceof Error ? error.message : "Unknow error")
+    }
+})
 //Os 10 primeiros dissays recentes
 dissayRouter.get("/recentDissays", async(_req, res)=> {
     try {

@@ -31,6 +31,10 @@ export class ServiceDissayService {
   clearInstruments(): void {
     this.instruments = []
   }
+  
+  searchDissays(query: string): Observable<Dissay[]> {
+    return this.http.get<Dissay[]>(`${this.API}/publicDissays/${query}`)
+  }
 
   getRecentDissays(): Observable<Dissay[]>{
     return this.http.get<Dissay[]>(`${this.API}/recentDissays`)
