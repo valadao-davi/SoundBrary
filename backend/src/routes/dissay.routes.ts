@@ -106,7 +106,7 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
                         idOptional: `${musicId}`
                     }
                     await collections?.users?.updateMany({musicSaved: musicId}, {$push: {notifications: notification}})
-                    return res.status(200).send(result.insertedId.toString())
+                    return res.status(200).json({insertedId: result.insertedId})
                 }else{
                     return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")
                 }
@@ -143,7 +143,7 @@ dissayRouter.post("/privateDissay/:musicId", auth, async(req: CustomRequest, res
                 console.log("Dissay criado")
                 const addToUser = await collections?.users?.updateOne({_id: findUser._id}, {$push: { dissaysCreated: result.insertedId.toString()}})
                 if(addToUser){
-                    return res.status(200).send(result.insertedId.toString())
+                    return res.status(200).json({insertedId: result.insertedId})
                 }else{
                     console.log("aqui")
                     return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")

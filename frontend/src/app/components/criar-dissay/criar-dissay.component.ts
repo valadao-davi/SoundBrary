@@ -176,7 +176,7 @@ export class CriarDissayComponent {
           return this.handleError.handleErrorCode(code)
         })).subscribe({
           next: (response) => {
-            this.router.navigate([`/dissay/${response}`]);
+            this.router.navigate([`/dissay/${response.insertedId}`]);
 
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
@@ -195,10 +195,10 @@ export class CriarDissayComponent {
           return this.handleError.handleErrorCode(code)
         })).subscribe({
           next: (response) => {
+            this.router.navigate([`/dissay/${response.insertedId}`]);
             console.log(response)
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
-            this.router.navigate([`/dissay/${response}`]);
             
           }
         });
@@ -222,6 +222,8 @@ export class CriarDissayComponent {
           return this.handleError.handleErrorCode(code)
         })).subscribe({
           next: (response) => {
+            
+            this.router.navigate([`/dissay/${response.insertedId}`]);
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
   
