@@ -68,11 +68,11 @@ export class ServiceDissayService {
     return this.http.get<Dissay>(`${this.API}/getDissay/${id}`)
   }
 
-  createDissay(token: string,dissayData: any): Observable<any>{
+  createDissay(token: string,dissayData: any): Observable<string>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     })
-    return this.http.post<any>(`${this.API}/createDissay/${dissayData.musicId}`,  dissayData, {headers})
+    return this.http.post<string>(`${this.API}/createDissay/${dissayData.musicId}`,  dissayData, {headers})
   }
 
   createPrivateDissay(token: string,dissayData: any): Observable<any>{
