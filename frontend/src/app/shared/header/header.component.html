@@ -10,8 +10,8 @@
     <div id="auth_redirects">
         <button (click)="navigateLogin(false)" *ngIf="userAuthenticated === false"><h3 id="entrar_text" >Entrar</h3></button>
         <ng-container *ngIf="userAuthenticated === true">
-          <button (click)="openAndCloseNotifications($event)" *ngIf="listNotification.length === 0"><img src="../../../assets/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg"></button>
-          <button (click)="openAndCloseNotifications($event)" *ngIf="listNotification.length > 0"><img src="../../../assets/notifications_unread_24dp_E8EAED_FILL1_wght400_GRAD0_opsz24.svg"></button>
+          <button class="btn_notif" (click)="openAndCloseNotifications($event)" *ngIf="listNotification.length === 0"><img src="../../../assets/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg"></button>
+          <button class="btn_notif" (click)="openAndCloseNotifications($event)" *ngIf="listNotification.length > 0"><img src="../../../assets/notifications_unread_24dp_E8EAED_FILL1_wght400_GRAD0_opsz24.svg"></button>
         </ng-container>
         <button (click)="navigateLogin(true)" *ngIf="userAuthenticated === true"><h3 id="entrar_text" >Sair</h3></button>
         <button (click)="navigateCadastro()"><h3 *ngIf="userAuthenticated === false">Cadastrar</h3></button>

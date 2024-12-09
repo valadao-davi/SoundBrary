@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
@@ -10,4 +10,8 @@ import { RouterModule } from '@angular/router';
 })
 export class AuthLayoutComponent {
 
+  constructor (private router: Router){}
+  navigateHome() {
+    this.router.navigate(['/home']);
+  }
 }

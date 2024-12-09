@@ -19,6 +19,7 @@ div {
 }
 #h_left {
   gap: 32px;
+  height: 56px;
 }
 #logo_header {
   height: 48px;
@@ -65,7 +66,7 @@ input::placeholder{
   gap: 32px;
 }
 #auth_redirects{
-  gap: 24px;
+  gap: 32px;
   width: fit-content;
 }
 
@@ -73,4 +74,21 @@ input::placeholder{
 .custom-backdrop {
   background-color: transparent !important; 
   pointer-events: auto; /* Garante que o clique fora seja detectado */
+}
+
+.btn_notif {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  height: fit-content;
+  width: fit-content;
+  padding: 0px;
+}
+
+.btn_notif img {
+  height: 24px;
 }

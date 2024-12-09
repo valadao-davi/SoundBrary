@@ -36,6 +36,8 @@ export class PerfilLateralComponent {
       this.router.navigate(['/criar-dissay']);
     }
 
-
+    navigateHome() {
+    this.router.navigate(['/home']);
+  }
 
 }

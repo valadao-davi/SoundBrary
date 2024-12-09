@@ -104,6 +104,9 @@ export class CadastroComponent {
     return this.cadastroForm.get('senha')!
   }
 
+  navigateHome() {
+    this.router.navigate(['/home']);
+  }
 
   sucessoNotification() {
     if (!this.falha) { // Verifica se a notificação de publicação não está visível
