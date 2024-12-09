@@ -106,7 +106,7 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
                         idOptional: `${musicId}`
                     }
                     await collections?.users?.updateMany({musicSaved: musicId}, {$push: {notifications: notification}})
-                    return res.status(200).json({message: "Dissay criado"})
+                    return res.status(200).send(result.insertedId.toString())
                 }else{
                     return res.status(404).send("Erro ao adicionar na lista de IDS do usuario")
                 }
