@@ -37,7 +37,15 @@
     gap: 8px;
     flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
     max-width: 100%;
+  }
 
+  .sem_generos{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+    max-width: 100%;
+    align-self: flex-end;
+    color: #808080;
   }
 
 .genero{

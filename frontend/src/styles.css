@@ -473,3 +473,31 @@ template {
   font-size: 24px;
   border-bottom: 1px solid #00000080;
 }
+
+
+
+.icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 125%; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; 
+  color: #fff; 
+  padding: 5px 10px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  white-space: nowrap; 
+  opacity: 0; 
+  visibility: hidden; 
+  transition: opacity 0.3s ease-in-out; 
+}
+
+.icon-container:hover .tooltip {
+  opacity: 1; 
+  visibility: visible; 
+}

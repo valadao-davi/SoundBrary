@@ -239,6 +239,7 @@ button {
 .nome_data {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .nome_data div {
@@ -290,4 +291,11 @@ button {
 
 .cinza {
   background-color: gray;
+}
+
+.lixeirinha button {
+  margin: 0px;
+  padding: 0px;
+  height: fit-content;
+  display: flex;
 }

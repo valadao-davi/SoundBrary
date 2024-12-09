@@ -54,33 +54,36 @@ router.get('/idArtist/:id', async(req, res)=> {
     }
 })
 
-router.get('/idArtist/album/:id', async(req, res)=> {
-    const idArtist = req.params.id
+router.get('/idArtist/album/:id', async (req, res) => {
+    const idArtist = req.params.id;
+
     try {
-        const albumData = await artistAlbums(idArtist)
-        if(albumData === null){
-            res.status(404).json({message: `Artist with the ID: ${idArtist} Data not found`})
-        }else{
-            const formatted = await Promise.all(albumData.map(items => ({
-                id: items.id,
-                albumName: items.name,
-                albumType: items.album_group,
-                artists: items.artists.map(artist => ({
-                    id: artist.id,
-                    name: artist.name
-                })),
-                releaseDate: items.release_date,
-                albumImage: items.images.map(image => ({
-                    link: image.url,
-                    width: image.width,
-                    height: image.height
-                }))
-            })))
-            res.status(200).json(formatted)
-       
-    } }catch(e){
-        console.log(e)
-        res.status(500).json({"erro": e})
+        const albumData = await artistAlbums(idArtist);
+        if (!albumData.length) {
+            return res.status(404).json({ message: `No albums found for artist with ID: ${idArtist}` });
+        }
+
+        const formatted = albumData.map(items => ({
+            id: items.id,
+            albumName: items.name,
+            albumType: items.album_group,
+            artists: items.artists.map(artist => ({
+                id: artist.id,
+                name: artist.name,
+            })),
+            releaseDate: items.release_date,
+            albumImage: items.images.map(image => ({
+                link: image.url,
+                width: image.width,
+                height: image.height,
+            })),
+        }));
+
+        res.status(200).json(formatted);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ erro: e });
     }
-})
+});
+
 export default router

@@ -20,8 +20,11 @@
 
         <div class="generos_sec">
             <h3>Gêneros do artista: </h3>
-            <div class="generos">
+            <div *ngIf="artistItem.genres.length > 0" class="generos">
               <div class="genero" *ngFor="let genero of artistItem.genres"><h4>{{ genero }}</h4></div>
+            </div>
+            <div *ngIf="artistItem.genres.length === 0" class="sem_generos">
+              <h3>Sem gêneros fornecidos para o artista.</h3>
             </div>
         </div>
 

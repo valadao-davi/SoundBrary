@@ -32,14 +32,19 @@
               </div>
             </div>
             <div class="estrelas_avaliacao" *ngIf="ownerDissay && dissayData.totalRate">
-              <div *ngFor="let i of [1,2,3,4,5]">
+              <div class="info_icon icon-container" *ngFor="let i of [1,2,3,4,5]">
                 <img *ngIf="dissayData.totalRate! >=i" src="../../../assets/estrela_cheia.svg">
                 <img *ngIf="dissayData.totalRate! < i"  src="../../../assets/estrela_vazia.svg">
+                <div class="tooltip">Você não pode avaliar o próprio Dissay</div>
+
               </div>
+
             </div>
-            <div class="estrelas_avaliacao" *ngIf="dissayData.totalRate === undefined && ownerDissay">
+            <div class="estrelas_avaliacao info_icon icon-container" *ngIf="dissayData.totalRate === undefined && ownerDissay">
               <div *ngFor="let i of [1,2,3,4,5]">
                 <img src="../../../assets/estrela_vazia.svg">
+                <div class="tooltip">Você não pode avaliar o próprio Dissay</div>
+
               </div>
             </div>
             <h2>{{dissayData.totalRate}}</h2>
@@ -114,8 +119,8 @@
                     <h5>{{ comentario.userName }}</h5>
                     <p>{{ comentario.date }}</p>
                   </div>
-                  <div *ngIf="userData">
-                    <button (click)="excluirComentario(comentario._id!)" *ngIf="comentario.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
+                  <div *ngIf="userData" class="lixeirinha">
+                    <button (click)="excluirComentario(comentario._id!)" *ngIf="comentario.userName === userData.userName"><img src="../../../assets/lixeira.svg" alt="" srcset=""></button>
                   </div>
                 </div>
                 <div class="resposta_text">

@@ -82,6 +82,10 @@ input::placeholder{
   align-items: center;
 }
 
+.resultado h1 {
+  
+}
+
 .resultado img {
   width: 100px;
   height: 100px;

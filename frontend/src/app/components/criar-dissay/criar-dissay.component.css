@@ -250,29 +250,3 @@ button {
     width: 100%; /* Ou defina um tamanho fixo conforme necessário */
     z-index: 9999; /* Garante que o overlay fique acima de outros elementos */
   }
-
-.icon-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .tooltip {
-    position: absolute;
-    bottom: 150%; 
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333; 
-    color: #fff; 
-    padding: 5px 10px; 
-    border-radius: 5px; 
-    font-size: 16px; 
-    white-space: nowrap; 
-    opacity: 0; 
-    visibility: hidden; 
-    transition: opacity 0.3s ease-in-out; 
-  }
-  
-  .icon-container:hover .tooltip {
-    opacity: 1; 
-    visibility: visible; 
-  }

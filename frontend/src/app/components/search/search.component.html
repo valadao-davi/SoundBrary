@@ -24,7 +24,7 @@
     <div class="resultados_item">
       <div class="resultados">
         <div class="resultado">
-          <h1 *ngIf="track.albumImages === []">Imagem não encontrada</h1>
+          <img *ngIf="track.albumImages === []" src="../../../assets/no_music.svg">
           <img [src]="track.albumImages[0].link">
         <div class="resultado_textos">
           <h2>{{track.name}}</h2>
@@ -52,7 +52,6 @@
           <h3>{{album.albumName}}</h3>
           <h4>{{album.artists[0].name}}</h4>
         </div>
-        <div class="resultado_criados">Dissays criados: 4</div>
         </div>
         <div class="linha"></div>
       </div>
@@ -73,7 +72,6 @@
             <h3>{{item.albumName}}</h3>
             <h4>{{item.artists[0].name}}</h4>
           </div>
-          <div class="resultado_criados">Dissays criados: 4</div>
           </div>
           <div class="linha"></div>
         </div>
@@ -88,8 +86,8 @@
         <div class="resultados_item">
           <div class="resultados">
             <div class="resultado">
-              <h1 *ngIf="item.artistImages.length == 0">Imagem não encontrada</h1>
-             <img *ngIf="item.artistImages.length > 0" [src]="item.artistImages[0].link">
+              <img *ngIf="item.artistImages.length === 0" src="../../../assets/no_music.svg">
+              <img *ngIf="item.artistImages.length > 0" [src]="item.artistImages[0].link">
             <div class="resultado_textos">
               <h3>{{item.name}}</h3>
             </div>

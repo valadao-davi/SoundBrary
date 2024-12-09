@@ -90,8 +90,11 @@ export class ArtistaComponent {
     this.serviceSpotify.getAlbumsByArtist(id).subscribe(
       items => {
         this.itemsAlbum = items
+        console.log("Itens: " + items)
         this.albumItems = this.itemsAlbum.filter(items => items.albumType === "album")
         this.singleItems = this.itemsAlbum.filter(items => items.albumType === "single")
+        console.log("Albuns" + this.itemsAlbum)
+        console.log("Singles" + this.singleItems)
       }
     )
   }
