@@ -42,6 +42,8 @@ export class ProfileLayoutComponent {
   musicsList!: Music[]
   albumsList!: Album[]
   dissaysList!: Dissay[]
+  dissaysListPrivate!: Dissay[]
+
   dataLoad: boolean = false;
   artistsList!: Artist[]
   query!: string | null
@@ -180,7 +182,8 @@ export class ProfileLayoutComponent {
     )
       forkJoin(items).subscribe(
         (results) => {
-          this.dissaysList = results
+          this.dissaysList = results.filter(i => i.isPrivate == false)
+          this.dissaysListPrivate = results.filter(i => i.isPrivate == true)
           console.log(this.dissaysList)
         }
       )

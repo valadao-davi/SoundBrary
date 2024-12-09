@@ -1,5 +1,5 @@
 <ng-container  *ngIf="dissayData">
-  <button (click)="navigateDissay(dissayId)" class="dissay">
+  <button (click)="navigateDissay(dissayData._id ?? '')" class="dissay">
     <div class="topo">
       <div class="topo_textos">
         <h3>{{dissayData.name}}</h3>
