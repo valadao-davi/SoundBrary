@@ -142,37 +142,67 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
     }
 })
 
-commentRouter.delete("/deleteComment/:id", auth, async(req: CustomRequest, res: Response)=> {
-    try{
-        const commentId = new ObjectId(req.params.id)
-        const userName = req.token?.userName
-        const findUser = await collections?.users?.findOne({userName: userName})
-        const findDissay = await collections?.dissays?.findOne({"comments._id": new ObjectId(commentId)})
-       if(findUser && findDissay){
-            const userOwner = findDissay.userName
-            const deleteReplies = await collections?.dissays?.updateOne({_id: findDissay._id}, {$pull: {comments:{idParent: commentId.toString()}}})
-            const deleteComment = await collections?.dissays?.updateOne(
-                { _id: findDissay._id },
-                { $pull: { comments: { _id: commentId, userName: userName } } }
-            );
-            const removeOfUserOwner = await collections?.users?.findOneAndUpdate({userName: userOwner}, {$pull: {notifications: {idObject: commentId}}}, {returnDocument: 'after'})
-            if(removeOfUserOwner?.notifications?.length === 0){
-                console.log("Deletado da lista do usuario")
+commentRouter.delete("/deleteComment/:id", auth, async (req: CustomRequest, res: Response) => {
+    try {
+        const commentId = new ObjectId(req.params.id);
+        const userName = req.token?.userName;
+
+        // Buscar o usuário autenticado e o Dissay com o comentário
+        const findUser = await collections?.users?.findOne({ userName });
+        const findDissay = await collections?.dissays?.findOne({ "comments._id": commentId });
+
+        if (!findUser || !findDissay) {
+            return res.status(404).json({ message: "Dissay ou usuário não encontrado" });
+        }
+
+        const userOwner = findDissay.userName;
+
+        // Remover respostas associadas ao comentário
+        await collections?.dissays?.updateMany(
+            { _id: findDissay._id },
+            { $pull: { comments: { idParent: commentId.toString() } } }
+        );
+
+        // Remover o comentário principal
+        const deleteComment = await collections?.dissays?.updateOne(
+            { _id: findDissay._id },
+            { $pull: { comments: { _id: commentId, userName } } }
+        );
+
+        if (!deleteComment?.acknowledged || deleteComment.modifiedCount === 0) {
+            return res.status(400).json({ message: "Ocorreu um erro ao deletar o comentário" });
+        }
+
+        // Remover notificações relacionadas ao comentário do usuário dono do Dissay
+        await collections?.users?.updateOne(
+            { userName: userOwner },
+            { $pull: { notifications: { idOptional: commentId.toString() } } }
+        );
+
+        // Remover notificações relacionadas a respostas, se aplicável
+        const commentOfDissay = findDissay.comments?.find(i => i._id!.equals(commentId));
+        if (commentOfDissay && commentOfDissay.idParent) {
+            const parentComment = findDissay.comments?.find(i => i._id!.equals(new ObjectId(commentOfDissay.idParent)));
+            if (parentComment) {
                 await collections?.users?.updateOne(
-                    { userName: userName },
-                    { $unset: { notifications: "" } }
+                    { userName: parentComment.userName },
+                    { $pull: { notifications: { idOptional: commentId.toString() } } }
                 );
             }
-            if(deleteComment?.acknowledged && deleteComment?.modifiedCount > 0){
-                res.status(200).json({ message: "Comentário deletado com sucesso" });
-            }else{
-                res.status(400).json({ message: "Ocorreu um erro ao deletar o comentário" });
-            }
-       }else{
-        return res.status(404).json({message: "Dissay ou usuário não encontrado"})
+        }
+
+        // Verificar e remover o campo notifications se estiver vazio para o dono do Dissay
+        const ownerNotifications = await collections?.users?.findOne({ userName: userOwner });
+        if (ownerNotifications?.notifications?.length === 0) {
+            await collections?.users?.updateOne(
+                { userName: userOwner },
+                { $unset: { notifications: "" } }
+            );
+        }
+
+        res.status(200).json({ message: "Comentário deletado com sucesso" });
+    } catch (error) {
+        console.error("Erro ao deletar comentário do dissay: ", error);
+        return res.status(500).json({ error: "Erro interno no servidor" });
     }
-    }catch(error){
-        console.error("Erro ao deletar comentário do dissay: ", error)
-        return res.status(500).json({error: error})
-    }
-})
+});

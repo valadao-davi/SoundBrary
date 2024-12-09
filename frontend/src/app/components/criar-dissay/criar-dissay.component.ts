@@ -222,7 +222,7 @@ export class CriarDissayComponent {
           return this.handleError.handleErrorCode(code)
         })).subscribe({
           next: (response) => {
-            
+            console.log(response)
             this.router.navigate([`/dissay/${response.insertedId}`]);
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")

@@ -43,7 +43,10 @@ const routes: Routes = [
 
   {path: 'perfil/:query', component: ProfileLayoutComponent},
 
-  {path: 'overlay', component: InstrumentoOverlayComponent}
+  {path: 'overlay', component: InstrumentoOverlayComponent},
+
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
+
 ];
 
 @NgModule({

@@ -150,6 +150,7 @@ export class DissayComponent {
       this.dataLoaded = true
     })
   }
+  
 
   loadComments(dissayObject: Dissay){
     if(dissayObject.comments && dissayObject.comments.length > 0){
