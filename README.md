@@ -19,6 +19,7 @@ SoundBrary é uma plataforma para criação de "dissays" (artigos musicais) base
 ## Screenshots
 
 ![App Screenshot](/frontend/src/assets/Tela%20inicial.png)
+![App Screenshot](/frontend/src/assets/Tela%20musica.png)
 ![App Screenshot](/frontend/src/assets/Procurar%20musica.png)
 ![App Screenshot](/frontend/src/assets/Criar%20dissay.png)
 ![App Screenshot](/frontend/src/assets/Guitarra%20-%20Níveis.png)
