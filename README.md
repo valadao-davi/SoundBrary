@@ -14,6 +14,16 @@ SoundBrary é uma plataforma para criação de "dissays" (artigos musicais) base
 - **Controle de Privacidade**: Opção de criar dissays privados, visíveis apenas para o autor.
 - **Edição de Perfil**: Permite que os usuários personalizem suas informações pessoais.
 - **Banco de Dados MongoDB**: Gerencia usuários, dissays, comentários e notificações em um banco de dados robusto e escalável.
+
+
+## Screenshots
+
+![App Screenshot](/frontend/src/assets/Tela%20inicial.png)
+![App Screenshot](/frontend/src/assets/Criar%20dissay.png)
+![App Screenshot](/frontend/src/assets/Guitarra%20-%20Níveis.png)
+
+
+
 ## Instalação
 
 ### 1. Clone o repositório
