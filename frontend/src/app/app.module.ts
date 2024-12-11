@@ -37,6 +37,7 @@ import { InstrumentoCriarOverlayComponent } from './overlays/instrumento-criar-o
 import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrumento.component';
 import { NotificationsComponent } from './overlays/notifications/notifications.component';
 import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profile-pic-overlay.component';
+import { LeftInfo2Component } from './components/left-info-2/left-info-2.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profi
     AddInstrumentoComponent,
     NotificationsComponent,
     ProfilePicOverlayComponent,
+    LeftInfo2Component,
   ],
   imports: [
     BrowserModule,

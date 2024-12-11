@@ -5,8 +5,9 @@
   </div>
 
 <div *ngIf="dataLoaded" class="layout">
-  <div *ngIf="dissayData.musicId !== 'no-id-music'">
-    <app-left-info [urlLink]="musicData.externalLink" [trackName]="musicData.name" [urlImage]="musicData.albumImages[0].link" [albumId]="musicData.albumId"></app-left-info>
+  <div>
+    <app-left-info *ngIf="dissayData.musicId !== 'no-id-music'" [urlLink]="musicData.externalLink" [trackName]="musicData.name" [urlImage]="musicData.albumImages[0].link" [albumId]="musicData.albumId"></app-left-info>
+    <app-left-info-2 *ngIf="dissayData.musicId === 'no-id-music'"></app-left-info-2>
   </div>
   <div class="conteudo">
     <div class="dissay_content">
@@ -84,8 +85,8 @@
         <h1 class="secao_titulo">Descrição</h1>
         <div class="linha"></div>
         <div class="campo_texto">
-         {{dissayData.desc}}
-         <h2 *ngIf="!dissayData.desc">Dissay sem descrição no momento...</h2>
+         <p>{{dissayData.desc}}</p>
+         <h2 *ngIf="!dissayData.desc" class="cinza_text">Dissay sem descrição no momento...</h2>
         </div>
       </div>
 
@@ -143,7 +144,7 @@
                           <p>{{ resposta.date }}</p>
                         </div>
                         <div *ngIf="userData">
-                          <button (click)="excluirComentario(resposta._id!)" *ngIf="resposta.userName === userData.userName"><img src="../../../assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="" srcset=""></button>
+                          <button (click)="excluirComentario(resposta._id!)" *ngIf="resposta.userName === userData.userName"><img src="../../../assets/lixeira.svg" alt="" srcset=""></button>
                         </div>
                       </div>
                       <div class="resposta_text">

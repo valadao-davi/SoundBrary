@@ -12,6 +12,10 @@
 }
 
 .seta_voltar {
+    padding: 0px;
+}
+
+.seta_voltar img {
     width: 32px;
     height: 32px;
 }
@@ -130,7 +134,7 @@ button {
 
 .titulo p {
     color: rgba(0, 0, 0, 0.5);
-    font-size: 14px;
+    font-size: 16px;
     text-align: end;
 }
 

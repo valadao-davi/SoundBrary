@@ -131,6 +131,11 @@
 
 .campo_texto p {
   font-size: 20px;
+  font-weight: 500;
+}
+
+.campo_texto h2 {
+
 }
 
 .zona_comentario {
@@ -291,6 +296,10 @@ button {
 
 .cinza {
   background-color: gray;
+}
+
+.cinza_text{
+  color: #00000080;
 }
 
 .lixeirinha button {

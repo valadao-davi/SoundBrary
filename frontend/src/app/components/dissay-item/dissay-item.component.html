@@ -2,7 +2,7 @@
   <button (click)="navigateDissay(dissayData._id ?? '')" class="dissay">
     <div class="topo">
       <div class="topo_textos">
-        <h3>{{dissayData.name}}</h3>
+        <h2>{{dissayData.name}}</h2>
         <div class="info_perfil">
           <img *ngIf="userImage.length === 0" src="../../../assets/perfil_icon.png">
           <img *ngIf="userImage.length > 0" [src]="userImage">

@@ -11,6 +11,8 @@ import { ErrorHandleServiceService } from 'src/app/services/error-handle-service
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
 import { ServiceInstrumentsImageService } from 'src/app/services/service-instruments-image.service';
 import { ServiceMusicService } from 'src/app/services/service-music.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-criar-dissay',
@@ -41,11 +43,15 @@ export class CriarDissayComponent {
 
   showTooltip = false;
 
-  constructor(private router: Router, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService){
+  constructor(private location: Location, private router: Router, private serviceSpotify: ServiceMusicService, private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService){
     this.searchSubject.pipe(debounceTime(500)).subscribe(value => {
       this.getTracksQuery(value)
     })
 
+  }
+
+  voltarPagina() {
+    this.location.back();
   }
 
   ngOnInit(){
@@ -123,8 +129,10 @@ export class CriarDissayComponent {
       const foundTrack = this.tracksSearched.find(track => track.id === id)
       if(foundTrack){
         this.musicSelected = foundTrack
-        this.titleValue = 'Dissay ' + foundTrack.name
         this.showResults = false
+        if(this.titleValue.length === 0) {
+          this.titleValue = 'Dissay ' + foundTrack.name
+        }
       }
     }
   }
