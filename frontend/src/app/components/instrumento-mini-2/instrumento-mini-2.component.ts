@@ -18,6 +18,7 @@ export class InstrumentoMini2Component {
   listDissayInstruments: Instrument[] = []
   @Input() nomeAfinacao!: string;
   @Input() nomeBigAfinacao!: string;
+  @Input() toneDissay!: string;
   
 
 

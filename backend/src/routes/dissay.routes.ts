@@ -87,6 +87,7 @@ dissayRouter.post("/createDissay/:musicId", auth, async(req: CustomRequest, res:
             userName: userName,
             instruments: req.body.instruments,
             createdAt: new Date(),
+            tone: req.body?.tone,
             desc: req.body?.description,
             isPrivate: isPrivate
         }
@@ -133,6 +134,7 @@ dissayRouter.post("/privateDissay/:musicId", auth, async(req: CustomRequest, res
             userName: userName,
             instruments: req.body.instruments,
             createdAt: new Date(),
+            tone: req.body?.tone,
             desc: req.body?.description,
             isPrivate: isPrivate
         }
@@ -202,12 +204,13 @@ dissayRouter.put('/editDissay/:id', auth, async(req: CustomRequest, res: Respons
                 userName: findDissay.userName,
                 instruments: req.body?.instruments,
                 createdAt: new Date(),
+                tone: req.body?.tone,
                 desc: req.body?.description,
             }
-            const result = await collections?.dissays?.findOneAndUpdate({_id: new ObjectId(findDissay._id)}, {$set: dissay})
+            const result = await collections?.dissays?.findOneAndUpdate({_id: new ObjectId(findDissay._id)}, {$set: dissay}, {returnDocument: 'after'})
             if(result){
                 console.log("dissay atualizado")
-                return res.status(200).json({message: "Dissay atualizado com sucesso"})
+                return res.status(200).json({insertedId: result._id})
             }else{
                 console.log("error ao atualizar")
             }

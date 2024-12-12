@@ -89,10 +89,10 @@ export class ServiceDissayService {
     return this.http.delete<void>(`${this.API}/deleteDissay/${dissayId}`, {headers})
   }
 
-  editDissay(token: string, dissayId: string, dissayData: any): Observable<void>{
+  editDissay(token: string, dissayId: string, dissayData: any): Observable<any>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     })
-    return this.http.put<void>(`${this.API}/editDissay/${dissayId}`, dissayData, {headers})
+    return this.http.put<any>(`${this.API}/editDissay/${dissayId}`, dissayData, {headers})
   }
 }

@@ -49,6 +49,7 @@ export class ProfilePicOverlayComponent {
         console.log('aqui')
         this.avisosService.mostrarAvisoTemporario("Imagem editada com sucesso!", "success")
         this.closeOverlay()
+        window.location.reload();
       }
     })
   }

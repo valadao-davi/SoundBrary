@@ -38,6 +38,7 @@ import { AddInstrumentoComponent } from './overlays/add-instrumento/add-instrume
 import { NotificationsComponent } from './overlays/notifications/notifications.component';
 import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profile-pic-overlay.component';
 import { LeftInfo2Component } from './components/left-info-2/left-info-2.component';
+import { NumeroFormatadoPipe } from './pipes/numero-formatado.pipe';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { LeftInfo2Component } from './components/left-info-2/left-info-2.compone
     NotificationsComponent,
     ProfilePicOverlayComponent,
     LeftInfo2Component,
+    NumeroFormatadoPipe,
   ],
   imports: [
     BrowserModule,

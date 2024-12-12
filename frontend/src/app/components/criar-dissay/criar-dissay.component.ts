@@ -51,6 +51,7 @@ export class CriarDissayComponent {
   }
 
   voltarPagina() {
+    this.clearFields()
     this.location.back();
   }
 
@@ -168,7 +169,6 @@ export class CriarDissayComponent {
   }
 
   publishDissay(){
-
   if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
       console.log("Dissay inválido")
     }else {
@@ -193,6 +193,7 @@ export class CriarDissayComponent {
           }
         });
       }else{
+        console.log(this.toneDissay)
         this.serviceDissay.createDissay(this.accessToken,{
           musicId: this.musicSelected.id,
           name: this.titleValue,
@@ -258,7 +259,7 @@ export class CriarDissayComponent {
             next: (response) => {
               this.clearFields()
               this.avisosService.mostrarAvisoTemporario("Dissay editado com sucesso!", "success")
-             
+              this.router.navigate([`/dissay/${response.insertedId}`]);
               
             }
           });
@@ -275,5 +276,6 @@ export class CriarDissayComponent {
     this.musicSelected = undefined
     this.searchQuery = '';
     this.serviceDissay.clearInstruments()
+    console.log(this.instrumentsDissay)
   }
 }

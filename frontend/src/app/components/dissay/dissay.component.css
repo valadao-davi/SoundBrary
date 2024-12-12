@@ -228,6 +228,7 @@ button {
 .resposta {
   display: flex;
   flex-direction: column;
+  margin-top: 8px;
 }
 
 .nivel_1 {
@@ -307,4 +308,21 @@ button {
   padding: 0px;
   height: fit-content;
   display: flex;
+}
+
+.title_tone {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: end;
+}
+
+.titulo {
+  flex: 1 1 auto;
+  max-width: 100%; 
+}
+
+.tonalidade{
+  flex-shrink: 0;
+  white-space: nowrap; 
 }

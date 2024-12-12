@@ -11,7 +11,11 @@
   </div>
   <div class="conteudo">
     <div class="dissay_content">
-      <h1>{{dissayData.name}}</h1>
+      <div class="title_tone">
+        <h1>{{dissayData.name}}</h1>
+        <h2 class="tonalidade" *ngIf="dissayData.tone !== undefined">{{dissayData.tone}}</h2>
+        <h2 class="tonalidade cinza_text" *ngIf="dissayData.tone === undefined">Afinação não fornecida</h2>
+      </div>
       <div class="perfil_avaliacao">
         <div class="dissay_perfil" *ngIf="userDissayData.image">
           <img [src]="userDissayData.image">
@@ -75,10 +79,7 @@
             <app-instrumento-mini-2 *ngFor="let instrumento of dissayData.instruments" [instrumentData]="instrumento"></app-instrumento-mini-2>
           </div>
         </div>
-        <div class="afinacao" *ngIf="dissayData.tone">
-          <h2>Afinação</h2>
-          <app-instrumento-mini-2></app-instrumento-mini-2>
-        </div>
+      
       </div>
 
       <div class="descricao">
@@ -110,8 +111,7 @@
 
         <div class="respostas">
           <div *ngFor="let comentario of comments; let i = index;" [hidden]="comentario.idParent === undefined">
-          <div *ngIf="comentario.idParent!.length === 0 || comentario.idParent === undefined || comentario.idParentAwnser == undefined">
-            <div class="resposta" >
+          <div class="resposta" *ngIf="comentario.idParent!.length === 0 || comentario.idParent === undefined || comentario.idParentAwnser == undefined">
               <div  class="conteudo_resposta">
                 <img class="mini_avatar" [src]="listImages[i]" alt="">
               <div class="resposta_right">
@@ -192,7 +192,6 @@
             </div>
 
           </div>
-        </div>
         </div>
       </div>
 
