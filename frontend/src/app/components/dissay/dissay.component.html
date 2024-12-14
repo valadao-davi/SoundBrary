@@ -17,14 +17,14 @@
         <h2 class="tonalidade cinza_text" *ngIf="dissayData.tone === undefined">Afinação não fornecida</h2>
       </div>
       <div class="perfil_avaliacao">
-        <div class="dissay_perfil" *ngIf="userDissayData.image">
+        <button (click)="navigateProfile(userDissayData.userName)" class="dissay_perfil" *ngIf="userDissayData.image">
           <img [src]="userDissayData.image">
           <h2>{{userDissayData.name}}</h2>
-        </div>
-        <div class="dissay_perfil" *ngIf="!userDissayData.image">
+        </button>
+        <button (click)="navigateProfile(userDissayData.userName)" class="dissay_perfil" *ngIf="!userDissayData.image">
           <div class="gray_circle"></div>
           <h2>{{userDissayData.name}}</h2>
-        </div>
+        </button>
         <div class="avaliacao_excluir">
           <div class="dissay_avaliacao" *ngIf="totalRate !== null && !dissayData.isPrivate">
             <div class="estrelas_avaliacao" *ngFor="let i of [1,2,3,4,5]">
@@ -113,11 +113,11 @@
           <div *ngFor="let comentario of comments; let i = index;" [hidden]="comentario.idParent === undefined">
           <div class="resposta" *ngIf="comentario.idParent!.length === 0 || comentario.idParent === undefined || comentario.idParentAwnser == undefined">
               <div  class="conteudo_resposta">
-                <img class="mini_avatar" [src]="listImages[i]" alt="">
+                <button (click)="navigateProfile(comentario.userName)"><img class="mini_avatar" [src]="listImages[i]" alt=""></button>
               <div class="resposta_right">
                 <div class="nome_data">
                   <div>
-                    <h5>{{ comentario.userName }}</h5>
+                    <button (click)="navigateProfile(comentario.userName)"><h5>{{ comentario.userName }}</h5></button>
                     <p>{{ comentario.date }}</p>
                   </div>
                   <div *ngIf="userData" class="lixeirinha">

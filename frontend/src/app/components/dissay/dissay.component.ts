@@ -98,6 +98,7 @@ export class DissayComponent {
 
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;
+        console.log(this.userDissayData.userName)
         if(this.userData && this.userDissayData){
           this.verifyDissayCreatedByUser(this.userData, this.userDissayData, dissay.isPrivate); // Verifica o ownership aqui mesmo
         }else if(dissay.isPrivate && !this.userData){
@@ -239,6 +240,10 @@ export class DissayComponent {
     textarea.style.height = 'auto'; // Reseta a altura
     textarea.style.height = `${textarea.scrollHeight}px`; // Define a nova altura
 
+  }
+
+  navigateProfile(username: string): void{
+    this.router.navigate([`/perfil/${username}`])
   }
 
   editDissay(){
