@@ -37,7 +37,7 @@
 
 
           <div class="lista_dissays" *ngFor="let musics of albumItem.tracks">
-            <h1>{{musics.orderTrack}}.  {{musics.name}}</h1>
+            <h1>{{musics.orderTrack}}.  <button (click)="navigateMusic(musics.id)">{{musics.name}}</button></h1>
             <ng-container *ngIf="hasDissaysForMusic(musics.id); else noDissay">
               <ng-container *ngFor="let dissay of dissaysAlbums">
                 <app-dissay-item [dissayId]="dissay._id!" [dissayData]="dissay"></app-dissay-item>
