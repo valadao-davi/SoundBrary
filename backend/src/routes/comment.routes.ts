@@ -72,8 +72,9 @@ commentRouter.post("/commentDissay/:id", auth, async(req: CustomRequest, res: Re
                 idOptional: `${commentId}`
             }
             const editedDissay = await collections?.dissays?.findOneAndUpdate({_id: findDissay._id}, {$push: {comments: comment}}, { returnDocument: "after" })
-           
-            await collections?.users?.findOneAndUpdate({userName: findDissay.userName}, {$push: {notifications: notification}})
+            if(findDissay.userName !== userName){
+                await collections?.users?.findOneAndUpdate({userName: findDissay.userName}, {$push: {notifications: notification}})
+            }
             if(editedDissay){
                 return res.status(200).json({editedDissay})
             }
@@ -114,8 +115,9 @@ commentRouter.post("/awnserDissay/:id", auth, async(req: CustomRequest, res: Res
                     idOptional: `${commentAwnserId}`
                 }
             
-    
-                await collections?.users?.findOneAndUpdate({userName: userNameCommentParent}, {$push: {notifications: notification}})
+                if(userName !== userNameCommentParent){
+                    await collections?.users?.findOneAndUpdate({userName: userNameCommentParent}, {$push: {notifications: notification}})
+                }
                 
                 if(comment.idParentAwnser !== null){
                     const parentCommentAwnser = findDissay.comments?.find((c: any) => c._id.toString() === comment.idParentAwnser)
