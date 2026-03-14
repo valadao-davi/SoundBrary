@@ -75,7 +75,7 @@ export class MusicaComponent {
     })
   }
   navigateCreate(id: string) {
-    if(this.user === null){
+    if(!this.user){
       this.router.navigate(['/login'])
       return
     }

@@ -20,7 +20,7 @@ export class PerfilLateralComponent {
   }
 
     navigatePerfil() {
-      if(this.user === null){
+      if(!this.user){
         this.router.navigate(['/login'])
         return
       }
@@ -29,7 +29,7 @@ export class PerfilLateralComponent {
     }
 
     navigateCreate() {
-      if(this.user === null){
+      if(!this.user){
         this.router.navigate(['/login'])
         return
       }
