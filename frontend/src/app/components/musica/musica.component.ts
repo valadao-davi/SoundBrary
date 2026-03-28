@@ -83,7 +83,10 @@ export class MusicaComponent {
   }
 
   saveSongOrRemove(id: string, isSaved: boolean): void {
-    console.log(isSaved)
+    if(!this.user) {
+      this.router.navigate(['/login'])
+      return
+    }
     if(this.accessToken && isSaved === false){
       this.serviceUser.saveSongToFavorite(this.accessToken, id).pipe(
         catchError((code)=> {

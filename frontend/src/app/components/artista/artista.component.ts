@@ -22,6 +22,7 @@ export class ArtistaComponent {
   accessToken!: string
   saved: boolean = false;
   user?: User;
+  userAuthenticated: boolean = false;
 
   id!: string | null;
   constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){
@@ -45,6 +46,7 @@ export class ArtistaComponent {
   }
   getUser(){
     if(this.accessToken.length > 0){
+      this.userAuthenticated = true
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
         if(this.artistItem && this.user.artistsSaved){
@@ -54,6 +56,10 @@ export class ArtistaComponent {
     }
   }
   saveOrRemoveArtist(id: string, isSaved: boolean): void {
+    if(this.userAuthenticated === false) {
+      this.router.navigate(['/login'])
+      return
+    }
     if(this.accessToken && isSaved === false){
       this.serviceUser.saveArtistsToFavorite(this.accessToken, id).pipe(
         catchError((code)=> {
