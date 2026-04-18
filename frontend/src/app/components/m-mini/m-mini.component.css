@@ -10,14 +10,14 @@
 .m_mini::after {
   content: "";
   position: absolute;
-  inset: 0; /* top, right, bottom, left = 0 */
-  background: rgba(0, 0, 0, 0); /* transparente inicial */
+  inset: 0; 
+  background: rgba(0, 0, 0, 0); 
   transition: background 0.3s ease;
-  pointer-events: none; /* não interfere no hover */
+  pointer-events: none;
 }
 
 .m_mini:hover::after {
-  background: rgba(0, 0, 0, 0.1); /* sombra */
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .m_mini img{

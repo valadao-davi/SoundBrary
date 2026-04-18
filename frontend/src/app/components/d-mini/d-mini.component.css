@@ -15,10 +15,10 @@
 .d_mini::after {
   content: "";
   position: absolute;
-  inset: 0; /* top, right, bottom, left = 0 */
-  background: rgba(0, 0, 0, 0); /* transparente inicial */
+  inset: 0; 
+  background: rgba(0, 0, 0, 0);
   transition: background 0.3s ease;
-  pointer-events: none; /* não interfere no hover */
+  pointer-events: none; 
 }
 
 .d_mini:hover::after {

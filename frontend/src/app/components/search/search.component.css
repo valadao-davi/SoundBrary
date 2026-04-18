@@ -115,3 +115,16 @@ input::placeholder{
 .setinha {
   height: 24px !important;
 }
+
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #FD47BC;
+  font-weight: 600;
+  gap: 24px;
+}
+.pagination button {
+  padding: 0;
+}

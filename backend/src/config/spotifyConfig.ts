@@ -52,19 +52,32 @@ export const searchSample = async <T>(type: 'track' | 'album' | 'artist', query:
     }
 }
 
-export const searchGeneral = async(itemName: string): Promise<any>=> {
-    const url: string = `https://api.spotify.com/v1/search?q=${itemName}&type=artist%2Calbum%2Ctrack`
-    try {
-        const response = await axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${acessToken}`
-            }
-        })
-        return response.data
-    }catch(e){
-        console.error("Erro na busca: ", e)
-    }
-}
+export const searchGeneral = async (
+  itemName: string,
+  limit: number,
+  offset: number
+): Promise<any> => {
+
+  try {
+    const response = await axios.get("https://api.spotify.com/v1/search", {
+      headers: {
+        Authorization: `Bearer ${acessToken}`
+      },
+      params: {
+        q: itemName,
+        type: "artist,album,track",
+        limit: limit,
+        offset: offset
+      }
+    });
+
+    return response.data;
+
+  } catch (e) {
+    console.error("Erro na busca: ", e);
+    return null;
+  }
+};
 //Procura pela música
 export const searchTrack = async(musicName: string, offset: number = 0) => searchSample<SpotifyApi.TrackObjectFull>("track", musicName, offset)
 
