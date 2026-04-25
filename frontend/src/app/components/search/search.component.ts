@@ -135,6 +135,8 @@ export class SearchComponent {
   nextPage() {
     this.page++;
     this.getTracksQuery(this.searchQuery);
+    window.scrollTo(0, 0);
+    this.dataload = false
   }
 
   prevPage() {
