@@ -31,6 +31,9 @@
         <div class="seguidores">
           <h3>Seguidores: <span>{{ artistItem.artistFollowers | numeroFormatado }}</span></h3>
         </div>
+        
+        
+
 
         <div class="lancamentos">
           <div class="lancamentos_secao">
@@ -51,9 +54,21 @@
                 </div>
                 <h3>{{getYearFromReleaseDate(album.releaseDate)}}</h3>
               </div>
+              
               <div class="linha"></div>
               
             </div>
+            <div class="paginacao">
+                <button (click)="prevPage('album')" [disabled]="pageAlbums  === 0">
+                  Anterior
+                </button>
+
+                <span>Página {{ pageAlbums  + 1 }}</span>
+
+                <button (click)="nextPage('album')" [disabled]="!hasMoreAlbums">
+                  Próxima
+                </button>
+              </div>
             <div *ngIf="albumItems.length === 0" class="no_slider_space">O artista não possui álbuns</div>
             </div>
 
@@ -76,7 +91,19 @@
                 <h3>{{getYearFromReleaseDate(single.releaseDate)}}</h3>
               </div>
               <div *ngIf="singleItems.length === 0" class="no_slider_space">O artista não possui singles ou EPS</div>
+              
               <div class="linha"></div>
+            </div>
+            <div class="paginacao">
+                <button (click)="prevPage('single')" [disabled]="pageSingles === 0">
+                  Anterior
+                </button>
+
+                <span>Página {{ pageSingles + 1 }}</span>
+
+                <button (click)="nextPage('single')" [disabled]="!hasMoreSingles">
+                  Próxima
+                </button>
             </div>
 
           </div>

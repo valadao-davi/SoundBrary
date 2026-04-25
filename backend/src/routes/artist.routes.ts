@@ -56,9 +56,12 @@ router.get('/idArtist/:id', async(req, res)=> {
 
 router.get('/idArtist/album/:id', async (req, res) => {
     const idArtist = req.params.id;
+    const offset = parseInt(req.query.offset as string) || 0;
+    const limit = parseInt(req.query.limit as string) || 5;
+    const type = req.query.type as string || 'album,single';
 
     try {
-        const albumData = await artistAlbums(idArtist);
+        const albumData = await artistAlbums(idArtist, limit, offset, type);
         if (!albumData.length) {
             return res.status(404).json({ message: `No albums found for artist with ID: ${idArtist}` });
         }

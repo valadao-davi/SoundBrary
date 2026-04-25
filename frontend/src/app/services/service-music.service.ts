@@ -30,8 +30,14 @@ export class ServiceMusicService {
     return this.http.get<Artist>(`${this.API}/artists/idArtist/${id}`)
   }
 
-  getAlbumsByArtist(id: string): Observable<Album[]>{
-    return this.http.get<Album[]>(`${this.API}/artists/idArtist/album/${id}`)
+  getAlbumsByArtist(id: string, limit: number = 20, offset: number = 0, type: string = "album,single"): Observable<Album[]> {
+  return this.http.get<Album[]>(`${this.API}/artists/idArtist/album/${id}`, {
+    params: {
+        limit: limit,
+        offset: offset,
+        type: type
+      }
+  });
   }
 
   getQueryMusic(query: string, limit: number = 5, offset: number = 0): Observable<Music[]> {
