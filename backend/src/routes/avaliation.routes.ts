@@ -1,10 +1,9 @@
 import { collections } from './../config/db';
-import * as express from 'express'
-import * as dotenv from 'dotenv';
+import express, { Request, Response, NextFunction } from 'express'
+import dotenv from 'dotenv';
 import { ObjectId } from 'mongodb';
-import {Request, Response, NextFunction} from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import {auth} from './user.routes'
+import { auth } from './user.routes'
 
 
 export const avaliationRouter = express.Router();
