@@ -1,6 +1,7 @@
 {
     "include": ["../src/*"],
     "compilerOptions": {
+      "noImplicitAny": false,
       "target": "es2016",
       "module": "commonjs",
       "esModuleInterop": true,  
