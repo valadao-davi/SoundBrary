@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, catchError, throwError, BehaviorSubject } from 'rxjs';
 import { Notiffication } from '../layouts/Notification';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ServiceNotificationService {
   public notifications$: Observable<Notiffication[]> = this.notificationsSubject.asObservable();
 
 
-  private readonly API = 'http://localhost:3000/users'
+  private readonly API = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
 

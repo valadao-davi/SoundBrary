@@ -3,13 +3,14 @@ import { User } from '../layouts/User';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Notiffication } from '../layouts/Notification';
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServiceUserService {
-  private readonly API = 'http://localhost:3000/users'
+  private readonly API = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
 

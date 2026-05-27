@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Dissay } from '../layouts/Dissay';
 import  {Instrument} from '../layouts/Instrument'
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceDissayService {
-  private readonly API = 'http://localhost:3000/dissays'
+  private readonly API = `${environment.apiUrl}/dissays`;
   private instruments: Instrument[] = [];
   private toneDissay = new BehaviorSubject<string>(''); // Valor inicial
 

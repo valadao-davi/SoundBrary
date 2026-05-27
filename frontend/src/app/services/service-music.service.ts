@@ -5,12 +5,13 @@ import { Music } from '../layouts/Music';
 import { Album } from '../layouts/Album';
 import { Artist } from '../layouts/Artists';
 import { Items } from '../layouts/Items';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceMusicService {
-  private readonly API = 'http://localhost:3000'
+  private readonly API = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) { }
 

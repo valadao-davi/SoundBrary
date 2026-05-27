@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServiceAvaliateService {
-  private readonly API = 'http://localhost:3000/avaliations'
+  private readonly API = `${environment.apiUrl}/avaliations`;
 
   constructor(private http: HttpClient) { }
 
