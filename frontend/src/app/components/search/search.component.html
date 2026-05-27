@@ -118,8 +118,17 @@
     </div>
  </ng-container>
 
+ <div class="pagination" *ngIf="dataload">
+  <button (click)="prevPage()" [disabled]="page === 0">
+    <img src="../../../assets/setinha_gray.svg" style="transform: rotate(180deg);" alt="Voltar página">
+  </button>
 
+  <span>{{ page + 1 }}</span>
+
+  <button (click)="nextPage()">
+    <img src="../../../assets/setinha_gray.svg"  alt="Voltar página">
+  </button>
+</div>
 
 
 </div>
-

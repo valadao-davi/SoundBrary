@@ -28,6 +28,8 @@ export class SearchComponent {
   singleAndEpsSearched!: Album[]
   categoria = "catMusica";
   dataload: boolean = false
+  page = 0;
+  limit = 20;
 
   changeMusica() {
     this.dataload = false
@@ -88,62 +90,61 @@ export class SearchComponent {
   }
 
   getTracksQuery(query: string): void {
-    if(query) {
-      switch(this.categoria){
-        case 'catMusica':
-          this.serviceSpotify.getQueryMusic(query).subscribe(items => {
-            this.tracksSearched = items
-            this.dataload = true
+    if (!query) return;
+
+    const offset = this.page * this.limit;
+
+    switch (this.categoria) {
+
+      case 'catMusica':
+        this.serviceSpotify.getQueryMusic(query, this.limit, offset)
+          .subscribe(items => {
+            this.tracksSearched = items;
+            this.dataload = true;
           });
         break;
-        case 'catAlbuns':
-          this.serviceSpotify.getQueryAlbum(query).subscribe(items => {
-            this.albumsAndSingles = items
-            console.log(this.albumsAndSingles)
-            this.albumsSearched = this.albumsAndSingles.filter(items => items.albumType === "album")
-            this.dataload = true
+
+      case 'catAlbuns':
+        this.serviceSpotify.getQueryAlbum(query, this.limit, offset)
+          .subscribe(items => {
+            this.albumsAndSingles = items;
+            this.albumsSearched = items.filter(i => i.albumType === "album");
+            this.dataload = true;
           });
         break;
-        case 'catSinglesEps':
-          this.serviceSpotify.getQueryAlbum(query).subscribe(items => {
-            this.albumsAndSingles = items
-            this.singleAndEpsSearched = this.albumsAndSingles.filter(items => items.albumType !== "album")
-            this.dataload = true
+
+      case 'catSinglesEps':
+        this.serviceSpotify.getQueryAlbum(query, this.limit, offset)
+          .subscribe(items => {
+            this.albumsAndSingles = items;
+            this.singleAndEpsSearched = items.filter(i => i.albumType !== "album");
+            this.dataload = true;
           });
         break;
-        case 'catArtistas':
-          this.serviceSpotify.getQueryArtist(query).subscribe(items => {
-            this.artistsSearched = items
-            console.log(this.artistsSearched)
-            this.dataload = true
-          })
+
+      case 'catArtistas':
+        this.serviceSpotify.getQueryArtist(query, this.limit, offset)
+          .subscribe(items => {
+            this.artistsSearched = items;
+            this.dataload = true;
+          });
         break;
-        case 'catDissays':
-          this.serviceDissay.searchDissays(query).subscribe(items => {
-            this.DissaysSearched = items
-            this.MusicIdDissays = this.DissaysSearched.map(i => {
-              return i.musicId
-            })
-            this.dataload = true
-            const images = this.MusicIdDissays.map(i => 
-              this.serviceSpotify.getMusicById(i)
-            )
-            forkJoin(images).subscribe(
-              (results) => {
-                this.MusicDissaySearched = results
-              }
-            )
-          })
-          break;
-      }
-    }else {
-      this.tracksSearched = []
-      this.albumsAndSingles = []
-      this.albumsAndSingles = []
-      this.DissaysSearched = []
     }
   }
 
+  nextPage() {
+    this.page++;
+    this.getTracksQuery(this.searchQuery);
+    window.scrollTo(0, 0);
+    this.dataload = false
+  }
+
+  prevPage() {
+    if (this.page > 0) {
+      this.page--;
+      this.getTracksQuery(this.searchQuery);
+    }
+  }
 
 
 }

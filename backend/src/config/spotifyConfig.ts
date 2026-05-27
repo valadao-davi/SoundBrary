@@ -52,19 +52,32 @@ export const searchSample = async <T>(type: 'track' | 'album' | 'artist', query:
     }
 }
 
-export const searchGeneral = async(itemName: string): Promise<any>=> {
-    const url: string = `https://api.spotify.com/v1/search?q=${itemName}&type=artist%2Calbum%2Ctrack`
-    try {
-        const response = await axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${acessToken}`
-            }
-        })
-        return response.data
-    }catch(e){
-        console.error("Erro na busca: ", e)
-    }
-}
+export const searchGeneral = async (
+  itemName: string,
+  limit: number,
+  offset: number
+): Promise<any> => {
+
+  try {
+    const response = await axios.get("https://api.spotify.com/v1/search", {
+      headers: {
+        Authorization: `Bearer ${acessToken}`
+      },
+      params: {
+        q: itemName,
+        type: "artist,album,track",
+        limit: limit,
+        offset: offset
+      }
+    });
+
+    return response.data;
+
+  } catch (e) {
+    console.error("Erro na busca: ", e);
+    return null;
+  }
+};
 //Procura pela música
 export const searchTrack = async(musicName: string, offset: number = 0) => searchSample<SpotifyApi.TrackObjectFull>("track", musicName, offset)
 
@@ -95,31 +108,26 @@ export const detailsGeneral = async<T>(type: 'artists' | 'tracks' | 'albums', id
 // Entra nos detalhes do artista
 export const detailsArtist = async(idArtist: string) => detailsGeneral<SpotifyApi.ArtistObjectFull | null>("artists", idArtist)
 
-export const artistAlbums = async (idArtist: string): Promise<SpotifyApi.AlbumObjectSimplified[]> => {
-    const url = `https://api.spotify.com/v1/artists/${idArtist}/albums?include_groups=single%2Calbum`;
-    let offset = 0;
-    const limit = 50; // Limite máximo suportado pela API
-    let allAlbums: SpotifyApi.AlbumObjectSimplified[] = [];
-
+export const artistAlbums = async (
+  idArtist: string,
+  limit: number,
+  offset: number,
+  type?: string
+): Promise<SpotifyApi.AlbumObjectSimplified[]> => {
     try {
-        while (true) {
-            const response = await axios.get<{ items: SpotifyApi.AlbumObjectSimplified[], next: string | null }>(
-                `${url}&offset=${offset}&limit=${limit}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${acessToken}`,
-                    },
-                }
-            );
-            const { items, next } = response.data;
-
-            allAlbums = allAlbums.concat(items);
-
-            if (!next) break; // Para quando não houver mais resultados
-            offset += limit; // Avança para a próxima página
+        const response = await axios.get<{ items: SpotifyApi.AlbumObjectSimplified[] }>(
+        `https://api.spotify.com/v1/artists/${idArtist}/albums`,
+        {
+            headers: { Authorization: `Bearer ${acessToken}` },
+            params: {
+            include_groups: type ? type : "album,single",
+            limit,
+            offset,
+            type
+            }
         }
-
-        return allAlbums;
+        );
+        return response.data.items;
     } catch (e) {
         console.error(e);
         return [];

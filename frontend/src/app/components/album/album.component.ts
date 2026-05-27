@@ -49,6 +49,7 @@ export class AlbumComponent {
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
+
         if(this.albumItem && this.user.albumSaved){
          this.saved = this.user.albumSaved?.includes(this.albumItem.id) ?? false
         }
@@ -56,6 +57,10 @@ export class AlbumComponent {
     }
   }
   saveOrRemoveAlbum(id: string, isSaved: boolean): void {
+    if(!this.user){
+      this.router.navigate(['/login'])
+      return
+    }
     if(this.accessToken && isSaved === false){
       this.serviceUser.saveAlbumToFavorite(this.accessToken, id).pipe(
         catchError((code)=> {

@@ -22,6 +22,16 @@ export class ArtistaComponent {
   accessToken!: string
   saved: boolean = false;
   user?: User;
+  userAuthenticated: boolean = false;
+  page: number = 0;
+  limit: number = 5;
+  hasMore: boolean = true;
+  pageAlbums: number = 0;
+  pageSingles: number = 0;
+  hasMoreAlbums: boolean = true;
+  hasMoreSingles: boolean = true;
+
+  
 
   id!: string | null;
   constructor(private router: Router,private route: ActivatedRoute, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService){
@@ -39,12 +49,14 @@ export class ArtistaComponent {
       this.id = params.get('id')
       if(this.id){
         this.loadArtist(this.id!)
-        this.loadAlbums(this.id!)
+        this.loadAlbumsOnly(this.id!)
+        this.loadSinglesOnly(this.id!)
       }
     })
   }
   getUser(){
     if(this.accessToken.length > 0){
+      this.userAuthenticated = true
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
         if(this.artistItem && this.user.artistsSaved){
@@ -54,6 +66,10 @@ export class ArtistaComponent {
     }
   }
   saveOrRemoveArtist(id: string, isSaved: boolean): void {
+    if(this.userAuthenticated === false) {
+      this.router.navigate(['/login'])
+      return
+    }
     if(this.accessToken && isSaved === false){
       this.serviceUser.saveArtistsToFavorite(this.accessToken, id).pipe(
         catchError((code)=> {
@@ -86,18 +102,84 @@ export class ArtistaComponent {
     }
   }
 
-  loadAlbums(id: string): void {
-    this.serviceSpotify.getAlbumsByArtist(id).subscribe(
-      items => {
-        this.itemsAlbum = items
-        console.log("Itens: " + items)
-        this.albumItems = this.itemsAlbum.filter(items => items.albumType === "album")
-        this.singleItems = this.itemsAlbum.filter(items => items.albumType === "single")
-        console.log("Albuns" + this.itemsAlbum)
-        console.log("Singles" + this.singleItems)
-      }
-    )
+  
+loadAlbumsOnly(id: string): void {
+  const offset = this.pageAlbums * this.limit;
+
+  this.serviceSpotify
+    .getAlbumsByArtist(id, this.limit, offset, 'album')
+    .subscribe(items => {
+      this.albumItems = items;
+      this.hasMoreAlbums = items.length === this.limit;
+    });
+}
+
+loadSinglesOnly(id: string): void {
+  const offset = this.pageSingles * this.limit;
+
+  this.serviceSpotify
+    .getAlbumsByArtist(id, this.limit, offset, 'single')
+    .subscribe(items => {
+      this.singleItems = items;
+      this.hasMoreSingles = items.length === this.limit;
+    });
+}
+
+nextPage(type: 'album' | 'single'): void {
+  if (type === 'album') {
+    if (!this.hasMoreAlbums) return;
+
+    const nextPage = this.pageAlbums + 1;
+    const offset = nextPage * this.limit;
+
+    this.serviceSpotify
+      .getAlbumsByArtist(this.id!, this.limit, offset, 'album')
+      .subscribe(items => {
+
+        if (items.length === 0) {
+          this.hasMoreAlbums = false;
+          return; 
+        }
+
+        this.pageAlbums = nextPage; 
+        this.albumItems = items;
+        this.hasMoreAlbums = items.length === this.limit;
+      });
+
+  } else {
+    if (!this.hasMoreSingles) return;
+
+    const nextPage = this.pageSingles + 1;
+    const offset = nextPage * this.limit;
+
+    this.serviceSpotify
+      .getAlbumsByArtist(this.id!, this.limit, offset, 'single')
+      .subscribe(items => {
+
+        if (items.length === 0) {
+          this.hasMoreSingles = false;
+          return;
+        }
+
+        this.pageSingles = nextPage;
+        this.singleItems = items;
+        this.hasMoreSingles = items.length === this.limit;
+      });
   }
+}
+
+prevPage(type: 'album' | 'single'): void {
+  if (type === 'album') {
+    if (this.pageAlbums === 0) return;
+    this.pageAlbums--;
+    this.loadAlbumsOnly(this.id!);
+  } else {
+    if (this.pageSingles === 0) return;
+    this.pageSingles--;
+    this.loadSinglesOnly(this.id!);
+  }
+}
+
   loadArtist(id: string): void {
     this.serviceSpotify.getArtistById(id).subscribe(
       artist => {

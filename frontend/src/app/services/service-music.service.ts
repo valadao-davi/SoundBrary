@@ -15,7 +15,7 @@ export class ServiceMusicService {
   constructor(private http: HttpClient) { }
 
   getTracksPlaylist(): Observable<Music[]>{
-    return this.http.get<Music[]>(`${this.API}/playlist/playlistTracks/5KJDMJe9EJ7QRz8FG2MIpI`)
+    return this.http.get<Music[]>(`${this.API}/playlist/playlistTracks/6UeSakyzhiEt4NB3UAd6NQ`)
   }
 
   getMusicById(id: String): Observable<Music>{
@@ -30,20 +30,46 @@ export class ServiceMusicService {
     return this.http.get<Artist>(`${this.API}/artists/idArtist/${id}`)
   }
 
-  getAlbumsByArtist(id: string): Observable<Album[]>{
-    return this.http.get<Album[]>(`${this.API}/artists/idArtist/album/${id}`)
+  getAlbumsByArtist(id: string, limit: number = 20, offset: number = 0, type: string = "album,single"): Observable<Album[]> {
+  return this.http.get<Album[]>(`${this.API}/artists/idArtist/album/${id}`, {
+    params: {
+        limit: limit,
+        offset: offset,
+        type: type
+      }
+  });
   }
 
-  getQueryMusic(query: string): Observable<Music[]>{
-    return this.http.get<Music[]>(`${this.API}/music/searchMusic/${query}`)
+  getQueryMusic(query: string, limit: number = 5, offset: number = 0): Observable<Music[]> {
+  return this.http.get<Music[]>(`${this.API}/music/searchMusic/${query}`, {
+      params: {
+        limit: limit,
+        offset: offset
+      }
+    });
   }
-  getQueryAlbum(query: string): Observable<Album[]>{
-    return this.http.get<Album[]>(`${this.API}/album/searchAlbum/${query}`)
+  getQueryAlbum(query: string, limit: number = 5, offset: number = 0): Observable<Album[]> {
+  return this.http.get<Album[]>(`${this.API}/album/searchAlbum/${query}`, {
+      params: {
+        limit: limit,
+        offset: offset
+      }
+    });
   }
-  getQueryArtist(query: string): Observable<Artist[]>{
-    return this.http.get<Artist[]>(`${this.API}/artists/searchArtist/${query}`)
+  getQueryArtist(query: string, limit: number = 5, offset: number = 0): Observable<Artist[]> {
+  return this.http.get<Artist[]>(`${this.API}/artists/searchArtist/${query}`, {
+      params: {
+        limit: limit,
+        offset: offset
+      }
+    });
   }
-  getQueryGeneral(query: string): Observable<Items>{
-    return this.http.get<Items>(`${this.API}/allSearch/${query}`)
+  getQueryGeneral(query: string, limit: number = 5, offset: number = 0): Observable<Items> {
+  return this.http.get<Items>(`${this.API}/allSearch/${query}`, {
+      params: {
+        limit: limit,
+        offset: offset
+      }
+    });
   }
 }
