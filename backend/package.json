@@ -21,8 +21,8 @@
     "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.7.6",
     "nodemon": "^3.1.4",
