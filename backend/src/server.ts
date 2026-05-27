@@ -39,30 +39,32 @@ const initializeToken = async () => {
     }
 }
 //Conecta ao banco de dados
-connectToDatabase(MONGODB_URI)
-    .then(()=> {
-        //Usa a rota de users
-       app.use('/users', userRouter)
-       app.use('/dissays', dissayRouter)
-       app.use('/avaliations', avaliationRouter)
-       app.use("/comments", commentRouter)
-       console.log("Conectado")
+const startServer = async () => {
+    try {
+        await connectToDatabase(MONGODB_URI!)
+        console.log("Conectado ao banco")
         
-    })
-    .catch((error)=> console.error("Ocorreu um erro ao se conectar com o banco: ", error))
+        app.use('/users', userRouter)
+        app.use('/dissays', dissayRouter)
+        app.use('/avaliations', avaliationRouter)
+        app.use("/comments", commentRouter)
 
+        await initializeToken()
+        console.log("Token inicializado")
 
+        app.use('/music', musicRoutes)
+        app.use('/artists', artistRoutes)
+        app.use('/playlist', playlistRoutes)
+        app.use('/album', albumRoutes)
+        app.use('/allSearch', searchRoutes)
 
-initializeToken().then(() => {
-    
-   app.use('/music', musicRoutes)
-   app.use('/artists', artistRoutes)
-   app.use('/playlist', playlistRoutes)
-   app.use('/album', albumRoutes)
-   app.use('/allSearch', searchRoutes)
-   
-   app.listen(PORT, ()=> {
-    console.log(`Server funcionando na porta ${PORT}...`)
-    });
-})
+        app.listen(PORT, () => {
+            console.log(`Server funcionando na porta ${PORT}...`)
+        })
+    } catch(error) {
+        console.error("Erro ao iniciar servidor:", error)
+        process.exit(1)
+    }
+}
 
+startServer()
