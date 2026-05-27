@@ -17,6 +17,8 @@ import playlistRoutes from '../src/routes/playlist.routes'
 dotenv.config({path: './src/.env'})
 
 const { MONGODB_URI } = process.env;
+const PORT = process.env.PORT || 3000;
+
 
 if( !MONGODB_URI ) {
     console.error("Nã foi definido nenhuma variável no config.env");
@@ -59,8 +61,8 @@ initializeToken().then(() => {
    app.use('/album', albumRoutes)
    app.use('/allSearch', searchRoutes)
    
-   app.listen(3000, ()=> {
-    console.log(`Server funcionando na porta 3000...`)
+   app.listen(PORT, ()=> {
+    console.log(`Server funcionando na porta ${PORT}...`)
     });
 })
 
