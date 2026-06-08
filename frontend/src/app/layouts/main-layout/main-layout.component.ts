@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { ServiceUserService } from 'src/app/services/service-user.service';
 import { User } from '../User';
+import { HeaderService } from 'src/app/services/header.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,9 +14,14 @@ export class MainLayoutComponent {
   accessToken!: string
   user!: User | null
   dataLoad: boolean = false
+  menuRetraido = false
 
-  constructor(private serviceUsers: ServiceUserService){}
+  constructor(private serviceUsers: ServiceUserService, private headerService: HeaderService){}
   ngOnInit(){
+    this.headerService.menuRetraido$
+      .subscribe(valor => {
+        this.menuRetraido = valor;
+      });
     this.accessToken = localStorage.getItem('token') ?? ""
     if(this.accessToken){
       this.serviceUsers.getUser(this.accessToken).pipe(

@@ -8,6 +8,7 @@ import { CdkPortal } from '@angular/cdk/portal';
 import { OverlayService } from 'src/app/services/overlay.service';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { NotificationsComponent } from 'src/app/overlays/notifications/notifications.component';
+import { HeaderService } from 'src/app/services/header.service';
 
 
 RouterModule
@@ -31,7 +32,7 @@ export class HeaderComponent {
   currentRoute: any;
   text!: string;
 
-  constructor(private overlay: Overlay, private overlayRefSerivce: OverlayService, private router: Router, private ServiceUserService: ServiceUserService, private ServiceNotificationService: ServiceNotificationService) {}
+  constructor(private overlay: Overlay, private overlayRefSerivce: OverlayService, private router: Router, private ServiceUserService: ServiceUserService, private ServiceNotificationService: ServiceNotificationService, private headerService: HeaderService) {}
 
   ngOnInit() {
     this.accessToken = localStorage.getItem('token') ?? '';
@@ -161,5 +162,9 @@ export class HeaderComponent {
     }else{
       this.router.navigate(['/login']);
     }
+  }
+
+  retrairPerfilLateral(){
+        this.headerService.toggleMenu();
   }
 }

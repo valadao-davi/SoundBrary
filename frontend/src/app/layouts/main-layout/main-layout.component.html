@@ -2,7 +2,7 @@
   <div>
     <app-header></app-header>
 <main>
-  <app-perfil-lateral [user]="user"></app-perfil-lateral>
+  <app-perfil-lateral [user]="user" *ngIf="menuRetraido"></app-perfil-lateral>
   <div class="main_filho"><router-outlet></router-outlet></div>
   <app-ads></app-ads>
 </main>

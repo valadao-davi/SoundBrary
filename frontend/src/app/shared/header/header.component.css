@@ -92,3 +92,17 @@ button {
 .btn_notif img {
   height: 24px;
 }
+
+#barra_hamburguer{
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+}
+
+#barra_hamburguer img{
+  width: 40px;
+  height: 40px;
+}
