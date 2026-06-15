@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 
 export class ServiceUserService {
   private readonly API = `${environment.apiUrl}/users`;
+  private readonly TOKEN_KEY = 'auth_token';
 
   constructor(private http: HttpClient) {}
 
@@ -19,6 +20,19 @@ export class ServiceUserService {
       userOrEmail,
       password
     });
+  }
+
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem(this.TOKEN_KEY, token);
+  }
+
+  clearToken(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 
   getUser(token: String): Observable<User> {

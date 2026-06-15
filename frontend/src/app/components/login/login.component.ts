@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { catchError, of, throwError } from "rxjs";
 import { AvisosService } from "src/app/services/avisos.service";
 import { ErrorHandleServiceService } from "src/app/services/error-handle-service.service";
+import { RedirectStorageService } from "src/app/services/redirect-storage.service";
 import { ServiceUserService } from "src/app/services/service-user.service";
 
 
@@ -14,19 +15,21 @@ import { ServiceUserService } from "src/app/services/service-user.service";
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private service: ServiceUserService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService) {}
+  constructor(private router: Router, private service: ServiceUserService, private avisosService: AvisosService, private handleError: ErrorHandleServiceService, private session: RedirectStorageService) {}
 
   mostrarAviso = false;
   sumirAviso = true;
   mensagemAviso = '';
   tipoAviso = '';
   timeoutAviso: any;
+  redirectUrl: string | null = null;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       userOrEmail: new FormControl('', [Validators.required]),
       senha: new FormControl('', [Validators.required])
     })
+    this.redirectUrl = this.session.getRedirectUrl();
   }
 
   navigateCadastro() {
@@ -39,7 +42,11 @@ export class LoginComponent {
 
 
   navigateHome() {
+    if(this.redirectUrl){
+      this.router.navigate([this.redirectUrl]);
+    } else {  
     this.router.navigate(['/home']);
+    }
   }
 
   logar() {
@@ -61,7 +68,6 @@ export class LoginComponent {
         this.token = response.accessToken
         localStorage.setItem('token', this.token)
         this.avisosService.mostrarAvisoTemporario('Login feito com sucesso!', 'success');
-        console.log("deu bom")
         this.navigateHome()
       }
     }

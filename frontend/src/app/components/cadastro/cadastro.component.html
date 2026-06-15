@@ -31,7 +31,7 @@
                           <input type="text" placeholder="Endereço de email" formControlName="email" required/>
                           <img src="./assets/cadeado_icon.svg">
                       </div>
-                      <div class="input_item" class="erroValidacao" *ngIf="getEmailForm().invalid && formDir.submitted">Email inválido</div>
+                      <div class="input_item" class="erroValidacao" *ngIf="getEmailForm().invalid && formDir.submitted">Formato de email inválido</div>
                       <div class="erroValidacao" *ngIf="invalidEmail && formDir.submitted">Email já existente</div>
                   </div>
                     <div id="input_item">
@@ -40,7 +40,7 @@
                             <input id="senha" type="password" placeholder="Crie uma senha" formControlName="senha" required />
                             <img src="./assets/cadeado_icon.svg">
                         </div>
-                        <div class="erroValidacao" *ngIf="getPasswordForm().invalid && formDir.submitted">Senha inválida</div>
+                        <div class="erroValidacao" *ngIf="getPasswordForm().invalid && formDir.submitted">Senha inválida, mínimo 8 caracteres</div>
                     </div>
                     <div id="input_item">
                         <p>Confirmar senha</p>
