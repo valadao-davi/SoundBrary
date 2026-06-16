@@ -555,7 +555,6 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   min-height: 100%;
   margin-top: 64px;
   overflow: visible;
