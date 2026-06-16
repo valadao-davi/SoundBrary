@@ -22,7 +22,7 @@
           <h2>{{userDissayData.name}}</h2>
         </button>
         <button (click)="navigateProfile(userDissayData.userName)" class="dissay_perfil" *ngIf="!userDissayData.image">
-          <div class="gray_circle"></div>
+          <img class="grey_circle" *ngIf="userDissayData.image === undefined" src="../../../assets/icone_0.png" alt="" >
           <h2>{{userDissayData.name}}</h2>
         </button>
         <div class="avaliacao_excluir">

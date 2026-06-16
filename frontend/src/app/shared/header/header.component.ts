@@ -36,7 +36,6 @@ export class HeaderComponent {
   ngOnInit() {
     this.accessToken = localStorage.getItem('token') ?? '';
     if (this.accessToken.length > 0) {
-      console.log(this.accessToken)
       this.ServiceUserService.getUser(this.accessToken).subscribe({
         next: (i) => {
           if(i.notifications){

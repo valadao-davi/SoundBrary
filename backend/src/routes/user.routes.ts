@@ -341,14 +341,7 @@ userRouter.delete('/profile/deleteNotification/:id', auth, async(req: CustomRequ
     }
 })
 
-userRouter.get('/', async(_req, res)=> {
-    try{
-        const users = await collections?.users?.find({}).toArray();
-        res.status(200).send(users)
-    }catch(error){
-        res.status(500).send(error instanceof Error ? error.message : "Unknown error");
-    }
-})
+
 
 userRouter.get('/profile/:query', async(req, res)=> {
     try{

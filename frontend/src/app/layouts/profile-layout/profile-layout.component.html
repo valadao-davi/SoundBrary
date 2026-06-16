@@ -9,10 +9,11 @@
 
       <div class="imagem" [ngClass]="{'space_between': isOwnProfile, 'centro': !isOwnProfile}">
         <img *ngIf="!isOwnProfile && otherUser.image"  class="img_perfil" [src]="otherUser.image">
-        <img *ngIf="!isOwnProfile && otherUser.image === undefined"  class="grey_circle" src="../../../assets/icon_0.png">
+        
+        <img *ngIf="!isOwnProfile && otherUser.image === undefined"  class="grey_circle" src="../../../assets/icone_0.png">
 
         <button (click)="openImageSetter('Image')" *ngIf="isOwnProfile">
-          <img class="grey_circle" *ngIf="myUser.image === undefined" src="../../../assets/icon_0.png" alt="" >
+          <img class="grey_circle" *ngIf="myUser.image === undefined" src="../../../assets/icone_0.png" alt="" >
           <img class="img_perfil" *ngIf="myUser.image" [src]="myUser.image">
         </button>
         <button (click)="openImageSetter('Image')" ><img *ngIf="isOwnProfile" class="img_edit" src="../../../assets/edit_icon.svg"></button>
@@ -63,7 +64,7 @@
           </div>
         </div>
 
-        <div class="section" *ngIf="dissaysList.length === 0">
+        <div class="section" *ngIf="!dissaysList">
           <div class="titulo_slider">
               <h1>Dissays criados</h1>
           </div>
