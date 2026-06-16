@@ -47,7 +47,6 @@ userRouter.post('/createUser', async(req, res)=> {
         const passwordHash =  await hash(user.password, randomSalt);
 
         if(existUserName){
-            console.log("aqui")
             return res.status(409).json({account: "userName"})
         }if(existUserEmail){
             return res.status(409).send({account: "email"})
@@ -75,14 +74,11 @@ userRouter.patch('/addToFavorites/songs', auth, async(req: CustomRequest, res: R
     try{
         const userId = req.token?.sub;
         const item = req.body.id
-        console.log("id: ", item + ", userid: ", userId)
         if(userId && item){
-            console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {musicSaved: item}})
             if(result){
                 res.status(200)
             }else{
-                console.log("Erro aqui")
                 res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
@@ -99,12 +95,10 @@ userRouter.patch('/removeFavorites/songs', auth, async(req: CustomRequest, res: 
         const userId = req.token?.sub;
         const item = req.body.id
         if(userId && item){
-            console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {musicSaved: item}})
             if(result){
                 res.status(200)
             }else{
-                console.log("Erro aqui")
                 res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
@@ -120,14 +114,11 @@ userRouter.patch('/addToFavorites/albums', auth, async(req: CustomRequest, res: 
     try{
         const userId = req.token?.sub;
         const item = req.body.id
-        console.log("id: ", item + ", userid: ", userId)
         if(userId && item){
-            console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {albumSaved: item}})
             if(result){
                 res.status(200)
             }else{
-                console.log("Erro aqui")
                 res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
@@ -144,12 +135,10 @@ userRouter.patch('/removeFavorites/albums', auth, async(req: CustomRequest, res:
         const userId = req.token?.sub;
         const item = req.body.id
         if(userId && item){
-            console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {albumSaved: item}})
             if(result){
                 res.status(200)
             }else{
-                console.log("Erro aqui")
                 res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
@@ -165,9 +154,7 @@ userRouter.patch('/addToFavorites/artists', auth, async(req: CustomRequest, res:
     try{
         const userId = req.token?.sub;
         const item = req.body.id
-        console.log("id: ", item + ", userid: ", userId)
         if(userId && item){
-            console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$push: {artistsSaved: item}})
             if(result){
                 res.status(200)
@@ -246,7 +233,6 @@ userRouter.patch('/removeFavorites/albums', auth, async(req: CustomRequest, res:
             if(result){
                 res.status(200)
             }else{
-                console.log("Erro aqui")
                 res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
@@ -263,12 +249,10 @@ userRouter.patch('/removeFavorites/artists', auth, async(req: CustomRequest, res
         const userId = req.token?.sub;
         const item = req.body.id
         if(userId && item){
-            console.log("validos")
             const result = await collections?.users?.findOneAndUpdate({_id: new ObjectId(userId)}, {$pull: {artistsSaved: item}})
             if(result){
                 return res.status(200)
             }else{
-                console.log("Erro aqui")
                 return res.status(500).json({error: "Erro ao salvar seu item"})
             }
         }else{
