@@ -11,7 +11,8 @@ import { AdsComponent } from './shared/ads/ads.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpCacheInterceptor } from './services/http-cache.interceptor';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { DMiniComponent } from './components/d-mini/d-mini.component';
@@ -86,7 +87,8 @@ import { NumeroFormatadoPipe } from './pipes/numero-formatado.pipe';
     OverlayModule,
     PortalModule,
   ],
-  providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule],
+  providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

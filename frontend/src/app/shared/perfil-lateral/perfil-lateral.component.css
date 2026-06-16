@@ -70,3 +70,17 @@ button {
   padding: 0px;
   align-items: center;
 }
+
+@media (max-width: 899px) {
+  #profile_left { padding: 16px; width: 100%; }
+  #profile_left-top { width: 100%; }
+  .grey_circle, .circle { width: 96px; height: 96px; }
+  #coluna_salvos { gap: 6px; }
+  #btn_criar_dissay { padding: 12px; border-radius: 20px; }
+  #btn_criar_dissay h4 { font-size: 12px; }
+}
+@media (min-width: 900px) {
+  #profile_left { padding: 40px 40px 0px 40px; }
+  .grey_circle, .circle { width: 160px; height: 160px; }
+  #btn_criar_dissay h4 { font-size: 14px; }
+}

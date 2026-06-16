@@ -55,9 +55,7 @@ export class InstrumentoMiniComponent {
   }
 
   setAfinacao(nomeAfinacao: string) {
-    console.log("funcionando")
     this.serviceDissay.setTone(nomeAfinacao)
-    console.log(this.serviceDissay.getTone())
     this.overlayRefSerivce.closeAllOverlays()
 
   }

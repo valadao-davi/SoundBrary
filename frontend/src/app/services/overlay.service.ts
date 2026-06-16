@@ -13,7 +13,6 @@ export class OverlayService {
   }
 
   closeAllOverlays(): void{
-    console.log(this.overlayRefs)
     this.overlayRefs.forEach((ref)=> ref.dispose())
     this.overlayRefs = []
   }

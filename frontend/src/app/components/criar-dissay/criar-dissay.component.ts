@@ -67,9 +67,7 @@ export class CriarDissayComponent {
 
         })
       }else{
-        console.log("No value")
-      }
-      console.log(params['id'])
+        }
       if(params['id'] ){
         this.serviceDissay.getDissayById(params['id']).subscribe(dissay => {
           this.dissayEdit = dissay
@@ -91,8 +89,7 @@ export class CriarDissayComponent {
       }
 
     })
-    console.log(this.instrumentsDissay)
-  }
+    }
   
 
   activePrivate(){
@@ -105,8 +102,7 @@ export class CriarDissayComponent {
   activeNoMusic(){
     if(this.isPrivate === true){
       this.noMusic = !this.noMusic
-      console.log(this.noMusic)
-    }
+      }
   }
 
   getTracksQuery(query: string): void {
@@ -123,8 +119,7 @@ export class CriarDissayComponent {
 
   addInstrumentToList(newInstrument: Instrument){
     this.instrumentsDissay.push(newInstrument)
-    console.log(this.instrumentsDissay)
-  }
+    }
   selectMusic(id: string){
     if(this.tracksSearched && this.tracksSearched.length > 0){
       const foundTrack = this.tracksSearched.find(track => track.id === id)
@@ -170,9 +165,7 @@ export class CriarDissayComponent {
 
   publishDissay(){
   if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
-      console.log("Dissay inválido")
-    }else {
-      console.log(this.accessToken)
+      }else {
       if(this.isPrivate === true){
         this.serviceDissay.createPrivateDissay(this.accessToken,{
           musicId: this.musicSelected.id,
@@ -193,7 +186,6 @@ export class CriarDissayComponent {
           }
         });
       }else{
-        console.log(this.toneDissay)
         this.serviceDissay.createDissay(this.accessToken,{
           musicId: this.musicSelected.id,
           name: this.titleValue,
@@ -205,7 +197,6 @@ export class CriarDissayComponent {
         })).subscribe({
           next: (response) => {
             this.router.navigate([`/dissay/${response.insertedId}`]);
-            console.log(response)
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
             
@@ -219,8 +210,7 @@ export class CriarDissayComponent {
   publishPrivateNoMusic(){
 
     if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.noMusic === false){
-        console.log("Dissay inválido")
-      }else {
+        }else {
         this.serviceDissay.createPrivateDissay(this.accessToken,{
           musicId: "no-id-music",
           name: this.titleValue,
@@ -231,7 +221,6 @@ export class CriarDissayComponent {
           return this.handleError.handleErrorCode(code)
         })).subscribe({
           next: (response) => {
-            console.log(response)
             this.router.navigate([`/dissay/${response.insertedId}`]);
             this.clearFields()
             this.avisosService.mostrarAvisoTemporario("Dissay criado com sucesso!", "success")
@@ -244,8 +233,7 @@ export class CriarDissayComponent {
 
   editDissay(){
     if(this.titleValue.length === 0 || this.instrumentsDissay.length === 0 || this.musicSelected === undefined){
-        console.log("Dissay inválido")
-      }else {
+        }else {
         if(this.dissayEdit && this.dissayEdit._id){
           this.serviceDissay.editDissay(this.accessToken, this.dissayEdit._id, {
             musicId: this.musicSelected.id,
@@ -276,6 +264,5 @@ export class CriarDissayComponent {
     this.musicSelected = undefined
     this.searchQuery = '';
     this.serviceDissay.clearInstruments()
-    console.log(this.instrumentsDissay)
-  }
+    }
 }

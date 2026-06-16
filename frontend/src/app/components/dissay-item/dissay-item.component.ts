@@ -32,10 +32,8 @@ export class DissayItemComponent {
         this.userImage = user.image ?? ""
       })
     }
-    console.log(this.name)
-  }
+    }
   navigateDissay(id: string) {
-    console.log(id)
     this.router.navigate([`/dissay/${id}`])
   }
 }

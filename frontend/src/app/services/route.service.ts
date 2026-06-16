@@ -13,8 +13,7 @@ export class RouteService {
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe(event => {
       this.currentRoute = event.urlAfterRedirects;
-      console.log("Rota: ", this.currentRoute)
-    });
+      });
   }
 }
 

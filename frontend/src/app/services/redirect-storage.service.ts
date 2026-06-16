@@ -12,7 +12,7 @@ export class RedirectStorageService {
     if (!isAuthenticated && url !== '/login' && url !== '/cadastro') {
       try {
         localStorage.setItem(this.STORAGE_KEY, url);
-        console.log('RedirectStorageService: URL salva →', url);
+        
       } catch (e) {
         // ignore storage errors (private mode, quota, etc.)
       }

@@ -30,8 +30,6 @@ export class InstrumentoCriarOverlayComponent {
   
   ngOnInit(){
     const listInstruments = this.dissayService.getInstruments()
-    console.log("Instrumentos na lista: ", listInstruments)
-
     if(this.instrument === undefined && this.defaultInstrument){
       //cria um padrão com base no card que foi clicado
       this.instrumentMade = {
@@ -39,10 +37,7 @@ export class InstrumentoCriarOverlayComponent {
         effects: [],
         model: ''
       }
-      console.log(this.instrumentMade.defaultInstrument.nameInstrument)
-      console.log("instrumento padrao definido")
-
-    }else if(this.instrument === undefined && this.defaultInstrument === undefined){
+      }else if(this.instrument === undefined && this.defaultInstrument === undefined){
       this.instrumentMade = {
         defaultInstrument: {
           nameInstrument: '',
@@ -51,11 +46,8 @@ export class InstrumentoCriarOverlayComponent {
         effects: [],
         model: ''
       }
-      console.log("instrumento nao definido")
-    }
+      }
     else{
-      console.log(this.instrument)
-      console.log("instrumento definido")
       this.instrumentMade = this.instrument
       this.modelInstrument = this.instrument.model
     }
@@ -66,8 +58,7 @@ export class InstrumentoCriarOverlayComponent {
   adicionarParametro(chave: string, valor: string): void {
     if (chave && valor) {
       this.efeito.parameters[chave] = valor
-      console.log(this.efeito)
-    }
+      }
     this.chave = ""
     this.valor = ""
     if(this.editMode){
@@ -111,8 +102,7 @@ export class InstrumentoCriarOverlayComponent {
     }
     //Pega a lista e verifica com base no nome se esse instrumento já existe
     const listInstruments = this.dissayService.getInstruments()
-    console.log('Nome do instrumento para salvar:', this.instrumentMade.defaultInstrument.nameInstrument);
-    console.log("Instrumentos na lista: ", listInstruments)
+    
     const indexFinded = listInstruments.findIndex(i => i.defaultInstrument.nameInstrument === this.instrumentMade.defaultInstrument.nameInstrument)
     if(indexFinded !== -1){
       
@@ -130,16 +120,11 @@ export class InstrumentoCriarOverlayComponent {
       const index = this.instrumentMade.effects.findIndex(e => e.name === this.efeito.name)
       if(index !== -1){
         this.instrumentMade.effects[index] = this.efeito
-        console.log("index encontrado")
-      }else{
+        }else{
         this.instrumentMade.effects.push(this.efeito)
-        console.log("index não encontrado")
-
-      }
+        }
     }else{
-      console.log("erro")
-    }
-    console.log(this.instrumentMade)
+      }
     this.clearEffects()
   }
 

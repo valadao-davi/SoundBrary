@@ -26,13 +26,10 @@ export class NotificationsComponent {
 
   constructor(private serviceMusic: ServiceMusicService, private router: Router, private serviceComment: ServiceCommentService, private serviceUser: ServiceUserService, private serviceNotification: ServiceNotificationService){}
   ngOnInit(){
-    console.log(this.accessToken)
     if(this.accessToken && this.accessToken.length > 0){
       this.serviceNotification.getUserNotifications(this.accessToken).subscribe(list => {
-        console.log(list)
         this.listReceived = list
         this.serviceNotification.setClientNotifications(this.listReceived)
-        console.log(this.listReceived)
         this.listNotificationDissays = this.listReceived.filter(i => i.type === 'Dissay')
         this.listNotificationComments = this.listReceived.filter(i => i.type === 'Comment')
         if(this.listNotificationDissays.length > 0){
@@ -51,8 +48,7 @@ export class NotificationsComponent {
         }
       })
     }else{
-      console.log(this.accessToken)
-    }
+      }
 
   }
 
@@ -81,16 +77,13 @@ export class NotificationsComponent {
       this.serviceComment.getIdComment(id).subscribe(item => {
         if(item.userName){
           const userName = item.userName
-          console.log(userName)
           const text = item.text
           this.commentTextList.push(text)
-          console.log(userName, text)
           this.serviceUser.getUserName(userName).subscribe( i => {
             if(i.image){
               this.linkImagesUser.push(i.image)
               this.dataLoad = true
-              console.log(this.linkImagesUser)
-            }else{
+              }else{
               this.linkImagesUser.push('../../../assets/icone_0.png')
               this.dataLoad = true
             }
@@ -120,7 +113,7 @@ export class NotificationsComponent {
             this.serviceNotification.setClientNotifications(this.listReceived)
           },
           error: (error) => {
-            console.error("Erro ao deletar notificação", error);
+            
           }
         });
       this.router.navigate([`/dissay/${id}`])
