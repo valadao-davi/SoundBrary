@@ -500,3 +500,96 @@ template {
   opacity: 1; 
   visibility: visible; 
 }
+
+/* Responsive utilities and breakpoints (mobile-first) */
+:root {
+  --container-padding: 16px;
+  --max-width-sm: 720px;
+  --max-width-md: 900px;
+  --max-width-lg: 1200px;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  padding: 0 var(--container-padding);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+@media (min-width: 720px) {
+  .container { max-width: var(--max-width-sm); }
+}
+@media (min-width: 900px) {
+  .container { max-width: var(--max-width-md); }
+}
+@media (min-width: 1200px) {
+  .container { max-width: var(--max-width-lg); }
+}
+
+/* Forms */
+form {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  padding: 12px 16px;
+}
+@media (min-width: 900px) {
+  header { padding: 16px 48px; }
+}
+
+/* Search bar */
+#barra_pesquisa {
+  width: 100%;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+@media (min-width: 900px) {
+  #barra_pesquisa { width: 36%; padding: 12px 40px; }
+}
+
+/* Main layout */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+  margin-top: 64px;
+  overflow: visible;
+}
+@media (min-width: 900px) {
+  main {
+    flex-direction: row;
+    margin-top: 88px;
+    overflow: hidden;
+  }
+}
+
+/* Hide ads on small screens */
+app-ads, .anuncios { display: none; }
+@media (min-width: 900px) { app-ads, .anuncios { display: flex; } }
+
+/* Perfil lateral adjustments */
+#profile_left {
+  padding: 16px;
+}
+#profile_left .circle,
+#profile_left .grey_circle {
+  width: 96px;
+  height: 96px;
+}
+@media (min-width: 900px) {
+  #profile_left { padding: 40px 40px 0 40px; }
+  #profile_left .circle, #profile_left .grey_circle { width:160px; height:160px; }
+}
+
+/* Footer */
+.links_space { flex-direction: column; gap: 12px; padding: 0 16px; align-items: flex-start; }
+@media (min-width: 900px) { .links_space { flex-direction: row; gap: 120px; padding: 0; align-items: center; } }
+
+/* Utility classes */
+.d-hide-mobile { display: none; }
+@media (min-width: 900px) { .d-hide-mobile { display: initial; } }

@@ -84,7 +84,6 @@ export class SearchComponent {
 
   onSearchChange(value: string){
     this.searchQuery = value;
-    console.log(this.searchQuery)
     this.searchSubject.next(this.searchQuery)
     this.router.navigate(['/search', this.searchQuery])
   }

@@ -90,15 +90,13 @@ export class DissayComponent {
       if(this.dissayData.musicId !== 'no-id-music'){
         this.loadMusic(this.dissayData.musicId);
         this.loadComments(this.dissayData)
-        console.log("esta aqui")
-      }else{
+        }else{
         this.dataLoaded = true
       }
      
 
       this.serviceUser.getUserName(this.dissayData.userName).subscribe(user => {
         this.userDissayData = user;
-        console.log(this.userDissayData.userName)
         if(this.userData && this.userDissayData){
           this.verifyDissayCreatedByUser(this.userData, this.userDissayData, dissay.isPrivate); // Verifica o ownership aqui mesmo
         }else if(dissay.isPrivate && !this.userData){
@@ -125,9 +123,7 @@ export class DissayComponent {
       if((userData && userOwner) && userData.userName === userOwner.userName){
         this.ownerDissay = true
         this.allowed = true
-        console.log("Usuario privado visualizando")
-      }else{
-        console.log("Nao era pra estar visualizando")
+        }else{
         this.ownerDissay = false
         this.router.navigate(['/home'])
 
@@ -147,7 +143,6 @@ export class DissayComponent {
   loadMusic(id: string){
     this.serviceSpotify.getMusicById(id).subscribe(music => {
       this.musicData = music
-      console.log(this.musicData)
       this.dataLoaded = true
     })
   }
@@ -181,7 +176,6 @@ export class DissayComponent {
   }
 
   avaliateDissay(rate: number){
-    console.log(rate)
     if(this.accessToken === ""){
       this.router.navigate(["/login"])
       return;
@@ -202,13 +196,11 @@ export class DissayComponent {
           alert("Erro no servidor: " + code.error)
         }else if(code.status !== 200){
           alert("Erro desconhecido")
-          console.log(code.error)
-        }
+          }
         return throwError(() => code)
       })
     ).subscribe(params => {
         this.totalRateUser = rate
-        console.log(this.totalRateUser)
         this.loadDissay(this.id!)
         this.totalRate = null
     })
@@ -229,8 +221,7 @@ export class DissayComponent {
       },
       error: (err) => {
         this.avisosService.mostrarAvisoTemporario('Erro ao deletar Dissay', 'error')
-        console.error('Erro ao deletar dissay')
-      }
+        }
     })
   }
 
@@ -265,7 +256,6 @@ export class DissayComponent {
   }
 
   excluirComentario(idComment: string){
-    console.log(idComment)
     this.serviceComment.deleteComment(this.accessToken, idComment).pipe(
       catchError((code)=> {
         if(code.status === 400){
@@ -334,7 +324,7 @@ export class DissayComponent {
           this.loadDissay(this.id!)
           this.avisosService.mostrarAvisoTemporario('Comentário publicado com sucesso!', 'success');
         })
-        console.log(`Publicar resposta para a resposta ${index}: ${texto}`);
+        
         this.avisosService.mostrarAvisoTemporario('Resposta publicada com sucesso!', 'success');
         this.respostaAbertaIndex = null;
         this.respostas[index].showInput = false; // Fechar o campo de resposta

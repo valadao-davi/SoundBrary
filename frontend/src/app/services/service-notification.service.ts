@@ -29,7 +29,7 @@ export class ServiceNotificationService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     return this.http.get<Notiffication[]>(`${this.API}/profile/notifications`, { headers }).pipe(
       catchError((error) => {
-        console.error("Erro ao buscar notificações", error);
+        
         return throwError(() => new Error("Erro ao buscar notificações"));
       })
     );
@@ -39,7 +39,7 @@ export class ServiceNotificationService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     return this.http.delete<Notiffication[]>(`${this.API}/profile/deleteNotification/${idNotification}`, { headers }).pipe(
       catchError((error) => {
-        console.error("Erro ao deletar a notificação", error);
+        
         return throwError(() => new Error("Erro ao deletar notificação"));
       })
     );

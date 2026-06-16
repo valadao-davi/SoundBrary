@@ -52,19 +52,15 @@ export class LoginComponent {
   logar() {
     let value = this.getUserOrEmail().value
     if(!value.includes('.com')){
-      console.log("tentativa de login")
-
       value = "@" + this.getUserOrEmail().value
     }
-    console.log(value)
     this.service.loginUser(value, this.getPasswordForm().value).pipe(
       catchError((code)=> {
         return this.handleError.handleErrorCode(code, 'login')
       })
     ).subscribe({
       next: (response) => {
-        console.log(response)
-      if(response && response.accessToken){
+        if(response && response.accessToken){
         this.token = response.accessToken
         localStorage.setItem('token', this.token)
         this.avisosService.mostrarAvisoTemporario('Login feito com sucesso!', 'success');

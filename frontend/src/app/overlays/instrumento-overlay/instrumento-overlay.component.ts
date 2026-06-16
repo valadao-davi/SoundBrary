@@ -18,9 +18,7 @@ export class InstrumentoOverlayComponent {
       const firstEffect = this.instrumentParams.effects ? Object.entries(this.instrumentParams.effects)[0] : null;
       this.listParams = this.instrumentParams.effects
       this.efeito = this.listParams[0]
-      console.log(this.instrumentParams.effects)
-      console.log(firstEffect)
-    }
+      }
 
   loadListParams(effect: Effect){
     this.efeito = effect

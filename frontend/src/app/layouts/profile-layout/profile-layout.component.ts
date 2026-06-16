@@ -64,7 +64,6 @@ export class ProfileLayoutComponent {
       this.overlayRef = this.overlay.create(config);
     }
     this.overlayRef.attach(this.portal);
-    console.log(this.overlayRef)
     this.overlayRef.backdropClick().subscribe(() => this.closeCard(this.overlayRef));
   }
 
@@ -81,7 +80,6 @@ export class ProfileLayoutComponent {
           return of(null);
         })
       ).subscribe(user => {
-        console.log(user)
         this.userAuth = user
 
         if(this.userAuth !== null){
@@ -103,8 +101,7 @@ export class ProfileLayoutComponent {
     if(this.overlayRef?.hasAttached()){
       this.overlayRef.detach()
     }else{
-      console.log('não definido')
-    }
+      }
   }
   getAllUser(query: string){
     if(this.accessToken.length > 0){
@@ -121,13 +118,11 @@ export class ProfileLayoutComponent {
 
         }else{
           this.getUserName(query)
-          console.log("usuario pesquisado")
-        }
+          }
       })
     }else{
       this.getUserName(query)
-      console.log("usuario pesquisado")
-    }
+      }
   }
 
   getUserName(query: string){
@@ -152,8 +147,7 @@ export class ProfileLayoutComponent {
       forkJoin(items).subscribe(
         (results) => {
           this.musicsList = results
-          console.log(this.musicsList)
-        }
+          }
       )
     }
     if(this.listIdsString.artists.length > 0) {
@@ -184,8 +178,7 @@ export class ProfileLayoutComponent {
         (results) => {
           this.dissaysList = results.filter(i => i.isPrivate == false)
           this.dissaysListPrivate = results.filter(i => i.isPrivate == true)
-          console.log(this.dissaysList)
-        }
+          }
       )
     }
     }

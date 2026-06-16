@@ -61,7 +61,7 @@ export class HomeComponent  {
         this.dataload = true
       },
       (error) => {
-        console.error('Erro ao carregar dados:', error);
+        
       }
     );
   }

@@ -58,3 +58,39 @@ h4 {
   height: 1px;
   background-color: rgba(255, 255, 255, 0.25);
 }
+
+/* Responsive main layout */
+@media (max-width: 899px) {
+  main {
+    flex-direction: column;
+    margin-top: 64px;
+    gap: 16px;
+  }
+  app-perfil-lateral {
+    display: none;
+  }
+  .main_filho {
+    width: 100%;
+  }
+  footer {
+    padding: 24px 16px;
+  }
+  .links_space {
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (min-width: 900px) {
+  main {
+    flex-direction: row;
+    margin-top: 88px;
+  }
+  app-perfil-lateral {
+    display: block;
+  }
+  .links_space {
+    flex-direction: row;
+    gap: 120px;
+  }
+}

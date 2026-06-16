@@ -92,3 +92,32 @@ button {
 .btn_notif img {
   height: 24px;
 }
+
+/* Responsive header */
+@media (max-width: 899px) {
+  header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #barra_pesquisa {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 8px;
+  }
+  #h_left {
+    gap: 12px;
+  }
+  #h_right {
+    gap: 12px;
+  }
+  #h_right h3 {
+    display: none;
+  }
+  #logo_header { height: 40px; }
+}
+@media (min-width: 900px) {
+  header { padding: 16px 48px; }
+  #barra_pesquisa { width: 36%; padding: 12px 40px; }
+  #h_right h3 { display: block; }
+}

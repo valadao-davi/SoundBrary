@@ -33,19 +33,15 @@ export class DMiniComponent {
   }
 
   ngOnInit(){
-    console.log("musicId: ", this.musicId, " userName: ", this.userName)
     if(this.musicId !== 'no-id-music'){
-      console.log("teste")
       this.serviceSpotify.getMusicById(this.musicId).subscribe(music => {
         this.musicDissay = music
-        console.log(this.musicDissay)
-      })
+        })
     }
     if(this.userName.length > 0){
       this.serviceUser.getUserName(this.userName).subscribe(user => {
         this.namePerson = user.name
-        console.log(user.name)
-      })
+        })
     }
   }
 

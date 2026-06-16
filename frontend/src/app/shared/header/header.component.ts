@@ -126,7 +126,7 @@ export class HeaderComponent {
       this.overlayRef.dispose();
       this.overlayRef = null!;
     } else {
-      console.log('Overlay not defined');
+      
     }
   }
 
@@ -142,8 +142,7 @@ export class HeaderComponent {
   pesquisar(query: string) {
     this.router.navigate([`/search/${query}`])
 
-    console.log("Pesquisa")
-  }
+    }
 
   navigateHome() {
     this.router.navigate(['/home']);

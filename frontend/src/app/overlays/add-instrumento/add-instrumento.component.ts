@@ -15,12 +15,9 @@ export class AddInstrumentoComponent {
 
   constructor(private serviceDefaultImages: ServiceInstrumentsImageService, private serviceDissay: ServiceDissayService){}
   ngOnInit(){
-    console.log(this.isAfinacao)
     if(this.isAfinacao){
-      console.log('afinacao')
-    }else{
-      console.log('instrumento')
-    }
+      }else{
+      }
     this.listDefaultInstruments = this.serviceDefaultImages.getDefaultInstruments()
   }
 

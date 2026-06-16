@@ -34,8 +34,7 @@ export class LeftInfoComponent {
     if(this.isArtistPage === false){
       this.loadAlbumTracks(this.albumId!)
     }
-    console.log(this.albumItem)
-  }
+    }
 
   loadAlbumTracks(id: string): void {
     this.serviceSpotify.getAlbumById(id).subscribe(

@@ -46,13 +46,9 @@ export class MusicaComponent {
     if(this.accessToken.length > 0){
       this.serviceUser.getUser(this.accessToken).subscribe(user => {
         this.user = user
-        console.log(this.user?.musicSaved)
         if(this.musicItem && this.user.musicSaved){
-         console.log(this.user.musicSaved)
          this.saved = this.user.musicSaved?.includes(this.musicItem.id) ?? false
-         console.log("Is saved: ", this.saved)
-         console.log("ID saved: ", this.musicItem.id)
-        }
+         }
       })
     }
   }
@@ -71,8 +67,7 @@ export class MusicaComponent {
         totalRate: dissay.totalRate ?? 0.0,
         isPrivate: dissay.isPrivate
       }))
-      console.log(this.listDissays)
-    })
+      })
   }
   navigateCreate(id: string) {
     if(!this.user){

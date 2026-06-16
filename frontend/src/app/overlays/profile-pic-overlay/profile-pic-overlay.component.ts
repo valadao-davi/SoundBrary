@@ -25,7 +25,7 @@ export class ProfilePicOverlayComponent {
 
   onInputChangeImage(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    console.log('Texto digitado:', inputElement.value);
+    
     if(inputElement.value){
       this.isImageValid(inputElement.value)
     }
@@ -33,7 +33,7 @@ export class ProfilePicOverlayComponent {
 
   onInputChangeName(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    console.log('Texto digitado:', inputElement.value);
+    
     if(inputElement.value){
       this.isNameValid(inputElement.value)
     }
@@ -46,7 +46,6 @@ export class ProfilePicOverlayComponent {
       })
     ).subscribe({
       next: () => {
-        console.log('aqui')
         this.avisosService.mostrarAvisoTemporario("Imagem editada com sucesso!", "success")
         this.closeOverlay()
         window.location.reload();
@@ -68,7 +67,6 @@ export class ProfilePicOverlayComponent {
   }
 
   isNameValid(name: string){
-    console.log('lendo')
     if(name.length === 0 || name.length > 25){
       this.validName = false
     }else{
@@ -85,15 +83,11 @@ export class ProfilePicOverlayComponent {
       }).toPromise();
       if(response && response.status === 200){
          this.validUrl = true
-         console.log(this.validUrl)
-
-      }else if( response && response.status === 404){
+         }else if( response && response.status === 404){
          this.validUrl = false
-         console.log(this.validUrl)
-      }
+         }
     }catch{
-      console.log(this.validUrl)
-       this.validUrl = false
+      this.validUrl = false
     }
   }
 }
