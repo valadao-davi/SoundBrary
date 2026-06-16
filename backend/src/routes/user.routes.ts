@@ -4,20 +4,21 @@ import * as dotenv from 'dotenv';
 import { ObjectId } from 'mongodb';
 import {Request, Response, NextFunction} from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-
+import { hash, compare } from "bcrypt";
+import { randomInt } from 'crypto';
 
 export const userRouter = express.Router();
 userRouter.use(express.json())
 dotenv.config({path: './src/.env'})
 const { ACCESS_SECRET } =  process.env
 
+
 interface CustomRequest extends Request {
-    token?: JwtPayload; // A propriedade token pode ser undefined
+    token?: JwtPayload;
 }
 
 
 
-//Verificação se o token do usuário é valido
 export const auth = async(req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const token = req.header('Authorization')?.split(' ')[1]
@@ -34,7 +35,6 @@ export const auth = async(req: CustomRequest, res: Response, next: NextFunction)
     }
 }
 
-//faz uma requisição ao servidor utilizando a rota HTTP: url/users/createUser no método .post para criar um usuário
 userRouter.post('/createUser', async(req, res)=> {
     try{
         const user = req.body
@@ -43,6 +43,8 @@ userRouter.post('/createUser', async(req, res)=> {
         const userNameFormatted = `@${getUserName}`
         const existUserEmail = await collections?.users?.findOne({email: email})
         const existUserName = await collections?.users?.findOne({userName: userNameFormatted})
+        const randomSalt = randomInt(10, 16);
+        const passwordHash =  await hash(user.password, randomSalt);
 
         if(existUserName){
             console.log("aqui")
@@ -54,7 +56,7 @@ userRouter.post('/createUser', async(req, res)=> {
                 name: user.name,
                 email: email,
                 userName: userNameFormatted,
-                password: user.password
+                password: passwordHash
             }
             const result = await collections?.users?.insertOne(newUser)
             if(result?.acknowledged){
@@ -339,8 +341,6 @@ userRouter.delete('/profile/deleteNotification/:id', auth, async(req: CustomRequ
     }
 })
 
-
-//Retorna todos os usuarios - TESTE
 userRouter.get('/', async(_req, res)=> {
     try{
         const users = await collections?.users?.find({}).toArray();
@@ -374,8 +374,9 @@ userRouter.post('/login', async(req, res)=> {
         if(!checkUser){
             return res.status(404).send("Usuário não encontrado")
         }
+        const passwordMatch = await compare(password, checkUser.password);
         
-        if(checkUser?.password === password){
+        if(passwordMatch){
             const token = jwt.sign({sub: checkUser?._id, userName: checkUser?.userName},`${ACCESS_SECRET}`)
             return res.json({accessToken: token})
         }else{
@@ -411,22 +412,31 @@ userRouter.put("/profile/edit", auth, async(req: CustomRequest, res)=> {
 })
 
 //função de deletar
-userRouter.delete('/:id', async(req, res)=> {
+userRouter.delete('/profile/delete', auth, async(req: CustomRequest, res: Response) => {
     try {
-        const id = req?.params?.id
-        const query = { _id: new ObjectId(id)}
-        const result = await collections?.users?.deleteOne(query)
+        const userId = req.token?.sub
 
-        if(result && result.deletedCount){
-            res.status(200).send({"message": "usuario deletado com sucesso"})
-        }else if (!result){
-            res.status(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
-        }else if (!result.deletedCount){
-            res.status(404).send(`Não foi possível encontrar usuário com id: ${req.params.id}`)
+        if (!userId || !ObjectId.isValid(userId)) {
+            return res.status(401).send("Autentique para continuar")
         }
-    }catch(error){
+
+        const result = await collections?.users?.deleteOne({
+            _id: new ObjectId(userId)
+        })
+
+        if (result?.deletedCount) {
+            return res.status(200).json({
+                message: "Usuário deletado com sucesso"
+            })
+        }
+
+        return res.status(404).send("Usuário não encontrado")
+
+    } catch (error) {
         console.error(error)
-        res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
+        return res.status(500).send(
+            error instanceof Error ? error.message : "Erro desconhecido"
+        )
     }
 })
 
