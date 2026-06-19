@@ -16,4 +16,7 @@ export interface User {
     notifications?: Notiffication[];
     dissaysCreated?: string[];
     dissaysPrivate?: Dissay[];
+    formalName?: string;
+    city?: string;
+    pixKey?: string;
 }

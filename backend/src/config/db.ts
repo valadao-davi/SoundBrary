@@ -133,6 +133,24 @@ async function applySchemaValidation(db: mongodb.Db) {
                         maxLength: 128
                     }
                 },
+                formalName: {
+                    bsonType: "string",
+                    description: "'formalName is optional and is a string'",
+                    minLength: 2,
+                    maxLength: 100
+                },
+                city: {
+                    bsonType: "string",
+                    description: "'city is optional and is a string'",
+                    minLength: 2,
+                    maxLength: 200
+                },
+                pixKey: {
+                    bsonType: "string",
+                    description: "'pixKey is optional and is a string'",
+                    minLength: 2,
+                    maxLength: 300
+                }
     }
         
     };

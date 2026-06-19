@@ -416,4 +416,3 @@ userRouter.delete('/profile/delete', auth, async(req: CustomRequest, res: Respon
         )
     }
 })
-
