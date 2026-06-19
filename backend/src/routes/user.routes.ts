@@ -382,10 +382,15 @@ userRouter.put("/profile/edit", auth, async(req: CustomRequest, res)=> {
         }else {
             res.status(400).send(`Por favor autentique para continuar`)
         }
-    }catch(error){
-        console.error(error)
-        res.status(400).send(error instanceof Error ? error.message : "Erro desconhecido")
-    }
+    }catch(error: any){
+    console.dir(
+        error?.errInfo?.details?.schemaRulesNotSatisfied,
+        { depth: null }
+    )
+
+    res.status(400).send(error.message)
+}
+    
 })
 
 //função de deletar

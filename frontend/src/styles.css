@@ -567,7 +567,6 @@ main {
   }
 }
 
-/* Hide ads on small screens */
 app-ads, .anuncios { display: none; }
 @media (min-width: 900px) { app-ads, .anuncios { display: flex; } }
 
