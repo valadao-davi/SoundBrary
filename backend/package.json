@@ -20,6 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.1",
     "mongoose": "^8.6.1",
+    "pix-payload": "^1.0.4",
+    "qrcode": "^1.5.4",
     "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {

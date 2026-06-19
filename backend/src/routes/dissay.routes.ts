@@ -13,7 +13,7 @@ dotenv.config({path: './src/.env'})
 const { ACCESS_SECRET } =  process.env
 
 interface CustomRequest extends Request {
-    token?: JwtPayload; // A propriedade token pode ser undefined
+    token?: JwtPayload; 
 }
 
 /*Fins de teste*/
