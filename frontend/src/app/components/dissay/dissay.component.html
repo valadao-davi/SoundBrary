@@ -91,7 +91,7 @@
         </div>
       </div>
 
-      <button class="agradecimento" *ngIf="!dissayData.isPrivate"><h3>Esse Dissay te ajudou? Envie um agradecimento!</h3><img src="../../../assets/donate_icon.svg" alt=""></button>
+      <button (click)="openPayment()" class="agradecimento" *ngIf="!dissayData.isPrivate"><h3>Esse Dissay te ajudou? Envie um agradecimento!</h3><img src="../../../assets/donate_icon.svg" alt=""></button>
 
       <div class="comentarios" *ngIf="!dissayData.isPrivate">
         <h1 class="secao_titulo">Comentários</h1>
@@ -204,3 +204,7 @@
   {{ mensagemAviso }}
 </div>
 </ng-container>
+
+ <ng-template cdkPortal>
+  <app-payment-overlay [initialScreen]="'home'"></app-payment-overlay>
+ </ng-template>

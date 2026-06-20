@@ -40,6 +40,7 @@ import { NotificationsComponent } from './overlays/notifications/notifications.c
 import { ProfilePicOverlayComponent } from './overlays/profile-pic-overlay/profile-pic-overlay.component';
 import { LeftInfo2Component } from './components/left-info-2/left-info-2.component';
 import { NumeroFormatadoPipe } from './pipes/numero-formatado.pipe';
+import { PaymentOverlayComponent } from './overlays/payment-overlay/payment-overlay.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { NumeroFormatadoPipe } from './pipes/numero-formatado.pipe';
     FormsModule,
     OverlayModule,
     PortalModule,
+    PaymentOverlayComponent
   ],
   providers: [provideHttpClient(withFetch()), FormsModule, ReactiveFormsModule,
     { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true }],

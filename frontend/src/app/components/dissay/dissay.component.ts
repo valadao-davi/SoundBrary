@@ -1,11 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { CdkPortal } from '@angular/cdk/portal';
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, forkJoin, throwError } from 'rxjs';
 import { Coment } from 'src/app/layouts/Comment';
 import { Dissay } from 'src/app/layouts/Dissay';
 import { Music } from 'src/app/layouts/Music';
 import { User } from 'src/app/layouts/User';
+import { PaymentOverlayComponent } from 'src/app/overlays/payment-overlay/payment-overlay.component';
 import { AvisosService } from 'src/app/services/avisos.service';
+import { OverlayService } from 'src/app/services/overlay.service';
 import { ServiceAvaliateService } from 'src/app/services/service-avaliate.service';
 import { ServiceCommentService } from 'src/app/services/service-comment.service';
 import { ServiceDissayService } from 'src/app/services/service-dissay.service';
@@ -50,7 +54,9 @@ export class DissayComponent {
   commentText: string = ''
   answerText: string = ''
 
-  constructor(private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
+  @ViewChild(CdkPortal) portal!: CdkPortal;
+
+  constructor(private overlay: Overlay, private overlayService: OverlayService, private router: Router,private route: ActivatedRoute, private serviceDissay: ServiceDissayService, private serviceSpotify: ServiceMusicService, private serviceUser: ServiceUserService, private serviceComment: ServiceCommentService, private serviceAvaliate: ServiceAvaliateService, private avisosService: AvisosService){}
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
@@ -345,4 +351,15 @@ export class DissayComponent {
     }
 
 
+    openPayment(){
+        const config = new OverlayConfig({
+          positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+          hasBackdrop: true
+        })
+    
+        const overlayRef = this.overlay.create(config);
+        overlayRef.attach(this.portal);
+        overlayRef.backdropClick().subscribe(()=> overlayRef.detach())
+        this.overlayService.addOverlay(overlayRef)
+      }
 }

@@ -32,8 +32,8 @@
         <button (click)="openImageSetter('Password')"><img class="img_edit" src="../../../assets/edit_icon.svg"></button>
       </div>
       <div *ngIf="isOwnProfile" class="agradecimento profile_content">
-        <button><h3>Receba agradecimentos!</h3></button>
-        <button><img src="../../../assets/donate_icon.svg"></button>
+        <button (click)="openPayment()"><h3>Receba agradecimentos!</h3></button>
+        <button (click)="openPayment()"><img src="../../../assets/donate_icon.svg"></button>
       </div>
     </div>
 
@@ -189,6 +189,10 @@
 
 </div>
 
-<ng-template cdkPortal>
+<ng-template cdkPortal #profilePortal>
   <app-profile-pic-overlay [typeCard]="typeCard" [link]="myUser.image ? myUser.image : ''" [closeOverlay]="closeCard.bind(this, overlayRef)" [acessToken]="accessToken"></app-profile-pic-overlay>
  </ng-template>
+
+<ng-template cdkPortal #paymentPortal>
+<app-payment-overlay [initialScreen]="'recebimento-home'"></app-payment-overlay>
+</ng-template>

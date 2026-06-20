@@ -1,0 +1,294 @@
+<ng-container [ngSwitch]="currentScreen">
+
+    <div *ngSwitchCase="'home'" class="overlay card-payment">
+    <div class="left-payment" style="border: none;">
+        <div class="agradecimentos">
+            <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
+            <h3>Agradecimentos</h3>
+        </div>
+        <div class="informacoes">
+            <div class="informacoes-texto">
+                <p>Agradecimentos ajudam a demonstrar sua gratidão pela ajuda que recebeu. Além disso, incentiva os criadores a continuarem contribuindo com a comunidade!</p>
+                <p>&nbsp;</p>
+                <p>Você pode enviar o valor da quantia que quiser</p>
+            </div>
+                
+            <div class="insira-valor">
+                <h4>Insira um valor</h4>
+                <div class="campo-valor">
+                    <span>R$</span>
+                    <input
+                    type="text"
+                    [value]="valor"
+                    (input)="onValorInput($event)"
+                    (keydown)="permitirSomenteNumeros($event)"
+                    placeholder="0,00"
+                    />
+                </div>
+            </div>
+
+            <!-- 
+            <button
+            type="button"
+            [disabled]="!valorValido"
+            (click)="proximoPasso()"
+            >
+            Próximo
+            </button>    
+            -->
+            <div style="display: flex;flex-direction: column;gap: 8px;">
+                <div class="cards-metodos">
+                <button (click)="navigateTo('pix')" class="card-metodo" style="border: 1px solid #04BCAC;"><img src="../../../assets/pix_icon.svg" alt=""></button>
+                <img style="" src="../../../assets/paypal_icon.png" alt="">
+                <button class="card-metodo"><img src="../../../assets/boleto_icon.png" alt=""></button>
+                <button class="card-metodo"><img src="../../../assets/apple_pay_icon.png" alt=""></button>
+                <button class="card-metodo"><img src="../../../assets/google_pay_icon.png" alt=""></button>
+                <button class="card-metodo"><img src="../../../assets/amazon_pay_icon.png" alt=""></button>
+            </div>
+
+            <button  (click)="navigateTo('personal-data')" class="outros-metodos">
+                <p>Outros métodos de pagamento</p>
+                <img style="transform: rotate(360deg);" src="../../../assets/arrow_left_simple.svg" alt="">
+            </button>
+            </div>
+            
+        </div>
+
+
+    </div>
+        
+    <div class="payment-banner">
+    </div>
+
+</div>
+
+  <div *ngSwitchCase="'pix'">
+    <!-- Tela PIX -->
+     <div class="overlay card-payment">
+        <div class="left-payment">
+            <div class="agradecimentos">
+                <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
+                <h3>Agradecimentos</h3>
+            </div>
+            <div class="passos">
+                <div class="passos-item selected"><p>Efetuar agradecimento</p><img src="../../../assets/arrow_left_simple.svg" ></div>
+            </div>
+        </div>
+
+            <div>a</div>
+
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'personal-data'">
+    <!-- Dados pessoais -->
+        <div class="overlay card-payment">
+        <div class="left-payment">
+            <div class="agradecimentos">
+                <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
+                <h3>Agradecimentos</h3>
+            </div>
+            <div class="passos">
+                <button class="passos-item selected"><p>Dados pessoais</p><img src="../../../assets/arrow_left_simple.svg" ></button>
+                <button class="passos-item"><p>Método de pagamento</p></button>
+                <button class="passos-item"><p>Confirmar agradecimento</p></button>
+            </div>
+        </div>
+
+            <form class="right-payment" [formGroup]="dadosPessoaisForm" (ngSubmit)="onConfirmar()">
+            <h1>Dados pessoais</h1>
+            <div class="campo">
+            <label for="nomeCompleto">Nome completo:</label>
+            <input id="nomeCompleto" type="text" formControlName="nomeCompleto" />
+        </div>
+
+        <div class="divisao">
+            <div class="campo">
+            <label for="cpf">CPF:</label>
+            <input id="cpf" type="text" formControlName="cpf" />
+            </div>
+            <div class="campo">
+            <label for="telefone">Telefone:</label>
+            <input id="telefone" type="text" formControlName="telefone" />
+            </div>
+        </div>
+            <div class="campo">
+            <label for="email">Email:</label>
+            <input id="email" type="email" formControlName="email" />
+            </div>
+        
+
+        <div class="divisao">
+            <div class="campo campo--estreito">
+            <label for="cep">CEP:</label>
+            <input id="cep" type="text" formControlName="cep" />
+            </div>
+            <div class="campo campo--estreito">
+            <label for="numero">Número:</label>
+            <input id="numero" type="text" formControlName="numero" />
+            </div>
+            <div class="campo campo--larga">
+            <label for="cidade">Cidade:</label>
+            <input id="cidade" type="text" formControlName="cidade" />
+            </div>
+        </div>
+
+        <div class="campo">
+            <label for="enderecoCobranca">Endereço de cobrança:</label>
+            <input id="enderecoCobranca" type="text" formControlName="enderecoCobranca" />
+        </div>
+
+        <div class="divisao">
+            <div class="campo">
+            <label for="bairro">Bairro:</label>
+            <input id="bairro" type="text" formControlName="bairro" />
+            </div>
+            <div class="campo">
+            <label for="complemento">Complemento:</label>
+            <input id="complemento" type="text" formControlName="complemento" />
+            </div>
+        </div>
+
+        <button type="submit" class="botao-confirmar">Confirmar dados</button>
+        </form>
+
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'credit-card'">
+    <!-- Dados do cartão -->
+  </div>
+
+  <div *ngSwitchCase="'confirmation'">
+    <!-- Confirmação -->
+  </div>
+
+  <div *ngSwitchCase="'recebimento-home'"  class="overlay card-payment">
+    <!-- Home do Recebimento -->
+     <div class="left-payment" style="border: none;">
+        <div class="agradecimentos">
+            <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
+            <h3>Agradecimentos</h3>
+        </div>
+        <div class="informacoes">
+            <div class="informacoes-texto">
+                <p>Agradecimentos ajudam a demonstrar sua gratidão pela ajuda que recebeu. Além disso, incentiva os criadores a continuarem contribuindo com a comunidade!</p>
+                
+            </div>
+                
+            <div class="insira-valor" style="border: none;text-align:center;gap: 16px;">
+                <h4 style="font-weight: 500;">Afim de receber agradecimentos em dinheiro pelos seus Dissays?</h4>
+                <h4>Adicione um método de recebimento!</h4>
+            </div>
+
+            <!-- 
+            <button
+            type="button"
+            [disabled]="!valorValido"
+            (click)="proximoPasso()"
+            >
+            Próximo
+            </button>    
+            -->
+            <div style="display: flex;flex-direction: column;gap: 8px;">
+                <div class="cards-metodos">
+                <button (click)="navigateTo('recebimento-pix')" class="card-metodo" style="border: 1px solid #04BCAC;"><img src="../../../assets/pix_icon.svg" alt=""></button>
+                <img style="" src="../../../assets/paypal_icon.png" alt="">
+                <button class="card-metodo"><img src="../../../assets/boleto_icon.png" alt=""></button>
+                <button class="card-metodo"><img src="../../../assets/apple_pay_icon.png" alt=""></button>
+                <button class="card-metodo"><img src="../../../assets/google_pay_icon.png" alt=""></button>
+                <button class="card-metodo"><img src="../../../assets/amazon_pay_icon.png" alt=""></button>
+            </div>
+
+            <button  (click)="navigateTo('personal-data')" class="outros-metodos">
+                <p>Adicionar outros métodos de recebimento</p>
+                <img style="transform: rotate(360deg);" src="../../../assets/arrow_left_simple.svg" alt="">
+            </button>
+            </div>
+            
+        </div>
+
+
+    </div>
+        
+    <div class="payment-banner">
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'recebimento-pix'">
+    <!-- Recebimento PIX -->
+     <div class="overlay card-payment">
+        <div class="left-payment">
+            <div class="agradecimentos">
+                <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
+                <h3>Agradecimentos</h3>
+            </div>
+            <div class="passos">
+                <div class="passos-item selected"><p>Adicionar pix</p><img src="../../../assets/arrow_left_simple.svg" ></div>
+            </div>
+        </div>
+
+        <div class="right-recebimento">
+            <h1>Como você deseja receber?</h1>
+
+        <form class="form-recebimento-pix">
+            <h2>Selecione um tipo</h2>
+
+            <div class="checkbox-pix">
+                <div class="checkbox-pix-item">
+                    <input
+                        type="radio"
+                        id="cpf"
+                        name="pixType"
+                        value="cpf">
+                    <label for="cpf">CPF</label>
+                </div>
+
+                <div class="checkbox-pix-item">
+                    <input
+                        type="radio"
+                        id="email"
+                        name="pixType"
+                        value="email">
+                    <label for="email">E-mail</label>
+                </div>
+
+                <div class="checkbox-pix-item">
+                    <input
+                        type="radio"
+                        id="telefone"
+                        name="pixType"
+                        value="telefone">
+                    <label for="telefone">Telefone</label>
+                </div>
+
+                <div class="checkbox-pix-item">
+                    <input
+                        type="radio"
+                        id="aleatoria"
+                        name="pixType"
+                        value="aleatoria">
+                    <label for="aleatoria">Chave Aleatória</label>
+                </div>
+
+                <div class="campo-chave-pix">
+                    <h2 for="pixKey">Chave PIX</h2>
+                    <input
+                        type="text"
+                        id="pixKey"
+                        name="pixKey"
+                        placeholder="Digite sua chave PIX">
+                </div>
+            </div>
+
+            
+        </form>
+        <button type="submit" class="botao-confirmar confirmar-pix">Confirmar dados</button>
+        </div>
+
+    </div>
+  </div>
+
+</ng-container>
+
+

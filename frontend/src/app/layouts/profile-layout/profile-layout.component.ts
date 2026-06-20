@@ -48,13 +48,19 @@ export class ProfileLayoutComponent {
   artistsList!: Artist[]
   query!: string | null
 
-  @ViewChild(CdkPortal) portal!: CdkPortal
+@ViewChild('profilePortal', { read: CdkPortal })
+profilePortal!: CdkPortal;
+
+@ViewChild('paymentPortal', { read: CdkPortal })
+paymentPortal!: CdkPortal;
 
   constructor(private router: ActivatedRoute, private serviceUser: ServiceUserService, private serviceSpotify: ServiceMusicService, private serviceDissay: ServiceDissayService,
     private overlay: Overlay, private overlayRefSerivce: OverlayService
   ){}
 
   openImageSetter(type: string) {
+      console.log(this.paymentPortal);
+
     this.typeCard = type
     if (!this.overlayRef) {
       const config = new OverlayConfig({
@@ -63,9 +69,26 @@ export class ProfileLayoutComponent {
       });
       this.overlayRef = this.overlay.create(config);
     }
-    this.overlayRef.attach(this.portal);
+      this.overlayRef.attach(this.profilePortal);
     this.overlayRef.backdropClick().subscribe(() => this.closeCard(this.overlayRef));
   }
+
+  openPayment() {
+      console.log(this.paymentPortal);
+
+  const config = new OverlayConfig({
+    positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+    hasBackdrop: true
+  });
+
+  const overlayRef = this.overlay.create(config);
+
+  overlayRef.attach(this.paymentPortal);
+
+  overlayRef.backdropClick().subscribe(() => {
+    overlayRef.detach();
+  });
+}
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
@@ -182,8 +205,10 @@ export class ProfileLayoutComponent {
       )
     }
     }
+    
   }
 
+  
 
 
 
