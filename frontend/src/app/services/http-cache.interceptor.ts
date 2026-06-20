@@ -30,7 +30,9 @@ export class HttpCacheInterceptor implements HttpInterceptor {
 
     // allow bypass with header
     if (req.headers.get('x-cache-bypass') === 'true') {
-      const cleanReq = req.clone({ headers: req.headers.delete('x-cache-bypass') });
+      const cleanReq = req.clone({
+        headers: req.headers.delete('x-cache-bypass')
+      });
       return next.handle(cleanReq);
     }
 
@@ -39,20 +41,58 @@ export class HttpCacheInterceptor implements HttpInterceptor {
     const now = Date.now();
 
     if (cached) {
-      if (now - cached.entryTime < cached.ttl) {
+      const age = now - cached.entryTime;
+
+      if (age < cached.ttl) {
+        console.log(
+          `%c[CACHE HIT]%c ${req.method} ${cacheKey} | idade: ${(age / 1000).toFixed(1)}s`,
+          'color: #00c853; font-weight: bold;',
+          'color: inherit;'
+        );
+
         return of(cached.response.clone());
       }
+
+      console.log(
+        `%c[CACHE EXPIRED]%c ${req.method} ${cacheKey}`,
+        'color: #ff9800; font-weight: bold;',
+        'color: inherit;'
+      );
+
       this.cache.delete(cacheKey);
     }
 
-    // determine ttl from header (seconds) or default
     const ttlHeader = req.headers.get('x-cache-ttl');
     const ttl = ttlHeader ? Number(ttlHeader) * 1000 : this.defaultTTL;
+
+    console.log(
+      `%c[API REQUEST]%c ${req.method} ${cacheKey}`,
+      'color: #2196f3; font-weight: bold;',
+      'color: inherit;'
+    );
 
     return next.handle(req).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          this.cache.set(cacheKey, { url: cacheKey, response: event.clone(), entryTime: Date.now(), ttl });
+          console.log(
+            `%c[CACHE STORE]%c ${req.method} ${cacheKey} | TTL: ${ttl / 1000}s`,
+            'color: #9c27b0; font-weight: bold;',
+            'color: inherit;'
+          );
+
+          this.cache.set(cacheKey, {
+            url: cacheKey,
+            response: event.clone(),
+            entryTime: Date.now(),
+            ttl
+          });
+
+          console.log(
+            `%c[CACHE SIZE]%c ${this.cache.size}/${this.maxEntries} entradas`,
+            'color: #607d8b; font-weight: bold;',
+            'color: inherit;'
+          );
+
           this.trimCache();
         }
       })
@@ -63,18 +103,33 @@ export class HttpCacheInterceptor implements HttpInterceptor {
     if (this.cache.size <= this.maxEntries) {
       return;
     }
-    // remove oldest entries until size <= maxEntries
-    const entries = Array.from(this.cache.entries()).sort((a, b) => a[1].entryTime - b[1].entryTime);
+
+    const entries = Array.from(this.cache.entries()).sort(
+      (a, b) => a[1].entryTime - b[1].entryTime
+    );
+
     while (this.cache.size > this.maxEntries && entries.length) {
       const oldest = entries.shift();
+
       if (oldest) {
+        console.log(
+          `%c[CACHE REMOVE]%c ${oldest[0]}`,
+          'color: #f44336; font-weight: bold;',
+          'color: inherit;'
+        );
+
         this.cache.delete(oldest[0]);
       }
     }
   }
 
-  // optional API for runtime invalidation
   clear() {
+    console.log(
+      '%c[CACHE CLEAR]%c Cache completamente limpo',
+      'color: #f44336; font-weight: bold;',
+      'color: inherit;'
+    );
+
     this.cache.clear();
   }
 }
