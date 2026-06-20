@@ -206,5 +206,5 @@
 </ng-container>
 
  <ng-template cdkPortal>
-  <app-payment-overlay [initialScreen]="'home'"></app-payment-overlay>
+  <app-payment-overlay [initialScreen]="'home'" [closeOverlay]="closeCard.bind(this, overlayRef)" [usernameDissay]="userDissayData.userName"></app-payment-overlay>
  </ng-template>

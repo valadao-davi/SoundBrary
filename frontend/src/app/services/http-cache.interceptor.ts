@@ -24,7 +24,7 @@ export class HttpCacheInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // only cache GET
-    if (req.method !== 'GET') {
+    if (req.method !== 'GET' || req.headers.get('Authorization')) {
       return next.handle(req);
     }
 

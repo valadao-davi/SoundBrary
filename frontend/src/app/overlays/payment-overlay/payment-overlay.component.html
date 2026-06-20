@@ -9,7 +9,6 @@
         <div class="informacoes">
             <div class="informacoes-texto">
                 <p>Agradecimentos ajudam a demonstrar sua gratidão pela ajuda que recebeu. Além disso, incentiva os criadores a continuarem contribuindo com a comunidade!</p>
-                <p>&nbsp;</p>
                 <p>Você pode enviar o valor da quantia que quiser</p>
             </div>
                 
@@ -38,7 +37,7 @@
             -->
             <div style="display: flex;flex-direction: column;gap: 8px;">
                 <div class="cards-metodos">
-                <button (click)="navigateTo('pix')" class="card-metodo" style="border: 1px solid #04BCAC;"><img src="../../../assets/pix_icon.svg" alt=""></button>
+                <button (click)="navigateGeneratePix()" class="card-metodo" style="border: 1px solid #04BCAC;"><img src="../../../assets/pix_icon.svg" alt=""></button>
                 <img style="" src="../../../assets/paypal_icon.png" alt="">
                 <button class="card-metodo"><img src="../../../assets/boleto_icon.png" alt=""></button>
                 <button class="card-metodo"><img src="../../../assets/apple_pay_icon.png" alt=""></button>
@@ -63,22 +62,36 @@
 </div>
 
   <div *ngSwitchCase="'pix'">
-    <!-- Tela PIX -->
-     <div class="overlay card-payment">
+    <div class="overlay card-payment">
         <div class="left-payment">
-            <div class="agradecimentos">
-                <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
-                <h3>Agradecimentos</h3>
-            </div>
-            <div class="passos">
-                <div class="passos-item selected"><p>Efetuar agradecimento</p><img src="../../../assets/arrow_left_simple.svg" ></div>
+        <div class="agradecimentos">
+            <img src="../../../assets/donate_icon.svg" alt="Icone de doação">
+            <h3>Agradecimentos</h3>
+        </div>
+        <div class="passos">
+            <div class="passos-item selected">
+            <p>Efetuar agradecimento</p>
+            <img src="../../../assets/arrow_left_simple.svg">
             </div>
         </div>
+        </div>
 
-            <div>a</div>
-
+            <div class="right-recebimento pix-screen">
+            <h2>Escaneie o QR Code</h2>
+            <img [src]="pixInfo?.qrCode" alt="QR Code PIX" class="pix-qrcode">
+            <div class="pix-copia-cola">
+                <p class="pix-label">Pix Copia e Cola</p>
+                <div class="pix-copy-row">
+                <input type="text" readonly [value]="pixInfo?.copyPaste || ''" class="pix-input">
+                <button (click)="copiarPix()" class="botao-copiar-pix ">
+                    Copiar
+                </button>
+                </div>
+            </div>
+            <button class="botao-confirmar" style="align-self: center" (click)="confirmPayment()">Pagamento feito!</button>
+            </div>
+        </div>
     </div>
-  </div>
 
   <div *ngSwitchCase="'personal-data'">
     <!-- Dados pessoais -->
@@ -224,15 +237,29 @@
                 <h3>Agradecimentos</h3>
             </div>
             <div class="passos">
-                <div class="passos-item selected"><p>Adicionar pix</p><img src="../../../assets/arrow_left_simple.svg" ></div>
+                <div class="passos-item selected">
+                    <p *ngIf="!paymentForm.get('pixKey')?.value">
+                        Adicionar pix:
+                    </p>
+
+                    <p *ngIf="paymentForm.get('pixKey')?.value">
+                        Editar pix:
+                    </p>
+                    <img src="../../../assets/arrow_left_simple.svg" ></div>
             </div>
         </div>
 
         <div class="right-recebimento">
-            <h1>Como você deseja receber?</h1>
+            <h1 *ngIf="!paymentForm.get('pixKey')?.value">
+                Adicione suas informações para PIX:
+            </h1>
 
-        <form class="form-recebimento-pix" >
-            <!-- <h3>Selecione um tipo</h3> -->
+            <h1 *ngIf="paymentForm.get('pixKey')?.value">
+                Edite suas informações para PIX:
+            </h1>
+
+        <form class="form-recebimento-pix" [formGroup]="paymentForm">
+            <!-- <h3>Selecione um tipo</h3>
 
             <div class="checkbox-pix">
                 <!-- <div class="checkbox-pix-item">
@@ -269,7 +296,12 @@
                         formControlName="pixType"
                         value="aleatoria">
                     <label for="aleatoria">Chave Aleatória</label>
+<<<<<<< HEAD
                 </div> -->
+=======
+                </div> 
+                </div>-->
+>>>>>>> e73401f71d2683452fc3e36d61fb41a10897407d
 
                 <div class="campo-chave-pix">
                     <h3 for="pixKey">Chave PIX</h3>
@@ -277,6 +309,7 @@
                         type="text"
                         id="pixKey"
                         name="pixKey"
+                        formControlName="pixKey"
                         placeholder="Digite sua chave PIX">
                 </div>
                 <div class="campo-chave-pix">
@@ -294,11 +327,17 @@
                         formControlName="city"
                         placeholder="Cidade">
                 </div>
-            </div>
+            
 
             
         </form>
-        <button type="submit" class="botao-confirmar confirmar-pix">Confirmar dados</button>
+        <button
+            type="submit"
+            class="botao-confirmar confirmar-pix"
+            [disabled]="!podeSalvar"
+            (click)="setPaymentInfo()">
+            Confirmar dados
+        </button>
         </div>
 
     </div>

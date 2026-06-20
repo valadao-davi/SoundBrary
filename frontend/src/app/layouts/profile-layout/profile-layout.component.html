@@ -194,5 +194,5 @@
  </ng-template>
 
 <ng-template cdkPortal #paymentPortal>
-<app-payment-overlay [initialScreen]="'recebimento-home'"></app-payment-overlay>
+<app-payment-overlay [initialScreen]="'recebimento-home'" [closeOverlay]="closeCard.bind(this, overlayRef)"></app-payment-overlay>
 </ng-template>

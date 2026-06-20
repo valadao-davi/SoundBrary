@@ -1,4 +1,4 @@
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,6 +33,7 @@ export class DissayComponent {
   musicData!: Music;
   accessToken!: string
   comments!:Coment[]
+  overlayRef!: OverlayRef;
 
   listImages!: string[]
   totalRateUser!: number;
@@ -75,7 +76,12 @@ export class DissayComponent {
 
   }
 
-
+  closeCard(overlayRef: OverlayRef){
+    if(this.overlayRef?.hasAttached()){
+      this.overlayRef.detach()
+    }else{
+      }
+  }
   loadDissay(id: string) {
     this.serviceDissay.getDissayById(id).subscribe(dissay => {
       this.dissayData = dissay;
