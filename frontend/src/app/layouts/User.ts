@@ -13,5 +13,8 @@ export interface User {
   artistsSaved?: string[];
   notifications?: Notiffication[];
   dissaysCreated?: string[];
+  formalName?: string;
+  city?: string;
+  pixKey?: string;
 
 }
