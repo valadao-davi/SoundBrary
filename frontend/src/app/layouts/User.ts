@@ -1,5 +1,13 @@
 import { Notiffication } from "./Notification";
 
+
+export interface PaymentInfo {
+  formalName: string;
+  city: string;
+  pixKey: string;
+}
+
+
 export interface User {
   userName: string;
   name: string;
@@ -13,5 +21,6 @@ export interface User {
   artistsSaved?: string[];
   notifications?: Notiffication[];
   dissaysCreated?: string[];
+  paymentInfo?: PaymentInfo;
 
 }

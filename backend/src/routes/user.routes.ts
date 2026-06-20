@@ -273,7 +273,13 @@ userRouter.get('/profile', auth, async(req: CustomRequest, res: Response)=> {
             return res.status(400).send("ID de usuário inválido");
         }
         if(user){
-            res.status(200).send({userName: user.userName,email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated, image: user.image, notifications: user.notifications})
+            res.status(200).send({userName: user.userName,email: user.email, name: user.name, musicSaved: user.musicSaved, artistsSaved: user.artistsSaved, albumSaved: user.albumSaved,dissaySaved: user.dissaySaved, dissaysCreated: user.dissaysCreated, image: user.image, notifications: user.notifications,
+                                paymentInfo: {
+                                    formalName: user.formalName,
+                                    city: user.city,
+                                    pixKey: user.pixKey
+                                }
+            })
         }else{
             res.status(404).send("Usuário não encontrado")
         }

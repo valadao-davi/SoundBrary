@@ -3,6 +3,7 @@ import { User } from '../layouts/User';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Notiffication } from '../layouts/Notification';
+import { PaymentInfo } from '../layouts/User';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -78,6 +79,17 @@ export class ServiceUserService {
     })
     return this.http.put<User>(`${this.API}/profile/edit`, {name: newName}, {headers})
   }
+
+  setPaymentInfo(token: string, paymentInfo: PaymentInfo): Observable<User> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+    return this.http.put<User>(`${this.API}/profile/edit`, {
+      formalName: paymentInfo.formalName,
+      city: paymentInfo.city,
+      pixKey: paymentInfo.pixKey
+    }, {headers})
+  } 
 
   editUser(token: string, newUser: any): Observable<User>{
     const headers = new HttpHeaders({

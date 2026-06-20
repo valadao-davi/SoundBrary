@@ -59,8 +59,6 @@ paymentPortal!: CdkPortal;
   ){}
 
   openImageSetter(type: string) {
-      console.log(this.paymentPortal);
-
     this.typeCard = type
     if (!this.overlayRef) {
       const config = new OverlayConfig({
@@ -74,21 +72,19 @@ paymentPortal!: CdkPortal;
   }
 
   openPayment() {
-      console.log(this.paymentPortal);
+    const config = new OverlayConfig({
+      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+      hasBackdrop: true
+    });
 
-  const config = new OverlayConfig({
-    positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
-    hasBackdrop: true
-  });
+    this.overlayRef = this.overlay.create(config);
 
-  const overlayRef = this.overlay.create(config);
+    this.overlayRef.attach(this.paymentPortal);
 
-  overlayRef.attach(this.paymentPortal);
-
-  overlayRef.backdropClick().subscribe(() => {
-    overlayRef.detach();
-  });
-}
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.overlayRef.dispose();
+    });
+  }
 
   ngOnInit(){
     this.accessToken = localStorage.getItem('token') ?? ""
