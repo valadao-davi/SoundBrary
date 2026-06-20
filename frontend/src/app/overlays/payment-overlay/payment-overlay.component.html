@@ -231,15 +231,15 @@
         <div class="right-recebimento">
             <h1>Como você deseja receber?</h1>
 
-        <form class="form-recebimento-pix">
-            <h2>Selecione um tipo</h2>
+        <form class="form-recebimento-pix" >
+            <h3>Selecione um tipo</h3>
 
             <div class="checkbox-pix">
                 <div class="checkbox-pix-item">
                     <input
                         type="radio"
                         id="cpf"
-                        name="pixType"
+                        formControlName="pixType"
                         value="cpf">
                     <label for="cpf">CPF</label>
                 </div>
@@ -248,7 +248,7 @@
                     <input
                         type="radio"
                         id="email"
-                        name="pixType"
+                        formControlName="pixType"
                         value="email">
                     <label for="email">E-mail</label>
                 </div>
@@ -257,7 +257,7 @@
                     <input
                         type="radio"
                         id="telefone"
-                        name="pixType"
+                        formControlName="pixType"
                         value="telefone">
                     <label for="telefone">Telefone</label>
                 </div>
@@ -266,18 +266,33 @@
                     <input
                         type="radio"
                         id="aleatoria"
-                        name="pixType"
+                        formControlName="pixType"
                         value="aleatoria">
                     <label for="aleatoria">Chave Aleatória</label>
                 </div>
 
                 <div class="campo-chave-pix">
-                    <h2 for="pixKey">Chave PIX</h2>
+                    <h3 for="pixKey">Chave PIX</h3>
                     <input
                         type="text"
                         id="pixKey"
                         name="pixKey"
                         placeholder="Digite sua chave PIX">
+                </div>
+                <div class="campo-chave-pix">
+                    <h3>Nome completo</h3>
+                    <input
+                        type="text"
+                        formControlName="formalName"
+                        placeholder="Nome completo">
+                </div>
+
+                <div class="campo-chave-pix">
+                    <h3>Cidade</h3>
+                    <input
+                        type="text"
+                        formControlName="city"
+                        placeholder="Cidade">
                 </div>
             </div>
 

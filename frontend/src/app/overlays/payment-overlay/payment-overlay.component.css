@@ -284,10 +284,10 @@
 
   
 .right-recebimento{
-    padding: 48px;
+    padding: 48px 64px 48px 48px;
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 24px;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -305,7 +305,7 @@
 .checkbox-pix-item{
     display: flex;
     gap: 8px;
-    font-size: 20px;
+    font-size: 16px;
 }
 input[type="radio"] {
   accent-color: black;
@@ -314,10 +314,10 @@ input[type="radio"] {
 }
 .campo-chave-pix{
     margin-top: 32px;
-    font-size: 20px;
+    font-size: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 4px;
 }
 .campo-chave-pix input{
     border: none;
