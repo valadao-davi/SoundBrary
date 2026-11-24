@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
+    "build": "npx tsc --noEmit",
+    "start": "ts-node --transpile-only src/server.ts",
     "dev": "nodemon --exec ts-node --transpile-only src/server.ts"
-  },
-  "engines": {
-    "node": "20.x"
   },
   "keywords": [],
   "author": "",
