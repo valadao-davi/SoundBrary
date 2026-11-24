@@ -8,21 +8,21 @@ import * as dotenv from 'dotenv';
 import express from 'express'
 import cors from 'cors'
 import { connectToDatabase } from './config/db';
-import musicRoutes from '../src/routes/music.routes'
-import artistRoutes from '../src/routes/artist.routes'
-import albumRoutes from '../src/routes/album.routes'
-import searchRoutes from '../src/routes/searchGeneral.routes'
-import playlistRoutes from '../src/routes/playlist.routes'
+import musicRoutes from './routes/music.routes'
+import artistRoutes from './routes/artist.routes'
+import albumRoutes from './routes/album.routes'
+import searchRoutes from './routes/searchGeneral.routes'
+import playlistRoutes from './routes/playlist.routes'
 import { paymentRoutes } from './routes/payment.routes';
 
-dotenv.config({path: './src/.env'})
+dotenv.config()
 
 const { MONGODB_URI } = process.env;
 const PORT = process.env.PORT || 3000;
 
 
-if( !MONGODB_URI ) {
-    console.error("Nã foi definido nenhuma variável no config.env");
+if (!MONGODB_URI) {
+    console.error("A variável MONGODB_URI não está definida.");
     process.exit(1)
 }
 
@@ -42,7 +42,6 @@ const initializeToken = async () => {
 //Conecta ao banco de dados
 const startServer = async () => {
     try {
-        console.log(MONGODB_URI!);
         await connectToDatabase(MONGODB_URI!)
         console.log("Conectado ao banco")
         
